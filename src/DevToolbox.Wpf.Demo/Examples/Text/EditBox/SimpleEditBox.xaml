@@ -1,0 +1,17 @@
+﻿<devtoolbox:EditBox
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    devtoolbox:UIElementHelper.Placeholder="Editor"
+    BeginEditCommand="{Binding BeginEditCommand}"
+    BeginEditCommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
+    CancelEditCommand="{Binding CancelEditCommand}"
+    CancelEditCommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
+    DisplayText="{Binding DisplayText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+    EndEditCommand="{Binding EndEditCommand}"
+    EndEditCommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
+    IsEditableOnDoubleClick="True"
+    IsEditing="{Binding IsEditing, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+    IsReadOnly="False"
+    MinimumClickTime="100"
+    Text="{Binding Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+    TextTrimming="CharacterEllipsis" />

@@ -1,0 +1,95 @@
+﻿<Grid
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    xmlns:helpers="clr-namespace:DevToolbox.Wpf.Demo.Helpers">
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="auto" />
+        <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="28" />
+        <RowDefinition Height="28" />
+        <RowDefinition Height="28" />
+        <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <TextBlock
+        Grid.Row="0"
+        Grid.Column="0"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Center"
+        Text="ProgressRingStyle:" />
+    <devtoolbox:DropDown
+        Grid.Row="0"
+        Grid.Column="1"
+        Margin="4,0,0,0"
+        VerticalAlignment="Center"
+        Header="{Binding Path=ProgressRingStyle, ElementName=WaitingIndicator, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+        <ListBox SelectedItem="{Binding Path=ProgressRingStyle, ElementName=WaitingIndicator, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+            <devtoolbox:ProgressRingStyle>RotatingPlane</devtoolbox:ProgressRingStyle>
+            <devtoolbox:ProgressRingStyle>DoubleBounce</devtoolbox:ProgressRingStyle>
+            <devtoolbox:ProgressRingStyle>Wave</devtoolbox:ProgressRingStyle>
+            <devtoolbox:ProgressRingStyle>WanderingCubes</devtoolbox:ProgressRingStyle>
+            <devtoolbox:ProgressRingStyle>Pulse</devtoolbox:ProgressRingStyle>
+            <devtoolbox:ProgressRingStyle>ChasingDots</devtoolbox:ProgressRingStyle>
+            <devtoolbox:ProgressRingStyle>ThreeBounce</devtoolbox:ProgressRingStyle>
+            <devtoolbox:ProgressRingStyle>Circle</devtoolbox:ProgressRingStyle>
+        </ListBox>
+    </devtoolbox:DropDown>
+
+    <TextBlock
+        Grid.Row="1"
+        Grid.Column="0"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Center"
+        Text="ProgressRingColor:" />
+    <ComboBox
+        Grid.Row="1"
+        Grid.Column="1"
+        Margin="4,0,0,0"
+        VerticalAlignment="Center"
+        ItemsSource="{x:Static helpers:ColorList.Colors}"
+        SelectedValue="{Binding Path=ProgressRingColor, ElementName=WaitingIndicator, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        SelectedValuePath="Value">
+        <ComboBox.ItemTemplate>
+            <DataTemplate>
+                <StackPanel
+                    Margin="2"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <Border
+                        Width="12"
+                        Height="12"
+                        Margin="0,0,4,0"
+                        Background="{Binding Value}"
+                        BorderThickness="0" />
+                    <TextBlock Text="{Binding Key}" />
+                </StackPanel>
+            </DataTemplate>
+        </ComboBox.ItemTemplate>
+    </ComboBox>
+
+    <TextBlock
+        Grid.Row="2"
+        Grid.Column="0"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Center"
+        Text="IsActive:" />
+    <CheckBox
+        Grid.Row="2"
+        Grid.Column="1"
+        Margin="4,0,0,0"
+        VerticalAlignment="Center"
+        IsChecked="{Binding ElementName=WaitingIndicator, Path=InProgress, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+    <devtoolbox:WaitingIndicator
+        x:Name="WaitingIndicator"
+        Grid.Row="3"
+        Grid.Column="0"
+        Grid.ColumnSpan="2"
+        Height="300"
+        Background="#90FF0000"
+        Message="Please wait..">
+        <TextBlock HorizontalAlignment="Center" Text="Here goes Content" />
+    </devtoolbox:WaitingIndicator>
+</Grid>

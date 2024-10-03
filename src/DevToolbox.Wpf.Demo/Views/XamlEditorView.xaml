@@ -1,0 +1,44 @@
+﻿<UserControl
+    x:Class="DevToolbox.Wpf.Demo.Views.XamlEditorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid>
+        <devtoolbox:ExpanderEdit
+            Padding="0,12"
+            devtoolbox:UIElementHelper.CornerRadius="0,0,6,6"
+            Background="#323232"
+            Header="Source code"
+            IsExpanded="False">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Separator
+                    Grid.Row="0"
+                    Margin="0,12"
+                    Background="#232323" />
+                <TextBlock
+                    Grid.Row="1"
+                    Margin="12,0,0,0"
+                    Text="XAML" />
+                <avalonedit:TextEditor
+                    x:Name="textEditor"
+                    Grid.Row="2"
+                    Margin="12,12,0,0"
+                    Background="Transparent"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    SyntaxHighlighting="XML" />
+            </Grid>
+        </devtoolbox:ExpanderEdit>
+    </Grid>
+</UserControl>

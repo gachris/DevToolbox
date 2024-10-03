@@ -1,0 +1,46 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels">
+
+    <DataTemplate DataType="{x:Type viewModels:ExampleSubGategory}">
+        <Border
+            Background="#272727"
+            BorderBrush="#1D1D1D"
+            BorderThickness="1"
+            CornerRadius="8,0,0,0">
+            <Grid UseLayoutRounding="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Margin="28,28,28,4"
+                    FontSize="26"
+                    FontWeight="SemiBold"
+                    Foreground="White"
+                    Text="{Binding Header}" />
+                <TextBlock
+                    Grid.Row="1"
+                    Margin="28,0,28,0"
+                    FontSize="12"
+                    FontWeight="Light"
+                    Foreground="White"
+                    Text="{Binding Namespace}" />
+                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="28">
+                        <TextBlock
+                            Margin="0,0,0,28"
+                            Foreground="White"
+                            Text="{Binding Description}"
+                            TextWrapping="WrapWithOverflow" />
+                        <ItemsControl ItemsSource="{Binding Examples}" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+</ResourceDictionary>

@@ -1,0 +1,85 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
+
+    <Style x:Key="FocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle
+                        Margin="2"
+                        SnapsToDevicePixels="true"
+                        Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                        StrokeDashArray="1 2"
+                        StrokeThickness="1" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+        <Setter Property="Background" Value="{DynamicResource Button.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource Button.Foreground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Button.BorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="{DynamicResource Button.MouseOverBackground}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverForeground" Value="{DynamicResource Button.MouseOverForeground}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="{DynamicResource Button.MouseOverBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="{DynamicResource Button.PressedBackground}" />
+        <Setter Property="helpers:UIElementHelper.PressedForeground" Value="{DynamicResource Button.PressedForeground}" />
+        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="{DynamicResource Button.PressedBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.DisabledBackground" Value="{DynamicResource Button.DisabledBackground}" />
+        <Setter Property="helpers:UIElementHelper.DisabledForeground" Value="{DynamicResource Button.DisabledForeground}" />
+        <Setter Property="helpers:UIElementHelper.DisabledBorderBrush" Value="{DynamicResource Button.DisabledBorderBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.CornerRadius)}"
+                        SnapsToDevicePixels="true">
+                        <ContentPresenter
+                            x:Name="contentPresenter"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Focusable="False"
+                            RecognizesAccessKey="True"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBackground)}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBackground)}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBorderBrush)}" />
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.MouseOverForeground)}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBackground)}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBorderBrush)}" />
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.PressedForeground)}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBackground)}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBorderBrush)}" />
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.DisabledForeground)}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource ButtonStyle}" TargetType="{x:Type Button}" />
+
+</ResourceDictionary>

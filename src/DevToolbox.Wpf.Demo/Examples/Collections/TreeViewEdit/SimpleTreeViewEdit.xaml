@@ -1,0 +1,19 @@
+﻿<devtoolbox:TreeViewEdit
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    Margin="8"
+    Padding="8">
+    <devtoolbox:TreeViewItemEdit Header="Item 1" IsEnabled="False">
+        <devtoolbox:TreeViewItemEdit devtoolbox:VirtualToggleButtonHelper.IsChecked="True" Header="Item 1.1" />
+    </devtoolbox:TreeViewItemEdit>
+    <devtoolbox:TreeViewItemEdit Header="Item 2">
+        <devtoolbox:TreeViewItemEdit Header="Item 2.1">
+            <devtoolbox:TreeViewItemEdit devtoolbox:VirtualToggleButtonHelper.IsChecked="True" Header="Item 2.1.1" />
+            <devtoolbox:TreeViewItemEdit Header="Item 2.1.2" />
+            <devtoolbox:TreeViewItemEdit Header="Item 2.1.3" />
+        </devtoolbox:TreeViewItemEdit>
+        <devtoolbox:TreeViewItemEdit Header="Item 2.2" />
+        <devtoolbox:TreeViewItemEdit Header="Item 2.2" />
+        <devtoolbox:TreeViewItemEdit Header="Item 2.2" />
+    </devtoolbox:TreeViewItemEdit>
+</devtoolbox:TreeViewEdit>

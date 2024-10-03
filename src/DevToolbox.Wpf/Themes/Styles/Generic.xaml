@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:extensions="clr-namespace:DevToolbox.Wpf.MarkupExtensions">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/Button/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/Calendar/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/CheckBox/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ComboBox/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ComboBoxItem/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ContextMenu/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/DatePicker/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/GroupBox/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/Menu/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/MenuItem/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/PasswordBox/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/RadioButton/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/RepeatButton/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ScrollViewer/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TextBox/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ToggleButton/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ToolBar/Generic.xaml}" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

@@ -1,0 +1,208 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
+    xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters"
+    xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
+
+    <converters:InvertBoolConverter x:Key="InvertBoolConverter" />
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+    <ControlTemplate x:Key="ToggleButtonTemplate" TargetType="{x:Type ToggleButton}">
+        <Border
+            x:Name="border"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=controls:DropDown, Mode=FindAncestor}, Path=(helpers:UIElementHelper.CornerRadius)}"
+            SnapsToDevicePixels="true">
+            <ContentPresenter
+                Focusable="False"
+                RecognizesAccessKey="True"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+        </Border>
+    </ControlTemplate>
+
+    <Style x:Key="FocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle
+                        Margin="2"
+                        SnapsToDevicePixels="true"
+                        Stroke="Black"
+                        StrokeDashArray="1 2"
+                        StrokeThickness="1" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="{x:Type controls:DropDown}" TargetType="{x:Type controls:DropDown}">
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+        <Setter Property="Background" Value="{DynamicResource DropDown.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource DropDown.Foreground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource DropDown.BorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="{DynamicResource DropDown.MouseOverBackground}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverForeground" Value="{DynamicResource DropDown.MouseOverForeground}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="{DynamicResource DropDown.MouseOverBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="{DynamicResource DropDown.PressedBackground}" />
+        <Setter Property="helpers:UIElementHelper.PressedForeground" Value="{DynamicResource DropDown.PressedForeground}" />
+        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="{DynamicResource DropDown.PressedBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.DisabledBackground" Value="{DynamicResource DropDown.DisabledBackground}" />
+        <Setter Property="helpers:UIElementHelper.DisabledForeground" Value="{DynamicResource DropDown.DisabledForeground}" />
+        <Setter Property="helpers:UIElementHelper.DisabledBorderBrush" Value="{DynamicResource DropDown.DisabledBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.PopupBackground" Value="{DynamicResource DropDown.PopupBackground}" />
+        <Setter Property="helpers:UIElementHelper.PopupForeground" Value="{DynamicResource DropDown.PopupForeground}" />
+        <Setter Property="helpers:UIElementHelper.PopupBorderBrush" Value="{DynamicResource DropDown.PopupBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.PopupEffect" Value="{DynamicResource DropDown.DropShadow}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:DropDown}">
+                    <Grid>
+                        <ToggleButton
+                            x:Name="PART_ToggleButton"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Focusable="False"
+                            IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                            IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InvertBoolConverter}}"
+                            Template="{StaticResource ToggleButtonTemplate}">
+                            <ContentPresenter
+                                x:Name="header"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                ContentSource="Header"
+                                Focusable="False"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                TextElement.Foreground="{TemplateBinding Foreground}" />
+                        </ToggleButton>
+                        <Popup
+                            x:Name="PART_Popup"
+                            AllowsTransparency="True"
+                            CustomPopupPlacementCallback="{Binding Path=CustomPopupPlacementCallback, RelativeSource={RelativeSource TemplatedParent}}"
+                            Focusable="False"
+                            HorizontalOffset="{TemplateBinding HorizontalOffset}"
+                            IsOpen="{Binding IsChecked, ElementName=PART_ToggleButton}"
+                            Placement="{Binding Path=Placement, RelativeSource={RelativeSource TemplatedParent}}"
+                            PlacementRectangle="{Binding Path=PlacementRectangle, RelativeSource={RelativeSource TemplatedParent}}"
+                            PlacementTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource TemplatedParent}}"
+                            PopupAnimation="{TemplateBinding PopupAnimation}"
+                            StaysOpen="{TemplateBinding StaysOpen}"
+                            VerticalOffset="{TemplateBinding VerticalOffset}">
+                            <controls:SpeechBalloon
+                                Margin="6"
+                                Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupBackground)}"
+                                BorderBrush="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupBorderBrush)}"
+                                CornerRadius="{TemplateBinding DropDownCornerRadius}"
+                                Effect="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupEffect)}"
+                                FocusVisualStyle="{x:Null}"
+                                Foreground="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupForeground)}"
+                                HorizontalOffset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HorizontalOffset}"
+                                IsTabStop="False"
+                                Placement="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Placement}"
+                                PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlacementTarget}"
+                                SpeechBalloonHorizontalOffset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SpeechBalloonHorizontalOffset}"
+                                SpeechBalloonPlacement="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SpeechBalloonPlacement}"
+                                SpeechBalloonVerticalOffset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SpeechBalloonVerticalOffset}"
+                                VerticalOffset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VerticalOffset}">
+                                <Grid
+                                    x:Name="PART_PopupContent"
+                                    Width="{Binding Path=DropDownWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Height="{Binding Path=DropDownHeight, RelativeSource={RelativeSource TemplatedParent}}"
+                                    MinWidth="{Binding Path=MinDropDownWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                                    MinHeight="{Binding Path=MinDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}"
+                                    MaxWidth="{Binding Path=MaxDropDownWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                                    MaxHeight="{Binding Path=MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <ScrollViewer
+                                        x:Name="DropDownScrollViewer"
+                                        Background="Transparent"
+                                        VerticalScrollBarVisibility="Auto">
+                                        <ContentPresenter
+                                            x:Name="PART_ContentPresenter"
+                                            Grid.Row="0"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            ContentSource="Content"
+                                            Focusable="False"
+                                            RecognizesAccessKey="True"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    </ScrollViewer>
+                                    <Separator
+                                        Grid.Row="1"
+                                        BorderBrush="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupBorderBrush)}"
+                                        Focusable="False"
+                                        Visibility="{Binding Path=AllowResize, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    <Thumb
+                                        x:Name="PART_ResizeThumb"
+                                        Grid.Row="2"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Bottom"
+                                        Background="Transparent"
+                                        Cursor="SizeNWSE"
+                                        Visibility="{Binding Path=AllowResize, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                <ResizeGrip />
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </Grid>
+                            </controls:SpeechBalloon>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="StaysOpen" Value="True">
+                            <Setter TargetName="PART_ToggleButton" Property="IsHitTestVisible" Value="True" />
+                        </Trigger>
+                        <Trigger SourceName="PART_ToggleButton" Property="IsFocused" Value="true">
+                            <Setter TargetName="PART_ToggleButton" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.FocusedBackground)}" />
+                            <Setter TargetName="PART_ToggleButton" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.FocusedBorderBrush)}" />
+                            <Setter TargetName="header" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.FocusedForeground)}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_ToggleButton" Property="IsKeyboardFocusWithin" Value="true">
+                            <Setter TargetName="PART_ToggleButton" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.FocusedBackground)}" />
+                            <Setter TargetName="PART_ToggleButton" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.FocusedBorderBrush)}" />
+                            <Setter TargetName="header" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.FocusedForeground)}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="PART_ToggleButton" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBackground)}" />
+                            <Setter TargetName="PART_ToggleButton" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBorderBrush)}" />
+                            <Setter TargetName="header" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverForeground)}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_ToggleButton" Property="IsPressed" Value="true">
+                            <Setter TargetName="PART_ToggleButton" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBackground)}" />
+                            <Setter TargetName="PART_ToggleButton" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBorderBrush)}" />
+                            <Setter TargetName="header" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedForeground)}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_ToggleButton" Property="IsChecked" Value="true">
+                            <Setter TargetName="PART_ToggleButton" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBackground)}" />
+                            <Setter TargetName="PART_ToggleButton" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBorderBrush)}" />
+                            <Setter TargetName="header" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedForeground)}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="PART_ToggleButton" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBackground)}" />
+                            <Setter TargetName="PART_ToggleButton" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBorderBrush)}" />
+                            <Setter TargetName="header" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledForeground)}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,78 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:demo="clr-namespace:DevToolbox.Wpf.Demo"
+    xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels"
+    xmlns:views="clr-namespace:DevToolbox.Wpf.Demo.Views">
+
+    <DataTemplate x:Key="CheckBoxPropertyDataTemplate" DataType="{x:Type viewModels:Property}">
+        <CheckBox
+            Margin="12,8"
+            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}, Path=DataContext.InvokePropertyCommand}"
+            CommandParameter="{Binding}"
+            Content="{Binding DisplayName}"
+            IsChecked="{Binding Value}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="CornerRadiusPropertyDataTemplate" DataType="{x:Type viewModels:Property}">
+        <StackPanel Margin="12,8" Orientation="Horizontal">
+            <TextBlock Margin="0,0,4,0" Text="{Binding DisplayName}" />
+            <TextBox Width="64" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="TextChanged">
+                        <b:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}, Path=DataContext.InvokePropertyCommand}" CommandParameter="{Binding}" />
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </TextBox>
+        </StackPanel>
+    </DataTemplate>
+
+    <demo:PropertyDataTemplateSelector
+        x:Key="PropertyDataTemplateSelector"
+        CheckBoxDataTemplate="{StaticResource CheckBoxPropertyDataTemplate}"
+        CornerRadiusDataTemplate="{StaticResource CornerRadiusPropertyDataTemplate}" />
+
+    <DataTemplate DataType="{x:Type viewModels:Example}">
+        <Grid Margin="0,0,0,28">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Margin="0,0,0,12"
+                FontWeight="SemiBold"
+                Foreground="White"
+                Text="{Binding Header}"
+                TextWrapping="WrapWithOverflow" />
+            <Border
+                Grid.Row="1"
+                Background="#202020"
+                CornerRadius="6,6,0,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ContentControl Margin="12,28" Content="{Binding View}" />
+                    <Border
+                        Grid.Column="2"
+                        Margin="1"
+                        Background="#2B2B2B"
+                        CornerRadius="0,6,0,0">
+                        <ItemsControl
+                            Padding="0,10"
+                            VerticalContentAlignment="Center"
+                            ItemTemplateSelector="{StaticResource PropertyDataTemplateSelector}"
+                            ItemsSource="{Binding Properties}" />
+                    </Border>
+                </Grid>
+            </Border>
+            <views:XamlEditorView Grid.Row="2" SourceCode="{Binding SourceCode}" />
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

@@ -1,0 +1,666 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="Add_Field" xml:space="preserve">
+    <value>Add Field</value>
+  </data>
+  <data name="Add_File" xml:space="preserve">
+    <value>Add File...</value>
+  </data>
+  <data name="Add_New_Address" xml:space="preserve">
+    <value>Add New Address</value>
+  </data>
+  <data name="Add_Photo" xml:space="preserve">
+    <value>Add Photo</value>
+  </data>
+  <data name="AIM" xml:space="preserve">
+    <value>AIM</value>
+  </data>
+  <data name="All_completed_reminders_will_be_permanently_deleted_You_cannot_undo_this_action" xml:space="preserve">
+    <value>All completed reminders will be permanently deleted. You cannot undo this action.</value>
+  </data>
+  <data name="All_Contacts" xml:space="preserve">
+    <value>All Contacts</value>
+  </data>
+  <data name="all_day" xml:space="preserve">
+    <value>all-day</value>
+  </data>
+  <data name="All_of_its_reminders_will_be_permanently_deleted" xml:space="preserve">
+    <value>All of its reminders will be permanently deleted.</value>
+  </data>
+  <data name="AM" xml:space="preserve">
+    <value>AM</value>
+  </data>
+  <data name="Anniversary" xml:space="preserve">
+    <value>Anniversary</value>
+  </data>
+  <data name="Apple_ID" xml:space="preserve">
+    <value>Apple ID</value>
+  </data>
+  <data name="Apple_Watch" xml:space="preserve">
+    <value>Apple Watch</value>
+  </data>
+  <data name="Are_you_sure_you_want_to_delete_the_selected_contact" xml:space="preserve">
+    <value>Are you sure you want to delete the selected contact?</value>
+  </data>
+  <data name="Are_you_sure_you_want_to_delete_the_selected_group" xml:space="preserve">
+    <value>Are you sure you want to delete the selected group?</value>
+  </data>
+  <data name="Assistant" xml:space="preserve">
+    <value>Assistant</value>
+  </data>
+  <data name="attachments" xml:space="preserve">
+    <value>attachments</value>
+  </data>
+  <data name="Authentication_error" xml:space="preserve">
+    <value>Authentication error</value>
+  </data>
+  <data name="Birthday" xml:space="preserve">
+    <value>Birthday</value>
+  </data>
+  <data name="Blog" xml:space="preserve">
+    <value>Blog</value>
+  </data>
+  <data name="Brother" xml:space="preserve">
+    <value>Brother</value>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Calendar</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Can_t_delete_item" xml:space="preserve">
+    <value>Can't delete "{0}".</value>
+  </data>
+  <data name="Child" xml:space="preserve">
+    <value>Child</value>
+  </data>
+  <data name="Choose_Photo" xml:space="preserve">
+    <value>Choose Photo...</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="Clear_all_completed_reminders" xml:space="preserve">
+    <value>Clear all completed reminders?</value>
+  </data>
+  <data name="Clear_Completed" xml:space="preserve">
+    <value>Clear Completed</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Contacts</value>
+  </data>
+  <data name="Country_or_Region" xml:space="preserve">
+    <value>Country or Region</value>
+  </data>
+  <data name="Custom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Delete_Contact" xml:space="preserve">
+    <value>Delete Contact</value>
+  </data>
+  <data name="Delete_Event" xml:space="preserve">
+    <value>Delete Event</value>
+  </data>
+  <data name="Delete_Item" xml:space="preserve">
+    <value>Delete "{0}"?</value>
+  </data>
+  <data name="Delete_List" xml:space="preserve">
+    <value>Delete List</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Department</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Empty_Group" xml:space="preserve">
+    <value>Empty Group</value>
+  </data>
+  <data name="End_on_a_Date" xml:space="preserve">
+    <value>End on a Date</value>
+  </data>
+  <data name="Event_Title" xml:space="preserve">
+    <value>Event Title</value>
+  </data>
+  <data name="Every_2_Weeks" xml:space="preserve">
+    <value>Every 2 Weeks</value>
+  </data>
+  <data name="Every_Day" xml:space="preserve">
+    <value>Every Day</value>
+  </data>
+  <data name="Every_Month" xml:space="preserve">
+    <value>Every Month</value>
+  </data>
+  <data name="Every_Week" xml:space="preserve">
+    <value>Every Week</value>
+  </data>
+  <data name="Every_Year" xml:space="preserve">
+    <value>Every Year</value>
+  </data>
+  <data name="Exception_message" xml:space="preserve">
+    <value>Exception Message</value>
+  </data>
+  <data name="Export_vCard" xml:space="preserve">
+    <value>Export vCard...</value>
+  </data>
+  <data name="Facebook" xml:space="preserve">
+    <value>Facebook</value>
+  </data>
+  <data name="Father" xml:space="preserve">
+    <value>Father</value>
+  </data>
+  <data name="First" xml:space="preserve">
+    <value>First</value>
+  </data>
+  <data name="Flickr" xml:space="preserve">
+    <value>Flickr</value>
+  </data>
+  <data name="Friend" xml:space="preserve">
+    <value>Friend</value>
+  </data>
+  <data name="from" xml:space="preserve">
+    <value>from</value>
+  </data>
+  <data name="Gadu_Gadu" xml:space="preserve">
+    <value>Gadu-Gadu</value>
+  </data>
+  <data name="Google_Talk" xml:space="preserve">
+    <value>Google Talk</value>
+  </data>
+  <data name="Go_To_Date" xml:space="preserve">
+    <value>Go To Date...</value>
+  </data>
+  <data name="Go_to_Today" xml:space="preserve">
+    <value>Go to Today</value>
+  </data>
+  <data name="Go_to_today_button" xml:space="preserve">
+    <value>Go to today</value>
+  </data>
+  <data name="High" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Home_Fax" xml:space="preserve">
+    <value>Home Fax</value>
+  </data>
+  <data name="Home_Page" xml:space="preserve">
+    <value>Home Page</value>
+  </data>
+  <data name="iCloud" xml:space="preserve">
+    <value>iCloud</value>
+  </data>
+  <data name="iCloud_Print" xml:space="preserve">
+    <value>iCloud - Print</value>
+  </data>
+  <data name="ICQ" xml:space="preserve">
+    <value>ICQ</value>
+  </data>
+  <data name="Import_vCard" xml:space="preserve">
+    <value>Import vCard...</value>
+  </data>
+  <data name="Instant_Message" xml:space="preserve">
+    <value>Instant Message</value>
+  </data>
+  <data name="invitees" xml:space="preserve">
+    <value>invitees</value>
+  </data>
+  <data name="iPhone" xml:space="preserve">
+    <value>iPhone</value>
+  </data>
+  <data name="Jabber" xml:space="preserve">
+    <value>Jabber</value>
+  </data>
+  <data name="Job_Title" xml:space="preserve">
+    <value>Job Title</value>
+  </data>
+  <data name="Last" xml:space="preserve">
+    <value>Last</value>
+  </data>
+  <data name="LinkedIn" xml:space="preserve">
+    <value>LinkedIn</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="List_color" xml:space="preserve">
+    <value>List color</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="Low" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>Main</value>
+  </data>
+  <data name="Make_This_My_Card" xml:space="preserve">
+    <value>Make This My Card</value>
+  </data>
+  <data name="Manager" xml:space="preserve">
+    <value>Manager</value>
+  </data>
+  <data name="Medium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="Middle" xml:space="preserve">
+    <value>Middle</value>
+  </data>
+  <data name="Mobile" xml:space="preserve">
+    <value>Mobile</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="Mother" xml:space="preserve">
+    <value>Mother</value>
+  </data>
+  <data name="MSN" xml:space="preserve">
+    <value>MSN</value>
+  </data>
+  <data name="Myspace" xml:space="preserve">
+    <value>Myspace</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Never_Repeat" xml:space="preserve">
+    <value>Never Repeat</value>
+  </data>
+  <data name="New_Calendar" xml:space="preserve">
+    <value>New Calendar</value>
+  </data>
+  <data name="New_Contact" xml:space="preserve">
+    <value>New Contact</value>
+  </data>
+  <data name="New_Event" xml:space="preserve">
+    <value>New Event</value>
+  </data>
+  <data name="New_Group" xml:space="preserve">
+    <value>New Group</value>
+  </data>
+  <data name="New_item" xml:space="preserve">
+    <value>New item...</value>
+  </data>
+  <data name="New_List" xml:space="preserve">
+    <value>New List</value>
+  </data>
+  <data name="Nickname" xml:space="preserve">
+    <value>Nickname</value>
+  </data>
+  <data name="Nickname_Format" xml:space="preserve">
+    <value>«{0}»</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="note" xml:space="preserve">
+    <value>note</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Note_optional" xml:space="preserve">
+    <value>Note (optional)</value>
+  </data>
+  <data name="No_Contact_Selected" xml:space="preserve">
+    <value>No Contact Selected</value>
+  </data>
+  <data name="No_Events" xml:space="preserve">
+    <value>No Events</value>
+  </data>
+  <data name="No_Name" xml:space="preserve">
+    <value>No Name</value>
+  </data>
+  <data name="No_reminder_list_selected" xml:space="preserve">
+    <value>No reminder list selected</value>
+  </data>
+  <data name="No_results_found" xml:space="preserve">
+    <value>No results found</value>
+  </data>
+  <data name="No_search_results" xml:space="preserve">
+    <value>No search results</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="On_a_day" xml:space="preserve">
+    <value>On a day</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="Pager" xml:space="preserve">
+    <value>Pager</value>
+  </data>
+  <data name="Parent" xml:space="preserve">
+    <value>Parent</value>
+  </data>
+  <data name="Partner" xml:space="preserve">
+    <value>Partner</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Personalization" xml:space="preserve">
+    <value>Personalization</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="Phonetic_Company_Name" xml:space="preserve">
+    <value>Phonetic Company Name</value>
+  </data>
+  <data name="Phonetic_First_Name" xml:space="preserve">
+    <value>Phonetic First Name</value>
+  </data>
+  <data name="Phonetic_Last_Name" xml:space="preserve">
+    <value>Phonetic Last Name</value>
+  </data>
+  <data name="Please_Wait" xml:space="preserve">
+    <value>Please Wait...</value>
+  </data>
+  <data name="PM" xml:space="preserve">
+    <value>PM</value>
+  </data>
+  <data name="Postal_Code" xml:space="preserve">
+    <value>Postal Code</value>
+  </data>
+  <data name="Preferences" xml:space="preserve">
+    <value>Preferences...</value>
+  </data>
+  <data name="Prefix" xml:space="preserve">
+    <value>Prefix</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="QQ" xml:space="preserve">
+    <value>QQ</value>
+  </data>
+  <data name="Refresh_Contacts" xml:space="preserve">
+    <value>Refresh Contacts</value>
+  </data>
+  <data name="Related_People" xml:space="preserve">
+    <value>Related People</value>
+  </data>
+  <data name="Reminders" xml:space="preserve">
+    <value>Reminders</value>
+  </data>
+  <data name="Reminders_completed" xml:space="preserve">
+    <value>{0} Completed</value>
+  </data>
+  <data name="Remind_me" xml:space="preserve">
+    <value>Remind me</value>
+  </data>
+  <data name="Rename_Group" xml:space="preserve">
+    <value>Rename Group</value>
+  </data>
+  <data name="repeat" xml:space="preserve">
+    <value>repeat</value>
+  </data>
+  <data name="Results_for" xml:space="preserve">
+    <value>Results for “{0}”</value>
+  </data>
+  <data name="Save_Changes_to" xml:space="preserve">
+    <value>Save Changes to "{0}"?</value>
+  </data>
+  <data name="School" xml:space="preserve">
+    <value>School</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search {0}</value>
+  </data>
+  <data name="Search_all_reminders" xml:space="preserve">
+    <value>Search all reminders</value>
+  </data>
+  <data name="Select_All" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Show_Declined_Events" xml:space="preserve">
+    <value>Show Declined Events</value>
+  </data>
+  <data name="Sign_in_with_Apple_ID" xml:space="preserve">
+    <value>Sign in with Apple ID</value>
+  </data>
+  <data name="Sign_out" xml:space="preserve">
+    <value>Sign out</value>
+  </data>
+  <data name="Sina_Weibo" xml:space="preserve">
+    <value>SinaWeibo</value>
+  </data>
+  <data name="Sister" xml:space="preserve">
+    <value>Sister</value>
+  </data>
+  <data name="Skype" xml:space="preserve">
+    <value>Skype</value>
+  </data>
+  <data name="Spouse" xml:space="preserve">
+    <value>Spouse</value>
+  </data>
+  <data name="Stack_Trace" xml:space="preserve">
+    <value>Stack Trace</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="Street" xml:space="preserve">
+    <value>Street</value>
+  </data>
+  <data name="Suffix" xml:space="preserve">
+    <value>Suffix</value>
+  </data>
+  <data name="Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>to</value>
+  </data>
+  <data name="Total_Contacts" xml:space="preserve">
+    <value>{0} Contacts</value>
+  </data>
+  <data name="Twitter" xml:space="preserve">
+    <value>Twitter</value>
+  </data>
+  <data name="Unhandled_exception" xml:space="preserve">
+    <value>Unhandled exception</value>
+  </data>
+  <data name="Untitled" xml:space="preserve">
+    <value>Untitled</value>
+  </data>
+  <data name="Untitled_Group" xml:space="preserve">
+    <value>Untitled Group</value>
+  </data>
+  <data name="url" xml:space="preserve">
+    <value>url</value>
+  </data>
+  <data name="URL_Upper" xml:space="preserve">
+    <value>URL</value>
+  </data>
+  <data name="User_name" xml:space="preserve">
+    <value>User name</value>
+  </data>
+  <data name="Week" xml:space="preserve">
+    <value>Week</value>
+  </data>
+  <data name="Work" xml:space="preserve">
+    <value>Work</value>
+  </data>
+  <data name="Work_Fax" xml:space="preserve">
+    <value>Work Fax</value>
+  </data>
+  <data name="Yahoo" xml:space="preserve">
+    <value>Yahoo</value>
+  </data>
+  <data name="Your_changes_will_be_lost_if_you_don_t_save_them" xml:space="preserve">
+    <value>Your changes will be lost if you don't save them.</value>
+  </data>
+  <data name="You_must_own_at_least_one_reminder_list_Create_a_new_list_and_then_delete_this_one" xml:space="preserve">
+    <value>You must own at least one reminder list. Create a new list and then delete this one.</value>
+  </data>
+</root>

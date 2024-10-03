@@ -1,0 +1,227 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
+    xmlns:fonts="clr-namespace:DevToolbox.Wpf.Fonts"
+    xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
+
+    <Style x:Key="ToggleButtonStyle" TargetType="ToggleButton">
+        <Setter Property="Background" Value="{DynamicResource ComboBox.ToggleButton.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource ComboBox.ToggleButton.Foreground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ComboBox.ToggleButton.BorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.FocusedBackground" Value="{DynamicResource ComboBox.ToggleButton.FocusedBackground}" />
+        <Setter Property="helpers:UIElementHelper.FocusedForeground" Value="{DynamicResource ComboBox.ToggleButton.FocusedForeground}" />
+        <Setter Property="helpers:UIElementHelper.FocusedBorderBrush" Value="{DynamicResource ComboBox.ToggleButton.FocusedBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="{DynamicResource ComboBox.ToggleButton.MouseOverBackground}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverForeground" Value="{DynamicResource ComboBox.ToggleButton.MouseOverForeground}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="{DynamicResource ComboBox.ToggleButton.MouseOverBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="{DynamicResource ComboBox.ToggleButton.PressedBackground}" />
+        <Setter Property="helpers:UIElementHelper.PressedForeground" Value="{DynamicResource ComboBox.ToggleButton.PressedForeground}" />
+        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="{DynamicResource ComboBox.ToggleButton.PressedBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.DisabledBackground" Value="{DynamicResource ComboBox.ToggleButton.DisabledBackground}" />
+        <Setter Property="helpers:UIElementHelper.DisabledForeground" Value="{DynamicResource ComboBox.ToggleButton.DisabledForeground}" />
+        <Setter Property="helpers:UIElementHelper.DisabledBorderBrush" Value="{DynamicResource ComboBox.ToggleButton.DisabledBorderBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <ContentPresenter
+                            Grid.Column="0"
+                            Margin="2,0"
+                            Content="{TemplateBinding Content}" />
+                        <Border
+                            x:Name="border"
+                            Grid.Column="1"
+                            Width="16"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1,0,0,0">
+                            <controls:FontGlyph
+                                x:Name="glyphArrow"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Code="{x:Static fonts:Symbol.GlyphDown}"
+                                Foreground="{TemplateBinding Foreground}" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsFocused, RelativeSource={RelativeSource AncestorType=ComboBox}}" Value="true">
+                            <Setter TargetName="border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.FocusedBackground)}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.FocusedBorderBrush)}" />
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.FocusedForeground)}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ComboBox}}" Value="true">
+                            <Setter TargetName="border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBackground)}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBorderBrush)}" />
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.MouseOverForeground)}" />
+                        </DataTrigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBackground)}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBorderBrush)}" />
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.PressedForeground)}" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=ComboBox}}" Value="False">
+                            <Setter TargetName="border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBackground)}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBorderBrush)}" />
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.DisabledForeground)}" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ComboBoxStyle" TargetType="{x:Type ComboBox}">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="Background" Value="{DynamicResource ComboBox.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource ComboBox.Foreground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ComboBox.BorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.FocusedBackground" Value="{DynamicResource ComboBox.FocusedBackground}" />
+        <Setter Property="helpers:UIElementHelper.FocusedForeground" Value="{DynamicResource ComboBox.FocusedForeground}" />
+        <Setter Property="helpers:UIElementHelper.FocusedBorderBrush" Value="{DynamicResource ComboBox.FocusedBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="{DynamicResource ComboBox.MouseOverBackground}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverForeground" Value="{DynamicResource ComboBox.MouseOverForeground}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="{DynamicResource ComboBox.MouseOverBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.DisabledBackground" Value="{DynamicResource ComboBox.DisabledBackground}" />
+        <Setter Property="helpers:UIElementHelper.DisabledForeground" Value="{DynamicResource ComboBox.DisabledForeground}" />
+        <Setter Property="helpers:UIElementHelper.DisabledBorderBrush" Value="{DynamicResource ComboBox.DisabledBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.PopupBackground" Value="{DynamicResource ComboBox.PopupBackground}" />
+        <Setter Property="helpers:UIElementHelper.PopupForeground" Value="{DynamicResource ComboBox.PopupForeground}" />
+        <Setter Property="helpers:UIElementHelper.PopupBorderBrush" Value="{DynamicResource ComboBox.PopupBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.PopupEffect" Value="{DynamicResource ComboBox.DropShadow}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <Border
+                        x:Name="PART_Border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <ToggleButton
+                                x:Name="ToggleButton"
+                                Grid.Column="1"
+                                ClickMode="Press"
+                                FocusVisualStyle="{x:Null}"
+                                Focusable="False"
+                                IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                Style="{StaticResource ToggleButtonStyle}">
+                                <Grid Margin="{TemplateBinding Padding}">
+                                    <ContentPresenter
+                                        Name="ContentSite"
+                                        Margin="0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        Content="{TemplateBinding SelectionBoxItem}"
+                                        ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                        ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                        IsHitTestVisible="True"
+                                        Visibility="Collapsed" />
+                                    <TextBox
+                                        x:Name="PART_EditableTextBox"
+                                        Margin="0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Center"
+                                        Background="Transparent"
+                                        CaretBrush="{TemplateBinding Foreground}"
+                                        Focusable="True"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        IsEnabled="{TemplateBinding IsEditable}"
+                                        IsReadOnly="{TemplateBinding IsReadOnly}"
+                                        Visibility="Collapsed">
+                                        <TextBox.Template>
+                                            <ControlTemplate TargetType="TextBox">
+                                                <ScrollViewer
+                                                    x:Name="PART_ContentHost"
+                                                    VerticalAlignment="Center"
+                                                    Background="{TemplateBinding Background}"
+                                                    Focusable="False" />
+                                            </ControlTemplate>
+                                        </TextBox.Template>
+                                    </TextBox>
+                                </Grid>
+                            </ToggleButton>
+                            <Popup
+                                Name="Popup"
+                                AllowsTransparency="True"
+                                Focusable="False"
+                                IsOpen="{TemplateBinding IsDropDownOpen}"
+                                Placement="Bottom"
+                                PlacementTarget="{Binding ElementName=PART_Border}"
+                                PopupAnimation="Slide"
+                                SnapsToDevicePixels="True">
+                                <Border
+                                    Name="PART_DropDownBorder"
+                                    Margin="0,0,15,15"
+                                    Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupBackground)}"
+                                    BorderBrush="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupBorderBrush)}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Effect="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupEffect)}">
+                                    <Grid
+                                        Name="DropDown"
+                                        MinWidth="{TemplateBinding ActualWidth}"
+                                        MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                        SnapsToDevicePixels="True">
+                                        <ScrollViewer
+                                            VerticalContentAlignment="Center"
+                                            BorderBrush="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupForeground)}"
+                                            SnapsToDevicePixels="True">
+                                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasItems" Value="false">
+                            <Setter TargetName="PART_DropDownBorder" Property="MinHeight" Value="95" />
+                        </Trigger>
+                        <Trigger Property="IsGrouping" Value="true">
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+                        </Trigger>
+                        <Trigger Property="IsEditable" Value="true">
+                            <Setter Property="IsTabStop" Value="false" />
+                            <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="ContentSite" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsEditable" Value="False">
+                            <Setter Property="IsTabStop" Value="True" />
+                            <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="ContentSite" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.FocusedForeground)}" />
+                            <Setter TargetName="PART_Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.FocusedBackground)}" />
+                            <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.FocusedBorderBrush)}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.MouseOverForeground)}" />
+                            <Setter TargetName="PART_Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBackground)}" />
+                            <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBorderBrush)}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.DisabledForeground)}" />
+                            <Setter TargetName="PART_Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBackground)}" />
+                            <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBorderBrush)}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource ComboBoxStyle}" TargetType="{x:Type ComboBox}" />
+
+</ResourceDictionary>

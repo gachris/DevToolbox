@@ -1,0 +1,73 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels">
+
+    <DataTemplate DataType="{x:Type viewModels:ExampleGategory}">
+        <Border
+            Background="#272727"
+            BorderBrush="#1D1D1D"
+            BorderThickness="1"
+            CornerRadius="8,0,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Margin="34,28,28,28"
+                    FontSize="26"
+                    FontWeight="SemiBold"
+                    Foreground="White"
+                    Text="{Binding Header}" />
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl Margin="28,12,28,12" ItemsSource="{Binding SubCategories}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type viewModels:ExampleSubGategory}">
+                                <Button
+                                    Width="358"
+                                    MinHeight="88"
+                                    Margin="8"
+                                    Padding="12"
+                                    devtoolbox:UIElementHelper.CornerRadius="4"
+                                    Command="{Binding SelectCommand}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="68" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <devtoolbox:FontGlyph
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Code="{Binding Icon}"
+                                            FontSize="46" />
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock
+                                                FontSize="16"
+                                                FontWeight="SemiBold"
+                                                Foreground="White"
+                                                Text="{Binding Header}"
+                                                TextWrapping="Wrap" />
+                                            <TextBlock
+                                                FontSize="12"
+                                                Foreground="White"
+                                                Text="{Binding Description}"
+                                                TextWrapping="Wrap" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+</ResourceDictionary>

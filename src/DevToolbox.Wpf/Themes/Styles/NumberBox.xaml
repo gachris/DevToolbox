@@ -1,0 +1,104 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
+    xmlns:fonts="clr-namespace:DevToolbox.Wpf.Fonts">
+
+    <Style TargetType="{x:Type controls:NumberBox}">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="{DynamicResource NumberBox.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource NumberBox.Foreground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource NumberBox.BorderBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:NumberBox}">
+                    <Border
+                        x:Name="PART_Border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox
+                                x:Name="PART_TextBox"
+                                Grid.Column="0"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="0"
+                                Foreground="{TemplateBinding Foreground}"
+                                Text="{Binding Value, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Validation.ErrorTemplate="{x:Null}" />
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <RepeatButton
+                                    x:Name="PART_ButtonIncrease"
+                                    Grid.Row="0"
+                                    VerticalAlignment="Stretch"
+                                    BorderThickness="0"
+                                    Delay="0"
+                                    Interval="1">
+                                    <RepeatButton.ContentTemplate>
+                                        <DataTemplate>
+                                            <controls:FontGlyph
+                                                Margin="4,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Code="{x:Static fonts:Symbol.GlyphUp}"
+                                                FontSize="8" />
+                                        </DataTemplate>
+                                    </RepeatButton.ContentTemplate>
+                                </RepeatButton>
+                                <RepeatButton
+                                    x:Name="PART_ButtonReduce"
+                                    Grid.Row="1"
+                                    VerticalAlignment="Stretch"
+                                    BorderThickness="0"
+                                    Delay="0"
+                                    Interval="1">
+                                    <RepeatButton.ContentTemplate>
+                                        <DataTemplate>
+                                            <controls:FontGlyph
+                                                Margin="4,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Code="{x:Static fonts:Symbol.GlyphDown}"
+                                                FontSize="8" />
+                                        </DataTemplate>
+                                    </RepeatButton.ContentTemplate>
+                                </RepeatButton>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource NumberBox.MouseOverBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource NumberBox.FocusedBorderBrush}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_TextBox" Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource NumberBox.FocusedBorderBrush}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_ButtonIncrease" Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource NumberBox.FocusedBorderBrush}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_ButtonReduce" Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource NumberBox.FocusedBorderBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

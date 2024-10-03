@@ -1,0 +1,336 @@
+﻿[
+  {
+    "Header": "Basic input",
+    "SubCategories": [
+      {
+        "Header": "Button",
+        "Description": "A control that responds to user input and raises a Click event.",
+        "Icon": "Abbreviation",
+        "Namespace": "System.Windows.Controls",
+        "Examples": [
+          {
+            "Header": "A simple Button with text content.",
+            "SourceCode": "\\Examples\\BasicInput\\Button\\StandardXAMLButton.xaml",
+            "Properties": [
+              {
+                "Name": "IsEnabled",
+                "DisplayName": "Is Enabled",
+                "Type": "bool",
+                "ControlType": "CheckBox"
+              },
+              {
+                "Name": "UIElementHelper.CornerRadius",
+                "DisplayName": "Corner Radius",
+                "Type": "CornerRadius",
+                "ControlType": "CornerRadius",
+                "Namespace": "http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+              }
+            ]
+          },
+          {
+            "Header": "A Button with graphical content.",
+            "SourceCode": "\\Examples\\BasicInput\\Button\\FontIconButton.xaml",
+            "Properties": [
+              {
+                "Name": "IsEnabled",
+                "DisplayName": "Is Enabled",
+                "Type": "bool",
+                "ControlType": "CheckBox"
+              },
+              {
+                "Name": "UIElementHelper.CornerRadius",
+                "DisplayName": "Corner Radius",
+                "Type": "CornerRadius",
+                "ControlType": "CornerRadius",
+                "Namespace": "http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Header": "DropDown",
+        "Description": "A button that displays a flyout of content when clicked.",
+        "Icon": "DropdownControl",
+        "Namespace": "DevToolbox.Wpf.Controls",
+        "Examples": [
+          {
+            "Header": "A simple DropDown with text content.",
+            "SourceCode": "\\Examples\\BasicInput\\DropDown\\SimpleDropDown.xaml"
+          }
+        ]
+      },
+      {
+        "Header": "RepeatButton",
+        "Description": "A button that raises its Click event repeatedly from the time it's pressed until it's released.",
+        "Icon": "Abbreviation",
+        "Namespace": "System.Windows.Controls.Primitives",
+        "Examples": [
+          {
+            "Header": "A simple RepeatButton with text content.",
+            "SourceCode": "\\Examples\\BasicInput\\RepeatButton\\SimpleRepeatButton.xaml"
+          }
+        ]
+      },
+      {
+        "Header": "ToggleButton",
+        "Description": "A button that can be switched between two states like a CheckBox.",
+        "Icon": "Toggle",
+        "Namespace": "System.Windows.Controls.Primitives",
+        "Examples": [
+          {
+            "Header": "A simple ToggleButton with text content.",
+            "SourceCode": "\\Examples\\BasicInput\\ToggleButton\\SimpleToggleButton.xaml"
+          }
+        ]
+      },
+      {
+        "Header": "CheckBox",
+        "Description": "A control that a user can select or clear.",
+        "Icon": "ASXCheckBoxGroup",
+        "Namespace": "System.Windows.Controls",
+        "Examples": [
+          {
+            "Header": "A simple CheckBox with text content.",
+            "SourceCode": "\\Examples\\BasicInput\\CheckBox\\SimpleCheckBox.xaml"
+          }
+        ]
+      },
+      {
+        "Header": "ColorPicker",
+        "Description": "A control that displays a selectable color space.",
+        "Icon": "ColorPalette",
+        "Namespace": "DevToolbox.Wpf.Controls",
+        "Examples": [
+          {
+            "Header": "A simple ColorPicker.",
+            "SourceCode": "\\Examples\\BasicInput\\ColorPicker\\SimpleColorPicker.xaml"
+          }
+        ]
+      },
+      {
+        "Header": "ComboBox",
+        "Description": "A drop-down list of items a user can select from.",
+        "Icon": "ComboBox",
+        "Namespace": "System.Windows.Controls",
+        "Examples": [
+          {
+            "Header": "A ComboBox with items defined inline and its width set.",
+            "SourceCode": "\\Examples\\BasicInput\\ComboBox\\SimpleComboBox.xaml"
+          }
+        ]
+      },
+      {
+        "Header": "RadioButton",
+        "Description": "A control that allows a user to select a single option from a group of options.",
+        "Icon": "RadioButton",
+        "Namespace": "System.Windows.Controls",
+        "Examples": [
+          {
+            "Header": "A group of RadioButton controls in a RadioButtons group.",
+            "SourceCode": "\\Examples\\BasicInput\\RadioButton\\SimpleRadioButton.xaml"
+          }
+        ]
+      },
+      {
+        "Header": "Slider",
+        "Description": "A control that lets the user select from a range of values by moving a Thumb control along a track.",
+        "Icon": "Slider",
+        "Namespace": "System.Windows.Controls",
+        "Examples": [
+          {
+            "Header": "A simple Slider.",
+            "SourceCode": "\\Examples\\BasicInput\\Slider\\SimpleSlider.xaml"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Header": "Collections",
+    "SubCategories": [
+      {
+        "Header": "TreeViewEdit",
+        "Description": "The TreeViewEdit control is hierarchical list pattern with expanding and collapsing nodes that contain nested items.",
+        "Icon": "DirectLinkList",
+        "Namespace": "DevToolbox.Wpf.Controls",
+        "Examples": [
+          {
+            "Header": "A simple TreeViewEdit.",
+            "SourceCode": "\\Examples\\Collections\\TreeViewEdit\\SimpleTreeViewEdit.xaml"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Header": "Date & Time",
+    "SubCategories": [
+      {
+        "Header": "Calendar",
+        "Description": "A control that presents a calendar for a user to choose a date from.",
+        "Icon": "Calendar",
+        "Namespace": "System.Windows.Controls"
+      },
+      {
+        "Header": "DatePicker",
+        "Description": "A control that ltes a user pick a date value.",
+        "Icon": "MonthCalendar",
+        "Namespace": "System.Windows.Controls",
+        "Examples": [
+          {
+            "Header": "A simple DatePicker.",
+            "SourceCode": "\\Examples\\DateAndTime\\DatePicker\\SimpleDatePicker.xaml"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Header": "Layout",
+    "SubCategories": [
+      {
+        "Header": "ExpanderEdit",
+        "Description": "A container with a header that can be expanded to show body with more content.",
+        "Icon": "Expander",
+        "Namespace": "DevToolbox.Wpf.Controls"
+      },
+      {
+        "Header": "GroupBox",
+        "Description": "A container for grouping related controls under a common heading.",
+        "Icon": "GroupBox",
+        "Namespace": "System.Windows.Controls"
+      },
+      {
+        "Header": "SliderPanel",
+        "Description": "A panel that includes both visible content and collapsible content, providing a way to toggle visibility.",
+        "Icon": "CollapsiblePanel",
+        "Namespace": "DevToolbox.Wpf.Controls"
+      },
+      {
+        "Header": "SpeechBalloon",
+        "Description": "A control that simulates a speech balloon, typically used to display contextual information or messages in a visually appealing manner.",
+        "Icon": "Comment",
+        "Namespace": "DevToolbox.Wpf.Controls"
+      }
+    ]
+  },
+  {
+    "Header": "Menus & toolbars",
+    "SubCategories": [
+      {
+        "Header": "ContextMenu",
+        "Description": "Shows a contextual list of simple commands or options.",
+        "Icon": "ContextMenu",
+        "Namespace": "System.Windows.Controls"
+      },
+      {
+        "Header": "Menu",
+        "Description": "A classic menu, allowing the display of MenuItems.",
+        "Icon": "DynamicMenu",
+        "Namespace": "System.Windows.Controls"
+      },
+      {
+        "Header": "ToolBar",
+        "Description": "A classic toolbar, allowing the display of items.",
+        "Icon": "ToolBar",
+        "Namespace": "System.Windows.Controls",
+        "Examples": [
+          {
+            "Header": "A simple ToolBar.",
+            "SourceCode": "\\Examples\\MenusAndToolbars\\ToolBar\\SimpleToolBar.xaml"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Header": "Navigation",
+    "SubCategories": [
+      {
+        "Header": "TabControlEdit",
+        "Description": "A control that allows displays a collection of tabs that can be used to display several documents.",
+        "Icon": "NavigationApp",
+        "Namespace": "DevToolbox.Wpf.Controls"
+      }
+    ]
+  },
+  {
+    "Header": "Scrolling",
+    "SubCategories": [
+      {
+        "Header": "ScrollViewer",
+        "Description": "A container control that lets the user to pan its content.",
+        "Icon": "ImageScrollViewer",
+        "Namespace": "System.Windows.Controls"
+      }
+    ]
+  },
+  {
+    "Header": "StatusAndInfo",
+    "SubCategories": [
+      {
+        "Header": "ProgressRing",
+        "Description": "A control that indicates an ongoing operation with an animation.",
+        "Icon": "Loading",
+        "Namespace": "DevToolbox.Wpf.Controls"
+      },
+      {
+        "Header": "WaitingIndicator",
+        "Description": "A control that displays a visual indicator to convey that the application is waiting or processing.",
+        "Icon": "Hourglass",
+        "Namespace": "DevToolbox.Wpf.Controls"
+      }
+    ]
+  },
+  {
+    "Header": "Styles",
+    "SubCategories": [
+      {
+        "Header": "FontGlyph",
+        "Description": "A control that represents a single glyph or character from a font, allowing for the display of custom symbols or icons.",
+        "Icon": "ImageIcon",
+        "Namespace": "DevToolbox.Wpf.Controls"
+      },
+      {
+        "Header": "System Backdrops (Mica/Acrylic/Tabbed)",
+        "Description": "System Backdrops, like Mica, Acrylic, and Tabbed, for the window.",
+        "Icon": "TransparentBackground",
+        "Namespace": "DevToolbox.Wpf.Windows"
+      }
+    ]
+  },
+  {
+    "Header": "Text",
+    "SubCategories": [
+      {
+        "Header": "NumberBox",
+        "Description": "A text control used for numeric input and evaluation of algebraic equations.",
+        "Icon": "NumericListBox",
+        "Namespace": "DevToolbox.Wpf.Controls"
+      },
+      {
+        "Header": "EditBox",
+        "Description": "A control that lets a user edit labels.",
+        "Icon": "TextBox",
+        "Namespace": "DevToolbox.Wpf.Controls"
+      },
+      {
+        "Header": "PasswordBox",
+        "Description": "A control for entering passwords.",
+        "Icon": "PasswordBox",
+        "Namespace": "System.Windows.Controls"
+      },
+      {
+        "Header": "TextBox",
+        "Description": "A single-line or multi-line plain text field.",
+        "Icon": "TextBox",
+        "Namespace": "System.Windows.Controls"
+      }
+    ]
+  },
+  {
+    "Header": "Windowing",
+    "SubCategories": []
+  }
+]

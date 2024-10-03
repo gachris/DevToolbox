@@ -1,0 +1,12 @@
+﻿<ComboBox
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    xmlns:system="clr-namespace:System;assembly=netstandard"
+    Width="200"
+    Padding="8,4"
+    devtoolbox:UIElementHelper.CornerRadius="4">
+    <system:String>Blue</system:String>
+    <system:String>Green</system:String>
+    <system:String>Red</system:String>
+    <system:String>Yellow</system:String>
+</ComboBox>

@@ -1,0 +1,4 @@
+﻿<GroupBox
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    Content="This is the content"
+    Header="This text is in the header" />

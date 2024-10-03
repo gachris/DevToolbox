@@ -1,0 +1,49 @@
+﻿<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Margin="8">
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="auto" />
+
+        <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="28" />
+        <RowDefinition Height="28" />
+        <RowDefinition Height="28" />
+        <RowDefinition Height="120" />
+    </Grid.RowDefinitions>
+    <TextBlock
+        Grid.Row="0"
+        Grid.Column="0"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Center"
+        Text="IsMoveToPointOnDragEnabled:" />
+    <!--<CheckBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="4,0,0,0"
+                        IsChecked="{Binding ElementName=SliderEdit,Path=IsMoveToPointOnDragEnabled}"/>-->
+    <TextBlock
+        Grid.Row="1"
+        Grid.Column="0"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Center"
+        Text="IsMoveToPointEnabled:" />
+    <CheckBox
+        Grid.Row="1"
+        Grid.Column="1"
+        Margin="4,0,0,0"
+        VerticalAlignment="Center"
+        IsChecked="{Binding ElementName=SliderEdit, Path=IsMoveToPointEnabled}" />
+    <TextBlock
+        Grid.Row="2"
+        Grid.Column="0"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Center"
+        Text="Orientation:" />
+    <ComboBox
+        Grid.Row="2"
+        Grid.Column="1"
+        Margin="4,0,0,0"
+        VerticalAlignment="Center"
+        SelectedItem="{Binding ElementName=SliderEdit, Path=Orientation}">
+        <Orientation>Horizontal</Orientation>
+        <Orientation>Vertical</Orientation>
+    </ComboBox>
+    <Slider Width="200" />
+</Grid>

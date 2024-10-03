@@ -1,0 +1,6 @@
+﻿<StackPanel xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <TextBlock Margin="0,0,0,4" Text="Options:" />
+    <RadioButton Content="Option 1" />
+    <RadioButton Content="Option 2" />
+    <RadioButton Content="Option 3" />
+</StackPanel>

@@ -1,0 +1,11 @@
+﻿<devtoolbox:DropDown
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    Padding="8,4"
+    devtoolbox:UIElementHelper.CornerRadius="4"
+    Content="Standard DropDown Content"
+    DropDownCornerRadius="4"
+    Header="Standard DropDown"
+    SpeechBalloonPlacement="None"
+    StaysOpen="True"
+    VerticalOffset="4" />
