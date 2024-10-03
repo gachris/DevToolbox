@@ -74,7 +74,7 @@
             <controls:FontGlyph
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Code="{x:Static fonts:Symbol.Calendar}"
+                Code="{x:Static controls:Symbol.Calendar}"
                 FontSize="18" />
         </Grid>
     </ControlTemplate>

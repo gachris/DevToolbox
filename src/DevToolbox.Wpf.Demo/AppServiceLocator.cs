@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CommonServiceLocator;
+﻿using CommonServiceLocator;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DevToolbox.Wpf.Demo;

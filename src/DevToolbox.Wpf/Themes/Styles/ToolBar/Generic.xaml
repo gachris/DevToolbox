@@ -35,7 +35,7 @@
                         <controls:FontGlyph
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Code="{x:Static fonts:Symbol.Ellipsis}"
+                            Code="{x:Static controls:Symbol.Ellipsis}"
                             FontSize="24"
                             Foreground="{DynamicResource ToolBar.Thumb.IconBrush}"
                             Rotation="90"
@@ -64,7 +64,7 @@
                         <controls:FontGlyph
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Code="{x:Static fonts:Symbol.Ellipsis}"
+                            Code="{x:Static controls:Symbol.Ellipsis}"
                             FontSize="16"
                             Foreground="{DynamicResource ToolBar.Thumb.IconBrush}"
                             TextOptions.TextFormattingMode="Ideal"

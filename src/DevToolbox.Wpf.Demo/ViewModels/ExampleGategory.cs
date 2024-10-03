@@ -13,6 +13,6 @@ public partial class ExampleGategory : ObservableObject
 
     [ObservableProperty]
     private bool _isExpanded;
-    
+
     public ObservableCollection<ExampleSubGategory>? SubCategories { get; set; }
 }

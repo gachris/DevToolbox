@@ -23,7 +23,7 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="Margin" Value="8,0,0,0" />
         <Setter Property="ToolTip" Value="Close" />
-        <Setter Property="Content" Value="{x:Static fonts:Symbol.Close}" />
+        <Setter Property="Content" Value="{x:Static controls:Symbol.Close}" />
         <Setter Property="FontSize" Value="10" />
         <Setter Property="ContentTemplate">
             <Setter.Value>

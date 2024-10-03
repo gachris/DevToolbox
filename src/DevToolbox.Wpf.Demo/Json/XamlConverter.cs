@@ -10,7 +10,7 @@ public class XamlConverter : JsonConverter<string>
     {
         var path = reader.GetString();
         ArgumentNullException.ThrowIfNull(path, nameof(path));
-        
+
         var fullPath = Path.Combine(Directory.GetCurrentDirectory(), path.TrimStart('\\', '/'));
 
         // Read XAML content from file

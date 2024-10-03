@@ -77,7 +77,7 @@
                                 <controls:FontGlyph
                                     x:Name="optionMark"
                                     Margin="1"
-                                    Code="{x:Static fonts:Symbol.Checkmark}"
+                                    Code="{x:Static controls:Symbol.Checkmark}"
                                     FontSize="12"
                                     Foreground="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.GlyphBrush)}"
                                     Opacity="0" />

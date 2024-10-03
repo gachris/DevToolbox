@@ -14,7 +14,7 @@
                     <Border Background="Transparent">
                         <controls:FontGlyph
                             x:Name="ExpandPath"
-                            Code="{x:Static fonts:Symbol.GlyphRight}"
+                            Code="{x:Static controls:Symbol.GlyphRight}"
                             FontSize="16"
                             Foreground="{DynamicResource TreeViewEdit.ToggleGlyph.Brush}" />
                     </Border>

@@ -43,49 +43,49 @@
         x:Key="TabRightScrollButtonStyle"
         BasedOn="{StaticResource RepeatButtonStyle}"
         TargetType="{x:Type RepeatButton}">
-        <Setter Property="Content" Value="{x:Static fonts:Symbol.ExpandRight}" />
+        <Setter Property="Content" Value="{x:Static controls:Symbol.ExpandRight}" />
     </Style>
 
     <Style
         x:Key="TabLeftScrollButtonStyle"
         BasedOn="{StaticResource RepeatButtonStyle}"
         TargetType="{x:Type RepeatButton}">
-        <Setter Property="Content" Value="{x:Static fonts:Symbol.CollapseLeft}" />
+        <Setter Property="Content" Value="{x:Static controls:Symbol.CollapseLeft}" />
     </Style>
 
     <Style
         x:Key="TabTopScrollButtonStyle"
         BasedOn="{StaticResource RepeatButtonStyle}"
         TargetType="{x:Type RepeatButton}">
-        <Setter Property="Content" Value="{x:Static fonts:Symbol.CollapseUp}" />
+        <Setter Property="Content" Value="{x:Static controls:Symbol.CollapseUp}" />
     </Style>
 
     <Style
         x:Key="TabBottomScrollButtonStyle"
         BasedOn="{StaticResource RepeatButtonStyle}"
         TargetType="{x:Type RepeatButton}">
-        <Setter Property="Content" Value="{x:Static fonts:Symbol.ExpandDown}" />
+        <Setter Property="Content" Value="{x:Static controls:Symbol.ExpandDown}" />
     </Style>
 
     <Style
         x:Key="AddTabItemButtonStyle"
         BasedOn="{StaticResource ButtonStyle}"
         TargetType="{x:Type Button}">
-        <Setter Property="Content" Value="{x:Static fonts:Symbol.Add}" />
+        <Setter Property="Content" Value="{x:Static controls:Symbol.Add}" />
     </Style>
 
     <Style
         x:Key="SwapTabsButtonStyle"
         BasedOn="{StaticResource ButtonStyle}"
         TargetType="{x:Type Button}">
-        <Setter Property="Content" Value="{x:Static fonts:Symbol.GlyphDown}" />
+        <Setter Property="Content" Value="{x:Static controls:Symbol.GlyphDown}" />
     </Style>
 
     <Style
         x:Key="CloseTabItemButtonStyle"
         BasedOn="{StaticResource ButtonStyle}"
         TargetType="{x:Type Button}">
-        <Setter Property="Content" Value="{x:Static fonts:Symbol.Close}" />
+        <Setter Property="Content" Value="{x:Static controls:Symbol.Close}" />
     </Style>
 
     <Style x:Key="ScrollViewerStyle" TargetType="{x:Type ScrollViewer}">

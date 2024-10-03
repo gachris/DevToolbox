@@ -54,7 +54,7 @@
                                                 Margin="4,0"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Code="{x:Static fonts:Symbol.GlyphUp}"
+                                                Code="{x:Static controls:Symbol.GlyphUp}"
                                                 FontSize="8" />
                                         </DataTemplate>
                                     </RepeatButton.ContentTemplate>
@@ -72,7 +72,7 @@
                                                 Margin="4,0"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Code="{x:Static fonts:Symbol.GlyphDown}"
+                                                Code="{x:Static controls:Symbol.GlyphDown}"
                                                 FontSize="8" />
                                         </DataTemplate>
                                     </RepeatButton.ContentTemplate>

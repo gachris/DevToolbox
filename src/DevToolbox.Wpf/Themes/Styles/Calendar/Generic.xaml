@@ -7,7 +7,7 @@
     <ControlTemplate x:Key="PreviousButtonTemplate" TargetType="{x:Type Button}">
         <controls:FontGlyph
             x:Name="glyph"
-            Code="{x:Static fonts:Symbol.GlyphLeft}"
+            Code="{x:Static controls:Symbol.GlyphLeft}"
             FontSize="{DynamicResource FontSize16}" />
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -22,7 +22,7 @@
     <ControlTemplate x:Key="NextButtonTemplate" TargetType="{x:Type Button}">
         <controls:FontGlyph
             x:Name="glyph"
-            Code="{x:Static fonts:Symbol.GlyphRight}"
+            Code="{x:Static controls:Symbol.GlyphRight}"
             FontSize="{DynamicResource FontSize16}" />
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -256,7 +256,7 @@
                             x:Name="Blackout"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Code="{x:Static fonts:Symbol.Close}"
+                            Code="{x:Static controls:Symbol.Close}"
                             FontSize="{DynamicResource FontSize18}"
                             Foreground="{DynamicResource Calnedar.Button.Blackout.GlyphBrush}"
                             Opacity="0" />

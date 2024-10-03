@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace DevToolbox.Wpf.Demo;
+﻿namespace DevToolbox.Wpf.Demo;
 
 public interface ILocalSettingsService
 {

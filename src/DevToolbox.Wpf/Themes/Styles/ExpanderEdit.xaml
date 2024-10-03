@@ -13,12 +13,12 @@
                         x:Name="PART_FontGlyph"
                         Margin="4,0"
                         VerticalAlignment="Center"
-                        Code="{x:Static fonts:Symbol.ExpandRightmd}"
+                        Code="{x:Static controls:Symbol.ExpandRightmd}"
                         FontSize="16"
                         Foreground="#FF424242" />
                     <DataTemplate.Triggers>
                         <DataTrigger Binding="{Binding Path=IsExpanded, RelativeSource={RelativeSource AncestorType=controls:ExpanderEdit, Mode=FindAncestor}}" Value="True">
-                            <Setter TargetName="PART_FontGlyph" Property="Code" Value="{x:Static fonts:Symbol.ExpandDownmd}" />
+                            <Setter TargetName="PART_FontGlyph" Property="Code" Value="{x:Static controls:Symbol.ExpandDownmd}" />
                         </DataTrigger>
                     </DataTemplate.Triggers>
                 </DataTemplate>

@@ -44,7 +44,7 @@
                                 x:Name="glyphArrow"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Code="{x:Static fonts:Symbol.GlyphDown}"
+                                Code="{x:Static controls:Symbol.GlyphDown}"
                                 Foreground="{TemplateBinding Foreground}" />
                         </Border>
                     </Grid>

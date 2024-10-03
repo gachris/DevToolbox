@@ -1200,7 +1200,7 @@ public partial class DropDown : HeaderedContentControl, ICommandSource
             DropOpposite = GetDropOpposite();
 
         }, System.Windows.Threading.DispatcherPriority.Render);
-        
+
         // Set the focus on the content of the ContentPresenter.
         _contentPresenter?.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
     }

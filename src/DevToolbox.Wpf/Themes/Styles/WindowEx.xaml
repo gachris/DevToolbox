@@ -109,19 +109,19 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="windows:WindowEx.HitTestResult" Value="Close">
-                <Setter Property="Content" Value="{x:Static fonts:Symbol.ChromeClose}" />
+                <Setter Property="Content" Value="{x:Static controls:Symbol.ChromeClose}" />
             </Trigger>
             <Trigger Property="windows:WindowEx.HitTestResult" Value="Restore">
-                <Setter Property="Content" Value="{x:Static fonts:Symbol.ChromeRestore}" />
+                <Setter Property="Content" Value="{x:Static controls:Symbol.ChromeRestore}" />
             </Trigger>
             <Trigger Property="windows:WindowEx.HitTestResult" Value="Max">
-                <Setter Property="Content" Value="{x:Static fonts:Symbol.ChromeMaximize}" />
+                <Setter Property="Content" Value="{x:Static controls:Symbol.ChromeMaximize}" />
             </Trigger>
             <Trigger Property="windows:WindowEx.HitTestResult" Value="Min">
-                <Setter Property="Content" Value="{x:Static fonts:Symbol.ChromeMinimize}" />
+                <Setter Property="Content" Value="{x:Static controls:Symbol.ChromeMinimize}" />
             </Trigger>
             <Trigger Property="windows:WindowEx.HitTestResult" Value="Help">
-                <Setter Property="Content" Value="{x:Static fonts:Symbol.F1Help}" />
+                <Setter Property="Content" Value="{x:Static controls:Symbol.F1Help}" />
             </Trigger>
         </Style.Triggers>
     </Style>

@@ -48,7 +48,7 @@
     <DataTemplate x:Key="AddTabButtonTemplate">
         <controls:FontGlyph
             x:Name="PART_Image"
-            Code="{x:Static fonts:Symbol.Add}"
+            Code="{x:Static controls:Symbol.Add}"
             FontSize="16"
             Foreground="#FFB8B9C2" />
         <DataTemplate.Triggers>
@@ -64,7 +64,7 @@
     <DataTemplate x:Key="SwapTabsButtonStyleTemplate">
         <controls:FontGlyph
             x:Name="PART_Image"
-            Code="{x:Static fonts:Symbol.ExpandDownlg}"
+            Code="{x:Static controls:Symbol.ExpandDownlg}"
             FontSize="16"
             Foreground="#FFB8B9C2" />
         <DataTemplate.Triggers>
@@ -80,7 +80,7 @@
     <DataTemplate x:Key="CloseTabControlButtonStyleTemplate">
         <controls:FontGlyph
             x:Name="PART_Image"
-            Code="{x:Static fonts:Symbol.ChromeClose}"
+            Code="{x:Static controls:Symbol.ChromeClose}"
             FontSize="16"
             Foreground="#FFB8B9C2" />
         <DataTemplate.Triggers>
@@ -436,7 +436,7 @@
                         Background="{TemplateBinding Background}">
                         <controls:FontGlyph
                             x:Name="PART_Image"
-                            Code="{x:Static fonts:Symbol.ChromeClose}"
+                            Code="{x:Static controls:Symbol.ChromeClose}"
                             FontSize="12"
                             Foreground="#FFD0E6F5" />
                     </Border>

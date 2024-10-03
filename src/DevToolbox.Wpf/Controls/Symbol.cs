@@ -1,4 +1,4 @@
-namespace DevToolbox.Wpf.Fonts;
+namespace DevToolbox.Wpf.Controls;
 
 /// <summary>
 /// Contains string constants representing various symbols.
