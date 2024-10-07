@@ -78,14 +78,14 @@ public class WindowBehaviour : DependencyObject
     /// </summary>
     /// <param name="window">The target window.</param>
     /// <param name="brush">The brush to use for the window border.</param>
-    public static void SetWindowBorderBrush(Window window, Brush brush) => window.SetValue(BorderBrushProperty, brush);
+    public static void SetBorderBrush(Window window, Brush brush) => window.SetValue(BorderBrushProperty, brush);
 
     /// <summary>
     /// Gets the border brush of the specified window.
     /// </summary>
     /// <param name="window">The target window.</param>
     /// <returns>The brush used for the window border.</returns>
-    public static Brush GetWindowBorderBrush(Window window) => (Brush)window.GetValue(BorderBrushProperty);
+    public static Brush GetBorderBrush(Window window) => (Brush)window.GetValue(BorderBrushProperty);
 
     /// <summary>
     /// Callback method invoked when the Effect property changes.
