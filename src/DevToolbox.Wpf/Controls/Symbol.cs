@@ -3161,7 +3161,7 @@ public static class Symbol
     public const string SaveFileDialogControl = "f550";
     public const string SaveStatusBar1 = "f551";
     public const string SaveTable = "f552";
-    public const string Savegrey = "f553";
+    public const string Save = "f553";
     public const string Scaffold = "f554";
     public const string ScalarFunction = "f555";
     public const string ScalarFunctionError = "f556";
