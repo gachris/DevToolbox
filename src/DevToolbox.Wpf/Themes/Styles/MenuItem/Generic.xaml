@@ -2,7 +2,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
-    xmlns:fonts="clr-namespace:DevToolbox.Wpf.Fonts"
     xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
 
     <MenuScrollingVisibilityConverter x:Key="MenuScrollingVisibilityConverter" />
@@ -273,8 +272,8 @@
                 <Setter TargetName="templateRoot" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.HighlightBorderBrush)}" />
             </Trigger>
             <DataTrigger Binding="{Binding Path=(MenuItem.IsSubmenuOpen), RelativeSource={RelativeSource Mode=Self}}" Value="True">
-                <Setter TargetName="templateRoot" Property="Background" Value="#2E2E2E" />
-                <Setter TargetName="templateRoot" Property="BorderBrush" Value="#424242" />
+                <Setter TargetName="templateRoot" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.HighlightBackground)}" />
+                <Setter TargetName="templateRoot" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.HighlightBorderBrush)}" />
             </DataTrigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter TargetName="templateRoot" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledForeground)}" />
@@ -444,7 +443,7 @@
                     Margin="0,0,2,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
-                    Code="e920"
+                    Code="{x:Static controls:Symbol.GlyphRight}"
                     FontSize="14"
                     Foreground="{TemplateBinding Foreground}"
                     TextOptions.TextFormattingMode="Display" />

@@ -228,7 +228,13 @@
         "Header": "Menu",
         "Description": "A classic menu, allowing the display of MenuItems.",
         "Icon": "DynamicMenu",
-        "Namespace": "System.Windows.Controls"
+        "Namespace": "System.Windows.Controls",
+        "Examples": [
+          {
+            "Header": "A simple Menu.",
+            "SourceCode": "\\Examples\\MenusAndToolbars\\Menu\\SimpleMenu.xaml"
+          }
+        ]
       },
       {
         "Header": "ToolBar",

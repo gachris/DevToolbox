@@ -3,7 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
     xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters"
-    xmlns:fonts="clr-namespace:DevToolbox.Wpf.Fonts"
     xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers"
     xmlns:windows="clr-namespace:DevToolbox.Wpf.Windows">
 

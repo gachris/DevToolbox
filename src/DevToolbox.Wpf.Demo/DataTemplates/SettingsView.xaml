@@ -3,17 +3,50 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
     xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/Button/Generic.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style
+        x:Key="Button.BorderlessStyle"
+        BasedOn="{StaticResource ButtonStyle}"
+        TargetType="Button">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="{DynamicResource Button.Borderless.Background}" />
+        <Setter Property="devtoolbox:UIElementHelper.MouseOverBackground" Value="{DynamicResource Button.Borderless.MouseOverBackground}" />
+        <Setter Property="devtoolbox:UIElementHelper.PressedBackground" Value="{DynamicResource Button.Borderless.PressedBackground}" />
+        <Setter Property="devtoolbox:UIElementHelper.DisabledBackground" Value="{DynamicResource Button.Borderless.DisabledBackground}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource FocusVisualStyle}" />
+    </Style>
+
+    <Style
+        x:Key="Button.Primary.BorderlessStyle"
+        BasedOn="{StaticResource Button.BorderlessStyle}"
+        TargetType="Button">
+        <Setter Property="Foreground" Value="{DynamicResource Button.Primary.Foreground}" />
+        <Setter Property="devtoolbox:UIElementHelper.MouseOverForeground" Value="{DynamicResource Button.Primary.MouseOverForeground}" />
+        <Setter Property="devtoolbox:UIElementHelper.PressedForeground" Value="{DynamicResource Button.Primary.PressedForeground}" />
+        <Setter Property="devtoolbox:UIElementHelper.DisabledForeground" Value="{DynamicResource Button.Primary.DisabledForeground}" />
+    </Style>
+
+    <Style
+        x:Key="TextBlock.Regular.Style"
+        BasedOn="{StaticResource ResourceKey={x:Type TextBlock}}"
+        TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TextBlock.Primary.Foreground}" />
+    </Style>
 
     <devtoolbox:EnumBooleanConverter x:Key="EnumBooleanConverter" />
 
     <DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">
         <Border
-            Background="#272727"
-            BorderBrush="#1D1D1D"
+            Background="{DynamicResource SettingsView.Background}"
+            BorderBrush="{DynamicResource SettingsView.BorderBrush}"
             BorderThickness="1"
             CornerRadius="8,0,0,0">
             <ScrollViewer
-                Background="Transparent"
                 Focusable="False"
                 HorizontalScrollBarVisibility="Disabled"
                 VerticalScrollBarVisibility="Auto">
@@ -108,7 +141,8 @@
                             Margin="0,5"
                             FontSize="{DynamicResource FontSize16}"
                             Style="{DynamicResource TextBlock.Regular.Style}"
-                            Text="TODO: Replace with app description" />
+                            Text="WPF Gallery is a showcase application demonstrating the features and capabilities of the DevToolbox.Wpf library, available on NuGet. This gallery provides a visual exploration of various WPF (Windows Presentation Foundation) components, controls, and layouts that are part of the DevToolbox.Wpf toolkit."
+                            TextWrapping="Wrap" />
                         <Button
                             Grid.Row="2"
                             Grid.Column="0"

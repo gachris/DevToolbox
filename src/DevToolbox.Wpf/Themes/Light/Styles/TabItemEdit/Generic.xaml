@@ -4,7 +4,6 @@
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
     xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters"
     xmlns:extensions="clr-namespace:DevToolbox.Wpf.MarkupExtensions"
-    xmlns:fonts="clr-namespace:DevToolbox.Wpf.Fonts"
     xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TabItemEdit.xaml}" />

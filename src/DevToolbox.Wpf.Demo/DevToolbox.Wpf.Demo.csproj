@@ -33,6 +33,7 @@
 	  <Page Remove="Examples\Layout\ExpanderEdit\SimpleExpanderEdit.xaml" />
 	  <Page Remove="Examples\Layout\GroupBox\SimpleGroupBox.xaml" />
 	  <Page Remove="Examples\Layout\SliderPanel\SimpleSliderPanel.xaml" />
+	  <Page Remove="Examples\MenusAndToolbars\Menu\SimpleMenu.xaml" />
 	  <Page Remove="Examples\MenusAndToolbars\ToolBar\SimpleToolBar.xaml" />
 	  <Page Remove="Examples\StatusAndInfo\ProgressRing\SimpleProgressRing.xaml" />
 	  <Page Remove="Examples\StatusAndInfo\WaitingIndicator\SimpleWaitingIndicator.xaml" />
@@ -113,6 +114,11 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </Content>
 	  <Content Include="Examples\MenusAndToolbars\ToolBar\SimpleToolBar.xaml">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <SubType>Designer</SubType>
+	    <Generator>MSBuild:Compile</Generator>
+	  </Content>
+	  <Content Include="Examples\MenusAndToolbars\Menu\SimpleMenu.xaml">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	    <SubType>Designer</SubType>
 	    <Generator>MSBuild:Compile</Generator>

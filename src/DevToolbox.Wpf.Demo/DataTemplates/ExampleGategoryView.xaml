@@ -6,8 +6,8 @@
 
     <DataTemplate DataType="{x:Type viewModels:ExampleGategory}">
         <Border
-            Background="#272727"
-            BorderBrush="#1D1D1D"
+            Background="{DynamicResource ExampleGategory.Background}"
+            BorderBrush="{DynamicResource ExampleGategory.BorderBrush}"
             BorderThickness="1"
             CornerRadius="8,0,0,0">
             <Grid>
@@ -19,7 +19,7 @@
                     Margin="34,28,28,28"
                     FontSize="26"
                     FontWeight="SemiBold"
-                    Foreground="White"
+                    Foreground="{DynamicResource ExampleGategory.Foreground}"
                     Text="{Binding Header}" />
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <ItemsControl Margin="28,12,28,12" ItemsSource="{Binding SubCategories}">
@@ -51,12 +51,12 @@
                                             <TextBlock
                                                 FontSize="16"
                                                 FontWeight="SemiBold"
-                                                Foreground="White"
+                                                Foreground="{DynamicResource ExampleGategory.Foreground}"
                                                 Text="{Binding Header}"
                                                 TextWrapping="Wrap" />
                                             <TextBlock
                                                 FontSize="12"
-                                                Foreground="White"
+                                                Foreground="{DynamicResource ExampleGategory.Foreground}"
                                                 Text="{Binding Description}"
                                                 TextWrapping="Wrap" />
                                         </StackPanel>

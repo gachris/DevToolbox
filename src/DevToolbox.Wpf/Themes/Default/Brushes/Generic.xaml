@@ -247,35 +247,35 @@
 
     <!--#region Button-->
 
-    <SolidColorBrush x:Key="Button.Background" Color="#3F3F46" />
-    <SolidColorBrush x:Key="Button.Foreground" Color="#F1F1F1" />
-    <SolidColorBrush x:Key="Button.BorderBrush" Color="#555555" />
-    <SolidColorBrush x:Key="Button.MouseOverBackground" Color="#1C97EA" />
-    <SolidColorBrush x:Key="Button.MouseOverForeground" Color="#F1F1F1" />
-    <SolidColorBrush x:Key="Button.MouseOverBorderBrush" Color="#0097FB" />
-    <SolidColorBrush x:Key="Button.PressedBackground" Color="#007ACC" />
-    <SolidColorBrush x:Key="Button.PressedForeground" Color="#F1F1F1" />
-    <SolidColorBrush x:Key="Button.PressedBorderBrush" Color="#007ACC" />
-    <SolidColorBrush x:Key="Button.DisabledBackground" Color="#2D2D30" />
-    <SolidColorBrush x:Key="Button.DisabledForeground" Color="#656565" />
-    <SolidColorBrush x:Key="Button.DisabledBorderBrush" Color="#3F3F46" />
+    <SolidColorBrush x:Key="Button.Background" Color="#DDDDDD" />
+    <SolidColorBrush x:Key="Button.Foreground" Color="{StaticResource ResourceKey={x:Static SystemColors.ControlTextColorKey}}" />
+    <SolidColorBrush x:Key="Button.BorderBrush" Color="#FF707070" />
+    <SolidColorBrush x:Key="Button.MouseOverBackground" Color="#BEE6FD" />
+    <SolidColorBrush x:Key="Button.MouseOverForeground" Color="{StaticResource ResourceKey={x:Static SystemColors.ControlTextColorKey}}" />
+    <SolidColorBrush x:Key="Button.MouseOverBorderBrush" Color="#3C7FB1" />
+    <SolidColorBrush x:Key="Button.PressedBackground" Color="#FFC4E5F6" />
+    <SolidColorBrush x:Key="Button.PressedForeground" Color="{StaticResource ResourceKey={x:Static SystemColors.ControlTextColorKey}}" />
+    <SolidColorBrush x:Key="Button.PressedBorderBrush" Color="#2C628B" />
+    <SolidColorBrush x:Key="Button.DisabledBackground" Color="#F4F4F4" />
+    <SolidColorBrush x:Key="Button.DisabledForeground" Color="#838383" />
+    <SolidColorBrush x:Key="Button.DisabledBorderBrush" Color="#ADB2B5" />
 
     <!--#endregion-->
 
     <!--#region ToggleButton-->
 
-    <SolidColorBrush x:Key="ToggleButton.Background" Color="#3F3F46" />
-    <SolidColorBrush x:Key="ToggleButton.Foreground" Color="#F1F1F1" />
-    <SolidColorBrush x:Key="ToggleButton.BorderBrush" Color="#555555" />
-    <SolidColorBrush x:Key="ToggleButton.MouseOverBackground" Color="#1C97EA" />
-    <SolidColorBrush x:Key="ToggleButton.MouseOverForeground" Color="#F1F1F1" />
-    <SolidColorBrush x:Key="ToggleButton.MouseOverBorderBrush" Color="#0097FB" />
-    <SolidColorBrush x:Key="ToggleButton.PressedBackground" Color="#007ACC" />
-    <SolidColorBrush x:Key="ToggleButton.PressedForeground" Color="#F1F1F1" />
-    <SolidColorBrush x:Key="ToggleButton.PressedBorderBrush" Color="#007ACC" />
-    <SolidColorBrush x:Key="ToggleButton.DisabledBackground" Color="#2D2D30" />
-    <SolidColorBrush x:Key="ToggleButton.DisabledForeground" Color="#656565" />
-    <SolidColorBrush x:Key="ToggleButton.DisabledBorderBrush" Color="#3F3F46" />
+    <SolidColorBrush x:Key="ToggleButton.Background" Color="#DDDDDD" />
+    <SolidColorBrush x:Key="ToggleButton.Foreground" Color="{StaticResource ResourceKey={x:Static SystemColors.ControlTextColorKey}}" />
+    <SolidColorBrush x:Key="ToggleButton.BorderBrush" Color="#FF707070" />
+    <SolidColorBrush x:Key="ToggleButton.MouseOverBackground" Color="#BEE6FD" />
+    <SolidColorBrush x:Key="ToggleButton.MouseOverForeground" Color="{StaticResource ResourceKey={x:Static SystemColors.ControlTextColorKey}}" />
+    <SolidColorBrush x:Key="ToggleButton.MouseOverBorderBrush" Color="#3C7FB1" />
+    <SolidColorBrush x:Key="ToggleButton.PressedBackground" Color="#FFC4E5F6" />
+    <SolidColorBrush x:Key="ToggleButton.PressedForeground" Color="{StaticResource ResourceKey={x:Static SystemColors.ControlTextColorKey}}" />
+    <SolidColorBrush x:Key="ToggleButton.PressedBorderBrush" Color="#2C628B" />
+    <SolidColorBrush x:Key="ToggleButton.DisabledBackground" Color="#F4F4F4" />
+    <SolidColorBrush x:Key="ToggleButton.DisabledForeground" Color="#838383" />
+    <SolidColorBrush x:Key="ToggleButton.DisabledBorderBrush" Color="#ADB2B5" />
 
     <SolidColorBrush x:Key="ToggleButton.ToolBar.Background" Color="Transparent" />
     <SolidColorBrush x:Key="ToggleButton.ToolBar.MouseOverBackground" Color="#EEEEF2" />
@@ -284,18 +284,18 @@
 
     <!--#region RepeatButton-->
 
-    <SolidColorBrush x:Key="RepeatButton.Background" Color="#3F3F46" />
-    <SolidColorBrush x:Key="RepeatButton.Foreground" Color="#F1F1F1" />
-    <SolidColorBrush x:Key="RepeatButton.BorderBrush" Color="#555555" />
-    <SolidColorBrush x:Key="RepeatButton.MouseOverBackground" Color="#1C97EA" />
-    <SolidColorBrush x:Key="RepeatButton.MouseOverForeground" Color="#F1F1F1" />
-    <SolidColorBrush x:Key="RepeatButton.MouseOverBorderBrush" Color="#0097FB" />
-    <SolidColorBrush x:Key="RepeatButton.PressedBackground" Color="#007ACC" />
-    <SolidColorBrush x:Key="RepeatButton.PressedForeground" Color="#F1F1F1" />
-    <SolidColorBrush x:Key="RepeatButton.PressedBorderBrush" Color="#007ACC" />
-    <SolidColorBrush x:Key="RepeatButton.DisabledBackground" Color="#2D2D30" />
-    <SolidColorBrush x:Key="RepeatButton.DisabledForeground" Color="#656565" />
-    <SolidColorBrush x:Key="RepeatButton.DisabledBorderBrush" Color="#3F3F46" />
+    <SolidColorBrush x:Key="RepeatButton.Background" Color="#DDDDDD" />
+    <SolidColorBrush x:Key="RepeatButton.Foreground" Color="{StaticResource ResourceKey={x:Static SystemColors.ControlTextColorKey}}" />
+    <SolidColorBrush x:Key="RepeatButton.BorderBrush" Color="#FF707070" />
+    <SolidColorBrush x:Key="RepeatButton.MouseOverBackground" Color="#BEE6FD" />
+    <SolidColorBrush x:Key="RepeatButton.MouseOverForeground" Color="{StaticResource ResourceKey={x:Static SystemColors.ControlTextColorKey}}" />
+    <SolidColorBrush x:Key="RepeatButton.MouseOverBorderBrush" Color="#3C7FB1" />
+    <SolidColorBrush x:Key="RepeatButton.PressedBackground" Color="#FFC4E5F6" />
+    <SolidColorBrush x:Key="RepeatButton.PressedForeground" Color="{StaticResource ResourceKey={x:Static SystemColors.ControlTextColorKey}}" />
+    <SolidColorBrush x:Key="RepeatButton.PressedBorderBrush" Color="#2C628B" />
+    <SolidColorBrush x:Key="RepeatButton.DisabledBackground" Color="#F4F4F4" />
+    <SolidColorBrush x:Key="RepeatButton.DisabledForeground" Color="#838383" />
+    <SolidColorBrush x:Key="RepeatButton.DisabledBorderBrush" Color="#ADB2B5" />
 
     <!--#endregion-->
 
@@ -472,17 +472,17 @@
 
     <SolidColorBrush x:Key="Menu.Background" Color="#F0F0F0" />
     <SolidColorBrush x:Key="Menu.Foreground" Color="#000000" />
-    <SolidColorBrush x:Key="Menu.BorderBrush" Color="#ACACAC" />
+    <SolidColorBrush x:Key="Menu.BorderBrush" Color="#999999" />
 
     <!--#endregion-->
 
     <!--#region MenuItem-->
 
-    <SolidColorBrush x:Key="MenuItem.Background" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="MenuItem.Background" Color="#F0F0F0" />
     <SolidColorBrush x:Key="MenuItem.Foreground" Color="#000000" />
-    <SolidColorBrush x:Key="MenuItem.BorderBrush" Color="#ACACAC" />
-    <SolidColorBrush x:Key="MenuItem.HighlightBackground" Color="#E5F2FF" />
-    <SolidColorBrush x:Key="MenuItem.HighlightBorderBrush" Color="#E5F2FF" />
+    <SolidColorBrush x:Key="MenuItem.BorderBrush" Color="#999999" />
+    <SolidColorBrush x:Key="MenuItem.HighlightBackground" Color="#C0DDEB" />
+    <SolidColorBrush x:Key="MenuItem.HighlightBorderBrush" Color="#26A0DA" />
     <SolidColorBrush x:Key="MenuItem.SelectedBackground" Color="#E5F2FF" />
     <SolidColorBrush x:Key="MenuItem.SelectedBorderBrush" Color="#E5F2FF" />
     <SolidColorBrush x:Key="MenuItem.SubMenuBackground" Color="#F0F0F0" />

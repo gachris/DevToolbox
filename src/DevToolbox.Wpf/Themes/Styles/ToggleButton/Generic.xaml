@@ -68,6 +68,11 @@
                             <Setter TargetName="border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBorderBrush)}" />
                             <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.PressedForeground)}" />
                         </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBackground)}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBorderBrush)}" />
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.PressedForeground)}" />
+                        </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter TargetName="border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBackground)}" />
                             <Setter TargetName="border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBorderBrush)}" />
