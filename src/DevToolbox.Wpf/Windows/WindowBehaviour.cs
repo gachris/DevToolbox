@@ -12,7 +12,7 @@ namespace DevToolbox.Wpf.Windows;
 /// Provides attached properties and behaviors for customizing window effects
 /// and border colors in WPF applications.
 /// </summary>
-public class WindowBehaviour : DependencyObject
+public class WindowBehaviour
 {
     #region Fields
 
@@ -37,7 +37,7 @@ public class WindowBehaviour : DependencyObject
     /// Attached Dependency Property for setting the border brush of the window.
     /// </summary>
     public static readonly DependencyProperty BorderBrushProperty =
-        DependencyProperty.RegisterAttached("BorderBrush", typeof(Brush), typeof(WindowEx), new FrameworkPropertyMetadata(null, OnBorderBrushChanged));
+        DependencyProperty.RegisterAttached("BorderBrush", typeof(Brush), typeof(WindowBehaviour), new FrameworkPropertyMetadata(Brushes.Transparent, OnBorderBrushChanged));
 
     #endregion
 
