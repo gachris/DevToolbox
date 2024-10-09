@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:demo="clr-namespace:DevToolbox.Wpf.Demo"
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
     xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels"
     xmlns:views="clr-namespace:DevToolbox.Wpf.Demo.Views">
 
@@ -48,6 +49,7 @@
                 TextWrapping="WrapWithOverflow" />
             <Border
                 Grid.Row="1"
+                Background="{DynamicResource Example.Background}"
                 BorderBrush="{DynamicResource Example.BorderBrush}"
                 BorderThickness="1"
                 CornerRadius="6">
@@ -56,19 +58,19 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Border
-                        Grid.Row="0"
-                        Background="{DynamicResource Example.Background}"
-                        BorderBrush="{DynamicResource Example.BorderBrush}">
+                    <Border Grid.Row="0" BorderBrush="{DynamicResource Example.BorderBrush}">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <ContentControl Margin="12,28" Content="{Binding View}" />
+                            <ContentControl
+                                Grid.Column="0"
+                                Margin="12,28"
+                                HorizontalAlignment="Left"
+                                Content="{Binding View}" />
                             <Border
-                                Grid.Column="2"
+                                Grid.Column="1"
                                 Margin="1"
                                 Background="{DynamicResource Example.Properties.Background}">
                                 <ItemsControl
@@ -79,7 +81,10 @@
                             </Border>
                         </Grid>
                     </Border>
-                    <views:XamlEditorView Grid.Row="1" SourceCode="{Binding SourceCode}" />
+                    <views:XamlEditorView
+                        Grid.Row="1"
+                        devtoolbox:UIElementHelper.CornerRadius="0,0,6,6"
+                        SourceCode="{Binding SourceCode}" />
                 </Grid>
             </Border>
         </Grid>

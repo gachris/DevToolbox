@@ -3,40 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
     xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels">
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/Button/Generic.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
-    <Style
-        x:Key="Button.BorderlessStyle"
-        BasedOn="{StaticResource ButtonStyle}"
-        TargetType="Button">
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Background" Value="{DynamicResource Button.Borderless.Background}" />
-        <Setter Property="devtoolbox:UIElementHelper.MouseOverBackground" Value="{DynamicResource Button.Borderless.MouseOverBackground}" />
-        <Setter Property="devtoolbox:UIElementHelper.PressedBackground" Value="{DynamicResource Button.Borderless.PressedBackground}" />
-        <Setter Property="devtoolbox:UIElementHelper.DisabledBackground" Value="{DynamicResource Button.Borderless.DisabledBackground}" />
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource FocusVisualStyle}" />
-    </Style>
-
-    <Style
-        x:Key="Button.Primary.BorderlessStyle"
-        BasedOn="{StaticResource Button.BorderlessStyle}"
-        TargetType="Button">
-        <Setter Property="Foreground" Value="{DynamicResource Button.Primary.Foreground}" />
-        <Setter Property="devtoolbox:UIElementHelper.MouseOverForeground" Value="{DynamicResource Button.Primary.MouseOverForeground}" />
-        <Setter Property="devtoolbox:UIElementHelper.PressedForeground" Value="{DynamicResource Button.Primary.PressedForeground}" />
-        <Setter Property="devtoolbox:UIElementHelper.DisabledForeground" Value="{DynamicResource Button.Primary.DisabledForeground}" />
-    </Style>
-
-    <Style
-        x:Key="TextBlock.Regular.Style"
-        BasedOn="{StaticResource ResourceKey={x:Type TextBlock}}"
-        TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{DynamicResource TextBlock.Primary.Foreground}" />
-    </Style>
 
     <devtoolbox:EnumBooleanConverter x:Key="EnumBooleanConverter" />
 

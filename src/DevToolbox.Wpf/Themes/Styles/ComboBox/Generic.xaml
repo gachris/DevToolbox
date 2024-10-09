@@ -4,7 +4,7 @@
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
     xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
 
-    <Style x:Key="ToggleButtonStyle" TargetType="ToggleButton">
+    <Style x:Key="ComboBoxStyle.ToggleButtonStyle" TargetType="ToggleButton">
         <Setter Property="Background" Value="{DynamicResource ComboBox.ToggleButton.Background}" />
         <Setter Property="Foreground" Value="{DynamicResource ComboBox.ToggleButton.Foreground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ComboBox.ToggleButton.BorderBrush}" />
@@ -113,7 +113,7 @@
                                 FocusVisualStyle="{x:Null}"
                                 Focusable="False"
                                 IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                Style="{StaticResource ToggleButtonStyle}">
+                                Style="{StaticResource ComboBoxStyle.ToggleButtonStyle}">
                                 <Grid Margin="{TemplateBinding Padding}">
                                     <ContentPresenter
                                         Name="ContentSite"

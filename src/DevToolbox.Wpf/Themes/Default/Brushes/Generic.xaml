@@ -277,9 +277,6 @@
     <SolidColorBrush x:Key="ToggleButton.DisabledForeground" Color="#838383" />
     <SolidColorBrush x:Key="ToggleButton.DisabledBorderBrush" Color="#ADB2B5" />
 
-    <SolidColorBrush x:Key="ToggleButton.ToolBar.Background" Color="Transparent" />
-    <SolidColorBrush x:Key="ToggleButton.ToolBar.MouseOverBackground" Color="#EEEEF2" />
-
     <!--#endregion-->
 
     <!--#region RepeatButton-->
@@ -374,13 +371,25 @@
 
     <!--#endregion-->
 
+    <!--#region ToolBarTray-->
+
+    <SolidColorBrush x:Key="ToolBarTray.Background" Color="#EEF5FD" />
+
+    <!--#endregion-->
+
     <!--#region ToolBar-->
 
-    <SolidColorBrush x:Key="ToolBar.Background" Color="#EEEEF2" />
-    <SolidColorBrush x:Key="ToolBar.BorderBrush" Color="#CECAC0" />
+    <SolidColorBrush x:Key="ToolBar.Background" Color="#EEF5FD" />
+    <SolidColorBrush x:Key="ToolBar.SubMenuBackground" Color="#EEF5FD" />
+    <SolidColorBrush x:Key="ToolBar.MenuBorderBrush" Color="#B6BDC5" />
     <SolidColorBrush x:Key="ToolBar.DisabledForeground" Color="{DynamicResource {x:Static SystemColors.GrayTextColor}}" />
-    <SolidColorBrush x:Key="ToolBar.ShadowBrush" Color="#71000000" />
-    <SolidColorBrush x:Key="ToolBar.Thumb.IconBrush" Color="#1E1E1E" />
+
+    <SolidColorBrush x:Key="ToolBar.Thumb.Foreground" Color="#000000" />
+
+    <SolidColorBrush x:Key="ToolBar.ToggleButton.Background" Color="#EEF5FD" />
+    <SolidColorBrush x:Key="ToolBar.ToggleButton.Foreground" Color="#000000" />
+    <SolidColorBrush x:Key="ToolBar.ToggleButton.MouseOverBackground" Color="#210080FF" />
+    <SolidColorBrush x:Key="ToolBar.ToggleButton.DisabledForeground" Color="#6D6D6D" />
 
     <!--#endregion-->
 

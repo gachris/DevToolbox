@@ -9,35 +9,34 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid>
-        <devtoolbox:ExpanderEdit
-            Padding="0,12"
-            Background="{DynamicResource XamlEditorView.Background}"
-            Header="Source code"
-            IsExpanded="False">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Separator
-                    Grid.Row="0"
-                    Margin="0,12"
-                    Background="{DynamicResource XamlEditorView.BorderBrush}" />
-                <TextBlock
-                    Grid.Row="1"
-                    Margin="12,0,0,0"
-                    Text="XAML" />
-                <avalonedit:TextEditor
-                    x:Name="textEditor"
-                    Grid.Row="2"
-                    Margin="12,12,0,0"
-                    Background="{DynamicResource XamlEditorView.TextEditor.Background}"
-                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                    SyntaxHighlighting="XML" />
-            </Grid>
-        </devtoolbox:ExpanderEdit>
-    </Grid>
+    <devtoolbox:ExpanderEdit
+        Padding="0,12"
+        devtoolbox:UIElementHelper.CornerRadius="{Binding Path=(devtoolbox:UIElementHelper.CornerRadius), RelativeSource={RelativeSource AncestorType=UserControl}}"
+        Background="{DynamicResource XamlEditorView.Background}"
+        Header="Source code"
+        IsExpanded="False">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Separator
+                Grid.Row="0"
+                Margin="0,12"
+                Background="{DynamicResource XamlEditorView.BorderBrush}" />
+            <TextBlock
+                Grid.Row="1"
+                Margin="12,0,0,0"
+                Text="XAML" />
+            <avalonedit:TextEditor
+                x:Name="textEditor"
+                Grid.Row="2"
+                Margin="12,12,0,0"
+                Background="{DynamicResource XamlEditorView.TextEditor.Background}"
+                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                SyntaxHighlighting="XML" />
+        </Grid>
+    </devtoolbox:ExpanderEdit>
 </UserControl>

@@ -26,6 +26,6 @@
     </Style>
 
     <Style BasedOn="{StaticResource MenuStyle}" TargetType="{x:Type Menu}" />
-    
+
 </ResourceDictionary>
 

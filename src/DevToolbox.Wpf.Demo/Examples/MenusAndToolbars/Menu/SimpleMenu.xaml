@@ -1,28 +1,20 @@
 ﻿<Menu xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
     <MenuItem Header="File">
-        <MenuItem Header="New">
-            <MenuItem Header="Start Window" InputGestureText="Ctrl+N" />
-            <MenuItem Header="Start Window From Svg" InputGestureText="Ctrl+S+N" />
-        </MenuItem>
-        <MenuItem Header="Open">
-            <MenuItem Header="From Svg" InputGestureText="Ctrl+S+O" />
-        </MenuItem>
+        <MenuItem Header="New" ToolTip="Create a new document" />
+        <MenuItem Header="Open" ToolTip="Open an existing document" />
+        <MenuItem Header="Save" ToolTip="Save the current document" />
         <Separator />
-        <MenuItem Header="Save" InputGestureText="Ctrl+S" />
-        <MenuItem Header="Save As.." />
-        <MenuItem Header="Save All" InputGestureText="Ctrl+Shift+S" />
-        <Separator />
-        <MenuItem Header="Print" InputGestureText="Ctrl+P" />
-        <Separator />
-        <MenuItem Header="Close" />
-        <Separator />
-        <MenuItem Header="Exit" InputGestureText="Alt+F4" />
+        <MenuItem Header="Exit" ToolTip="Exit the application" />
     </MenuItem>
-    <MenuItem Header="Tools">
-        <MenuItem Header="Theme">
-            <MenuItem Header="Default" IsChecked="True" />
-            <MenuItem Header="Dark" />
-            <MenuItem Header="Light" />
-        </MenuItem>
+    <MenuItem Header="Edit">
+        <MenuItem Header="Undo" ToolTip="Undo the last action" />
+        <MenuItem Header="Redo" ToolTip="Redo the last undone action" />
+        <Separator />
+        <MenuItem Header="Cut" ToolTip="Cut the selected text" />
+        <MenuItem Header="Copy" ToolTip="Copy the selected text" />
+        <MenuItem Header="Paste" ToolTip="Paste from the clipboard" />
+    </MenuItem>
+    <MenuItem Header="Help">
+        <MenuItem Header="About" ToolTip="About this application" />
     </MenuItem>
 </Menu>

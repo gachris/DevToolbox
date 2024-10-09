@@ -1,50 +1,110 @@
-﻿<ToolBarTray
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    Background="Transparent"
-    Orientation="Horizontal">
+﻿<ToolBarTray xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Orientation="Horizontal">
     <ToolBar>
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
-        <Button Content="Test1" />
+        <Menu VerticalAlignment="Center">
+            <MenuItem Header="File">
+                <MenuItem Header="New" ToolTip="Create a new document" />
+                <MenuItem Header="Open" ToolTip="Open an existing document" />
+                <MenuItem Header="Save" ToolTip="Save the current document" />
+                <Separator />
+                <MenuItem Header="Exit" ToolTip="Exit the application" />
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Undo" ToolTip="Undo the last action" />
+                <MenuItem Header="Redo" ToolTip="Redo the last undone action" />
+                <Separator />
+                <MenuItem Header="Cut" ToolTip="Cut the selected text" />
+                <MenuItem Header="Copy" ToolTip="Copy the selected text" />
+                <MenuItem Header="Paste" ToolTip="Paste from the clipboard" />
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About" ToolTip="About this application" />
+            </MenuItem>
+        </Menu>
+        <Separator />
+        <Button
+            Margin="2"
+            Padding="4,2"
+            Content="New"
+            ToolTip="Create a new document" />
+        <Button
+            Margin="2"
+            Padding="4,2"
+            Content="Open"
+            ToolTip="Open an existing document" />
+        <Button
+            Margin="2"
+            Padding="4,2"
+            Content="Save"
+            ToolTip="Save the current document" />
+    </ToolBar>
+    <ToolBar>
+        <CheckBox
+            Margin="2"
+            Padding="4,2"
+            Content="Enable Feature"
+            ToolTip="Toggle feature" />
+        <Separator />
+        <RadioButton
+            Margin="2"
+            Padding="4,2"
+            Content="Option 1"
+            GroupName="Options"
+            ToolTip="Select option 1" />
+        <RadioButton
+            Margin="2"
+            Padding="4,2"
+            Content="Option 2"
+            GroupName="Options"
+            ToolTip="Select option 2" />
+    </ToolBar>
+    <ToolBar>
+        <ToggleButton
+            Margin="2"
+            Padding="4,2"
+            Content="Bold"
+            ToolTip="Bold text" />
+        <ToggleButton
+            Margin="2"
+            Padding="4,2"
+            Content="Italic"
+            ToolTip="Italic text" />
+        <ToggleButton
+            Margin="2"
+            Padding="4,2"
+            Content="Underline"
+            ToolTip="Underline text" />
+        <Separator />
+        <ComboBox
+            Width="120"
+            Margin="2"
+            Padding="4,2"
+            ToolTip="Font Selection">
+            <ComboBoxItem Content="Arial" />
+            <ComboBoxItem Content="Calibri" />
+            <ComboBoxItem Content="Times New Roman" />
+        </ComboBox>
+        <ComboBox
+            Width="60"
+            Margin="2"
+            Padding="4,2"
+            ToolTip="Font Size">
+            <ComboBoxItem Content="10" />
+            <ComboBoxItem Content="12" />
+            <ComboBoxItem Content="14" />
+            <ComboBoxItem Content="16" />
+        </ComboBox>
+    </ToolBar>
+    <ToolBar>
+        <TextBox
+            Width="75"
+            Margin="2"
+            Padding="4,2"
+            ToolTip="Search or type" />
+        <Separator />
+        <Button
+            Margin="2"
+            Padding="4,2"
+            Content="Help"
+            ToolTip="Help and support" />
     </ToolBar>
 </ToolBarTray>
