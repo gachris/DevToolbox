@@ -36,6 +36,12 @@
             Padding="4,2"
             Content="Save"
             ToolTip="Save the current document" />
+        <Separator />
+        <TextBox
+            Width="75"
+            Margin="2"
+            Padding="4,2"
+            ToolTip="Search or type" />
     </ToolBar>
     <ToolBar>
         <CheckBox
@@ -87,24 +93,12 @@
             Width="60"
             Margin="2"
             Padding="4,2"
+            IsEditable="True"
             ToolTip="Font Size">
             <ComboBoxItem Content="10" />
             <ComboBoxItem Content="12" />
             <ComboBoxItem Content="14" />
             <ComboBoxItem Content="16" />
         </ComboBox>
-    </ToolBar>
-    <ToolBar>
-        <TextBox
-            Width="75"
-            Margin="2"
-            Padding="4,2"
-            ToolTip="Search or type" />
-        <Separator />
-        <Button
-            Margin="2"
-            Padding="4,2"
-            Content="Help"
-            ToolTip="Help and support" />
     </ToolBar>
 </ToolBarTray>

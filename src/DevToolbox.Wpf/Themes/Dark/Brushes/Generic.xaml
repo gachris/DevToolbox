@@ -385,6 +385,13 @@
     <SolidColorBrush x:Key="ToolBar.ToggleButton.MouseOverBackground" Color="#3D3D3D" />
     <SolidColorBrush x:Key="ToolBar.ToggleButton.DisabledForeground" Color="#6D6D6D" />
 
+    <SolidColorBrush x:Key="ToolBar.Control.Background" Color="Transparent" />
+    <SolidColorBrush x:Key="ToolBar.Control.BorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="ToolBar.Control.MouseOverBackground" Color="#3D3D3D" />
+    <SolidColorBrush x:Key="ToolBar.Control.MouseOverBorderBrush" Color="#707070" />
+    <SolidColorBrush x:Key="ToolBar.Control.PressedBackground" Color="#2E2E2E" />
+    <SolidColorBrush x:Key="ToolBar.Control.PressedBorderBrush" Color="#707070" />
+
     <!--#endregion-->
 
     <!--#region WaitingIndicator-->
@@ -497,43 +504,37 @@
 
     <!--#region ComboBox-->
 
-    <SolidColorBrush x:Key="ComboBox.Background" Color="#333337" />
-    <SolidColorBrush x:Key="ComboBox.Foreground" Color="#F1F1F1" />
-    <SolidColorBrush x:Key="ComboBox.BorderBrush" Color="#434346" />
-    <SolidColorBrush x:Key="ComboBox.FocusedBackground" Color="#3F3F46" />
+    <SolidColorBrush x:Key="ComboBox.Background" Color="#383838" />
+    <SolidColorBrush x:Key="ComboBox.Foreground" Color="#FAFAFA" />
+    <SolidColorBrush x:Key="ComboBox.BorderBrush" Color="#424242" />
+    <SolidColorBrush x:Key="ComboBox.FocusedBackground" Color="#3D3D3D" />
     <SolidColorBrush x:Key="ComboBox.FocusedForeground" Color="#F1F1F1" />
-    <SolidColorBrush x:Key="ComboBox.FocusedBorderBrush" Color="#007ACC" />
-    <SolidColorBrush x:Key="ComboBox.MouseOverBackground" Color="#3F3F46" />
-    <SolidColorBrush x:Key="ComboBox.MouseOverForeground" Color="#F1F1F1" />
-    <SolidColorBrush x:Key="ComboBox.MouseOverBorderBrush" Color="#007ACC" />
-    <SolidColorBrush x:Key="ComboBox.DisabledBackground" Color="#2D2D30" />
-    <SolidColorBrush x:Key="ComboBox.DisabledForeground" Color="#4E4E50" />
-    <SolidColorBrush x:Key="ComboBox.DisabledBorderBrush" Color="#434346" />
-    <SolidColorBrush x:Key="ComboBox.PopupBackground" Color="#1B1B1C" />
-    <SolidColorBrush x:Key="ComboBox.PopupForeground" Color="#F1F1F1" />
-    <SolidColorBrush x:Key="ComboBox.PopupBorderBrush" Color="#333337" />
-    <DropShadowEffect
-        x:Key="ComboBox.DropShadow"
-        BlurRadius="4"
-        Direction="315"
-        ShadowDepth="3"
-        Color="#111111" />
+    <SolidColorBrush x:Key="ComboBox.FocusedBorderBrush" Color="#424242" />
+    <SolidColorBrush x:Key="ComboBox.MouseOverBackground" Color="#3D3D3D" />
+    <SolidColorBrush x:Key="ComboBox.MouseOverForeground" Color="#FAFAFA" />
+    <SolidColorBrush x:Key="ComboBox.MouseOverBorderBrush" Color="#424242" />
+    <SolidColorBrush x:Key="ComboBox.DisabledBackground" Color="#333333" />
+    <SolidColorBrush x:Key="ComboBox.DisabledForeground" Color="#808080" />
+    <SolidColorBrush x:Key="ComboBox.DisabledBorderBrush" Color="#3D3D3D" />
+    <SolidColorBrush x:Key="ComboBox.PopupBackground" Color="#2E2E2E" />
+    <SolidColorBrush x:Key="ComboBox.PopupForeground" Color="#FAFAFA" />
+    <SolidColorBrush x:Key="ComboBox.PopupBorderBrush" Color="#424242" />
 
-    <SolidColorBrush x:Key="ComboBox.ToggleButton.Background" Color="#333337" />
-    <SolidColorBrush x:Key="ComboBox.ToggleButton.Foreground" Color="#999999" />
-    <SolidColorBrush x:Key="ComboBox.ToggleButton.BorderBrush" Color="#333337" />
-    <SolidColorBrush x:Key="ComboBox.ToggleButton.FocusedBackground" Color="#1F1F20" />
-    <SolidColorBrush x:Key="ComboBox.ToggleButton.FocusedForeground" Color="#007ACC" />
-    <SolidColorBrush x:Key="ComboBox.ToggleButton.FocusedBorderBrush" Color="#007ACC" />
-    <SolidColorBrush x:Key="ComboBox.ToggleButton.MouseOverBackground" Color="#1F1F20" />
-    <SolidColorBrush x:Key="ComboBox.ToggleButton.MouseOverForeground" Color="#007ACC" />
-    <SolidColorBrush x:Key="ComboBox.ToggleButton.MouseOverBorderBrush" Color="#007ACC" />
-    <SolidColorBrush x:Key="ComboBox.ToggleButton.PressedBackground" Color="#007ACC" />
-    <SolidColorBrush x:Key="ComboBox.ToggleButton.PressedForeground" Color="#F1F1F1" />
-    <SolidColorBrush x:Key="ComboBox.ToggleButton.PressedBorderBrush" Color="#007ACC" />
-    <SolidColorBrush x:Key="ComboBox.ToggleButton.DisabledBackground" Color="#2D2D30" />
-    <SolidColorBrush x:Key="ComboBox.ToggleButton.DisabledForeground" Color="#4E4E50" />
-    <SolidColorBrush x:Key="ComboBox.ToggleButton.DisabledBorderBrush" Color="#2D2D30" />
+    <SolidColorBrush x:Key="ComboBox.ToggleButton.Background" Color="#383838" />
+    <SolidColorBrush x:Key="ComboBox.ToggleButton.Foreground" Color="#FAFAFA" />
+    <SolidColorBrush x:Key="ComboBox.ToggleButton.BorderBrush" Color="#424242" />
+    <SolidColorBrush x:Key="ComboBox.ToggleButton.FocusedBackground" Color="#3D3D3D" />
+    <SolidColorBrush x:Key="ComboBox.ToggleButton.FocusedForeground" Color="#F1F1F1" />
+    <SolidColorBrush x:Key="ComboBox.ToggleButton.FocusedBorderBrush" Color="#424242" />
+    <SolidColorBrush x:Key="ComboBox.ToggleButton.MouseOverBackground" Color="#3D3D3D" />
+    <SolidColorBrush x:Key="ComboBox.ToggleButton.MouseOverForeground" Color="#FAFAFA" />
+    <SolidColorBrush x:Key="ComboBox.ToggleButton.MouseOverBorderBrush" Color="#424242" />
+    <SolidColorBrush x:Key="ComboBox.ToggleButton.PressedBackground" Color="#3D3D3D" />
+    <SolidColorBrush x:Key="ComboBox.ToggleButton.PressedForeground" Color="#FAFAFA" />
+    <SolidColorBrush x:Key="ComboBox.ToggleButton.PressedBorderBrush" Color="#424242" />
+    <SolidColorBrush x:Key="ComboBox.ToggleButton.DisabledBackground" Color="#333333" />
+    <SolidColorBrush x:Key="ComboBox.ToggleButton.DisabledForeground" Color="#808080" />
+    <SolidColorBrush x:Key="ComboBox.ToggleButton.DisabledBorderBrush" Color="#3D3D3D" />
 
     <!--#endregion-->
 

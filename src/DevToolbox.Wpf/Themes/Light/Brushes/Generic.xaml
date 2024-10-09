@@ -385,6 +385,13 @@
     <SolidColorBrush x:Key="ToolBar.ToggleButton.MouseOverBackground" Color="#C9DEF5" />
     <SolidColorBrush x:Key="ToolBar.ToggleButton.DisabledForeground" Color="#CACACD" />
 
+    <SolidColorBrush x:Key="ToolBar.Control.Background" Color="Transparent" />
+    <SolidColorBrush x:Key="ToolBar.Control.BorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="ToolBar.Control.MouseOverBackground" Color="#C9DEF5" />
+    <SolidColorBrush x:Key="ToolBar.Control.MouseOverBorderBrush" Color="#3399FF" />
+    <SolidColorBrush x:Key="ToolBar.Control.PressedBackground" Color="#007ACC" />
+    <SolidColorBrush x:Key="ToolBar.Control.PressedBorderBrush" Color="#007ACC" />
+
     <!--#endregion-->
 
     <!--#region WaitingIndicator-->
@@ -512,12 +519,6 @@
     <SolidColorBrush x:Key="ComboBox.PopupBackground" Color="#F6F6F6" />
     <SolidColorBrush x:Key="ComboBox.PopupForeground" Color="#1E1E1E" />
     <SolidColorBrush x:Key="ComboBox.PopupBorderBrush" Color="#CCCEDB" />
-    <DropShadowEffect
-        x:Key="ComboBox.DropShadow"
-        BlurRadius="4"
-        Direction="315"
-        ShadowDepth="3"
-        Color="#919191" />
 
     <SolidColorBrush x:Key="ComboBox.ToggleButton.Background" Color="#FFFFFF" />
     <SolidColorBrush x:Key="ComboBox.ToggleButton.Foreground" Color="#717171" />
@@ -528,7 +529,7 @@
     <SolidColorBrush x:Key="ComboBox.ToggleButton.MouseOverBackground" Color="#C9DEF5" />
     <SolidColorBrush x:Key="ComboBox.ToggleButton.MouseOverForeground" Color="#1E1E1E" />
     <SolidColorBrush x:Key="ComboBox.ToggleButton.MouseOverBorderBrush" Color="#007ACC" />
-    <SolidColorBrush x:Key="ComboBox.ToggleButton.PressedBackground" Color="#007ACC" />
+    <SolidColorBrush x:Key="ComboBox.ToggleButton.PressedBackground" Color="#FFFFFF" />
     <SolidColorBrush x:Key="ComboBox.ToggleButton.PressedForeground" Color="#1E1E1E" />
     <SolidColorBrush x:Key="ComboBox.ToggleButton.PressedBorderBrush" Color="#007ACC" />
     <SolidColorBrush x:Key="ComboBox.ToggleButton.DisabledBackground" Color="#EEEEF2" />

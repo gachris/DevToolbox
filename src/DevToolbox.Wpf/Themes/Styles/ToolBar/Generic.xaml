@@ -21,12 +21,12 @@
         BasedOn="{StaticResource ButtonStyle}"
         TargetType="Button">
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="#3D3D3D" />
-        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="#707070" />
-        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="#2E2E2E" />
-        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="#707070" />
+        <Setter Property="Background" Value="{DynamicResource ToolBar.Control.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ToolBar.Control.BorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="{DynamicResource ToolBar.Control.MouseOverBackground}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="{DynamicResource ToolBar.Control.MouseOverBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="{DynamicResource ToolBar.Control.PressedBackground}" />
+        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="{DynamicResource ToolBar.Control.PressedBorderBrush}" />
     </Style>
 
     <Style
@@ -34,12 +34,12 @@
         BasedOn="{StaticResource ToggleButtonStyle}"
         TargetType="CheckBox">
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="#3D3D3D" />
-        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="#707070" />
-        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="#2E2E2E" />
-        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="#707070" />
+        <Setter Property="Background" Value="{DynamicResource ToolBar.Control.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ToolBar.Control.BorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="{DynamicResource ToolBar.Control.MouseOverBackground}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="{DynamicResource ToolBar.Control.MouseOverBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="{DynamicResource ToolBar.Control.PressedBackground}" />
+        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="{DynamicResource ToolBar.Control.PressedBorderBrush}" />
     </Style>
 
     <Style
@@ -47,9 +47,6 @@
         BasedOn="{StaticResource MenuStyle}"
         TargetType="Menu">
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" />
-        <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}" />
-        <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
     </Style>
 
@@ -58,12 +55,12 @@
         BasedOn="{StaticResource ToggleButtonStyle}"
         TargetType="RadioButton">
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="#3D3D3D" />
-        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="#707070" />
-        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="#2E2E2E" />
-        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="#707070" />
+        <Setter Property="Background" Value="{DynamicResource ToolBar.Control.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ToolBar.Control.BorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="{DynamicResource ToolBar.Control.MouseOverBackground}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="{DynamicResource ToolBar.Control.MouseOverBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="{DynamicResource ToolBar.Control.PressedBackground}" />
+        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="{DynamicResource ToolBar.Control.PressedBorderBrush}" />
     </Style>
 
     <Style
@@ -78,12 +75,12 @@
         BasedOn="{StaticResource ToggleButtonStyle}"
         TargetType="ToggleButton">
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="#3D3D3D" />
-        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="#707070" />
-        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="#2E2E2E" />
-        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="#707070" />
+        <Setter Property="Background" Value="{DynamicResource ToolBar.Control.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ToolBar.Control.BorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="{DynamicResource ToolBar.Control.MouseOverBackground}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="{DynamicResource ToolBar.Control.MouseOverBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="{DynamicResource ToolBar.Control.PressedBackground}" />
+        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="{DynamicResource ToolBar.Control.PressedBorderBrush}" />
     </Style>
 
     <Style
@@ -92,8 +89,6 @@
         TargetType="ComboBox">
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="BorderBrush" Value="#424242" />
-        <Setter Property="Background" Value="#383838" />
     </Style>
 
     <Style x:Key="ToolBarMainPanelBorderStyle" TargetType="{x:Type Border}">

@@ -253,7 +253,7 @@
     <SolidColorBrush x:Key="Button.MouseOverBackground" Color="#BEE6FD" />
     <SolidColorBrush x:Key="Button.MouseOverForeground" Color="{StaticResource ResourceKey={x:Static SystemColors.ControlTextColorKey}}" />
     <SolidColorBrush x:Key="Button.MouseOverBorderBrush" Color="#3C7FB1" />
-    <SolidColorBrush x:Key="Button.PressedBackground" Color="#FFC4E5F6" />
+    <SolidColorBrush x:Key="Button.PressedBackground" Color="#C4E5F6" />
     <SolidColorBrush x:Key="Button.PressedForeground" Color="{StaticResource ResourceKey={x:Static SystemColors.ControlTextColorKey}}" />
     <SolidColorBrush x:Key="Button.PressedBorderBrush" Color="#2C628B" />
     <SolidColorBrush x:Key="Button.DisabledBackground" Color="#F4F4F4" />
@@ -391,6 +391,13 @@
     <SolidColorBrush x:Key="ToolBar.ToggleButton.MouseOverBackground" Color="#210080FF" />
     <SolidColorBrush x:Key="ToolBar.ToggleButton.DisabledForeground" Color="#6D6D6D" />
 
+    <SolidColorBrush x:Key="ToolBar.Control.Background" Color="Transparent" />
+    <SolidColorBrush x:Key="ToolBar.Control.BorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="ToolBar.Control.MouseOverBackground" Color="#BEE6FD" />
+    <SolidColorBrush x:Key="ToolBar.Control.MouseOverBorderBrush" Color="#3C7FB1" />
+    <SolidColorBrush x:Key="ToolBar.Control.PressedBackground" Color="#C4E5F6" />
+    <SolidColorBrush x:Key="ToolBar.Control.PressedBorderBrush" Color="#2C628B" />
+
     <!--#endregion-->
 
     <!--#region WaitingIndicator-->
@@ -518,12 +525,6 @@
     <SolidColorBrush x:Key="ComboBox.PopupBackground" Color="#FFFFFF" />
     <SolidColorBrush x:Key="ComboBox.PopupForeground" Color="#000000" />
     <SolidColorBrush x:Key="ComboBox.PopupBorderBrush" Color="#CCCEDB" />
-    <DropShadowEffect
-        x:Key="ComboBox.DropShadow"
-        BlurRadius="4"
-        Direction="315"
-        ShadowDepth="3"
-        Color="#919191" />
 
     <SolidColorBrush x:Key="ComboBox.ToggleButton.Background" Color="#FFFFFF" />
     <SolidColorBrush x:Key="ComboBox.ToggleButton.Foreground" Color="#000000" />
