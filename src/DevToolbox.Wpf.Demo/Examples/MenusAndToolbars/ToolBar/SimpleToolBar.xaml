@@ -35,6 +35,7 @@
             Margin="2"
             Padding="4,2"
             Content="Save"
+            IsEnabled="False"
             ToolTip="Save the current document" />
         <Separator />
         <TextBox

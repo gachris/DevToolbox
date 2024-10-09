@@ -79,7 +79,6 @@
     </ControlTemplate>
 
     <Style x:Key="DatePickerStyle" TargetType="{x:Type DatePicker}">
-        <Setter Property="FontFamily" Value="{DynamicResource SFUIText_Light}" />
         <Setter Property="Background" Value="{DynamicResource DatePicker.Background}" />
         <Setter Property="Foreground" Value="{DynamicResource DatePicker.Foreground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource DatePicker.BorderBrush}" />
@@ -127,6 +126,7 @@
                                     Background="Transparent"
                                     BorderThickness="0"
                                     Focusable="{TemplateBinding Focusable}"
+                                    Foreground="{TemplateBinding Foreground}"
                                     IsReadOnly="True" />
                                 <Button
                                     x:Name="PART_Button"

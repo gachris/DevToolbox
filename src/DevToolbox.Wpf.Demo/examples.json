@@ -170,7 +170,13 @@
         "Header": "Calendar",
         "Description": "A control that presents a calendar for a user to choose a date from.",
         "Icon": "Calendar",
-        "Namespace": "System.Windows.Controls"
+        "Namespace": "System.Windows.Controls",
+        "Examples": [
+          {
+            "Header": "A simple Calendar.",
+            "SourceCode": "\\Examples\\DateAndTime\\Calendar\\SimpleCalendar.xaml"
+          }
+        ]
       },
       {
         "Header": "DatePicker",
@@ -257,7 +263,13 @@
         "Header": "TabControlEdit",
         "Description": "A control that allows displays a collection of tabs that can be used to display several documents.",
         "Icon": "NavigationApp",
-        "Namespace": "DevToolbox.Wpf.Controls"
+        "Namespace": "DevToolbox.Wpf.Controls",
+        "Examples": [
+          {
+            "Header": "A simple TabControl.",
+            "SourceCode": "\\Examples\\Navigation\\TabControlEdit\\SimpleTabControlEdit.xaml"
+          }
+        ]
       }
     ]
   },
@@ -268,7 +280,13 @@
         "Header": "ScrollViewer",
         "Description": "A container control that lets the user to pan its content.",
         "Icon": "ImageScrollViewer",
-        "Namespace": "System.Windows.Controls"
+        "Namespace": "System.Windows.Controls",
+        "Examples": [
+          {
+            "Header": "A simple ScrollViewer.",
+            "SourceCode": "\\Examples\\Scrolling\\ScrollViewer\\SimpleScrollViewer.xaml"
+          }
+        ]
       }
     ]
   },
@@ -279,13 +297,25 @@
         "Header": "ProgressRing",
         "Description": "A control that indicates an ongoing operation with an animation.",
         "Icon": "Loading",
-        "Namespace": "DevToolbox.Wpf.Controls"
+        "Namespace": "DevToolbox.Wpf.Controls",
+        "Examples": [
+          {
+            "Header": "A simple ProgressRing.",
+            "SourceCode": "\\Examples\\StatusAndInfo\\ProgressRing\\SimpleProgressRing.xaml"
+          }
+        ]
       },
       {
         "Header": "WaitingIndicator",
         "Description": "A control that displays a visual indicator to convey that the application is waiting or processing.",
         "Icon": "Hourglass",
-        "Namespace": "DevToolbox.Wpf.Controls"
+        "Namespace": "DevToolbox.Wpf.Controls",
+        "Examples": [
+          {
+            "Header": "A simple WaitingIndicator.",
+            "SourceCode": "\\Examples\\StatusAndInfo\\WaitingIndicator\\SimpleWaitingIndicator.xaml"
+          }
+        ]
       }
     ]
   },
@@ -313,25 +343,49 @@
         "Header": "NumberBox",
         "Description": "A text control used for numeric input and evaluation of algebraic equations.",
         "Icon": "NumericListBox",
-        "Namespace": "DevToolbox.Wpf.Controls"
+        "Namespace": "DevToolbox.Wpf.Controls",
+        "Examples": [
+          {
+            "Header": "A simple TextBox.",
+            "SourceCode": "\\Examples\\Text\\NumberBox\\SimpleNumberBox.xaml"
+          }
+        ]
       },
       {
         "Header": "EditBox",
         "Description": "A control that lets a user edit labels.",
         "Icon": "TextBox",
-        "Namespace": "DevToolbox.Wpf.Controls"
+        "Namespace": "DevToolbox.Wpf.Controls",
+        "Examples": [
+          {
+            "Header": "A simple TextBox.",
+            "SourceCode": "\\Examples\\Text\\EditBox\\SimpleEditBox.xaml"
+          }
+        ]
       },
       {
         "Header": "PasswordBox",
         "Description": "A control for entering passwords.",
         "Icon": "PasswordBox",
-        "Namespace": "System.Windows.Controls"
+        "Namespace": "System.Windows.Controls",
+        "Examples": [
+          {
+            "Header": "A simple TextBox.",
+            "SourceCode": "\\Examples\\Text\\PasswordBox\\SimplePasswordBox.xaml"
+          }
+        ]
       },
       {
         "Header": "TextBox",
         "Description": "A single-line or multi-line plain text field.",
         "Icon": "TextBox",
-        "Namespace": "System.Windows.Controls"
+        "Namespace": "System.Windows.Controls",
+        "Examples": [
+          {
+            "Header": "A simple TextBox.",
+            "SourceCode": "\\Examples\\Text\\TextBox\\SimpleTextBox.xaml"
+          }
+        ]
       }
     ]
   },

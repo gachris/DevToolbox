@@ -1,1 +1,1 @@
-﻿<DatePicker xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+﻿<DatePicker xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Width="100" />

@@ -13,6 +13,7 @@
             BorderThickness="1"
             CornerRadius="8,0,0,0">
             <ScrollViewer
+                Background="Transparent"
                 Focusable="False"
                 HorizontalScrollBarVisibility="Disabled"
                 VerticalScrollBarVisibility="Auto">

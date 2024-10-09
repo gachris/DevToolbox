@@ -391,6 +391,8 @@
     <SolidColorBrush x:Key="ToolBar.Control.MouseOverBorderBrush" Color="#707070" />
     <SolidColorBrush x:Key="ToolBar.Control.PressedBackground" Color="#2E2E2E" />
     <SolidColorBrush x:Key="ToolBar.Control.PressedBorderBrush" Color="#707070" />
+    <SolidColorBrush x:Key="ToolBar.Control.DisabledBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="ToolBar.Control.DisabledBorderBrush" Color="Transparent" />
 
     <!--#endregion-->
 
