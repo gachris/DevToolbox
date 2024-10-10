@@ -14,9 +14,9 @@
                         BorderThickness="{TemplateBinding BorderThickness}">
                         <DockPanel x:Name="PART_DockPanel" LastChildFill="True">
                             <ContentPresenter
-                                x:Name="PART_SliderControl"
+                                x:Name="PART_Pane"
                                 Panel.ZIndex="1"
-                                ContentSource="SliderControl" />
+                                ContentSource="Pane" />
                             <ContentPresenter
                                 x:Name="PART_Content"
                                 Panel.ZIndex="0"
@@ -25,22 +25,22 @@
                         </DockPanel>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding SliderControl.Dock, RelativeSource={RelativeSource Mode=Self}}" Value="Right">
-                            <Setter TargetName="PART_SliderControl" Property="DockPanel.Dock" Value="Right" />
+                        <Trigger Property="Dock" Value="Right">
+                            <Setter TargetName="PART_Pane" Property="DockPanel.Dock" Value="Right" />
                             <Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Left" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding SliderControl.Dock, RelativeSource={RelativeSource Mode=Self}}" Value="Left">
-                            <Setter TargetName="PART_SliderControl" Property="DockPanel.Dock" Value="Left" />
+                        </Trigger>
+                        <Trigger Property="Dock" Value="Left">
+                            <Setter TargetName="PART_Pane" Property="DockPanel.Dock" Value="Left" />
                             <Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Right" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding SliderControl.Dock, RelativeSource={RelativeSource Mode=Self}}" Value="Top">
-                            <Setter TargetName="PART_SliderControl" Property="DockPanel.Dock" Value="Top" />
+                        </Trigger>
+                        <Trigger Property="Dock" Value="Top">
+                            <Setter TargetName="PART_Pane" Property="DockPanel.Dock" Value="Top" />
                             <Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Bottom" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding SliderControl.Dock, RelativeSource={RelativeSource Mode=Self}}" Value="Bottom">
-                            <Setter TargetName="PART_SliderControl" Property="DockPanel.Dock" Value="Bottom" />
+                        </Trigger>
+                        <Trigger Property="Dock" Value="Bottom">
+                            <Setter TargetName="PART_Pane" Property="DockPanel.Dock" Value="Bottom" />
                             <Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Top" />
-                        </DataTrigger>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

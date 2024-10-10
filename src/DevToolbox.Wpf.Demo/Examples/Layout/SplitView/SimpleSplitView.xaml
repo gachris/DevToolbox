@@ -7,46 +7,47 @@
     xmlns:system="clr-namespace:System;assembly=netstandard"
     d:Width="800"
     mc:Ignorable="d">
-    <ScrollViewer>
-        <StackPanel UseLayoutRounding="True">
-            <devtoolbox:SplitView>
-                <devtoolbox:SplitView.SliderControl>
-                    <devtoolbox:SliderControl
-                        x:Name="_slide"
-                        AutoHide="True"
-                        Dock="Right" />
-                </devtoolbox:SplitView.SliderControl>
-                <Grid HorizontalAlignment="Stretch">
-                    <StackPanel
-                        Margin="50"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Top"
-                        Background="Transparent">
-                        <TextBlock Margin="0,8,0,0" Text="Expand Size:" />
-                        <devtoolbox:NumberBox
-                            Maximum="1000"
-                            Minimum="320"
-                            Value="{Binding Path=ExpandSize, ElementName=_slide, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                        <TextBlock Margin="0,8,0,0" Text="Dock:" />
-                        <ComboBox Height="24" SelectedItem="{Binding Path=Dock, ElementName=_slide, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                            <Dock>Left</Dock>
-                            <Dock>Top</Dock>
-                            <Dock>Right</Dock>
-                            <Dock>Bottom</Dock>
-                        </ComboBox>
-                        <TextBlock Margin="0,8,0,0" Text="Auto Hide:" />
-                        <ComboBox Height="24" SelectedItem="{Binding Path=AutoHide, ElementName=_slide, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                            <system:Boolean>False</system:Boolean>
-                            <system:Boolean>True</system:Boolean>
-                        </ComboBox>
-                        <CheckBox
-                            Margin="0,8,0,0"
-                            Content="Is Expanded:"
-                            IsChecked="{Binding ElementName=_slide, Path=IsExpanded}" />
-                    </StackPanel>
-                </Grid>
-            </devtoolbox:SplitView>
-
+    <Grid HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <devtoolbox:SplitView x:Name="splitView" Grid.Column="0">
+            <devtoolbox:SplitView.Pane>
+                <Border Background="Red">
+                    <TextBlock Text="Lorem Ipsum" />
+                </Border>
+            </devtoolbox:SplitView.Pane>
+            <Border Background="Green">
+                <TextBlock Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vestibulum orci at ipsum tincidunt egestas. Sed non metus a magna malesuada tincidunt. Curabitur condimentum libero sapien. Nullam suscipit sed mauris sit amet ornare. Nullam et eros at arcu tristique consequat in vitae velit. Proin dapibus venenatis dolor, nec dignissim orci semper et. Sed libero arcu, ultrices ac hendrerit a, luctus at ipsum. Etiam aliquam est justo, ut sodales purus imperdiet in. Proin ut volutpat purus. Donec porta diam vel est venenatis, sit amet accumsan nunc posuere. In sit amet lectus id dui maximus rhoncus" TextWrapping="Wrap" />
+            </Border>
+        </devtoolbox:SplitView>
+        <StackPanel
+            Grid.Column="1"
+            Margin="50"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top">
+            <TextBlock Margin="0,8,0,0" Text="Expand Size:" />
+            <devtoolbox:NumberBox
+                Maximum="500"
+                Minimum="100"
+                Value="{Binding Path=ExpandSize, ElementName=splitView, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <TextBlock Margin="0,8,0,0" Text="Dock:" />
+            <ComboBox Height="24" SelectedItem="{Binding Path=Dock, ElementName=splitView, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <Dock>Left</Dock>
+                <Dock>Top</Dock>
+                <Dock>Right</Dock>
+                <Dock>Bottom</Dock>
+            </ComboBox>
+            <TextBlock Margin="0,8,0,0" Text="Auto Hide:" />
+            <ComboBox Height="24" SelectedItem="{Binding Path=AutoHide, ElementName=splitView, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <system:Boolean>False</system:Boolean>
+                <system:Boolean>True</system:Boolean>
+            </ComboBox>
+            <CheckBox
+                Margin="0,8,0,0"
+                Content="Is Expanded:"
+                IsChecked="{Binding ElementName=splitView, Path=IsExpanded}" />
         </StackPanel>
-    </ScrollViewer>
+    </Grid>
 </UserControl>
