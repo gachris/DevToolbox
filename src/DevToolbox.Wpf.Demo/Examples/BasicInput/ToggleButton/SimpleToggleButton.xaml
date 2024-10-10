@@ -3,4 +3,4 @@
     xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
     Padding="8,4"
     devtoolbox:UIElementHelper.CornerRadius="4"
-    Content="Standard XAML button" />
+    Content="Standard XAML toggle button" />

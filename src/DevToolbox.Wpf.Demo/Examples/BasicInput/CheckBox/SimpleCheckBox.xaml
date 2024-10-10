@@ -1,4 +1,4 @@
 ﻿<CheckBox
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     Padding="8,0"
-    Content="Standard XAML CheckBox" />
+    Content="Standard XAML checkbox" />

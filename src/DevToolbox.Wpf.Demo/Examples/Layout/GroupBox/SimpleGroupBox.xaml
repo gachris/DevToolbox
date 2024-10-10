@@ -1,4 +1,6 @@
-﻿<GroupBox
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    Content="This is the content"
-    Header="This text is in the header" />
+﻿<GroupBox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Header="Lorem Ipsum">
+    <TextBlock
+        Margin="4"
+        Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vestibulum orci at ipsum tincidunt egestas. Sed non metus a magna malesuada tincidunt. Curabitur condimentum libero sapien. Nullam suscipit sed mauris sit amet ornare. Nullam et eros at arcu tristique consequat in vitae velit. Proin dapibus venenatis dolor, nec dignissim orci semper et. Sed libero arcu, ultrices ac hendrerit a, luctus at ipsum. Etiam aliquam est justo, ut sodales purus imperdiet in."
+        TextWrapping="Wrap" />
+</GroupBox>
