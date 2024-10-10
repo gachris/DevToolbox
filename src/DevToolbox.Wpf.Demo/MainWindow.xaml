@@ -26,9 +26,13 @@
                 <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/ExampleView.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/PropertyView.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/SettingsView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/TreeViewItem/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Style x:Key="TreeViewItemStyle" TargetType="devtoolbox:TreeViewItemEdit">
+            <Style
+                x:Key="TreeViewItemStyle"
+                BasedOn="{StaticResource ResourceKey={x:Type TreeViewItem}}"
+                TargetType="TreeViewItem">
                 <Setter Property="IsSelected" Value="{Binding IsSelected}" />
                 <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True" />
                 <Setter Property="devtoolbox:UIElementHelper.CornerRadius" Value="4" />
@@ -57,7 +61,7 @@
                         devtoolbox:UIElementHelper.CornerRadius="4"
                         devtoolbox:UIElementHelper.Placeholder="Search"
                         FontSize="16" />
-                    <devtoolbox:TreeViewEdit
+                    <TreeView
                         x:Name="TreeView"
                         Grid.Row="1"
                         Grid.Column="0"
@@ -70,7 +74,7 @@
                         <e:Interaction.Behaviors>
                             <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
                         </e:Interaction.Behaviors>
-                        <devtoolbox:TreeViewEdit.Resources>
+                        <TreeView.Resources>
                             <ResourceDictionary>
                                 <HierarchicalDataTemplate DataType="{x:Type viewModels:ExampleGategory}" ItemsSource="{Binding SubCategories}">
                                     <StackPanel Orientation="Horizontal">
@@ -83,8 +87,8 @@
                                     </StackPanel>
                                 </HierarchicalDataTemplate>
                             </ResourceDictionary>
-                        </devtoolbox:TreeViewEdit.Resources>
-                    </devtoolbox:TreeViewEdit>
+                        </TreeView.Resources>
+                    </TreeView>
                     <ContentControl
                         x:Name="mainContent"
                         Grid.Row="0"

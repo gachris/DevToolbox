@@ -44,7 +44,6 @@
         <Setter Property="Background" Value="{DynamicResource ExpanderEdit.Background}" />
         <Setter Property="Foreground" Value="{DynamicResource ExpanderEdit.Foreground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ExpanderEdit.BorderBrush}" />
-        <Setter Property="ToggleButtonStyle" Value="{StaticResource ExpanderEdit.ToggleButtonStyle}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ExpanderEdit}">
@@ -75,7 +74,7 @@
                                     Background="Transparent"
                                     BorderThickness="0"
                                     IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:ExpanderEdit}}"
-                                    Style="{TemplateBinding ToggleButtonStyle}" />
+                                    Style="{StaticResource ExpanderEdit.ToggleButtonStyle}" />
                                 <ContentPresenter
                                     x:Name="PART_HeaderSite"
                                     Grid.Column="1"

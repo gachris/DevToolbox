@@ -150,14 +150,14 @@
     "Header": "Collections",
     "SubCategories": [
       {
-        "Header": "TreeViewEdit",
-        "Description": "The TreeViewEdit control is hierarchical list pattern with expanding and collapsing nodes that contain nested items.",
+        "Header": "TreeView",
+        "Description": "The TreeView control is hierarchical list pattern with expanding and collapsing nodes that contain nested items.",
         "Icon": "DirectLinkList",
         "Namespace": "DevToolbox.Wpf.Controls",
         "Examples": [
           {
-            "Header": "A simple TreeViewEdit.",
-            "SourceCode": "\\Examples\\Collections\\TreeViewEdit\\SimpleTreeViewEdit.xaml"
+            "Header": "A simple TreeView.",
+            "SourceCode": "\\Examples\\Collections\\TreeView\\SimpleTreeView.xaml"
           }
         ]
       }
@@ -199,25 +199,49 @@
         "Header": "ExpanderEdit",
         "Description": "A container with a header that can be expanded to show body with more content.",
         "Icon": "Expander",
-        "Namespace": "DevToolbox.Wpf.Controls"
+        "Namespace": "DevToolbox.Wpf.Controls",
+        "Examples": [
+          {
+            "Header": "A simple ExpanderEdit.",
+            "SourceCode": "\\Examples\\Layout\\ExpanderEdit\\SimpleExpanderEdit.xaml"
+          }
+        ]
       },
       {
         "Header": "GroupBox",
         "Description": "A container for grouping related controls under a common heading.",
         "Icon": "GroupBox",
-        "Namespace": "System.Windows.Controls"
+        "Namespace": "System.Windows.Controls",
+        "Examples": [
+          {
+            "Header": "A simple GroupBox.",
+            "SourceCode": "\\Examples\\Layout\\GroupBox\\SimpleGroupBox.xaml"
+          }
+        ]
       },
       {
         "Header": "SliderPanel",
         "Description": "A panel that includes both visible content and collapsible content, providing a way to toggle visibility.",
         "Icon": "CollapsiblePanel",
-        "Namespace": "DevToolbox.Wpf.Controls"
+        "Namespace": "DevToolbox.Wpf.Controls",
+        "Examples": [
+          {
+            "Header": "A simple SliderPanel.",
+            "SourceCode": "\\Examples\\Layout\\SliderPanel\\SimpleSliderPanel.xaml"
+          }
+        ]
       },
       {
         "Header": "SpeechBalloon",
         "Description": "A control that simulates a speech balloon, typically used to display contextual information or messages in a visually appealing manner.",
         "Icon": "Comment",
-        "Namespace": "DevToolbox.Wpf.Controls"
+        "Namespace": "DevToolbox.Wpf.Controls",
+        "Examples": [
+          {
+            "Header": "A simple SpeechBalloon.",
+            "SourceCode": "\\Examples\\Layout\\SpeechBalloon\\SimpleSpeechBalloon.xaml"
+          }
+        ]
       }
     ]
   },

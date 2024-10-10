@@ -17,5 +17,7 @@
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TextBox/Generic.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ToggleButton/Generic.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ToolBar/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TreeView/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TreeViewItem/Generic.xaml}" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

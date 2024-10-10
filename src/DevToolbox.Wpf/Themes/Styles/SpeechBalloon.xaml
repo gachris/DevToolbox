@@ -1,8 +1,8 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters"
-    xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls">
+    xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
+    xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters">
 
     <converters:SpeechBalloonOffsetConverter x:Key="SpeechBalloonOffsetConverter" />
 
@@ -18,7 +18,7 @@
                 Data="M 11 20 L 11 0 L 0 10 Z"
                 Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:SpeechBalloon}, Path=Background}"
                 SnapsToDevicePixels="True"
-                Stroke="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:SpeechBalloon}, Path=Background}"
+                Stroke="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:SpeechBalloon}, Path=BorderBrush}"
                 StrokeThickness="1" />
             <Border
                 Grid.Column="1"
@@ -53,7 +53,7 @@
                 Data="M 0 20 L 0 0 L 11 10 Z"
                 Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:SpeechBalloon}, Path=Background}"
                 SnapsToDevicePixels="True"
-                Stroke="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:SpeechBalloon}, Path=Background}"
+                Stroke="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:SpeechBalloon}, Path=BorderBrush}"
                 StrokeThickness="1" />
         </Grid>
     </DataTemplate>
@@ -70,7 +70,7 @@
                 Data="M 20 11 L 0 11 L 10 0 Z"
                 Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:SpeechBalloon}, Path=Background}"
                 SnapsToDevicePixels="True"
-                Stroke="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:SpeechBalloon}, Path=Background}"
+                Stroke="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:SpeechBalloon}, Path=BorderBrush}"
                 StrokeThickness="1" />
             <Border
                 Grid.Row="1"
@@ -103,7 +103,7 @@
                 Panel.ZIndex="0"
                 Data="M 20 0 L 0 0 L 10 11 Z"
                 Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:SpeechBalloon}, Path=Background}"
-                Stroke="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:SpeechBalloon}, Path=Background}"
+                Stroke="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:SpeechBalloon}, Path=BorderBrush}"
                 StrokeThickness="1" />
         </Grid>
     </DataTemplate>

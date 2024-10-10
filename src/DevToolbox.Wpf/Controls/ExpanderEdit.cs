@@ -24,12 +24,6 @@ public partial class ExpanderEdit : Expander
     public static readonly DependencyProperty ExpanderMouseEventTypeProperty =
         DependencyProperty.Register("ExpanderMouseEventType", typeof(ExpanderMouseEventType), typeof(ExpanderEdit), new PropertyMetadata(default(ExpanderMouseEventType)));
 
-    /// <summary>
-    /// DependencyProperty for defining the style of the toggle button in the Expander.
-    /// </summary>
-    public static readonly DependencyProperty ToggleButtonStyleProperty =
-        DependencyProperty.Register("ToggleButtonStyle", typeof(Style), typeof(ExpanderEdit), new PropertyMetadata(null));
-
     #endregion
 
     #region Properties
@@ -41,15 +35,6 @@ public partial class ExpanderEdit : Expander
     {
         get => (ExpanderMouseEventType)GetValue(ExpanderMouseEventTypeProperty);
         set => SetValue(ExpanderMouseEventTypeProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the style for the toggle button within the Expander.
-    /// </summary>
-    public Style ToggleButtonStyle
-    {
-        get => (Style)GetValue(ToggleButtonStyleProperty);
-        set => SetValue(ToggleButtonStyleProperty, value);
     }
 
     #endregion

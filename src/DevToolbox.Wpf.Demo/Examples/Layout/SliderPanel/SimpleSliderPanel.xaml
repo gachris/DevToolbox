@@ -1,5 +1,4 @@
 ﻿<UserControl
-    x:Class="DevToolbox.Wpf.Demo.Views.ControlsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,11 +13,8 @@
                 <devtoolbox:SliderPanel.SliderControl>
                     <devtoolbox:SliderControl
                         x:Name="_slide"
-                        Grid.Row="0"
-                        Grid.Column="0"
                         AutoHide="True"
-                        Dock="Right"
-                        IsExpanded="{Binding IsEx}" />
+                        Dock="Right" />
                 </devtoolbox:SliderPanel.SliderControl>
                 <Grid HorizontalAlignment="Stretch">
                     <StackPanel
@@ -28,8 +24,8 @@
                         Background="Transparent">
                         <TextBlock Margin="0,8,0,0" Text="Expand Size:" />
                         <devtoolbox:NumberBox
-                            MaxValue="1000"
-                            MinValue="320"
+                            Maximum="1000"
+                            Minimum="320"
                             Value="{Binding Path=ExpandSize, ElementName=_slide, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                         <TextBlock Margin="0,8,0,0" Text="Dock:" />
                         <ComboBox Height="24" SelectedItem="{Binding Path=Dock, ElementName=_slide, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
@@ -43,11 +39,10 @@
                             <system:Boolean>False</system:Boolean>
                             <system:Boolean>True</system:Boolean>
                         </ComboBox>
-                        <TextBlock Margin="0,8,0,0" Text="Is Expanded:" />
-                        <ComboBox Height="24" SelectedItem="{Binding IsEx}">
-                            <system:Boolean>False</system:Boolean>
-                            <system:Boolean>True</system:Boolean>
-                        </ComboBox>
+                        <CheckBox
+                            Margin="0,8,0,0"
+                            Content="Is Expanded:"
+                            IsChecked="{Binding ElementName=_slide, Path=IsExpanded}" />
                     </StackPanel>
                 </Grid>
             </devtoolbox:SliderPanel>

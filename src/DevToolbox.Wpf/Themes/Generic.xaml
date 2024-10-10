@@ -46,8 +46,6 @@
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/SpeechBalloon.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TabControlEdit.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TabItemEdit.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TreeViewEdit.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TreeViewItemEdit.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/WaitingIndicator.xaml}" />
     </ResourceDictionary.MergedDictionaries>
 
