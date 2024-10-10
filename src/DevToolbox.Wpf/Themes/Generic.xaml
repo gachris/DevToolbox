@@ -35,6 +35,8 @@
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TabsWindow.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/SliderWindow.xaml}" />
 
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ColorPicker.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ColorComponents.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/DropDown.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/EditBox.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ExpanderEdit.xaml}" />
@@ -47,6 +49,7 @@
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TabControlEdit.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TabItemEdit.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/WaitingIndicator.xaml}" />
+
     </ResourceDictionary.MergedDictionaries>
 
     <FontFamily x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type controls:FontGlyph}, ResourceId=FontFamilyKey}">

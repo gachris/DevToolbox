@@ -1,0 +1,307 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
+    xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters"
+    xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
+
+    <converters:ContrastColorByBrightnessConverter x:Key="ContrastColorByBrightnessConverter" />
+    <converters:DoubleToBytesConverter x:Key="DoubleToBytesConverter" />
+
+    <ControlTemplate x:Key="SliderRepeatButtonTemplate" TargetType="{x:Type RepeatButton}">
+        <Border Background="Transparent" />
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="SliderThumbTemplate" TargetType="{x:Type Thumb}">
+        <Canvas SnapsToDevicePixels="true">
+            <controls:FontGlyph
+                Code="{x:Static controls:Symbol.GlyphLeft}"
+                FontSize="16"
+                Foreground="{DynamicResource ColorPicker.GlyphBrush}">
+                <controls:FontGlyph.RenderTransform>
+                    <TransformGroup>
+                        <TransformGroup.Children>
+                            <TransformCollection>
+                                <RotateTransform Angle="360" />
+                                <TranslateTransform X="15" Y="-8" />
+                            </TransformCollection>
+                        </TransformGroup.Children>
+                    </TransformGroup>
+                </controls:FontGlyph.RenderTransform>
+            </controls:FontGlyph>
+            <controls:FontGlyph
+                Code="{x:Static controls:Symbol.GlyphLeft}"
+                FontSize="16"
+                Foreground="{DynamicResource ColorPicker.GlyphBrush}">
+                <controls:FontGlyph.RenderTransform>
+                    <TransformGroup>
+                        <TransformGroup.Children>
+                            <TransformCollection>
+                                <RotateTransform Angle="180" />
+                                <TranslateTransform X="5" Y="8" />
+                            </TransformCollection>
+                        </TransformGroup.Children>
+                    </TransformGroup>
+                </controls:FontGlyph.RenderTransform>
+            </controls:FontGlyph>
+        </Canvas>
+    </ControlTemplate>
+
+    <Style x:Key="Slider" TargetType="{x:Type Slider}">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Slider}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" MinWidth="{TemplateBinding Width}" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TickBar
+                            x:Name="TopTick"
+                            Width="4"
+                            Fill="{TemplateBinding Foreground}"
+                            Placement="Left"
+                            SnapsToDevicePixels="True"
+                            Visibility="Collapsed" />
+                        <Border
+                            x:Name="TrackBackground"
+                            Grid.Column="1"
+                            Margin="0"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1" />
+                        <Track x:Name="PART_Track" Grid.Column="1">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="Slider.DecreaseLarge" Template="{StaticResource SliderRepeatButtonTemplate}" />
+                            </Track.DecreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb Template="{StaticResource SliderThumbTemplate}" />
+                            </Track.Thumb>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="Slider.IncreaseLarge" Template="{StaticResource SliderRepeatButtonTemplate}" />
+                            </Track.IncreaseRepeatButton>
+                        </Track>
+                        <TickBar
+                            x:Name="BottomTick"
+                            Grid.Column="2"
+                            Width="4"
+                            Fill="{TemplateBinding Foreground}"
+                            Placement="Right"
+                            SnapsToDevicePixels="True"
+                            Visibility="Collapsed" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="TickPlacement" Value="TopLeft">
+                            <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="TickPlacement" Value="BottomRight">
+                            <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="TickPlacement" Value="Both">
+                            <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <DrawingGroup x:Key="CheckerBoard">
+        <GeometryDrawing Brush="White">
+            <GeometryDrawing.Geometry>
+                <RectangleGeometry Rect="0,0,10,10" />
+            </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+            <GeometryDrawing.Geometry>
+                <GeometryGroup>
+                    <RectangleGeometry Rect="0,0,5,5" />
+                    <RectangleGeometry Rect="5,5,5,5" />
+                </GeometryGroup>
+            </GeometryDrawing.Geometry>
+            <GeometryDrawing.Brush>
+                <SolidColorBrush Color="#d7d7d7" />
+            </GeometryDrawing.Brush>
+        </GeometryDrawing>
+    </DrawingGroup>
+
+    <DrawingBrush
+        x:Key="CheckerBoard_05x05"
+        Drawing="{StaticResource CheckerBoard}"
+        Stretch="Fill"
+        TileMode="Tile"
+        Viewport="0.0,0.0,0.5,0.05" />
+
+    <DrawingBrush
+        x:Key="CheckerBoard_025x025"
+        Drawing="{StaticResource CheckerBoard}"
+        Stretch="Fill"
+        TileMode="Tile"
+        Viewport="0.0,0.0,0.25,0.25" />
+
+    <Style TargetType="{x:Type controls:ColorPicker}">
+        <Setter Property="Background" Value="{DynamicResource ColorPicker.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ColorPicker.BorderBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ColorPicker.Foreground}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:ColorPicker}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border
+                                Grid.Column="0"
+                                Width="258"
+                                Height="258"
+                                BorderBrush="{DynamicResource ColorPicker.PaneBorderBrush}"
+                                BorderThickness="1"
+                                SnapsToDevicePixels="True">
+                                <ContentControl
+                                    x:Name="PART_ColorCanvas"
+                                    Width="256"
+                                    Height="256"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    ClipToBounds="True"
+                                    SnapsToDevicePixels="True">
+                                    <ContentControl.Template>
+                                        <ControlTemplate TargetType="ContentControl">
+                                            <Border Background="{TemplateBinding Background}">
+                                                <ContentPresenter />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </ContentControl.Template>
+                                    <Ellipse
+                                        x:Name="PART_ColorPlaneEllipse"
+                                        Width="12"
+                                        Height="12"
+                                        Stroke="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ContrastColorByBrightnessConverter}}" />
+                                </ContentControl>
+                            </Border>
+                            <Slider
+                                x:Name="PART_NormalSlider"
+                                Grid.Column="1"
+                                Width="20"
+                                Height="258"
+                                Margin="18,0,0,0"
+                                helpers:SliderHelper.IsMoveToPointOnDragEnabled="True"
+                                BorderBrush="{DynamicResource ColorPicker.PaneBorderBrush}"
+                                BorderThickness="1"
+                                IsMoveToPointEnabled="True"
+                                Maximum="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=MaxNormal}"
+                                Minimum="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=MinNormal}"
+                                Orientation="Vertical"
+                                SnapsToDevicePixels="True"
+                                Style="{StaticResource Slider}"
+                                TickFrequency="1"
+                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Normal}" />
+                            <Border
+                                x:Name="AlphaSliderBorder"
+                                Grid.Column="2"
+                                Width="20"
+                                Height="258"
+                                Margin="24,0,0,0"
+                                Background="{StaticResource CheckerBoard_05x05}"
+                                Visibility="Collapsed">
+                                <Slider
+                                    x:Name="PART_AlphaSlider"
+                                    Width="20"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch"
+                                    helpers:SliderHelper.IsMoveToPointOnDragEnabled="True"
+                                    BorderBrush="{DynamicResource ColorPicker.PaneBorderBrush}"
+                                    BorderThickness="1"
+                                    IsMoveToPointEnabled="True"
+                                    IsSnapToTickEnabled="True"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    Style="{StaticResource Slider}"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Alpha, Converter={StaticResource DoubleToBytesConverter}}" />
+                            </Border>
+                            <StackPanel
+                                x:Name="Panels"
+                                Grid.Column="3"
+                                Margin="18,0,0,0"
+                                VerticalAlignment="Center"
+                                Visibility="Collapsed">
+                                <Grid HorizontalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Margin="0,0,4,0"
+                                        VerticalAlignment="Center"
+                                        Text="current" />
+                                    <Rectangle
+                                        Grid.Column="1"
+                                        Width="48"
+                                        Height="48"
+                                        Fill="{StaticResource CheckerBoard_025x025}" />
+                                    <Rectangle
+                                        Grid.Column="1"
+                                        Width="48"
+                                        Height="48">
+                                        <Rectangle.Fill>
+                                            <SolidColorBrush Color="{Binding InitialColor, RelativeSource={RelativeSource Mode=TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle
+                                        Grid.Column="2"
+                                        Width="48"
+                                        Height="48"
+                                        Fill="{StaticResource CheckerBoard_025x025}" />
+                                    <Rectangle
+                                        Grid.Column="2"
+                                        Width="48"
+                                        Height="48">
+                                        <Rectangle.Fill>
+                                            <SolidColorBrush Color="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock
+                                        Grid.Column="3"
+                                        Margin="4,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Text="new" />
+                                </Grid>
+                                <ContentPresenter x:Name="PART_ColorComponents" Margin="0,12,0,0" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ColorPickerStyle" Value="Full">
+                            <Setter TargetName="Panels" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="ColorPickerStyle" Value="StandardWithAlpha">
+                            <Setter TargetName="AlphaSliderBorder" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="ColorPickerStyle" Value="FullWithAlpha">
+                            <Setter TargetName="Panels" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="AlphaSliderBorder" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

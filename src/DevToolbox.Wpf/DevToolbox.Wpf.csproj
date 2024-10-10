@@ -30,6 +30,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="ColorSpace.Net" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Resource Include="SymbolThemeFont\fonts\SymbolThemeFont.ttf">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Resource>
