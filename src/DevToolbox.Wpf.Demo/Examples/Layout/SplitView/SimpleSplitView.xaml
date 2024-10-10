@@ -9,13 +9,13 @@
     mc:Ignorable="d">
     <ScrollViewer>
         <StackPanel UseLayoutRounding="True">
-            <devtoolbox:SliderPanel>
-                <devtoolbox:SliderPanel.SliderControl>
+            <devtoolbox:SplitView>
+                <devtoolbox:SplitView.SliderControl>
                     <devtoolbox:SliderControl
                         x:Name="_slide"
                         AutoHide="True"
                         Dock="Right" />
-                </devtoolbox:SliderPanel.SliderControl>
+                </devtoolbox:SplitView.SliderControl>
                 <Grid HorizontalAlignment="Stretch">
                     <StackPanel
                         Margin="50"
@@ -45,7 +45,7 @@
                             IsChecked="{Binding ElementName=_slide, Path=IsExpanded}" />
                     </StackPanel>
                 </Grid>
-            </devtoolbox:SliderPanel>
+            </devtoolbox:SplitView>
 
         </StackPanel>
     </ScrollViewer>

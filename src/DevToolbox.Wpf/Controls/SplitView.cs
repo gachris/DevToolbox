@@ -6,7 +6,7 @@ namespace DevToolbox.Wpf.Controls;
 /// <summary>
 /// Represents a panel that contains a slider control.
 /// </summary>
-public partial class SliderPanel : ContentControl
+public partial class SplitView : ContentControl
 {
     #region Fields/Consts
 
@@ -14,7 +14,7 @@ public partial class SliderPanel : ContentControl
     /// Identifies the <see cref="SliderControl"/> dependency property.
     /// </summary>
     public static readonly DependencyProperty SliderControlProperty =
-        DependencyProperty.Register("SliderControl", typeof(SliderControl), typeof(SliderPanel), new FrameworkPropertyMetadata());
+        DependencyProperty.Register("SliderControl", typeof(SliderControl), typeof(SplitView), new FrameworkPropertyMetadata());
 
     #endregion
 
@@ -32,10 +32,10 @@ public partial class SliderPanel : ContentControl
     #endregion
 
     /// <summary>
-    /// Initializes the static members of the <see cref="SliderPanel"/> class.
+    /// Initializes the static members of the <see cref="SplitView"/> class.
     /// </summary>
-    static SliderPanel()
+    static SplitView()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(SliderPanel), new FrameworkPropertyMetadata(typeof(SliderPanel)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(SplitView), new FrameworkPropertyMetadata(typeof(SplitView)));
     }
 }

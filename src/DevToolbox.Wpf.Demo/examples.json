@@ -220,14 +220,14 @@
         ]
       },
       {
-        "Header": "SliderPanel",
+        "Header": "SplitView",
         "Description": "A panel that includes both visible content and collapsible content, providing a way to toggle visibility.",
         "Icon": "CollapsiblePanel",
         "Namespace": "DevToolbox.Wpf.Controls",
         "Examples": [
           {
-            "Header": "A simple SliderPanel.",
-            "SourceCode": "\\Examples\\Layout\\SliderPanel\\SimpleSliderPanel.xaml"
+            "Header": "A simple SplitView.",
+            "SourceCode": "\\Examples\\Layout\\SplitView\\SimpleSplitView.xaml"
           }
         ]
       },
