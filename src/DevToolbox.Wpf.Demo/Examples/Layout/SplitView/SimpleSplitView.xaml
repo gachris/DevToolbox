@@ -31,7 +31,7 @@
             <devtoolbox:NumberBox
                 Maximum="500"
                 Minimum="100"
-                Value="{Binding Path=ExpandSize, ElementName=splitView, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                Value="{Binding Path=OpenPaneLength, ElementName=splitView, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             <TextBlock Margin="0,8,0,0" Text="Dock:" />
             <ComboBox Height="24" SelectedItem="{Binding Path=Dock, ElementName=splitView, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <Dock>Left</Dock>
@@ -47,7 +47,7 @@
             <CheckBox
                 Margin="0,8,0,0"
                 Content="Is Expanded:"
-                IsChecked="{Binding ElementName=splitView, Path=IsExpanded}" />
+                IsChecked="{Binding ElementName=splitView, Path=IsPaneOpen}" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -68,18 +68,18 @@ public partial class SplitView : ContentControl
         new FrameworkPropertyMetadata(default(Dock), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnDockChanged, DockCoerceValue));
 
     /// <summary>
-    /// Dependency property for indicating if the split view is expanded.
+    /// Dependency property for indicating if the split view is open.
     /// </summary>
     public static readonly DependencyProperty IsPaneOpenProperty =
         DependencyProperty.Register(nameof(IsPaneOpen), typeof(bool), typeof(SplitView),
-        new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsExpandedChanged, IsExpandedCoerceValue));
+        new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsPaneOpenChanged, IsPaneOpenCoerceValue));
 
     /// <summary>
     /// Dependency property for the size to which the split view expands.
     /// </summary>
     public static readonly DependencyProperty OpenPaneLengthProperty =
         DependencyProperty.Register(nameof(OpenPaneLength), typeof(double), typeof(SplitView),
-        new FrameworkPropertyMetadata(320D, OnExpandSizeChanged));
+        new FrameworkPropertyMetadata(320D, OnOpenPaneLengthChanged));
 
     /// <summary>
     /// Dependency property for the easing function used in animations.
@@ -309,7 +309,7 @@ public partial class SplitView : ContentControl
 
     #region Methods
 
-    private object IsExpandedCoerceValue(bool baseValue)
+    private object IsPaneOpenCoerceValue(bool baseValue)
     {
         return DesignerProperties.GetIsInDesignMode(this) || (!IsAnimationInProcess ? baseValue : IsPaneOpen);
     }
@@ -319,7 +319,7 @@ public partial class SplitView : ContentControl
         return !IsAnimationInProcess ? baseValue : (object)Dock;
     }
 
-    private void OnIsExpandedChanged(DependencyPropertyChangedEventArgs e)
+    private void OnIsPaneOpenChanged(DependencyPropertyChangedEventArgs e)
     {
         Update();
 
@@ -336,7 +336,7 @@ public partial class SplitView : ContentControl
         IsExpandedChanged?.Invoke(this, e);
     }
 
-    private void OnExpandSizeChanged(DependencyPropertyChangedEventArgs e)
+    private void OnOpenPaneLengthChanged(DependencyPropertyChangedEventArgs e)
     {
         Update();
     }
@@ -360,10 +360,10 @@ public partial class SplitView : ContentControl
         DockChanged?.Invoke(this, e);
     }
 
-    private static object IsExpandedCoerceValue(DependencyObject d, object baseValue)
+    private static object IsPaneOpenCoerceValue(DependencyObject d, object baseValue)
     {
         var splitView = (SplitView)d;
-        return splitView.IsExpandedCoerceValue((bool)baseValue);
+        return splitView.IsPaneOpenCoerceValue((bool)baseValue);
     }
 
     private static object DockCoerceValue(DependencyObject d, object baseValue)
@@ -372,16 +372,16 @@ public partial class SplitView : ContentControl
         return splitView.DockCoerceValue((Dock)baseValue);
     }
 
-    private static void OnIsExpandedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    private static void OnIsPaneOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var splitView = (SplitView)d;
-        splitView.OnIsExpandedChanged(e);
+        splitView.OnIsPaneOpenChanged(e);
     }
 
-    private static void OnExpandSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    private static void OnOpenPaneLengthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var splitView = (SplitView)d;
-        splitView.OnExpandSizeChanged(e);
+        splitView.OnOpenPaneLengthChanged(e);
     }
 
     private static void OnEasingFunctionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
