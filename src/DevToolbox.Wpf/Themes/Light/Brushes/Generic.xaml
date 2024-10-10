@@ -470,11 +470,19 @@
 
     <!--#endregion-->
 
-    <!--#region SliderControl-->
+    <!--#region SplitView-->
 
-    <SolidColorBrush x:Key="SliderControl.BackgroundBrush" Color="#EEEEF2" />
-    <SolidColorBrush x:Key="SliderControl.Foreground" Color="#1E1E1E" />
-    <SolidColorBrush x:Key="SliderControl.BorderBrush" Color="LightGray" />
+    <SolidColorBrush x:Key="SplitView.BackgroundBrush" Color="#EEEEF2" />
+    <SolidColorBrush x:Key="SplitView.Foreground" Color="#1E1E1E" />
+    <SolidColorBrush x:Key="SplitView.BorderBrush" Color="LightGray" />
+
+    <!--#endregion-->
+
+    <!--#region SidePanelWindow-->
+
+    <SolidColorBrush x:Key="SidePanelWindow.BackgroundBrush" Color="#EEEEF2" />
+    <SolidColorBrush x:Key="SidePanelWindow.Foreground" Color="#1E1E1E" />
+    <SolidColorBrush x:Key="SidePanelWindow.BorderBrush" Color="LightGray" />
 
     <!--#endregion-->
 

@@ -43,7 +43,6 @@
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/FontGlyph.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/NumberBox.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ProgressRing.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/SliderControl.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/SplitView.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/SpeechBalloon.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TabControlEdit.xaml}" />

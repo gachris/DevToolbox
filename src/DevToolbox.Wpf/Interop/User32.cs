@@ -6,9 +6,6 @@ namespace DevToolbox.Wpf.Interop;
 
 internal static class User32
 {
-    [DllImport("user32.dll", CharSet = CharSet.Auto)]
-    public static extern int ShowWindow(IntPtr hWnd, SW cmdShow);
-
     [DllImport("user32.dll")]
     public static extern int GetSystemMetrics(SM nIndex);
 
@@ -74,7 +71,4 @@ internal static class User32
 
     [DllImport("user32", EntryPoint = "SetWindowPos")]
     public static extern int SetWindowPos(IntPtr hWnd, int hwndInsertAfter, int x, int y, int cx, int cy, int wFlags);
-
-    [DllImport("user32.dll", CharSet = CharSet.Auto)]
-    public static extern int SetWindowPos(IntPtr hWnd, IntPtr hWndAfter, int x, int y, int width, int height, SWP flags);
 }
