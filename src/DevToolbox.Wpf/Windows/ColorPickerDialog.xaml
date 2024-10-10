@@ -1,0 +1,63 @@
+﻿<windows:WindowEx
+    x:Class="DevToolbox.Wpf.Windows.ColorPickerDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
+    xmlns:windows="clr-namespace:DevToolbox.Wpf.Windows"
+    Title="Advance Color Picker"
+    ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <controls:ColorPicker
+            x:Name="colorPicker"
+            Margin="18"
+            ColorPickerStyle="FullWithAlpha" />
+        <Separator Grid.Row="1" Margin="0" />
+        <Grid
+            Grid.Row="2"
+            MinHeight="24"
+            Margin="18"
+            HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!--<controls:EyeDropper
+                x:Name="eyeDropper"
+                Grid.Column="0"
+                MinWidth="24"
+                MinHeight="24"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                CaptureChanged="EyeDropper_CaptureChanged"
+                FontSize="16">
+                <controls:FontGlyph Code="{x:Static controls:Symbol.ColorPicker}" />
+            </controls:EyeDropper>-->
+            <StackPanel
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    Name="btOk"
+                    MinWidth="75"
+                    Margin="1,0,4,0"
+                    VerticalAlignment="Stretch"
+                    Click="Accept"
+                    Content="OK"
+                    IsDefault="True" />
+                <Button
+                    Name="btCancel"
+                    MinWidth="75"
+                    Margin="4,0,0,0"
+                    Click="Cancel"
+                    Content="Cancel"
+                    IsCancel="True" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</windows:WindowEx>

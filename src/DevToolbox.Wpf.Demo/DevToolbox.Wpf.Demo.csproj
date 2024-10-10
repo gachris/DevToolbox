@@ -19,6 +19,7 @@
 
 	<ItemGroup>
 	  <Page Remove="Examples\BasicInput\CheckBox\SimpleCheckBox.xaml" />
+	  <Page Remove="Examples\BasicInput\ColorChip\SimpleColorChip.xaml" />
 	  <Page Remove="Examples\BasicInput\ColorPicker\SimpleColorPicker.xaml" />
 	  <Page Remove="Examples\BasicInput\ComboBox\SimpleComboBox.xaml" />
 	  <Page Remove="Examples\BasicInput\DropDown\SimpleDropDown.xaml" />
@@ -48,6 +49,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Include="Examples\BasicInput\ColorChip\SimpleColorChip.xaml">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <SubType>Designer</SubType>
+	    <Generator>MSBuild:Compile</Generator>
+	  </Content>
 	  <Content Include="Examples\BasicInput\ComboBox\SimpleComboBox.xaml">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	    <SubType>Designer</SubType>

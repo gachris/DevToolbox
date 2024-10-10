@@ -35,6 +35,7 @@
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TabsWindow.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/SliderWindow.xaml}" />
 
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ColorChip.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ColorPicker.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ColorComponents.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/DropDown.xaml}" />

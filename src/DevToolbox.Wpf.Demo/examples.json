@@ -97,6 +97,18 @@
         ]
       },
       {
+        "Header": "ColorChip",
+        "Description": "A control that displays a selectable color space.",
+        "Icon": "ColorPalette",
+        "Namespace": "DevToolbox.Wpf.Controls",
+        "Examples": [
+          {
+            "Header": "A simple ColorChip.",
+            "SourceCode": "\\Examples\\BasicInput\\ColorChip\\SimpleColorChip.xaml"
+          }
+        ]
+      },
+      {
         "Header": "ColorPicker",
         "Description": "A control that displays a selectable color space.",
         "Icon": "ColorPalette",

@@ -13,7 +13,7 @@ using PointEx = System.Drawing.Point;
 namespace DevToolbox.Wpf.Controls;
 
 /// <summary>
-/// Color picker WPF control for selecting colors, supporting different color components and normal maps.
+/// A control representing a color picker for selecting colors, supporting different color components and normal maps.
 /// </summary>
 [TemplatePart(Name = "PART_ColorPlaneControl", Type = typeof(ContentControl))]
 [TemplatePart(Name = "PART_NormalSlider", Type = typeof(Slider))]
