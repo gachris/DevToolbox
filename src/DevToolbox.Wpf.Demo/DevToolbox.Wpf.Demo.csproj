@@ -31,7 +31,7 @@
 	  <Page Remove="Examples\Collections\TreeView\SimpleTreeView.xaml" />
 	  <Page Remove="Examples\DateAndTime\Calendar\SimpleCalendar.xaml" />
 	  <Page Remove="Examples\DateAndTime\DatePicker\SimpleDatePicker.xaml" />
-	  <Page Remove="Examples\Layout\ExpanderEdit\SimpleExpanderEdit.xaml" />
+	  <Page Remove="Examples\Layout\Expander\SimpleExpander.xaml" />
 	  <Page Remove="Examples\Layout\GroupBox\SimpleGroupBox.xaml" />
 	  <Page Remove="Examples\Layout\SliderPanel\SimpleSliderPanel - Copy.xaml" />
 	  <Page Remove="Examples\Layout\SliderPanel\SimpleSliderPanel.xaml" />
@@ -111,7 +111,7 @@
 	    <SubType>Designer</SubType>
 	    <Generator>MSBuild:Compile</Generator>
 	  </Content>
-	  <Content Include="Examples\Layout\ExpanderEdit\SimpleExpanderEdit.xaml">
+	  <Content Include="Examples\Layout\Expander\SimpleExpander.xaml">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	    <SubType>Designer</SubType>
 	    <Generator>MSBuild:Compile</Generator>

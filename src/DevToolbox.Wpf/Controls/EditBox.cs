@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 
 namespace DevToolbox.Wpf.Controls;
+
 /// <summary>
 /// Represents a customizable editable text box control that supports various properties and commands for editing text.
 /// </summary>

@@ -39,7 +39,6 @@
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ColorComponents.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/DropDown.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/EditBox.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ExpanderEdit.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/FontGlyph.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/NumberBox.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ProgressRing.xaml}" />

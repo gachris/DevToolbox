@@ -196,14 +196,14 @@
     "Header": "Layout",
     "SubCategories": [
       {
-        "Header": "ExpanderEdit",
+        "Header": "Expander",
         "Description": "A container with a header that can be expanded to show body with more content.",
         "Icon": "Expander",
         "Namespace": "DevToolbox.Wpf.Controls",
         "Examples": [
           {
-            "Header": "A simple ExpanderEdit.",
-            "SourceCode": "\\Examples\\Layout\\ExpanderEdit\\SimpleExpanderEdit.xaml"
+            "Header": "A simple Expander.",
+            "SourceCode": "\\Examples\\Layout\\Expander\\SimpleExpander.xaml"
           }
         ]
       },

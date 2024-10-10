@@ -40,9 +40,22 @@
 
     <!--#region TreeView-->
 
-    <SolidColorBrush x:Key="ExpanderEdit.Background" Color="Transparent" />
-    <SolidColorBrush x:Key="ExpanderEdit.Foreground" Color="#1E1E1E" />
-    <SolidColorBrush x:Key="ExpanderEdit.BorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="Expander.Background" Color="Transparent" />
+    <SolidColorBrush x:Key="Expander.Foreground" Color="#1E1E1E" />
+    <SolidColorBrush x:Key="Expander.BorderBrush" Color="Transparent" />
+
+    <SolidColorBrush x:Key="Expander.Circle.BorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="Expander.Circle.Background" Color="Transparent" />
+    <SolidColorBrush x:Key="Expander.Arrow.Foreground" Color="#1E1E1E" />
+    <SolidColorBrush x:Key="Expander.MouseOver.Circle.BorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="Expander.MouseOver.Circle.Background" Color="Transparent" />
+    <SolidColorBrush x:Key="Expander.MouseOver.Arrow.Foreground" Color="#424343" />
+    <SolidColorBrush x:Key="Expander.Pressed.Circle.BorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="Expander.Pressed.Circle.Background" Color="Transparent" />
+    <SolidColorBrush x:Key="Expander.Pressed.Arrow.Foreground" Color="#424343" />
+    <SolidColorBrush x:Key="Expander.Disabled.Circle.BorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="Expander.Disabled.Circle.Background" Color="Transparent" />
+    <SolidColorBrush x:Key="Expander.Disabled.Arrow.Foreground" Color="#707070" />
 
     <!--#endregion-->
 

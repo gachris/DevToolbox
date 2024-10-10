@@ -7,6 +7,7 @@
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ComboBoxItem/Generic.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ContextMenu/Generic.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/DatePicker/Generic.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/Expander/Generic.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/GroupBox/Generic.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/Menu/Generic.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/MenuItem/Generic.xaml}" />

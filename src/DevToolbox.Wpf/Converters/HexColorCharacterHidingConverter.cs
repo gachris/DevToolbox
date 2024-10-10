@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace DevToolbox.Wpf.Converters;
 
-public class HexColorCharacterHidingConverter : IValueConverter
+internal class HexColorCharacterHidingConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

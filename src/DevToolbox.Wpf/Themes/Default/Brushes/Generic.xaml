@@ -38,11 +38,24 @@
 
     <!--#endregion-->
 
-    <!--#region ExpanderEdit-->
+    <!--#region Expander-->
 
-    <SolidColorBrush x:Key="ExpanderEdit.Background" Color="Transparent" />
-    <SolidColorBrush x:Key="ExpanderEdit.Foreground" Color="#000000" />
-    <SolidColorBrush x:Key="ExpanderEdit.BorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="Expander.Background" Color="Transparent" />
+    <SolidColorBrush x:Key="Expander.Foreground" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}" />
+    <SolidColorBrush x:Key="Expander.BorderBrush" Color="Transparent" />
+
+    <SolidColorBrush x:Key="Expander.Circle.BorderBrush" Color="#FF333333" />
+    <SolidColorBrush x:Key="Expander.Circle.Background" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="Expander.Arrow.Foreground" Color="#FF333333" />
+    <SolidColorBrush x:Key="Expander.MouseOver.Circle.BorderBrush" Color="#FF5593FF" />
+    <SolidColorBrush x:Key="Expander.MouseOver.Circle.Background" Color="#FFF3F9FF" />
+    <SolidColorBrush x:Key="Expander.MouseOver.Arrow.Foreground" Color="#FF000000" />
+    <SolidColorBrush x:Key="Expander.Pressed.Circle.BorderBrush" Color="#FF3C77DD" />
+    <SolidColorBrush x:Key="Expander.Pressed.Circle.Background" Color="#FFD9ECFF" />
+    <SolidColorBrush x:Key="Expander.Pressed.Arrow.Foreground" Color="#FF000000" />
+    <SolidColorBrush x:Key="Expander.Disabled.Circle.BorderBrush" Color="#FFBCBCBC" />
+    <SolidColorBrush x:Key="Expander.Disabled.Circle.Background" Color="#FFE6E6E6" />
+    <SolidColorBrush x:Key="Expander.Disabled.Arrow.Foreground" Color="#FF707070" />
 
     <!--#endregion-->
 
@@ -102,7 +115,7 @@
     <SolidColorBrush x:Key="TabItemEdit.SelectedForeground" Color="#1E1E1E" />
     <SolidColorBrush x:Key="TabItemEdit.SelectedBorderBrush" Color="#ACACAC" />
     <SolidColorBrush x:Key="TabItemEdit.DisabledBackground" Color="#F0F0F0" />
-    <SolidColorBrush x:Key="TabItemEdit.DisabledForeground" Color="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+    <SolidColorBrush x:Key="TabItemEdit.DisabledForeground" Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}" />
     <SolidColorBrush x:Key="TabItemEdit.DisabledBorderBrush" Color="#D9D9D9" />
 
     <!--#endregion-->

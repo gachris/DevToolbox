@@ -12,6 +12,9 @@ using PointEx = System.Drawing.Point;
 
 namespace DevToolbox.Wpf.Controls;
 
+/// <summary>
+/// Color picker WPF control for selecting colors, supporting different color components and normal maps.
+/// </summary>
 [TemplatePart(Name = "PART_ColorPlaneControl", Type = typeof(ContentControl))]
 [TemplatePart(Name = "PART_NormalSlider", Type = typeof(Slider))]
 [TemplatePart(Name = "PART_AlphaSlider", Type = typeof(Slider))]
@@ -40,12 +43,25 @@ public partial class ColorPicker : Control
     private PointEx _selectionPoint;
     private readonly Dictionary<NormalComponentType, INormalComponent> Components = [];
 
+    /// <summary>
+    /// Event raised when the alpha (transparency) value changes.
+    /// </summary>
     public event EventHandler? AlphaChanged;
+
+    /// <summary>
+    /// Event raised when the selected color changes.
+    /// </summary>
     public event EventHandler? SelectedColorChanged;
 
+    /// <summary>
+    /// DependencyProperty for Alpha (transparency) value.
+    /// </summary>
     public static readonly DependencyProperty AlphaProperty =
         DependencyProperty.Register(nameof(Alpha), typeof(byte), typeof(ColorPicker), new FrameworkPropertyMetadata((byte)255, OnAlphaChanged, AlphaCoerceValue));
 
+    /// <summary>
+    /// DependencyProperty for ColorPickerStyle, which defines the style and behavior of the color picker.
+    /// </summary>
     public static readonly DependencyProperty ColorPickerStyleProperty =
         DependencyProperty.Register(nameof(ColorPickerStyle), typeof(ColorPickerStyle), typeof(ColorPicker), new FrameworkPropertyMetadata(default(ColorPickerStyle)));
 
@@ -55,60 +71,107 @@ public partial class ColorPicker : Control
     private static readonly DependencyPropertyKey MaxNormalPropertyKey =
         DependencyProperty.RegisterReadOnly(nameof(MaxNormal), typeof(int), typeof(ColorPicker), new FrameworkPropertyMetadata(default));
 
+    /// <summary>
+    /// DependencyProperty for NormalComponentType, which specifies the type of color component being modified.
+    /// </summary>
     public static readonly DependencyProperty NormalComponentTypeProperty =
         DependencyProperty.Register(nameof(NormalComponentType), typeof(NormalComponentType), typeof(ColorPicker), new FrameworkPropertyMetadata(default(NormalComponentType), OnNormalComponentTypeChanged));
 
+    /// <summary>
+    /// DependencyProperty for Normal value.
+    /// </summary>
     public static readonly DependencyProperty NormalProperty =
         DependencyProperty.Register(nameof(Normal), typeof(int), typeof(ColorPicker), new FrameworkPropertyMetadata(0, OnNormalChanged, NormalCoerceValue));
 
+    /// <summary>
+    /// DependencyProperty for the SelectedColor.
+    /// </summary>
     public static readonly DependencyProperty SelectedColorProperty =
         DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPicker), new FrameworkPropertyMetadata(Colors.Black, OnSelectedColorChanged));
-
+    
+    /// <summary>
+    /// DependencyProperty for MinNormal. It represents the minimum value for the normal component.
+    /// </summary>
     public static readonly DependencyProperty MinNormalProperty = MinNormalPropertyKey.DependencyProperty;
+
+    /// <summary>
+    /// DependencyProperty for MaxNormal. It represents the maximum value for the normal component.
+    /// </summary>
     public static readonly DependencyProperty MaxNormalProperty = MaxNormalPropertyKey.DependencyProperty;
 
     #endregion
 
     #region Properties
 
+
+    /// <summary>
+    /// Gets or sets the Alpha (transparency) value.
+    /// </summary>
     public byte Alpha
     {
         get => (byte)GetValue(AlphaProperty);
         set => SetValue(AlphaProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the ColorPickerStyle which defines how the picker is presented and whether alpha is enabled.
+    /// </summary>
     public ColorPickerStyle ColorPickerStyle
     {
         get => (ColorPickerStyle)GetValue(ColorPickerStyleProperty);
         set => SetValue(ColorPickerStyleProperty, value);
     }
 
+    /// <summary>
+    /// Gets a value indicating whether the alpha slider is enabled.
+    /// </summary>
     private bool IsAlphaEnabled => ColorPickerStyle is ColorPickerStyle.StandardWithAlpha or ColorPickerStyle.FullWithAlpha;
 
+    /// <summary>
+    /// Gets or sets the initial color of the color picker.
+    /// </summary>
     public Color InitialColor { get; set; }
 
+    /// <summary>
+    /// Gets the minimum normal value.
+    /// </summary>
     public int MinNormal => (int)GetValue(MinNormalProperty);
 
+    /// <summary>
+    /// Gets the maximum normal value.
+    /// </summary>
     public int MaxNormal => (int)GetValue(MaxNormalProperty);
 
+    /// <summary>
+    /// Gets or sets the type of normal component.
+    /// </summary>
     public NormalComponentType NormalComponentType
     {
         get => (NormalComponentType)GetValue(NormalComponentTypeProperty);
         set => SetValue(NormalComponentTypeProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the normal value.
+    /// </summary>
     public int Normal
     {
         get => (int)GetValue(NormalProperty);
         set => SetValue(NormalProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the selected color in the color picker.
+    /// </summary>
     public Color SelectedColor
     {
         get => (Color)GetValue(SelectedColorProperty);
         set => SetValue(SelectedColorProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the current selection point in the color plane.
+    /// </summary>
     private PointEx SelectionPoint
     {
         get => _selectionPoint;
@@ -126,12 +189,16 @@ public partial class ColorPicker : Control
         DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorPicker), new FrameworkPropertyMetadata(typeof(ColorPicker)));
     }
 
+    /// <summary>
+    /// Static constructor to override the default style for the ColorPicker control.
+    /// </summary>
     public ColorPicker()
     {
     }
 
     #region Methods Override
 
+    /// <inheritdoc/>
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();

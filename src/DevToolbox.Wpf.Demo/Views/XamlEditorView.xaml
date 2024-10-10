@@ -9,10 +9,21 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <devtoolbox:ExpanderEdit
-        Padding="0,12"
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="Expander.Circle.BorderBrush" Color="Transparent" />
+        <SolidColorBrush x:Key="Expander.Circle.Background" Color="Transparent" />
+        <SolidColorBrush x:Key="Expander.MouseOver.Circle.BorderBrush" Color="Transparent" />
+        <SolidColorBrush x:Key="Expander.MouseOver.Circle.Background" Color="Transparent" />
+        <SolidColorBrush x:Key="Expander.Pressed.Circle.BorderBrush" Color="Transparent" />
+        <SolidColorBrush x:Key="Expander.Pressed.Circle.Background" Color="Transparent" />
+        <SolidColorBrush x:Key="Expander.Disabled.Circle.BorderBrush" Color="Transparent" />
+        <SolidColorBrush x:Key="Expander.Disabled.Circle.Background" Color="Transparent" />
+    </UserControl.Resources>
+    <Expander
+        Padding="12"
         devtoolbox:UIElementHelper.CornerRadius="{Binding Path=(devtoolbox:UIElementHelper.CornerRadius), RelativeSource={RelativeSource AncestorType=UserControl}}"
         Background="{DynamicResource XamlEditorView.Background}"
+        BorderBrush="{DynamicResource XamlEditorView.BorderBrush}"
         Header="Source code"
         IsExpanded="False">
         <Grid>
@@ -23,7 +34,7 @@
             </Grid.RowDefinitions>
             <Separator
                 Grid.Row="0"
-                Margin="0,12"
+                Margin="0,0"
                 Background="{DynamicResource XamlEditorView.BorderBrush}" />
             <TextBlock
                 Grid.Row="1"
@@ -38,5 +49,5 @@
                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
                 SyntaxHighlighting="XML" />
         </Grid>
-    </devtoolbox:ExpanderEdit>
+    </Expander>
 </UserControl>
