@@ -13,7 +13,7 @@ namespace DevToolbox.Wpf.Windows;
 /// Represents a sliding window control that can expand or collapse, supporting docking and animation.
 /// </summary>
 [TemplatePart(Name = "PART_SliderControl", Type = typeof(SliderControl))]
-public class SliderWindow : WindowEx
+public class SidePanelWindow : WindowEx
 {
     #region Fields/Consts
 
@@ -23,87 +23,87 @@ public class SliderWindow : WindowEx
 
     /// <summary>
     /// Identifies the <see cref="Dock"/> dependency property.
-    /// This property defines how the slider window is docked in relation to other UI elements.
+    /// This property defines how the side panel window is docked in relation to other UI elements.
     /// </summary>
     public static readonly DependencyProperty DockProperty =
-        SliderControl.DockProperty.AddOwner(typeof(SliderWindow));
+        SliderControl.DockProperty.AddOwner(typeof(SidePanelWindow));
 
     /// <summary>
     /// Identifies the <see cref="ExpandSize"/> dependency property.
-    /// This property specifies the size to which the slider window expands when opened.
+    /// This property specifies the size to which the side panel window expands when opened.
     /// </summary>
     public static readonly DependencyProperty ExpandSizeProperty =
-        SliderControl.ExpandSizeProperty.AddOwner(typeof(SliderWindow));
+        SliderControl.ExpandSizeProperty.AddOwner(typeof(SidePanelWindow));
 
     /// <summary>
     /// Identifies the <see cref="AutoHide"/> dependency property.
-    /// This property determines whether the slider window automatically hides when not in use.
+    /// This property determines whether the side panel window automatically hides when not in use.
     /// </summary>
     public static readonly DependencyProperty AutoHideProperty =
-        SliderControl.AutoHideProperty.AddOwner(typeof(SliderWindow));
+        SliderControl.AutoHideProperty.AddOwner(typeof(SidePanelWindow));
 
     /// <summary>
     /// Identifies the <see cref="IsExpanded"/> dependency property.
-    /// This property indicates whether the slider window is currently expanded.
+    /// This property indicates whether the side panel window is currently expanded.
     /// </summary>
     public static readonly DependencyProperty IsExpandedProperty =
-        SliderControl.IsExpandedProperty.AddOwner(typeof(SliderWindow));
+        SliderControl.IsExpandedProperty.AddOwner(typeof(SidePanelWindow));
 
     /// <summary>
     /// Identifies the <see cref="EasingFunction"/> dependency property.
     /// This property specifies the easing function used for animations during expansion and collapse.
     /// </summary>
     public static readonly DependencyProperty EasingFunctionProperty =
-        SliderControl.EasingFunctionProperty.AddOwner(typeof(SliderWindow));
+        SliderControl.EasingFunctionProperty.AddOwner(typeof(SidePanelWindow));
 
     /// <summary>
     /// Identifies the <see cref="ExpandStarted"/> routed event.
-    /// This event is raised when the expansion of the slider window begins.
+    /// This event is raised when the expansion of the side panel window begins.
     /// </summary>
     public static readonly RoutedEvent ExpandStartedEvent =
-        SliderControl.ExpandStartedEvent.AddOwner(typeof(SliderWindow));
+        SliderControl.ExpandStartedEvent.AddOwner(typeof(SidePanelWindow));
 
     /// <summary>
     /// Identifies the <see cref="CollapseStarted"/> routed event.
-    /// This event is raised when the collapse of the slider window begins.
+    /// This event is raised when the collapse of the side panel window begins.
     /// </summary>
     public static readonly RoutedEvent CollapseStartedEvent =
-        SliderControl.CollapseStartedEvent.AddOwner(typeof(SliderWindow));
+        SliderControl.CollapseStartedEvent.AddOwner(typeof(SidePanelWindow));
 
     /// <summary>
     /// Identifies the <see cref="ExpandCompleted"/> routed event.
-    /// This event is raised when the expansion of the slider window is completed.
+    /// This event is raised when the expansion of the side panel window is completed.
     /// </summary>
     public static readonly RoutedEvent ExpandCompletedEvent =
-        SliderControl.ExpandCompletedEvent.AddOwner(typeof(SliderWindow));
+        SliderControl.ExpandCompletedEvent.AddOwner(typeof(SidePanelWindow));
 
     /// <summary>
     /// Identifies the <see cref="CollapseCompleted"/> routed event.
-    /// This event is raised when the collapse of the slider window is completed.
+    /// This event is raised when the collapse of the side panel window is completed.
     /// </summary>
     public static readonly RoutedEvent CollapseCompletedEvent =
-        SliderControl.CollapseCompletedEvent.AddOwner(typeof(SliderWindow));
+        SliderControl.CollapseCompletedEvent.AddOwner(typeof(SidePanelWindow));
 
     /// <summary>
     /// Identifies the <see cref="CollapseStateInvalidated"/> routed event.
-    /// This event is raised when the collapse state of the slider window is invalidated.
+    /// This event is raised when the collapse state of the side panel window is invalidated.
     /// </summary>
     public static readonly RoutedEvent CollapseStateInvalidatedEvent =
-        SliderControl.CollapseStateInvalidatedEvent.AddOwner(typeof(SliderWindow));
+        SliderControl.CollapseStateInvalidatedEvent.AddOwner(typeof(SidePanelWindow));
 
     /// <summary>
     /// Identifies the <see cref="ExpandStateInvalidated"/> routed event.
-    /// This event is raised when the expand state of the slider window is invalidated.
+    /// This event is raised when the expand state of the side panel window is invalidated.
     /// </summary>
     public static readonly RoutedEvent ExpandStateInvalidatedEvent =
-        SliderControl.ExpandStateInvalidatedEvent.AddOwner(typeof(SliderWindow));
+        SliderControl.ExpandStateInvalidatedEvent.AddOwner(typeof(SidePanelWindow));
 
     #endregion
 
     #region Properties
 
     /// <summary>
-    /// Gets or sets the dock position of the slider window.
+    /// Gets or sets the dock position of the side panel window.
     /// </summary>
     public Dock Dock
     {
@@ -203,18 +203,18 @@ public class SliderWindow : WindowEx
 
     #endregion
 
-    static SliderWindow()
+    static SidePanelWindow()
     {
-        // Override default style key and property metadata for the SliderWindow
-        SliderWindow.DefaultStyleKeyProperty.OverrideMetadata(typeof(SliderWindow), new FrameworkPropertyMetadata(typeof(SliderWindow)));
-        SliderWindow.WidthProperty.OverrideMetadata(typeof(SliderWindow), new FrameworkPropertyMetadata(null, (d, baseValue) => (d as SliderWindow)?.OnWidthChangedCoerceValueCallback(baseValue)));
-        SliderWindow.HeightProperty.OverrideMetadata(typeof(SliderWindow), new FrameworkPropertyMetadata(null, (d, baseValue) => (d as SliderWindow)?.OnHeightChangedCoerceValueCallback(baseValue)));
+        // Override default style key and property metadata for the SidePanelWindow
+        SidePanelWindow.DefaultStyleKeyProperty.OverrideMetadata(typeof(SidePanelWindow), new FrameworkPropertyMetadata(typeof(SidePanelWindow)));
+        SidePanelWindow.WidthProperty.OverrideMetadata(typeof(SidePanelWindow), new FrameworkPropertyMetadata(null, (d, baseValue) => (d as SidePanelWindow)?.OnWidthChangedCoerceValueCallback(baseValue)));
+        SidePanelWindow.HeightProperty.OverrideMetadata(typeof(SidePanelWindow), new FrameworkPropertyMetadata(null, (d, baseValue) => (d as SidePanelWindow)?.OnHeightChangedCoerceValueCallback(baseValue)));
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="SliderWindow"/> class.
+    /// Initializes a new instance of the <see cref="SidePanelWindow"/> class.
     /// </summary>
-    public SliderWindow()
+    public SidePanelWindow()
     {
         // Subscribe to expansion and collapse events
         ExpandStarted += OnExpandStarted;
@@ -301,7 +301,7 @@ public class SliderWindow : WindowEx
     private void DockChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => SetWindowPos(SWP.ASYNCWINDOWPOS, (int)ExpandSize, (Dock)e.NewValue);
 
     /// <summary>
-    /// Processes window messages for the slider window.
+    /// Processes window messages for the side panel window.
     /// </summary>
     /// <param name="hwnd">Handle to the window.</param>
     /// <param name="msg">Message ID.</param>
@@ -367,12 +367,12 @@ public class SliderWindow : WindowEx
     private void OnCollapseCompleted(object sender, RoutedEventArgs e) => _ = User32.ShowWindow(_hwnd, SW.MINIMIZE); // Minimize the window
 
     /// <summary>
-    /// Shows the slider window and expands it.
+    /// Shows the side panel window and expands it.
     /// </summary>
     public new void Show() => SetCurrentValue(IsExpandedProperty, true);
 
     /// <summary>
-    /// Hides the slider window and collapses it.
+    /// Hides the side panel window and collapses it.
     /// </summary>
     public new void Hide() => SetCurrentValue(IsExpandedProperty, false);
 

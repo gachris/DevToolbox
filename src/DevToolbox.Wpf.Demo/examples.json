@@ -427,6 +427,19 @@
   },
   {
     "Header": "Windowing",
-    "SubCategories": []
+    "SubCategories": [
+      {
+        "Header": "SidePanelWindow",
+        "Description": "",
+        "Icon": "ChildWindow",
+        "Namespace": "DevToolbox.Wpf.Windows",
+        "Examples": [
+          {
+            "Header": "A simple TextBox.",
+            "SourceCode": "\\Examples\\Windowing\\SidePanelWindow\\SimpleSidePanelWindow.xaml"
+          }
+        ]
+      }
+    ]
   }
 ]

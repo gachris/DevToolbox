@@ -33,7 +33,7 @@
 
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/WindowEx.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TabsWindow.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/SliderWindow.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/SidePanelWindow.xaml}" />
 
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ColorChip.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ColorPicker.xaml}" />

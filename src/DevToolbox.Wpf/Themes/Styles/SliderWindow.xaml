@@ -4,21 +4,21 @@
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
     xmlns:windows="clr-namespace:DevToolbox.Wpf.Windows">
 
-    <Style TargetType="{x:Type windows:SliderWindow}">
+    <Style TargetType="{x:Type windows:SidePanelWindow}">
         <Setter Property="Focusable" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type windows:SliderWindow}">
+                <ControlTemplate TargetType="{x:Type windows:SidePanelWindow}">
                     <controls:SliderControl
                         x:Name="PART_SliderControl"
-                        AutoHide="{Binding Path=AutoHide, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:SliderWindow}}"
+                        AutoHide="{Binding Path=AutoHide, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:SidePanelWindow}}"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        Dock="{Binding Path=Dock, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:SliderWindow}}"
-                        EasingFunction="{Binding Path=EasingFunction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:SliderWindow}}"
-                        ExpandSize="{Binding Path=ExpandSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:SliderWindow}}"
-                        IsExpanded="{Binding Path=IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:SliderWindow}}"
+                        Dock="{Binding Path=Dock, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:SidePanelWindow}}"
+                        EasingFunction="{Binding Path=EasingFunction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:SidePanelWindow}}"
+                        ExpandSize="{Binding Path=ExpandSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:SidePanelWindow}}"
+                        IsExpanded="{Binding Path=IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:SidePanelWindow}}"
                         IsGlowEnable="False">
                         <AdornerDecorator>
                             <ContentPresenter />

@@ -13,6 +13,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Examples\Windowing\SidePanelWindow\SidePanelWindow.xaml.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Remove="Assets\icon.ico" />
 		<None Remove="examples.json" />
 	</ItemGroup>
@@ -46,6 +50,7 @@
 	  <Page Remove="Examples\Text\NumberBox\SimpleNumberBox.xaml" />
 	  <Page Remove="Examples\Text\PasswordBox\SimplePasswordBox.xaml" />
 	  <Page Remove="Examples\Text\TextBox\SimpleTextBox.xaml" />
+	  <Page Remove="Examples\Windowing\SidePanelWindow\SimpleSidePanelWindow.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -186,6 +191,11 @@
 	    <SubType>Designer</SubType>
 	    <Generator>MSBuild:Compile</Generator>
 	  </Content>
+	  <Content Include="Examples\Windowing\SidePanelWindow\SimpleSidePanelWindow.xaml">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <SubType>Designer</SubType>
+	    <Generator>MSBuild:Compile</Generator>
+	  </Content>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -222,10 +232,6 @@
 	    <Generator>ResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Examples\Windowing\" />
 	</ItemGroup>
 
 	<ItemGroup>
