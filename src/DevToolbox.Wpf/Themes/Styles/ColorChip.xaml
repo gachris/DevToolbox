@@ -81,6 +81,7 @@
                                 Panel.ZIndex="2"
                                 BorderBrush="{DynamicResource ColorChipChipBorderBrush}"
                                 Command="{x:Static controls:ColorChip.ResetColorsCommand}"
+                                Cursor="Hand"
                                 Style="{StaticResource ChipButtonStyle}">
                                 <Button.Background>
                                     <SolidColorBrush Color="{Binding PrimaryDefaultColor, RelativeSource={RelativeSource Mode=TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
@@ -94,6 +95,7 @@
                                 Panel.ZIndex="1"
                                 BorderBrush="{DynamicResource ColorChipChipBorderBrush}"
                                 Command="{x:Static controls:ColorChip.ResetColorsCommand}"
+                                Cursor="Hand"
                                 Style="{StaticResource ChipButtonStyle}">
                                 <Button.Background>
                                     <SolidColorBrush Color="{Binding SecondaryDefaultColor, RelativeSource={RelativeSource Mode=TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
@@ -109,13 +111,13 @@
                                 Background="Transparent"
                                 BorderThickness="0"
                                 Command="{x:Static controls:ColorChip.SwitchColorsCommand}"
+                                Cursor="Hand"
                                 Template="{StaticResource FlatButtonTemplate}">
                                 <controls:FontGlyph
                                     x:Name="swapColorsGlyph"
-                                    Code="e934"
-                                    FontSize="16"
-                                    Foreground="{DynamicResource ColorChipGlyph}"
-                                    Rotation="320" />
+                                    Code="{x:Static controls:Symbol.Open}"
+                                    FontSize="12"
+                                    Rotation="180" />
                             </Button>
                         </Grid>
                         <Button
@@ -127,6 +129,7 @@
                             Background="{StaticResource CheckerBoard}"
                             Command="{x:Static controls:ColorChip.ShowDialogCommand}"
                             CommandParameter="{Binding PrimaryColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                            Cursor="Hand"
                             Style="{StaticResource ChipButtonStyle}">
                             <Rectangle>
                                 <Rectangle.Fill>
@@ -143,6 +146,7 @@
                             Background="{StaticResource CheckerBoard}"
                             Command="{x:Static controls:ColorChip.ShowDialogCommand}"
                             CommandParameter="{Binding SecondaryColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                            Cursor="Hand"
                             Style="{StaticResource ChipButtonStyle}">
                             <Rectangle>
                                 <Rectangle.Fill>

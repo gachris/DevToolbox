@@ -396,7 +396,7 @@ public partial class ColorPicker : Control
             _colorComponents?.UpdateFromColor(newValue);
         }
 
-        if (_colorChangeSource is null)
+        if (_colorChangeSource is null && _normalComponent is not null)
         {
             SelectionPoint = _normalComponent.PointFromColor(drawColor);
             Normal = _colorComponents?.GetNormal() ?? -1;
