@@ -6,6 +6,14 @@ namespace DevToolbox.Wpf.Interop;
 
 internal class NativeMethods
 {
+    public static System.Drawing.Point GetCursorPosition()
+    {
+        var point = new POINT();
+        User32.GetCursorPos(ref point);
+
+        return new System.Drawing.Point(point.X, point.Y);
+    }
+
     public static int GetDWORD(Color color) => color.R + (color.G << 8) + (color.B << 16);
 
     public static void RaiseMouseMessage(IntPtr hWnd, WM msg)

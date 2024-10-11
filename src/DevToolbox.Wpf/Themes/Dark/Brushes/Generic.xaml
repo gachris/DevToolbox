@@ -590,4 +590,19 @@
 
     <!--#endregion-->
 
+    <!--#region FontGlyph-->
+
+    <SolidColorBrush x:Key="FontGlyph.Foreground" Color="#E1E1E1" />
+
+    <!--#endregion-->
+
+    <!--#region FontGlyph-->
+
+    <SolidColorBrush x:Key="ZoomAndPanControl.Background" Color="#252526" />
+    <SolidColorBrush x:Key="ZoomAndPanControl.BorderBrush" Color="#5E5E5E" />
+    <SolidColorBrush x:Key="ZoomAndPanControl.Foreground" Color="#E1E1E1" />
+    <SolidColorBrush x:Key="ZoomAndPanControl.DragZoomRectangle.Stroke" Color="#5E5E5E" />
+
+    <!--#endregion-->
+
 </ResourceDictionary>

@@ -27,7 +27,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <!--<controls:EyeDropper
+            <controls:EyeDropper
                 x:Name="eyeDropper"
                 Grid.Column="0"
                 MinWidth="24"
@@ -35,9 +35,10 @@
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 CaptureChanged="EyeDropper_CaptureChanged"
+                ColorFormat="Hex"
                 FontSize="16">
                 <controls:FontGlyph Code="{x:Static controls:Symbol.ColorPicker}" />
-            </controls:EyeDropper>-->
+            </controls:EyeDropper>
             <StackPanel
                 Grid.Column="1"
                 HorizontalAlignment="Right"

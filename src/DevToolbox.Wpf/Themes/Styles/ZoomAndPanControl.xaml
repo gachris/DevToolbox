@@ -1,0 +1,53 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls">
+
+    <Style x:Key="DragZoomRectangleStyle" TargetType="{x:Type Rectangle}">
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeDashArray" Value="4 4 " />
+        <Setter Property="Stroke" Value="{DynamicResource ZoomAndPanControl.DragZoomRectangle.Stroke}" />
+    </Style>
+
+    <Style TargetType="{x:Type controls:ZoomAndPanControl}">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="{DynamicResource ZoomAndPanControl.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ZoomAndPanControl.BorderBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ZoomAndPanControl.Foreground}" />
+        <Setter Property="DragZoomRectangleStyle" Value="{StaticResource DragZoomRectangleStyle}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:ZoomAndPanControl}">
+                    <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="True">
+                            <ContentPresenter
+                                x:Name="PART_Content"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                SnapsToDevicePixels="True" />
+                        </Border>
+                        <Canvas
+                            x:Name="PART_DragZoomCanvas"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Visibility="Collapsed">
+                            <Border
+                                x:Name="PART_DragZoomBorder"
+                                Background="Transparent"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="1">
+                                <Rectangle Style="{TemplateBinding DragZoomRectangleStyle}" />
+                            </Border>
+                        </Canvas>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

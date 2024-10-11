@@ -5,6 +5,7 @@
 
     <Style TargetType="{x:Type controls:FontGlyph}">
         <Setter Property="Focusable" Value="False" />
+        <Setter Property="Foreground" Value="{DynamicResource FontGlyph.Foreground}" />
         <Setter Property="FontFamily" Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type controls:FontGlyph}, ResourceId=FontFamilyKey}}" />
         <Setter Property="Template">
             <Setter.Value>

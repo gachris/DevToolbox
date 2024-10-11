@@ -8,7 +8,7 @@
     <converters:InvertBoolConverter x:Key="InvertBoolConverter" />
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <ControlTemplate x:Key="ToggleButtonTemplate" TargetType="{x:Type ToggleButton}">
+    <ControlTemplate x:Key="DropDown.ToggleButtonTemplate" TargetType="{x:Type ToggleButton}">
         <Border
             x:Name="border"
             Background="{TemplateBinding Background}"
@@ -74,7 +74,7 @@
                             Focusable="False"
                             IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                             IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InvertBoolConverter}}"
-                            Template="{StaticResource ToggleButtonTemplate}">
+                            Template="{StaticResource DropDown.ToggleButtonTemplate}">
                             <ContentPresenter
                                 x:Name="header"
                                 Margin="{TemplateBinding Padding}"

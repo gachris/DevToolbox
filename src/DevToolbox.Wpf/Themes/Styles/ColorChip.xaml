@@ -155,14 +155,6 @@
                             </Rectangle>
                         </Button>
                     </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger SourceName="swapColorsButton" Property="IsMouseOver" Value="true">
-                            <Setter TargetName="swapColorsGlyph" Property="Foreground" Value="{DynamicResource ColorChipMouseOverGlyph}" />
-                        </Trigger>
-                        <Trigger SourceName="swapColorsButton" Property="IsPressed" Value="true">
-                            <Setter TargetName="swapColorsGlyph" Property="Foreground" Value="{DynamicResource ColorChipPressedGlyph}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

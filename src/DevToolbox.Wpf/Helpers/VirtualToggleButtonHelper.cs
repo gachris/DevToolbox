@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using DevToolbox.Wpf.Extensions;
 
 namespace DevToolbox.Wpf.Helpers;
 
@@ -120,19 +121,6 @@ public static class VirtualToggleButtonHelper
         }
 
         SetIsChecked(treeViewItem, state, false, true);
-    }
-
-    private static T? FindVisualAncestor<T>(this DependencyObject element, Func<T, bool>? filter = null) where T : DependencyObject
-    {
-        filter ??= (depObj => true);
-        while (element is not null and Visual)
-        {
-            if (element is T o && filter(o))
-                return o;
-
-            element = VisualTreeHelper.GetParent(element);
-        }
-        return default;
     }
 
     #endregion
