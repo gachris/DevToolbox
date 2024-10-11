@@ -4,39 +4,6 @@
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
     xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
 
-    <Style x:Key="Expander.ToggleButtonStyle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="ContentTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <controls:FontGlyph
-                        x:Name="PART_FontGlyph"
-                        Margin="4,0"
-                        VerticalAlignment="Center"
-                        Code="{x:Static controls:Symbol.ExpandRightmd}"
-                        FontSize="16"
-                        Foreground="#FF424242" />
-                    <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Path=IsExpanded, RelativeSource={RelativeSource AncestorType=Expander, Mode=FindAncestor}}" Value="True">
-                            <Setter TargetName="PART_FontGlyph" Property="Code" Value="{x:Static controls:Symbol.ExpandDownmd}" />
-                        </DataTrigger>
-                    </DataTemplate.Triggers>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
-                        <ContentPresenter />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="ExpanderHeaderFocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>

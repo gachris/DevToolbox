@@ -46,8 +46,21 @@
         <Setter Property="Background" Value="{DynamicResource TreeViewItem.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TreeViewItem.BorderBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TreeViewItem.Foreground}" />
-        <Setter Property="helpers:VirtualToggleButtonHelper.IsVirtualToggleButton" Value="False" />
-        <Setter Property="helpers:VirtualToggleButtonHelper.IsThreeState" Value="False" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="{DynamicResource TreeViewItem.MouseOverBackground}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverForeground" Value="{DynamicResource TreeViewItem.MouseOverForeground}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="{DynamicResource TreeViewItem.MouseOverBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.SelectedBackground" Value="{DynamicResource TreeViewItem.SelectedBackground}" />
+        <Setter Property="helpers:UIElementHelper.SelectedForeground" Value="{DynamicResource TreeViewItem.SelectedForeground}" />
+        <Setter Property="helpers:UIElementHelper.SelectedBorderBrush" Value="{DynamicResource TreeViewItem.SelectedBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.SelectedHoverBackground" Value="{DynamicResource TreeViewItem.MouseOverSelectedBackground}" />
+        <Setter Property="helpers:UIElementHelper.SelectedHoverForeground" Value="{DynamicResource TreeViewItem.MouseOverSelectedForeground}" />
+        <Setter Property="helpers:UIElementHelper.SelectedHoverBorderBrush" Value="{DynamicResource TreeViewItem.MouseOverSelectedBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.InactiveSelectionMouseOverBackground" Value="{DynamicResource TreeViewItem.InactiveBackground}" />
+        <Setter Property="helpers:UIElementHelper.InactiveSelectionMouseOverForeground" Value="{DynamicResource TreeViewItem.InactiveForeground}" />
+        <Setter Property="helpers:UIElementHelper.InactiveSelectionMouseOverBorderBrush" Value="{DynamicResource TreeViewItem.InactiveBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.DisabledBackground" Value="{DynamicResource TreeViewItem.DisabledBackground}" />
+        <Setter Property="helpers:UIElementHelper.DisabledForeground" Value="{DynamicResource TreeViewItem.DisabledForeground}" />
+        <Setter Property="helpers:UIElementHelper.DisabledBorderBrush" Value="{DynamicResource TreeViewItem.DisabledBorderBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TreeViewItem}">
@@ -68,7 +81,6 @@
                             <Grid Margin="{Binding Converter={StaticResource TreeViewItemLeftMarginConverter}, RelativeSource={RelativeSource TemplatedParent}}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition Width="auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <ToggleButton
@@ -78,13 +90,6 @@
                                     IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                     Style="{StaticResource TreeViewItem.ToggleButtonStyle}" />
-                                <CheckBox
-                                    Grid.Column="1"
-                                    VerticalAlignment="Center"
-                                    IsChecked="{TemplateBinding helpers:VirtualToggleButtonHelper.IsChecked}"
-                                    IsEnabled="{TemplateBinding IsEnabled}"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                    Visibility="{Binding Path=(helpers:VirtualToggleButtonHelper.IsVirtualToggleButton), Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                                 <ContentPresenter
                                     x:Name="PART_Header"
                                     Grid.Column="2"
@@ -121,19 +126,19 @@
                             <Setter TargetName="PART_Header" Property="MinHeight" Value="19" />
                         </MultiTrigger>
                         <Trigger SourceName="PART_Border" Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource TreeViewItem.MouseOverBackground}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource TreeViewItem.MouseOverBorderBrush}" />
-                            <Setter Property="TextElement.Foreground" Value="{DynamicResource TreeViewItem.MouseOverForeground}" />
+                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBackground)}" />
+                            <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBorderBrush)}" />
+                            <Setter Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.MouseOverForeground)}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource TreeViewItem.SelectedBackground}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource TreeViewItem.SelectedBorderBrush}" />
-                            <Setter Property="TextElement.Foreground" Value="{DynamicResource TreeViewItem.SelectedForeground}" />
+                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedBackground)}" />
+                            <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedBorderBrush)}" />
+                            <Setter Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.SelectedForeground)}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" Value="{DynamicResource TreeViewItem.DisabledBackground}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource TreeViewItem.DisabledBorderBrush}" />
-                            <Setter Property="TextBlock.Foreground" Value="{DynamicResource TreeViewItem.DisabledForeground}" />
+                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBackground)}" />
+                            <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBorderBrush)}" />
+                            <Setter Property="TextBlock.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.DisabledForeground)}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -141,9 +146,9 @@
                                 <Condition SourceName="PART_Border" Property="IsMouseOver" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter Property="Background" Value="{DynamicResource TreeViewItem.MouseOverSelectedBackground}" />
-                                <Setter Property="BorderBrush" Value="{DynamicResource TreeViewItem.MouseOverSelectedBorderBrush}" />
-                                <Setter Property="TextBlock.Foreground" Value="{DynamicResource TreeViewItem.MouseOverSelectedForeground}" />
+                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedHoverBackground)}" />
+                                <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedHoverBorderBrush)}" />
+                                <Setter Property="TextBlock.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.SelectedHoverForeground)}" />
                             </MultiTrigger.Setters>
                         </MultiTrigger>
                         <MultiTrigger>
@@ -152,9 +157,9 @@
                                 <Condition Property="IsSelectionActive" Value="False" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter Property="Background" Value="{DynamicResource TreeViewItem.InactiveBackground}" />
-                                <Setter Property="BorderBrush" Value="{DynamicResource TreeViewItem.InactiveBorderBrush}" />
-                                <Setter Property="TextElement.Foreground" Value="{DynamicResource TreeViewItem.InactiveForeground}" />
+                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.InactiveSelectionMouseOverBackground)}" />
+                                <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.InactiveSelectionMouseOverBorderBrush)}" />
+                                <Setter Property="TextBlock.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.InactiveSelectionMouseOverForeground)}" />
                             </MultiTrigger.Setters>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>

@@ -169,6 +169,24 @@ public class UIElementHelper
         DependencyProperty.RegisterAttached("SelectedHoverBorderBrush", typeof(Brush), typeof(UIElementHelper));
 
     /// <summary>
+    /// DependencyProperty for the inactive background color when the selected element is hovered over.
+    /// </summary>
+    public static readonly DependencyProperty InactiveSelectionMouseOverBackgroundProperty =
+        DependencyProperty.RegisterAttached("InactiveSelectionMouseOverBackground", typeof(Brush), typeof(UIElementHelper));
+
+    /// <summary>
+    /// DependencyProperty for the inactive foreground color when the selected element is hovered over.
+    /// </summary>
+    public static readonly DependencyProperty InactiveSelectionMouseOverForegroundProperty =
+        DependencyProperty.RegisterAttached("InactiveSelectionMouseOverForeground", typeof(Brush), typeof(UIElementHelper));
+
+    /// <summary>
+    /// DependencyProperty for the inactive border brush when the selected element is hovered over.
+    /// </summary>
+    public static readonly DependencyProperty InactiveSelectionMouseOverBorderBrushProperty =
+        DependencyProperty.RegisterAttached("InactiveSelectionMouseOverBorderBrush", typeof(Brush), typeof(UIElementHelper));
+
+    /// <summary>
     /// DependencyProperty for the background color when the selected element is not focused.
     /// </summary>
     public static readonly DependencyProperty SelectedNoFocusedBackgroundProperty =
@@ -788,6 +806,66 @@ public class UIElementHelper
     public static void SetSelectedHoverBorderBrush(UIElement element, Brush value)
     {
         element.SetValue(SelectedHoverBorderBrushProperty, value);
+    }
+
+    /// <summary>
+    /// Sets the inactive background brush for the specified UIElement when it is hovered over.
+    /// </summary>
+    /// <param name="element">The UIElement to set the inactive hover background for.</param>
+    /// <param name="value">The Brush to use as the inactive hover background.</param>
+    public static void SetInactiveSelectionMouseOverBackground(UIElement element, Brush value)
+    {
+        element.SetValue(InactiveSelectionMouseOverBackgroundProperty, value);
+    }
+
+    /// <summary>
+    /// Gets the inactive background brush for the specified UIElement when it is hovered over.
+    /// </summary>
+    /// <param name="element">The UIElement to get the inactive hover background from.</param>
+    /// <returns>The Brush used as the inactive hover background.</returns>
+    public static Brush GetInactiveSelectionMouseOverBackground(UIElement element)
+    {
+        return (Brush)element.GetValue(InactiveSelectionMouseOverBackgroundProperty);
+    }
+
+    /// <summary>
+    /// Sets the inactive foreground brush for the specified UIElement when it is hovered over.
+    /// </summary>
+    /// <param name="element">The UIElement to set the inactive hover foreground for.</param>
+    /// <param name="value">The Brush to use as the inactive hover foreground.</param>
+    public static void SetInactiveSelectionMouseOverForeground(UIElement element, Brush value)
+    {
+        element.SetValue(InactiveSelectionMouseOverForegroundProperty, value);
+    }
+
+    /// <summary>
+    /// Gets the inactive foreground brush for the specified UIElement when it is hovered over.
+    /// </summary>
+    /// <param name="element">The UIElement to get the inactive hover foreground from.</param>
+    /// <returns>The Brush used as the inactive hover foreground.</returns>
+    public static Brush GetInactiveSelectionMouseOverForeground(UIElement element)
+    {
+        return (Brush)element.GetValue(InactiveSelectionMouseOverForegroundProperty);
+    }
+
+    /// <summary>
+    /// Sets the inactive border brush for the specified UIElement when it is hovered over.
+    /// </summary>
+    /// <param name="element">The UIElement to set the inactive hover border brush for.</param>
+    /// <param name="value">The Brush to use as the inactive hover border brush.</param>
+    public static void SetInactiveSelectionMouseOverBorderBrush(UIElement element, Brush value)
+    {
+        element.SetValue(InactiveSelectionMouseOverBorderBrushProperty, value);
+    }
+
+    /// <summary>
+    /// Gets the inactive border brush for the specified UIElement when it is hovered over.
+    /// </summary>
+    /// <param name="element">The UIElement to get the inactive hover border brush from.</param>
+    /// <returns>The Brush used as the inactive hover border brush.</returns>
+    public static Brush GetInactiveSelectionMouseOverBorderBrush(UIElement element)
+    {
+        return (Brush)element.GetValue(InactiveSelectionMouseOverBorderBrushProperty);
     }
 
     /// <summary>
