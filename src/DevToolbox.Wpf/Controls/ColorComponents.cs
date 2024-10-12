@@ -6,6 +6,7 @@ using System.Windows.Media;
 using ColorSpace.Net;
 using ColorSpace.Net.Colors;
 using ColorSpace.Net.Convert;
+using DevToolbox.Wpf.Media;
 
 namespace DevToolbox.Wpf.Controls;
 

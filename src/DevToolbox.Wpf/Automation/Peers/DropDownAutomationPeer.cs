@@ -1,7 +1,8 @@
 ﻿using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
+using DevToolbox.Wpf.Controls;
 
-namespace DevToolbox.Wpf.Controls.Automation.Peers;
+namespace DevToolbox.Wpf.Automation.Peers;
 
 /// <summary>
 /// Provides UI Automation support for the custom DropDown control.
@@ -38,18 +39,18 @@ public class DropDownAutomationPeer : FrameworkElementAutomationPeer, IInvokePro
     /// </summary>
     public void Invoke()
     {
-        if (DropDownControl != null)
+        if (DropDownControl is null)
         {
-            if (DropDownControl.IsOpen)
-            {
-                // Close the DropDown
-                DropDownControl.IsOpen = false;
-            }
-            else
-            {
-                // Open the DropDown
-                DropDownControl.IsOpen = true;
-            }
+            return;
+        }
+
+        if (DropDownControl.IsOpen)
+        {
+            DropDownControl.IsOpen = false;
+        }
+        else
+        {
+            DropDownControl.IsOpen = true;
         }
     }
 }

@@ -15,62 +15,47 @@ public partial class ColorChip : Control
     #region Fields/Consts
 
     /// <summary>
-    /// Command for switching primary and secondary colors.
-    /// </summary>
-    private static readonly RoutedUICommand _switchColorsCommand = new(nameof(SwitchColorsCommand), nameof(SwitchColorsCommand), typeof(ColorChip));
-
-    /// <summary>
-    /// Command for resetting colors to their default values.
-    /// </summary>
-    private static readonly RoutedUICommand _resetColorsCommand = new(nameof(ResetColorsCommand), nameof(ResetColorsCommand), typeof(ColorChip));
-
-    /// <summary>
-    /// Command for showing the color picker dialog to change the primary color.
-    /// </summary>
-    private static readonly RoutedUICommand _showDialogCommand = new(nameof(ShowDialogCommand), nameof(ShowDialogCommand), typeof(ColorChip));
-
-    /// <summary>
     /// Dependency property for the primary color of the color chip.
     /// </summary>
     public static readonly DependencyProperty PrimaryColorProperty =
-        DependencyProperty.Register("PrimaryColor", typeof(Color), typeof(ColorChip), new PropertyMetadata(Colors.Black));
+        DependencyProperty.Register(nameof(PrimaryColor), typeof(Color), typeof(ColorChip), new PropertyMetadata(Colors.Black));
 
     /// <summary>
     /// Dependency property for the default primary color.
     /// </summary>
     public static readonly DependencyProperty PrimaryDefaultColorProperty =
-        DependencyProperty.Register("PrimaryDefaultColor", typeof(Color), typeof(ColorChip), new PropertyMetadata(Colors.Black));
+        DependencyProperty.Register(nameof(PrimaryDefaultColor), typeof(Color), typeof(ColorChip), new PropertyMetadata(Colors.Black));
 
     /// <summary>
     /// Dependency property for the secondary color of the color chip.
     /// </summary>
     public static readonly DependencyProperty SecondaryColorProperty =
-        DependencyProperty.Register("SecondaryColor", typeof(Color), typeof(ColorChip), new PropertyMetadata(Colors.White));
+        DependencyProperty.Register(nameof(SecondaryColor), typeof(Color), typeof(ColorChip), new PropertyMetadata(Colors.White));
 
     /// <summary>
     /// Dependency property for the default secondary color.
     /// </summary>
     public static readonly DependencyProperty SecondaryDefaultColorProperty =
-        DependencyProperty.Register("SecondaryDefaultColor", typeof(Color), typeof(ColorChip), new PropertyMetadata(Colors.White));
+        DependencyProperty.Register(nameof(SecondaryDefaultColor), typeof(Color), typeof(ColorChip), new PropertyMetadata(Colors.White));
+
+    /// <summary>
+    /// Command for switching primary and secondary colors.
+    /// </summary>
+    public static readonly RoutedUICommand SwitchColorsCommand = new(nameof(SwitchColorsCommand), nameof(SwitchColorsCommand), typeof(ColorChip));
+
+    /// <summary>
+    /// Command for resetting colors to their default values.
+    /// </summary>
+    public static readonly RoutedUICommand ResetColorsCommand = new(nameof(ResetColorsCommand), nameof(ResetColorsCommand), typeof(ColorChip));
+
+    /// <summary>
+    /// Command for showing the color picker dialog to change the primary color.
+    /// </summary>
+    public static readonly RoutedUICommand ShowDialogCommand = new(nameof(ShowDialogCommand), nameof(ShowDialogCommand), typeof(ColorChip));
 
     #endregion
 
     #region Properties
-
-    /// <summary>
-    /// Gets the command for switching primary and secondary colors.
-    /// </summary>
-    public static RoutedUICommand SwitchColorsCommand => _switchColorsCommand;
-
-    /// <summary>
-    /// Gets the command for resetting colors to their default values.
-    /// </summary>
-    public static RoutedUICommand ResetColorsCommand => _resetColorsCommand;
-
-    /// <summary>
-    /// Gets the command for showing the color picker dialog.
-    /// </summary>
-    public static RoutedUICommand ShowDialogCommand => _showDialogCommand;
 
     /// <summary>
     /// Gets or sets the primary color of the color chip.
@@ -131,12 +116,18 @@ public partial class ColorChip : Control
     /// <summary>
     /// Executes the switch colors command by swapping the primary and secondary colors.
     /// </summary>
-    private void OnSwitchColorsExecuted(object sender, ExecutedRoutedEventArgs e) => (SecondaryColor, PrimaryColor) = (PrimaryColor, SecondaryColor);
+    private void OnSwitchColorsExecuted(object sender, ExecutedRoutedEventArgs e)
+    {
+        (SecondaryColor, PrimaryColor) = (PrimaryColor, SecondaryColor);
+    }
 
     /// <summary>
     /// Determines if the switch colors command can execute. Always returns true.
     /// </summary>
-    private void OnSwitchColorsCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+    private void OnSwitchColorsCanExecute(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = true;
+    }
 
     /// <summary>
     /// Executes the reset colors command by resetting the primary and secondary colors to their default values.
@@ -150,7 +141,10 @@ public partial class ColorChip : Control
     /// <summary>
     /// Determines if the reset colors command can execute. Always returns true.
     /// </summary>
-    private void OnResetColorsCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+    private void OnResetColorsCanExecute(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = true;
+    }
 
     /// <summary>
     /// Executes the show dialog command, opens a color picker dialog, and updates the primary color if a new color is selected.
@@ -169,7 +163,10 @@ public partial class ColorChip : Control
     /// <summary>
     /// Determines if the show dialog command can execute. Always returns true.
     /// </summary>
-    private void OnShowDialogCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+    private void OnShowDialogCanExecute(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = true;
+    }
 
     #endregion
 }

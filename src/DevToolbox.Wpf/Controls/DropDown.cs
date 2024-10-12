@@ -8,7 +8,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using DevToolbox.Wpf.Controls.Automation.Peers;
+using DevToolbox.Wpf.Automation.Peers;
 using DevToolbox.Wpf.Interop;
 using DevToolbox.Wpf.Utils;
 
