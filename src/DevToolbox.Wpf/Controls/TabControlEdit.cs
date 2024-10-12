@@ -47,79 +47,79 @@ public class TabControlEdit : TabControl
     /// Dependency property for the TabPanel view mode.
     /// </summary>
     public static readonly DependencyProperty TabPanelViewModeProperty =
-        DependencyProperty.Register("TabPanelViewMode", typeof(TabPanelViewMode), typeof(TabControlEdit), new PropertyMetadata());
+        DependencyProperty.Register(nameof(TabPanelViewMode), typeof(TabPanelViewMode), typeof(TabControlEdit), new PropertyMetadata());
 
     /// <summary>
     /// Dependency property for the style of the close tab control button.
     /// </summary>
     public static readonly DependencyProperty CloseTabControlButtonStyleProperty =
-        DependencyProperty.Register("CloseTabControlButtonStyle", typeof(Style), typeof(TabControlEdit));
+        DependencyProperty.Register(nameof(CloseTabControlButtonStyle), typeof(Style), typeof(TabControlEdit));
 
     /// <summary>
     /// Dependency property for the style of the swap tabs button.
     /// </summary>
     public static readonly DependencyProperty SwapTabsButtonStyleProperty =
-        DependencyProperty.Register("SwapTabsButtonStyle", typeof(Style), typeof(TabControlEdit));
+        DependencyProperty.Register(nameof(SwapTabsButtonStyle), typeof(Style), typeof(TabControlEdit));
 
     /// <summary>
     /// Dependency property for the style of the add tab button.
     /// </summary>
     public static readonly DependencyProperty AddTabButtonStyleProperty =
-        DependencyProperty.Register("AddTabButtonStyle", typeof(Style), typeof(TabControlEdit));
+        DependencyProperty.Register(nameof(AddTabButtonStyle), typeof(Style), typeof(TabControlEdit));
 
     /// <summary>
     /// Dependency property for the mode in which close buttons are shown.
     /// </summary>
     public static readonly DependencyProperty CloseButtonShowModeProperty =
-        DependencyProperty.Register("CloseButtonShowMode", typeof(CloseButtonShowMode), typeof(TabControlEdit), new PropertyMetadata(CloseButtonShowMode.InAllTabs));
+        DependencyProperty.Register(nameof(CloseButtonShowMode), typeof(CloseButtonShowMode), typeof(TabControlEdit), new PropertyMetadata(CloseButtonShowMode.InAllTabs));
 
     /// <summary>
     /// Dependency property indicating whether the add tab button should be displayed.
     /// </summary>
     public static readonly DependencyProperty ShowAddTabButtonProperty =
-        DependencyProperty.Register("ShowAddTabButton", typeof(bool), typeof(TabControlEdit), new PropertyMetadata(true));
+        DependencyProperty.Register(nameof(ShowAddTabButton), typeof(bool), typeof(TabControlEdit), new PropertyMetadata(true));
 
     /// <summary>
     /// Dependency property for the visibility mode of the swap tabs button.
     /// </summary>
     public static readonly DependencyProperty SwapTabsButtonShowModeProperty =
-        DependencyProperty.Register("SwapTabsButtonShowMode", typeof(SwapTabsButtonShowMode), typeof(TabControlEdit), new PropertyMetadata(SwapTabsButtonShowMode.Visible));
+        DependencyProperty.Register(nameof(SwapTabsButtonShowMode), typeof(SwapTabsButtonShowMode), typeof(TabControlEdit), new PropertyMetadata(SwapTabsButtonShowMode.Visible));
 
     /// <summary>
     /// Dependency property for the horizontal alignment of the tab panel.
     /// </summary>
     public static readonly DependencyProperty TabPanelHorizontalAlignmentProperty =
-        DependencyProperty.Register("TabPanelHorizontalAlignment", typeof(HorizontalAlignment), typeof(TabControlEdit));
+        DependencyProperty.Register(nameof(TabPanelHorizontalAlignment), typeof(HorizontalAlignment), typeof(TabControlEdit));
 
     /// <summary>
     /// Dependency property for the vertical alignment of the tab panel.
     /// </summary>
     public static readonly DependencyProperty TabPanelVerticalAlignmentProperty =
-        DependencyProperty.Register("TabPanelVerticalAlignment", typeof(VerticalAlignment), typeof(TabControlEdit));
+        DependencyProperty.Register(nameof(TabPanelVerticalAlignment), typeof(VerticalAlignment), typeof(TabControlEdit));
 
     /// <summary>
     /// Dependency property for the style of the tab left scroll button.
     /// </summary>
     public static readonly DependencyProperty TabLeftScrollButtonStyleProperty =
-        DependencyProperty.Register("TabLeftScrollButtonStyle", typeof(Style), typeof(TabControlEdit));
+        DependencyProperty.Register(nameof(TabLeftScrollButtonStyle), typeof(Style), typeof(TabControlEdit));
 
     /// <summary>
     /// Dependency property for the style of the tab bottom left scroll button.
     /// </summary>
     public static readonly DependencyProperty TabBottomScrollButtonStyleProperty =
-        DependencyProperty.Register("TabBottomScrollButtonStyle", typeof(Style), typeof(TabControlEdit));
+        DependencyProperty.Register(nameof(TabBottomScrollButtonStyle), typeof(Style), typeof(TabControlEdit));
 
     /// <summary>
     /// Dependency property for the style of the tab top scroll button.
     /// </summary>
     public static readonly DependencyProperty TabTopScrollButtonStyleProperty =
-        DependencyProperty.Register("TabTopScrollButtonStyle", typeof(Style), typeof(TabControlEdit));
+        DependencyProperty.Register(nameof(TabTopScrollButtonStyle), typeof(Style), typeof(TabControlEdit));
 
     /// <summary>
     /// Dependency property for the style of the tab right scroll button.
     /// </summary>
     public static readonly DependencyProperty TabRightScrollButtonStyleProperty =
-        DependencyProperty.Register("TabRightScrollButtonStyle", typeof(Style), typeof(TabControlEdit));
+        DependencyProperty.Register(nameof(TabRightScrollButtonStyle), typeof(Style), typeof(TabControlEdit));
 
     #endregion
 

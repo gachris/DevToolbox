@@ -2,7 +2,7 @@
 using System.Windows.Interop;
 using System.Windows.Markup;
 
-namespace DevToolbox.Wpf.MarkupExtensions;
+namespace DevToolbox.Wpf.Markup;
 
 /// <summary>
 /// An abstract base class for theme resource extensions used in XAML.

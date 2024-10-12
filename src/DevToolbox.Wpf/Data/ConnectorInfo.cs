@@ -1,6 +1,7 @@
 ﻿using System.Windows;
+using DevToolbox.Wpf.Controls;
 
-namespace DevToolbox.Wpf.Controls;
+namespace DevToolbox.Wpf.Data;
 
 /// <summary>
 /// Represents information about a connector, including its position, size, and orientation 

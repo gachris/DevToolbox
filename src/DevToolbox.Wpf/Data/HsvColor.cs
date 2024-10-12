@@ -1,6 +1,4 @@
-﻿using DevToolbox.Wpf.Mvvm;
-
-namespace DevToolbox.Wpf.Media;
+﻿namespace DevToolbox.Wpf.Data;
 
 internal class HsvColor : NotifyPropertyChanged
 {

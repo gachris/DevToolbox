@@ -36,8 +36,8 @@ public class DesignLayer : ContentControl, ISelectable, IGroupable
     /// <summary>
     /// Dependency property for the layer's position (read-only).
     /// </summary>
-    private static readonly DependencyPropertyKey PositionPropertyKey = DependencyProperty.RegisterReadOnly(
-        nameof(Position), typeof(Point), typeof(DesignLayer), new FrameworkPropertyMetadata(default));
+    private static readonly DependencyPropertyKey PositionPropertyKey =
+        DependencyProperty.RegisterReadOnly(nameof(Position), typeof(Point), typeof(DesignLayer), new FrameworkPropertyMetadata(default));
 
     /// <summary>
     /// Public dependency property for the layer's position.
@@ -47,32 +47,32 @@ public class DesignLayer : ContentControl, ISelectable, IGroupable
     /// <summary>
     /// Dependency property to control whether dragging is allowed.
     /// </summary>
-    public static readonly DependencyProperty AllowDragProperty = DependencyProperty.Register(
-        nameof(AllowDrag), typeof(bool), typeof(DesignLayer), new FrameworkPropertyMetadata(true));
+    public static readonly DependencyProperty AllowDragProperty =
+        DependencyProperty.Register(nameof(AllowDrag), typeof(bool), typeof(DesignLayer), new FrameworkPropertyMetadata(true));
 
     /// <summary>
     /// Dependency property to indicate if the layer is selected.
     /// </summary>
-    public static readonly DependencyProperty IsSelectedProperty = Selector.IsSelectedProperty.AddOwner(
-        typeof(DesignLayer), new FrameworkPropertyMetadata(false, (d, e) => (d as DesignLayer)?.OnIsSelectedChanged(e)));
+    public static readonly DependencyProperty IsSelectedProperty =
+        Selector.IsSelectedProperty.AddOwner(typeof(DesignLayer), new FrameworkPropertyMetadata(false, (d, e) => (d as DesignLayer)?.OnIsSelectedChanged(e)));
 
     /// <summary>
     /// Dependency property for the parent layer's ID.
     /// </summary>
-    public static readonly DependencyProperty ParentIDProperty = DependencyProperty.Register(
-        nameof(ParentID), typeof(Guid), typeof(DesignLayer));
+    public static readonly DependencyProperty ParentIDProperty =
+        DependencyProperty.Register(nameof(ParentID), typeof(Guid), typeof(DesignLayer));
 
     /// <summary>
     /// Dependency property to indicate if the layer is a group.
     /// </summary>
-    public static readonly DependencyProperty IsGroupProperty = DependencyProperty.Register(
-        nameof(IsGroup), typeof(bool), typeof(DesignLayer));
+    public static readonly DependencyProperty IsGroupProperty =
+        DependencyProperty.Register(nameof(IsGroup), typeof(bool), typeof(DesignLayer));
 
     /// <summary>
     /// Dependency property for the resize decorator template.
     /// </summary>
-    public static readonly DependencyProperty ResizeDecoratorTemplateProperty = DependencyProperty.Register(
-        nameof(ResizeDecoratorTemplate), typeof(ControlTemplate), typeof(DesignLayer));
+    public static readonly DependencyProperty ResizeDecoratorTemplateProperty = 
+        DependencyProperty.Register(nameof(ResizeDecoratorTemplate), typeof(ControlTemplate), typeof(DesignLayer));
 
     #endregion
 

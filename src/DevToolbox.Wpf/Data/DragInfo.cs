@@ -1,19 +1,19 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 
-namespace DevToolbox.Wpf.Controls;
+namespace DevToolbox.Wpf.Data;
 
-internal class DragItemInfo
+internal class DragInfo
 {
-    public DesignLayer Item { get; }
+    public UIElement Element { get; }
 
     public Point StartPosition { get; }
 
     public Transform Transform { get; }
 
-    public DragItemInfo(DesignLayer item, Point startPosition, Transform rotateTransform)
+    public DragInfo(UIElement element, Point startPosition, Transform rotateTransform)
     {
-        Item = item;
+        Element = element;
         StartPosition = startPosition;
         Transform = rotateTransform;
     }

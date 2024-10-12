@@ -2,7 +2,7 @@
 using System.Windows;
 using DevToolbox.Wpf.Helpers;
 
-namespace DevToolbox.Wpf.Controls;
+namespace DevToolbox.Wpf.Data;
 
 internal class UndoRedoStackItem : IEquatable<UndoRedoStackItem>
 {

@@ -24,7 +24,7 @@ public partial class TabPanelEdit : TabPanel
     /// Dependency property for specifying the view mode of the tab panel.
     /// </summary>
     public static readonly DependencyProperty TabPanelViewModeProperty =
-        DependencyProperty.Register("TabPanelViewMode", typeof(TabPanelViewMode), typeof(TabPanelEdit), new FrameworkPropertyMetadata((d, e) => (d as TabPanelEdit)?.OnTabPanelViewModeChanged(e)));
+        DependencyProperty.Register(nameof(TabPanelViewMode), typeof(TabPanelViewMode), typeof(TabPanelEdit), new FrameworkPropertyMetadata((d, e) => (d as TabPanelEdit)?.OnTabPanelViewModeChanged(e)));
 
     #endregion
 

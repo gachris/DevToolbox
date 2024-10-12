@@ -7,6 +7,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using DevToolbox.Wpf.Data;
 using DevToolbox.Wpf.Documents;
 using DevToolbox.Wpf.Extensions;
 using DevToolbox.Wpf.Helpers;
@@ -643,8 +644,6 @@ public partial class ZoomAndPanControl : ContentControl, IScrollInfo
 
     #endregion
 
-    #region Constructor
-
     /// <summary>
     /// Static constructor to define metadata for the control (and link it to the style in Generic.xaml).
     /// </summary>
@@ -681,8 +680,6 @@ public partial class ZoomAndPanControl : ContentControl, IScrollInfo
     public ZoomAndPanControl()
     {
     }
-
-    #endregion
 
     #region Methods Override
 

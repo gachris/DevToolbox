@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace DevToolbox.Wpf.Mvvm;
+namespace DevToolbox.Wpf.Data;
 
 internal abstract class NotifyPropertyChanged : INotifyPropertyChanged, INotifyDataErrorInfo
 {

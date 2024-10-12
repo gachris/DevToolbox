@@ -12,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Xml.Linq;
+using DevToolbox.Wpf.Data;
 using DevToolbox.Wpf.Documents;
 using DevToolbox.Wpf.Extensions;
 using Microsoft.Win32;
@@ -43,7 +44,7 @@ public partial class DesignCanvas : MultiSelector
     private static readonly Dictionary<string, DesignCanvas?> _focusedAreas;
 
     private readonly LassoAdorner _lassoAdorner;
-    private readonly List<DragItemInfo> _dragItems = [];
+    private readonly List<DragInfo> _dragItems = [];
 
     private bool _draggStarted;
     private bool _isDragging;
@@ -743,8 +744,8 @@ public partial class DesignCanvas : MultiSelector
                     if (item.Transform != null)
                         currentPosition = item.Transform.Transform(currentPosition);
 
-                    Canvas.SetLeft(item.Item, currentPosition.X - item.StartPosition.X);
-                    Canvas.SetTop(item.Item, currentPosition.Y - item.StartPosition.Y);
+                    Canvas.SetLeft(item.Element, currentPosition.X - item.StartPosition.X);
+                    Canvas.SetTop(item.Element, currentPosition.Y - item.StartPosition.Y);
                 }
             }
         }

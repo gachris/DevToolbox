@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace DevToolbox.Wpf.Controls;
+namespace DevToolbox.Wpf.Data;
 
 /// <summary>
 /// Provides functionality for formatting and parsing numeric values.
@@ -64,7 +64,7 @@ public class ValidateNumberFormatter : INumberFormatter, INumberParser
     /// <returns>The parsed unsigned integer if successful; otherwise, null.</returns>
     public uint? ParseUInt(string? value)
     {
-        return uint.TryParse(value, out uint ui) ? ui : (uint?)null;
+        return uint.TryParse(value, out uint ui) ? ui : null;
     }
 
     /// <summary>

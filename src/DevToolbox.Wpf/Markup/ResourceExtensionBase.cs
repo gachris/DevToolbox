@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DevToolbox.Wpf.MarkupExtensions;
+namespace DevToolbox.Wpf.Markup;
 
 /// <summary>
 /// An abstract base class for resource extensions in WPF that inherit from 

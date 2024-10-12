@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Threading;
 
-namespace DevToolbox.Wpf.Controls;
+namespace DevToolbox.Wpf.Data;
 
 internal class KeepAliveTimer
 {

@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using DevToolbox.Wpf.Data;
 using DevToolbox.Wpf.Documents;
 
 namespace DevToolbox.Wpf.Controls;

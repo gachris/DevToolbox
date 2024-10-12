@@ -6,7 +6,7 @@ using System.Windows.Media;
 using ColorSpace.Net;
 using ColorSpace.Net.Colors;
 using ColorSpace.Net.Convert;
-using DevToolbox.Wpf.Media;
+using DevToolbox.Wpf.Data;
 
 namespace DevToolbox.Wpf.Controls;
 
@@ -24,10 +24,10 @@ internal partial class ColorComponents : Control
 
     #region Fields/Consts
 
-    private readonly IColorConverter<Rgb> _rgbConverter_D65_2;
-    private readonly IColorConverter<Cmyk> _cmykConverter_D65_2;
-    private readonly IColorConverter<Lab> _labConverter_D65_2;
-    private readonly IColorConverter<Hsv> _hsvConverter_D65_2;
+    private readonly IColorConverter<Rgb> _rgbConverter;
+    private readonly IColorConverter<Cmyk> _cmykConverter;
+    private readonly IColorConverter<Lab> _labConverter;
+    private readonly IColorConverter<Hsv> _hsvConverter;
 
     private Color _color;
 
@@ -84,26 +84,22 @@ internal partial class ColorComponents : Control
         Hex = new HexColor();
         Hex.PropertyChanged += HexColorChanged;
 
-        _hsvConverter_D65_2 = ConverterBuilder.Create(new ColorConverterOptions() { Illuminant = Illuminants.D65_2 })
+        _hsvConverter = ConverterBuilder.Create(new ColorConverterOptions() { Illuminant = Illuminants.D65_2 })
             .ToColor<Hsv>()
             .Build();
 
-        _rgbConverter_D65_2 = ConverterBuilder.Create(new ColorConverterOptions() { Illuminant = Illuminants.D65_2 })
+        _rgbConverter = ConverterBuilder.Create(new ColorConverterOptions() { Illuminant = Illuminants.D65_2 })
             .ToColor<Rgb>()
             .Build();
 
-        _labConverter_D65_2 = ConverterBuilder.Create(new ColorConverterOptions() { Illuminant = Illuminants.D65_2 })
+        _labConverter = ConverterBuilder.Create(new ColorConverterOptions() { Illuminant = Illuminants.D65_2 })
             .ToColor<Lab>()
             .Build();
 
-        _cmykConverter_D65_2 = ConverterBuilder.Create(new ColorConverterOptions() { Illuminant = Illuminants.D65_2 })
+        _cmykConverter = ConverterBuilder.Create(new ColorConverterOptions() { Illuminant = Illuminants.D65_2 })
             .ToColor<Cmyk>()
             .Build();
     }
-
-    #region Methods Override
-
-    #endregion
 
     #region Methods
 
@@ -173,9 +169,9 @@ internal partial class ColorComponents : Control
         _colorUpdating = true;
 
         var rgb = ColorSpace.Net.Colors.Rgb.FromRgb(color.R, color.G, color.B);
-        var hsv = _hsvConverter_D65_2.ConvertFrom(rgb);
-        var lab = _labConverter_D65_2.ConvertFrom(rgb);
-        var cmyk = _cmykConverter_D65_2.ConvertFrom(rgb);
+        var hsv = _hsvConverter.ConvertFrom(rgb);
+        var lab = _labConverter.ConvertFrom(rgb);
+        var cmyk = _cmykConverter.ConvertFrom(rgb);
 
         if (colorSourceChange is not ColorSourceChange.FromHsv)
         {
@@ -237,7 +233,7 @@ internal partial class ColorComponents : Control
             return;
 
         var hsv = ColorSpace.Net.Colors.Hsv.FromHsv(Hsv.Hue, Hsv.Saturation / 100m, Hsv.Value / 100m);
-        var rgb = _rgbConverter_D65_2.ConvertFrom(hsv);
+        var rgb = _rgbConverter.ConvertFrom(hsv);
         var color = Color.FromArgb(Color.A, rgb.R, rgb.G, rgb.B);
         UpdateFromColor(color, ColorSourceChange.FromHsv);
     }
@@ -258,7 +254,7 @@ internal partial class ColorComponents : Control
             return;
 
         var lab = ColorSpace.Net.Colors.Lab.FromLab(Lab.Lightness, Lab.A, Lab.B);
-        var rgb = _rgbConverter_D65_2.ConvertFrom(lab);
+        var rgb = _rgbConverter.ConvertFrom(lab);
         var color = Color.FromArgb(Color.A, rgb.R, rgb.G, rgb.B);
         UpdateFromColor(color, ColorSourceChange.FromLab);
     }
@@ -269,7 +265,7 @@ internal partial class ColorComponents : Control
             return;
 
         var cmyk = ColorSpace.Net.Colors.Cmyk.FromCmyk(Cmyk.Cyan / 100m, Cmyk.Magenta / 100m, Cmyk.Yellow / 100m, Cmyk.Key / 100m);
-        var rgb = _rgbConverter_D65_2.ConvertFrom(cmyk);
+        var rgb = _rgbConverter.ConvertFrom(cmyk);
         var color = Color.FromArgb(Color.A, rgb.R, rgb.G, rgb.B);
         UpdateFromColor(color, ColorSourceChange.FromCmyk);
     }

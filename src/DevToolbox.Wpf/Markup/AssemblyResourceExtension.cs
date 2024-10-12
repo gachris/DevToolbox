@@ -1,4 +1,4 @@
-﻿namespace DevToolbox.Wpf.MarkupExtensions;
+﻿namespace DevToolbox.Wpf.Markup;
 
 /// <summary>
 /// A sealed class that extends <see cref="ResourceExtensionBase"/> to provide 

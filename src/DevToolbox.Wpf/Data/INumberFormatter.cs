@@ -1,4 +1,4 @@
-﻿namespace DevToolbox.Wpf.Controls;
+﻿namespace DevToolbox.Wpf.Data;
 
 /// <summary>
 /// Defines an interface for formatting numeric values as strings.
