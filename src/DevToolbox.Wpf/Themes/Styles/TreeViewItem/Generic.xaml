@@ -92,7 +92,7 @@
                                     Style="{StaticResource TreeViewItem.ToggleButtonStyle}" />
                                 <ContentPresenter
                                     x:Name="PART_Header"
-                                    Grid.Column="2"
+                                    Grid.Column="1"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
                                     ContentSource="Header"
@@ -126,18 +126,18 @@
                             <Setter TargetName="PART_Header" Property="MinHeight" Value="19" />
                         </MultiTrigger>
                         <Trigger SourceName="PART_Border" Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBackground)}" />
-                            <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBorderBrush)}" />
+                            <Setter TargetName="PART_Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBackground)}" />
+                            <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBorderBrush)}" />
                             <Setter Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.MouseOverForeground)}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedBackground)}" />
-                            <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedBorderBrush)}" />
+                            <Setter TargetName="PART_Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedBackground)}" />
+                            <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedBorderBrush)}" />
                             <Setter Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.SelectedForeground)}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBackground)}" />
-                            <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBorderBrush)}" />
+                            <Setter TargetName="PART_Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBackground)}" />
+                            <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBorderBrush)}" />
                             <Setter Property="TextBlock.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.DisabledForeground)}" />
                         </Trigger>
                         <MultiTrigger>
@@ -146,8 +146,8 @@
                                 <Condition SourceName="PART_Border" Property="IsMouseOver" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedHoverBackground)}" />
-                                <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedHoverBorderBrush)}" />
+                                <Setter TargetName="PART_Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedHoverBackground)}" />
+                                <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedHoverBorderBrush)}" />
                                 <Setter Property="TextBlock.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.SelectedHoverForeground)}" />
                             </MultiTrigger.Setters>
                         </MultiTrigger>
@@ -157,8 +157,8 @@
                                 <Condition Property="IsSelectionActive" Value="False" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.InactiveSelectionMouseOverBackground)}" />
-                                <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.InactiveSelectionMouseOverBorderBrush)}" />
+                                <Setter TargetName="PART_Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.InactiveSelectionMouseOverBackground)}" />
+                                <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.InactiveSelectionMouseOverBorderBrush)}" />
                                 <Setter Property="TextBlock.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.InactiveSelectionMouseOverForeground)}" />
                             </MultiTrigger.Setters>
                         </MultiTrigger>

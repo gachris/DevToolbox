@@ -18,4 +18,21 @@ internal static class DependencyObjectExtensions
         }
         return default;
     }
+
+    public static T? GetVisualChild<T>(DependencyObject parent) where T : Visual
+    {
+        var child = default(T);
+        var numVisuals = VisualTreeHelper.GetChildrenCount(parent);
+        for (var i = 0; i < numVisuals; i++)
+        {
+            var v = (Visual)VisualTreeHelper.GetChild(parent, i);
+            child = v as T;
+            child ??= GetVisualChild<T>(v);
+            if (child != null)
+            {
+                break;
+            }
+        }
+        return child;
+    }
 }

@@ -17,7 +17,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Remove="Assets\default_back.png" />
 		<None Remove="Assets\icon.ico" />
+		<None Remove="Assets\photo_1.jpg" />
+		<None Remove="Assets\photo_2.jpg" />
 		<None Remove="examples.json" />
 	</ItemGroup>
 
@@ -36,6 +39,7 @@
 	  <Page Remove="Examples\Collections\TreeView\SimpleTreeView.xaml" />
 	  <Page Remove="Examples\DateAndTime\Calendar\SimpleCalendar.xaml" />
 	  <Page Remove="Examples\DateAndTime\DatePicker\SimpleDatePicker.xaml" />
+	  <Page Remove="Examples\Layout\DesignCanvas\SimpleDesignCanvas.xaml" />
 	  <Page Remove="Examples\Layout\Expander\SimpleExpander.xaml" />
 	  <Page Remove="Examples\Layout\GroupBox\SimpleGroupBox.xaml" />
 	  <Page Remove="Examples\Layout\SpeechBalloon\SimpleSpeechBalloon.xaml" />
@@ -136,6 +140,11 @@
 	    <SubType>Designer</SubType>
 	    <Generator>MSBuild:Compile</Generator>
 	  </Content>
+	  <Content Include="Examples\Layout\DesignCanvas\SimpleDesignCanvas.xaml">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <SubType>Designer</SubType>
+	    <Generator>MSBuild:Compile</Generator>
+	  </Content>
 	  <Content Include="Examples\Layout\SplitView\SimpleSplitView.xaml">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	    <SubType>Designer</SubType>
@@ -199,7 +208,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Resource Include="Assets\default_back.png" />
 		<Resource Include="Assets\icon.ico" />
+		<Resource Include="Assets\photo_1.jpg" />
+		<Resource Include="Assets\photo_2.jpg" />
 		<EmbeddedResource Include="examples.json">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</EmbeddedResource>

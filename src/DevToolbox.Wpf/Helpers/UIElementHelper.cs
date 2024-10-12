@@ -16,247 +16,247 @@ public class UIElementHelper
     /// DependencyProperty for the background color when the element is pressed.
     /// </summary>
     public static readonly DependencyProperty PressedBackgroundProperty =
-        DependencyProperty.RegisterAttached("PressedBackground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("PressedBackground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the foreground color when the element is pressed.
     /// </summary>
     public static readonly DependencyProperty PressedForegroundProperty =
-        DependencyProperty.RegisterAttached("PressedForeground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("PressedForeground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the border brush when the element is pressed.
     /// </summary>
     public static readonly DependencyProperty PressedBorderBrushProperty =
-        DependencyProperty.RegisterAttached("PressedBorderBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("PressedBorderBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the background color when the mouse is over the element.
     /// </summary>
     public static readonly DependencyProperty MouseOverBackgroundProperty =
-        DependencyProperty.RegisterAttached("MouseOverBackground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("MouseOverBackground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the foreground color when the mouse is over the element.
     /// </summary>
     public static readonly DependencyProperty MouseOverForegroundProperty =
-        DependencyProperty.RegisterAttached("MouseOverForeground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("MouseOverForeground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the border brush when the mouse is over the element.
     /// </summary>
     public static readonly DependencyProperty MouseOverBorderBrushProperty =
-        DependencyProperty.RegisterAttached("MouseOverBorderBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("MouseOverBorderBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the background color when the element is disabled.
     /// </summary>
     public static readonly DependencyProperty DisabledBackgroundProperty =
-        DependencyProperty.RegisterAttached("DisabledBackground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("DisabledBackground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the foreground color when the element is disabled.
     /// </summary>
     public static readonly DependencyProperty DisabledForegroundProperty =
-        DependencyProperty.RegisterAttached("DisabledForeground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("DisabledForeground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the border brush when the element is disabled.
     /// </summary>
     public static readonly DependencyProperty DisabledBorderBrushProperty =
-        DependencyProperty.RegisterAttached("DisabledBorderBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("DisabledBorderBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the corner radius of the element.
     /// </summary>
     public static readonly DependencyProperty CornerRadiusProperty =
-        DependencyProperty.RegisterAttached("CornerRadius", typeof(CornerRadius), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("CornerRadius", typeof(CornerRadius), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the effect to be applied to popups.
     /// </summary>
     public static readonly DependencyProperty PopupEffectProperty =
-        DependencyProperty.RegisterAttached("PopupEffect", typeof(Effect), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("PopupEffect", typeof(Effect), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the background color of popups.
     /// </summary>
     public static readonly DependencyProperty PopupBackgroundProperty =
-        DependencyProperty.RegisterAttached("PopupBackground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("PopupBackground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the foreground color of popups.
     /// </summary>
     public static readonly DependencyProperty PopupForegroundProperty =
-        DependencyProperty.RegisterAttached("PopupForeground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("PopupForeground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the border brush of popups.
     /// </summary>
     public static readonly DependencyProperty PopupBorderBrushProperty =
-        DependencyProperty.RegisterAttached("PopupBorderBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("PopupBorderBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the background color when the element is focused.
     /// </summary>
     public static readonly DependencyProperty FocusedBackgroundProperty =
-        DependencyProperty.RegisterAttached("FocusedBackground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("FocusedBackground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the foreground color when the element is focused.
     /// </summary>
     public static readonly DependencyProperty FocusedForegroundProperty =
-        DependencyProperty.RegisterAttached("FocusedForeground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("FocusedForeground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the border brush when the element is focused.
     /// </summary>
     public static readonly DependencyProperty FocusedBorderBrushProperty =
-        DependencyProperty.RegisterAttached("FocusedBorderBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("FocusedBorderBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the background color when the mouse hovers over the element.
     /// </summary>
     public static readonly DependencyProperty HoverBackgroundProperty =
-        DependencyProperty.RegisterAttached("HoverBackground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("HoverBackground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the foreground color when the mouse hovers over the element.
     /// </summary>
     public static readonly DependencyProperty HoverForegroundProperty =
-        DependencyProperty.RegisterAttached("HoverForeground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("HoverForeground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the border brush when the mouse hovers over the element.
     /// </summary>
     public static readonly DependencyProperty HoverBorderBrushProperty =
-        DependencyProperty.RegisterAttached("HoverBorderBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("HoverBorderBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the background color when the element is selected.
     /// </summary>
     public static readonly DependencyProperty SelectedBackgroundProperty =
-        DependencyProperty.RegisterAttached("SelectedBackground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("SelectedBackground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the foreground color when the element is selected.
     /// </summary>
     public static readonly DependencyProperty SelectedForegroundProperty =
-        DependencyProperty.RegisterAttached("SelectedForeground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("SelectedForeground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the border brush when the element is selected.
     /// </summary>
     public static readonly DependencyProperty SelectedBorderBrushProperty =
-        DependencyProperty.RegisterAttached("SelectedBorderBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("SelectedBorderBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the background color when the selected element is hovered over.
     /// </summary>
     public static readonly DependencyProperty SelectedHoverBackgroundProperty =
-        DependencyProperty.RegisterAttached("SelectedHoverBackground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("SelectedHoverBackground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the foreground color when the selected element is hovered over.
     /// </summary>
     public static readonly DependencyProperty SelectedHoverForegroundProperty =
-        DependencyProperty.RegisterAttached("SelectedHoverForeground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("SelectedHoverForeground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the border brush when the selected element is hovered over.
     /// </summary>
     public static readonly DependencyProperty SelectedHoverBorderBrushProperty =
-        DependencyProperty.RegisterAttached("SelectedHoverBorderBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("SelectedHoverBorderBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the inactive background color when the selected element is hovered over.
     /// </summary>
     public static readonly DependencyProperty InactiveSelectionMouseOverBackgroundProperty =
-        DependencyProperty.RegisterAttached("InactiveSelectionMouseOverBackground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("InactiveSelectionMouseOverBackground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the inactive foreground color when the selected element is hovered over.
     /// </summary>
     public static readonly DependencyProperty InactiveSelectionMouseOverForegroundProperty =
-        DependencyProperty.RegisterAttached("InactiveSelectionMouseOverForeground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("InactiveSelectionMouseOverForeground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the inactive border brush when the selected element is hovered over.
     /// </summary>
     public static readonly DependencyProperty InactiveSelectionMouseOverBorderBrushProperty =
-        DependencyProperty.RegisterAttached("InactiveSelectionMouseOverBorderBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("InactiveSelectionMouseOverBorderBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the background color when the selected element is not focused.
     /// </summary>
     public static readonly DependencyProperty SelectedNoFocusedBackgroundProperty =
-        DependencyProperty.RegisterAttached("SelectedNoFocusedBackground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("SelectedNoFocusedBackground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the foreground color when the selected element is not focused.
     /// </summary>
     public static readonly DependencyProperty SelectedNoFocusedForegroundProperty =
-        DependencyProperty.RegisterAttached("SelectedNoFocusedForeground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("SelectedNoFocusedForeground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the border brush when the selected element is not focused.
     /// </summary>
     public static readonly DependencyProperty SelectedNoFocusedBorderBrushProperty =
-        DependencyProperty.RegisterAttached("SelectedNoFocusedBorderBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("SelectedNoFocusedBorderBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the background color when the element is hovered over while focused.
     /// </summary>
     public static readonly DependencyProperty HoverFocusedBackgroundProperty =
-        DependencyProperty.RegisterAttached("HoverFocusedBackground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("HoverFocusedBackground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the foreground color when the element is hovered over while focused.
     /// </summary>
     public static readonly DependencyProperty HoverFocusedForegroundProperty =
-        DependencyProperty.RegisterAttached("HoverFocusedForeground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("HoverFocusedForeground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the border brush when the element is hovered over while focused.
     /// </summary>
     public static readonly DependencyProperty HoverFocusedBorderBrushProperty =
-        DependencyProperty.RegisterAttached("HoverFocusedBorderBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("HoverFocusedBorderBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the brush used for glyphs.
     /// </summary>
     public static readonly DependencyProperty GlyphBrushProperty =
-        DependencyProperty.RegisterAttached("GlyphBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("GlyphBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the brush used for glyphs when the mouse is over the element.
     /// </summary>
     public static readonly DependencyProperty MouseOverGlyphBrushProperty =
-        DependencyProperty.RegisterAttached("MouseOverGlyphBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("MouseOverGlyphBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the brush used for glyphs when the element is pressed.
     /// </summary>
     public static readonly DependencyProperty PressedGlyphBrushProperty =
-        DependencyProperty.RegisterAttached("PressedGlyphBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("PressedGlyphBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the brush used for glyphs when the element is disabled.
     /// </summary>
     public static readonly DependencyProperty DisabledGlyphBrushProperty =
-        DependencyProperty.RegisterAttached("DisabledGlyphBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("DisabledGlyphBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the foreground color of placeholder text.
     /// </summary>
     public static readonly DependencyProperty PlaceholderForegroundProperty =
-        DependencyProperty.RegisterAttached("PlaceholderForeground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("PlaceholderForeground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the brush used for selection.
     /// </summary>
     public static readonly DependencyProperty SelectionBrushProperty =
-        DependencyProperty.RegisterAttached("SelectionBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("SelectionBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the placeholder text of input elements.
@@ -268,31 +268,31 @@ public class UIElementHelper
     /// DependencyProperty for the highlight background color of elements.
     /// </summary>
     public static readonly DependencyProperty HighlightBackgroundProperty =
-        DependencyProperty.RegisterAttached("HighlightBackground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("HighlightBackground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the border brush used for highlights.
     /// </summary>
     public static readonly DependencyProperty HighlightBorderBrushProperty =
-        DependencyProperty.RegisterAttached("HighlightBorderBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("HighlightBorderBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the background color of submenu items.
     /// </summary>
     public static readonly DependencyProperty SubMenuBackgroundProperty =
-        DependencyProperty.RegisterAttached("SubMenuBackground", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("SubMenuBackground", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the border brush of submenu items.
     /// </summary>
     public static readonly DependencyProperty SubMenuBorderBrushProperty =
-        DependencyProperty.RegisterAttached("SubMenuBorderBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("SubMenuBorderBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
     /// DependencyProperty for the brush used for separators in menus.
     /// </summary>
     public static readonly DependencyProperty SeparatorBrushProperty =
-        DependencyProperty.RegisterAttached("SeparatorBrush", typeof(Brush), typeof(UIElementHelper));
+        DependencyProperty.RegisterAttached("SeparatorBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     #endregion
 

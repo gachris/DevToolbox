@@ -208,6 +208,18 @@
     "Header": "Layout",
     "SubCategories": [
       {
+        "Header": "DesignCanvas",
+        "Description": "A versatile canvas for design applications that allows users to add, manipulate, and organize graphical elements such as images, paths, and shapes. It features an expandable header for navigation and a rich workspace for creative editing.",
+        "Icon": "InkCanvas",
+        "Namespace": "DevToolbox.Wpf.Controls",
+        "Examples": [
+          {
+            "Header": "A simple DesignCanvas.",
+            "SourceCode": "\\Examples\\Layout\\DesignCanvas\\SimpleDesignCanvas.xaml"
+          }
+        ]
+      },
+      {
         "Header": "Expander",
         "Description": "A container with a header that can be expanded to show body with more content.",
         "Icon": "Expander",

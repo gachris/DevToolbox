@@ -3,15 +3,12 @@
     xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
     Margin="8"
     Padding="8">
-    <TreeViewItem
-        devtoolbox:VirtualToggleButtonHelper.IsChecked="True"
-        Header="Item 1"
-        IsEnabled="False">
-        <TreeViewItem devtoolbox:VirtualToggleButtonHelper.IsChecked="True" Header="Item 1.1" />
+    <TreeViewItem Header="Item 1" IsEnabled="False">
+        <TreeViewItem Header="Item 1.1" />
     </TreeViewItem>
-    <TreeViewItem devtoolbox:VirtualToggleButtonHelper.IsChecked="True" Header="Item 2">
-        <TreeViewItem devtoolbox:VirtualToggleButtonHelper.IsChecked="True" Header="Item 2.1">
-            <TreeViewItem devtoolbox:VirtualToggleButtonHelper.IsChecked="True" Header="Item 2.1.1" />
+    <TreeViewItem Header="Item 2">
+        <TreeViewItem Header="Item 2.1">
+            <TreeViewItem Header="Item 2.1.1" />
             <TreeViewItem Header="Item 2.1.2" />
             <TreeViewItem Header="Item 2.1.3" />
         </TreeViewItem>

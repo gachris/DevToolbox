@@ -142,7 +142,16 @@ internal partial class CroppingAdorner : Adorner
             var top = Math.Max(rcProposed.Top, rcExterior.Top);
             var width = Math.Min(rcProposed.Right, rcExterior.Right) - left;
             var height = Math.Min(rcProposed.Bottom, rcExterior.Bottom) - top;
+            
+            if (width <= 0 || height <= 0)
+            {
+                // Set to a default value (1x1 rectangle) or return an appropriate result
+                return new Rect(left, top, 1, 1); // Example of defaulting to 1x1 rectangle
+            }
+
+            // Create a new valid rectangle
             rcProposed = new Rect(left, top, width, height);
+
             return rcProposed;
         }
 

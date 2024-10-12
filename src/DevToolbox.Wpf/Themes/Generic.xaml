@@ -38,6 +38,8 @@
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ColorChip.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ColorPicker.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ColorComponents.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/DesignCanvas.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/DesignLayer.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/DropDown.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/EditBox.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/EyeDropper.xaml}" />
