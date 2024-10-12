@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Point = System.Drawing.Point;
 
-namespace DevToolbox.Wpf.Controls;
+namespace DevToolbox.Wpf.Documents;
 
 internal partial class CroppingAdorner : Adorner
 {
@@ -17,7 +17,7 @@ internal partial class CroppingAdorner : Adorner
 
     private class CropThumb : Thumb
     {
-        #region Overrides
+        #region Methods Overrides
 
         protected override Visual? GetVisualChild(int index) => null;
 
@@ -118,8 +118,6 @@ internal partial class CroppingAdorner : Adorner
 
         #endregion
 
-        #region Constructor
-
         public PuncturedRect() : this(new Rect(0, 0, double.MaxValue, double.MaxValue), new Rect())
         {
         }
@@ -129,8 +127,6 @@ internal partial class CroppingAdorner : Adorner
             RectInterior = rectInterior;
             RectExterior = rectExterior;
         }
-
-        #endregion
 
         #region Methods
 
@@ -331,7 +327,7 @@ internal partial class CroppingAdorner : Adorner
             frameworkElement.SizeChanged += new SizeChangedEventHandler(AdornedElementSizeChanged);
     }
 
-    #region Overrides
+    #region Methods Overrides 
 
     protected override Visual GetVisualChild(int index) => _visualCollection[index];
 

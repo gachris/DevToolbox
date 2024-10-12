@@ -220,6 +220,18 @@
         ]
       },
       {
+        "Header": "DiagramCanvas",
+        "Description": "",
+        "Icon": "InkCanvas",
+        "Namespace": "DevToolbox.Wpf.Controls",
+        "Examples": [
+          {
+            "Header": "A simple DiagramCanvas.",
+            "SourceCode": "\\Examples\\Layout\\DiagramCanvas\\SimpleDiagramCanvas.xaml"
+          }
+        ]
+      },
+      {
         "Header": "Expander",
         "Description": "A container with a header that can be expanded to show body with more content.",
         "Icon": "Expander",

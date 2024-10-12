@@ -6,7 +6,7 @@
     xmlns:extensions="clr-namespace:DevToolbox.Wpf.MarkupExtensions"
     xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TabItemEdit.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/TabItemEdit.xaml}" />
     </ResourceDictionary.MergedDictionaries>
 
     <converters:TabItemCloseButtonShowModeConverter x:Key="TabItemCloseButtonShowModeConverter" />

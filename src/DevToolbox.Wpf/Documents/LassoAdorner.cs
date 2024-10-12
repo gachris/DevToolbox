@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace DevToolbox.Wpf.Controls;
+namespace DevToolbox.Wpf.Documents;
 
 internal class LassoAdorner : Adorner
 {
@@ -20,8 +20,6 @@ internal class LassoAdorner : Adorner
 
     #endregion
 
-    #region Constructors
-
     public LassoAdorner(UIElement adornedElement) : base(adornedElement)
     {
         _lasso = new Control();
@@ -29,9 +27,7 @@ internal class LassoAdorner : Adorner
         IsHitTestVisible = false;
     }
 
-    #endregion
-
-    #region Overrides 
+    #region Methods Overrides 
 
     protected override Visual GetVisualChild(int index) => _lasso;
 

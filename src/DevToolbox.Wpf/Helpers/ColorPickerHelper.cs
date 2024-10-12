@@ -3,15 +3,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using PointEx = System.Drawing.Point;
 
-namespace DevToolbox.Wpf.Controls;
+namespace DevToolbox.Wpf.Helpers;
 
 internal class ColorPickerHelper
 {
-    public static PointEx ConvertToDrawingPoint(Point point) => new((int)point.X, (int)point.Y);
+    public static PointEx ConvertToDrawingPoint(Point point)
+    {
+        return new((int)point.X, (int)point.Y);
+    }
 
-    public static Color ConvertToMediaColor(System.Drawing.Color color, byte? overrideAlpha = null) => Color.FromArgb(overrideAlpha ?? color.A, color.R, color.G, color.B);
+    public static Color ConvertToMediaColor(System.Drawing.Color color, byte? overrideAlpha = null)
+    {
+        return Color.FromArgb(overrideAlpha ?? color.A, color.R, color.G, color.B);
+    }
 
-    public static System.Drawing.Color ConvertToDrawingColor(Color color) => System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+    public static System.Drawing.Color ConvertToDrawingColor(Color color)
+    {
+        return System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+    }
 
     public static WriteableBitmap CreateWriteableBitmap(byte[] bitmapData, int width, int height, int stride, PixelFormat pixelFormat)
     {

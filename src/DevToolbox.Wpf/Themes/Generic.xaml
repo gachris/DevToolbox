@@ -31,28 +31,30 @@
             </theming:ThemePartResourceDictionary.Key>
         </theming:ThemePartResourceDictionary>
 
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/WindowEx.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TabsWindow.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/SidePanelWindow.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/WindowEx.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/TabsWindow.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/SidePanelWindow.xaml}" />
 
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ColorChip.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ColorPicker.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ColorComponents.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/DesignCanvas.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/DesignLayer.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/DropDown.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/EditBox.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/EyeDropper.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/FontGlyph.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/NumberBox.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ProgressRing.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/SplitView.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/SpeechBalloon.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TabControlEdit.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/TabItemEdit.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/WaitingIndicator.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ZoomAndPanControl.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResourceExtension Themes/Styles/ZoomAndPanViewBox.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ColorChip.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ColorPicker.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/Connector.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ColorComponents.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/DesignCanvas.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/DesignLayer.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/DiagramLayer.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/DropDown.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/EditBox.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/EyeDropper.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/FontGlyph.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/NumberBox.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ProgressRing.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/SplitView.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/SpeechBalloon.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/TabControlEdit.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/TabItemEdit.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/WaitingIndicator.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ZoomAndPanControl.xaml}" />
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ZoomAndPanViewBox.xaml}" />
 
     </ResourceDictionary.MergedDictionaries>
 

@@ -12,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Xml.Linq;
+using DevToolbox.Wpf.Documents;
 using DevToolbox.Wpf.Extensions;
 using Microsoft.Win32;
 
@@ -1120,7 +1121,7 @@ public partial class DesignCanvas : MultiSelector
     /// Adds a new item to the canvas and initializes it if necessary.
     /// </summary>
     /// <returns>The newly added item, or null if unable to add.</returns>
-    internal protected object? AddNewItem()
+    internal object? AddNewItem()
     {
         object? newItem = null;
         var isReadOnly = ((IList)Items).IsReadOnly;

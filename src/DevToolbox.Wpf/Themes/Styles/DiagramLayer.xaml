@@ -1,0 +1,318 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <SolidColorBrush x:Key="SolidBorderBrush" Color="#888" />
+
+    <!--  ResizeDecorator Default Template  -->
+    <ControlTemplate x:Key="ResizeDecoratorTemplate" TargetType="{x:Type Control}">
+        <Grid Opacity="0.7" SnapsToDevicePixels="true">
+            <controls:ResizeThumb
+                Height="3"
+                Margin="0,-4,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                Cursor="SizeNS" />
+            <controls:ResizeThumb
+                Width="3"
+                Margin="-4,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Stretch"
+                Cursor="SizeWE" />
+            <controls:ResizeThumb
+                Width="3"
+                Margin="0,0,-4,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Stretch"
+                Cursor="SizeWE" />
+            <controls:ResizeThumb
+                Height="3"
+                Margin="0,0,0,-4"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                Cursor="SizeNS" />
+            <controls:ResizeThumb
+                Width="7"
+                Height="7"
+                Margin="-6,-6,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Cursor="SizeNWSE" />
+            <controls:ResizeThumb
+                Width="7"
+                Height="7"
+                Margin="0,-6,-6,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Cursor="SizeNESW" />
+            <controls:ResizeThumb
+                Width="7"
+                Height="7"
+                Margin="-6,0,0,-6"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Cursor="SizeNESW" />
+            <controls:ResizeThumb
+                Width="7"
+                Height="7"
+                Margin="0,0,-6,-6"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Cursor="SizeNWSE" />
+        </Grid>
+    </ControlTemplate>
+
+    <!--  ConnectorDecoratorTemplate Default Template  -->
+    <ControlTemplate x:Key="ConnectorDecoratorTemplate" TargetType="{x:Type Control}">
+        <Grid Margin="-5">
+            <controls:Connector
+                x:Name="Left"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Orientation="Left" />
+            <controls:Connector
+                x:Name="Top"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Orientation="Top" />
+            <controls:Connector
+                x:Name="Right"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Orientation="Right" />
+            <controls:Connector
+                x:Name="Bottom"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Orientation="Bottom" />
+        </Grid>
+    </ControlTemplate>
+
+    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type controls:ResizeThumb}, ResourceId=SizeControlStyle}" TargetType="{x:Type Control}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Control}">
+                    <Grid SnapsToDevicePixels="True">
+                        <Path
+                            Height="10"
+                            Margin="-2,0,-2,-15"
+                            VerticalAlignment="Bottom"
+                            Data="M0,0 0,10 M 0,5 100,5 M 100,0 100,10"
+                            Stretch="Fill"
+                            Stroke="Red"
+                            StrokeThickness="1" />
+                        <TextBlock
+                            Margin="0,0,0,-18"
+                            Padding="3,0,3,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Background="White"
+                            Foreground="Red"
+                            Text="{Binding Path=Width, StringFormat=Width: {0:#.##}}" />
+                        <Path
+                            Width="10"
+                            Margin="0,-2,-15,-2"
+                            HorizontalAlignment="Right"
+                            Data="M5,0 5,100 M 0,0 10,0 M 0,100 10,100"
+                            Stretch="Fill"
+                            Stroke="Red"
+                            StrokeThickness="1" />
+                        <TextBlock
+                            Margin="0,0,-18,0"
+                            Padding="3,0,3,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Background="White"
+                            Foreground="Red"
+                            Text="{Binding Path=Height, StringFormat=Height: {0:#.##}}">
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="90" CenterX="1" CenterY="0.5" />
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Arrow Grid Style  -->
+    <Style x:Key="ArrowGridStyle" TargetType="Grid">
+        <Setter Property="Width" Value="10" />
+        <Setter Property="Height" Value="10" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TranslateTransform X="-5" Y="-5" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  base style for all arrow shapes  -->
+    <Style x:Key="ArrowSymbolBaseStyle" TargetType="Path">
+        <Setter Property="Fill" Value="{StaticResource SolidBorderBrush}" />
+        <Setter Property="Stretch" Value="Fill" />
+    </Style>
+
+    <!--  Arrow  -->
+    <Style
+        x:Key="Arrow"
+        BasedOn="{StaticResource ArrowSymbolBaseStyle}"
+        TargetType="Path">
+        <Setter Property="Data" Value="M0,0 8,4 0,8 Z" />
+    </Style>
+
+    <!--  Diamond  -->
+    <Style
+        x:Key="Diamond"
+        BasedOn="{StaticResource ArrowSymbolBaseStyle}"
+        TargetType="Path">
+        <Setter Property="Data" Value="M-5,0 0,-5 5,0 0,5 Z" />
+    </Style>
+
+    <!--  DesignerItem Style  -->
+    <Style TargetType="{x:Type controls:DiagramLayer}">
+        <Style.Resources>
+            <!--  Style for the ConnectorAdorner thumbs  -->
+            <Style x:Key="ConnectionAdornerThumbStyle" TargetType="{x:Type Thumb}">
+                <Setter Property="Width" Value="12" />
+                <Setter Property="Height" Value="12" />
+                <Setter Property="SnapsToDevicePixels" Value="true" />
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <TranslateTransform X="-6" Y="-6" />
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Thumb}">
+                            <Rectangle
+                                Fill="#AADCDCDC"
+                                RadiusX="0"
+                                RadiusY="0"
+                                Stroke="DodgerBlue"
+                                StrokeThickness="1" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Style.Resources>
+        <Setter Property="MinHeight" Value="10" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="ResizeDecoratorTemplate" Value="{StaticResource ResizeDecoratorTemplate}" />
+        <Setter Property="ConnectorDecoratorTemplate" Value="{StaticResource ConnectorDecoratorTemplate}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:DiagramLayer}">
+                    <Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                        <Control
+                            x:Name="PART_ResizeDecorator"
+                            Template="{TemplateBinding ResizeDecoratorTemplate}"
+                            Visibility="Collapsed" />
+                        <ContentPresenter
+                            x:Name="PART_ContentPresenter"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch" />
+                        <Control
+                            x:Name="PART_ConnectorDecorator"
+                            Template="{TemplateBinding ConnectorDecoratorTemplate}"
+                            Visibility="Hidden" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsSelected}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=ParentID}" Value="{x:Static sys:Guid.Empty}" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_ResizeDecorator" Property="Visibility" Value="Visible" />
+                        </MultiDataTrigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsDragConnectionOver}" Value="True">
+                            <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsGroup}" Value="True">
+                            <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsConnection" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type controls:DiagramLayer}">
+                            <Canvas DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                <Path
+                                    Name="PART_ConnectionPath"
+                                    Data="{TemplateBinding PathGeometry}"
+                                    SnapsToDevicePixels="True"
+                                    Stroke="{StaticResource SolidBorderBrush}"
+                                    StrokeDashArray="{TemplateBinding StrokeDashArray}"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"
+                                    StrokeStartLineCap="Round"
+                                    StrokeThickness="2" />
+                                <Grid
+                                    Canvas.Left="{Binding Path=AnchorPositionSource.X, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    Canvas.Top="{Binding Path=AnchorPositionSource.Y, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    Style="{StaticResource ArrowGridStyle}">
+                                    <Path Name="PART_SourceAnchorPath" />
+                                    <Grid.LayoutTransform>
+                                        <RotateTransform Angle="{Binding Path=AnchorAngleSource, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                    </Grid.LayoutTransform>
+                                </Grid>
+                                <Grid
+                                    Canvas.Left="{Binding Path=AnchorPositionSink.X, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    Canvas.Top="{Binding Path=AnchorPositionSink.Y, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    Style="{StaticResource ArrowGridStyle}">
+                                    <Path Name="PART_SinkAnchorPath" />
+                                    <Grid.LayoutTransform>
+                                        <RotateTransform Angle="{Binding Path=AnchorAngleSink, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                    </Grid.LayoutTransform>
+                                </Grid>
+
+                                <!--  Uncomment this to show default label text  -->
+                                <!--<TextBlock Width="100" Height="35"
+                                               Text="{Binding Path=(Canvas.ZIndex)}"
+                                               Canvas.Left="{Binding LabelPosition.X}"
+                                               Canvas.Top="{Binding LabelPosition.Y}">
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform X="5" Y="5"/>
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>-->
+
+                                <Canvas.BitmapEffect>
+                                    <DropShadowBitmapEffect
+                                        Direction="315"
+                                        Opacity="0.1"
+                                        ShadowDepth="10"
+                                        Softness="0"
+                                        Color="Gray" />
+                                </Canvas.BitmapEffect>
+                            </Canvas>
+                            <ControlTemplate.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=SourceArrowSymbol}" Value="Arrow">
+                                    <Setter TargetName="PART_SourceAnchorPath" Property="Style" Value="{StaticResource Arrow}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=SourceArrowSymbol}" Value="Diamond">
+                                    <Setter TargetName="PART_SourceAnchorPath" Property="Style" Value="{StaticResource Diamond}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=SinkArrowSymbol}" Value="Arrow">
+                                    <Setter TargetName="PART_SinkAnchorPath" Property="Style" Value="{StaticResource Arrow}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=SinkArrowSymbol}" Value="Diamond">
+                                    <Setter TargetName="PART_SinkAnchorPath" Property="Style" Value="{StaticResource Diamond}" />
+                                </DataTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

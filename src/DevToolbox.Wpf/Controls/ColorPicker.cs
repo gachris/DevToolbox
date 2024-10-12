@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using ColorSpace.Net;
 using ColorSpace.Net.Componentes;
+using DevToolbox.Wpf.Helpers;
 using PointEx = System.Drawing.Point;
 
 namespace DevToolbox.Wpf.Controls;

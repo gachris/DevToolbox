@@ -7,6 +7,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using DevToolbox.Wpf.Documents;
 using DevToolbox.Wpf.Extensions;
 using DevToolbox.Wpf.Helpers;
 
