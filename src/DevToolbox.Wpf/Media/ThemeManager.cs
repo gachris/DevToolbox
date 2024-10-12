@@ -4,16 +4,18 @@ using System.Windows;
 using System.Windows.Threading;
 using Microsoft.Win32;
 
-namespace DevToolbox.Wpf.Theming;
+namespace DevToolbox.Wpf.Media;
 
 /// <summary>
 /// Provides functionality to manage application themes within a WPF application.
-/// This class allows setting and retrieving the current theme and notifies subscribers of theme changes.
+/// This class allows setting and retrieving the current theme, managing the high contrast mode, 
+/// and notifying subscribers when the theme is changed.
 /// </summary>
 public static class ThemeManager
 {
     #region Fields/Constants
 
+    // Current theme-related fields
     private static ElementTheme _requestedTheme = ElementTheme.Default;
     private static ApplicationTheme _applicationTheme = ApplicationTheme.Default;
 
@@ -30,54 +32,57 @@ public static class ThemeManager
     public static event EventHandler? ApplicationThemeChanged;
 
     /// <summary>
-    /// Occurs when the application theme is changed.
-    /// Subscribers can listen for this event to respond to theme changes.
+    /// Internal event raised when the application theme changes due to system-level changes (e.g., high contrast mode).
     /// </summary>
     internal static event EventHandler? ApplicationThemeCoreChanged;
 
     #endregion
 
+    // Static constructor to set up event subscriptions
     static ThemeManager()
     {
         SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
-
-        if (SystemParameters.HighContrast)
-        {
-            ApplicationThemeCoreChanged?.Invoke(Application.Current, EventArgs.Empty);
-        }
     }
 
     #region Properties
 
     /// <summary>
-    /// Gets the current requested theme.
+    /// Gets or sets the current requested theme.
+    /// Changing this property triggers theme updates and raises the appropriate events.
     /// </summary>
     public static ElementTheme RequestedTheme
     {
         get => _requestedTheme;
         set
         {
-            var oldValue = _requestedTheme;
-            if (oldValue != value)
+            if (_requestedTheme != value)
             {
+                var oldTheme = _requestedTheme;
                 _requestedTheme = value;
-                RefreshTheme(oldValue: oldValue, newValue: _requestedTheme);
+
+                RefreshTheme(oldValue: oldTheme, newValue: _requestedTheme);
+
+                // Notify subscribers that the requested theme has changed
+                RequestedThemeChanged?.Invoke(Application.Current, EventArgs.Empty);
             }
         }
     }
 
     /// <summary>
-    /// Gets the current application theme.
+    /// Gets the current application theme that is actively applied to the application.
+    /// This reflects the final theme state after considering user preferences and system defaults.
     /// </summary>
     public static ApplicationTheme ApplicationTheme => _applicationTheme;
 
     /// <summary>
-    /// Gets the current application theme.
+    /// Returns the current application theme's name as a string.
+    /// Useful for UI bindings or diagnostics.
     /// </summary>
     internal static string ApplicationThemeName => _applicationTheme.ToString();
 
     /// <summary>
-    /// Gets the current application theme.
+    /// Gets the application theme name, considering high contrast mode.
+    /// If high contrast mode is enabled, this will return "HighContrast".
     /// </summary>
     internal static string ApplicationThemeNameCore => !SystemParameters.HighContrast ? ApplicationThemeName : "HighContrast";
 
@@ -86,15 +91,14 @@ public static class ThemeManager
     #region Methods
 
     /// <summary>
-    /// Updates the current application theme.
+    /// Refreshes the application theme by applying the new requested theme and raising necessary events.
     /// </summary>
-    /// <param name="oldValue">The old theme.</param>
+    /// <param name="oldValue">The previously set theme.</param>
     /// <param name="newValue">The new theme to apply.</param>
     private static void RefreshTheme(ElementTheme oldValue, ElementTheme newValue)
     {
-        RequestedThemeChanged?.Invoke(Application.Current, EventArgs.Empty);
-
-        var newApplicationTheme = newValue switch
+        // Determine the new application theme based on the requested theme
+        var newAppTheme = newValue switch
         {
             ElementTheme.Default => ApplicationTheme.Default,
             ElementTheme.Dark => ApplicationTheme.Dark,
@@ -103,27 +107,28 @@ public static class ThemeManager
             _ => throw new ArgumentOutOfRangeException(nameof(newValue)),
         };
 
-        if (_applicationTheme != newApplicationTheme)
+        // If the application theme has changed, notify subscribers and update the theme
+        if (_applicationTheme != newAppTheme)
         {
-            _applicationTheme = newApplicationTheme;
+            _applicationTheme = newAppTheme;
             ApplicationThemeChanged?.Invoke(Application.Current, EventArgs.Empty);
             ApplicationThemeCoreChanged?.Invoke(Application.Current, EventArgs.Empty);
         }
     }
 
     /// <summary>
-    /// Gets the current Windows theme (Light or Dark).
+    /// Retrieves the current Windows theme setting (either Light or Dark) from the system registry.
     /// </summary>
-    /// <returns>The current application theme based on the Windows setting.</returns>
+    /// <returns>The application theme based on the current Windows system setting.</returns>
     private static ApplicationTheme GetWindowsTheme()
     {
         try
         {
             using var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
             var value = key?.GetValue("AppsUseLightTheme");
-            if (value is int intValue)
+            if (value is int useLightTheme)
             {
-                return intValue == 1 ? ApplicationTheme.Light : ApplicationTheme.Dark;
+                return useLightTheme == 1 ? ApplicationTheme.Light : ApplicationTheme.Dark;
             }
         }
         catch (Exception ex)
@@ -131,6 +136,7 @@ public static class ThemeManager
             Debug.WriteLine($"Error accessing registry for Windows theme settings: {ex.Message}");
         }
 
+        // Default to Dark theme if no theme is found or an error occurs
         return ApplicationTheme.Dark;
     }
 
@@ -138,15 +144,23 @@ public static class ThemeManager
 
     #region Events Subscriptions
 
+    /// <summary>
+    /// Handles system-wide user preference changes.
+    /// This method responds to changes such as high contrast mode or general system preferences and updates the theme accordingly.
+    /// </summary>
+    /// <param name="sender">The sender of the event (system).</param>
+    /// <param name="e">The user preference change event arguments.</param>
     private static void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
     {
         Application.Current.Dispatcher.BeginInvoke(() =>
         {
+            // Respond to high contrast mode changes
             if (e.Category == UserPreferenceCategory.Accessibility)
             {
                 ApplicationThemeCoreChanged?.Invoke(Application.Current, EventArgs.Empty);
             }
 
+            // Respond to general changes when the theme is set to follow the Windows default theme
             if (e.Category == UserPreferenceCategory.General && RequestedTheme == ElementTheme.WindowsDefault && !SystemParameters.HighContrast)
             {
                 var windowsTheme = GetWindowsTheme();

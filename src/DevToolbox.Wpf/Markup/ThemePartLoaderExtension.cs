@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Markup;
 
-namespace DevToolbox.Wpf.Theming;
+namespace DevToolbox.Wpf.Markup;
 
 /// <summary>
 /// A markup extension that facilitates loading theme parts from a specified assembly.

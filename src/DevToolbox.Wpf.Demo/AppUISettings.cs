@@ -1,6 +1,4 @@
-﻿using System.Windows;
-using DevToolbox.Wpf.Theming;
-using Windows.UI.ViewManagement;
+﻿using DevToolbox.Wpf.Media;
 
 namespace DevToolbox.Wpf.Demo;
 
@@ -8,10 +6,8 @@ public class AppUISettings
 {
     #region Fields/Consts
 
-    private static readonly string FontSizeKey = "FontSize{0}";
     private const string SettingsKey = "AppBackgroundRequestedTheme";
 
-    private readonly UISettings _uISettings;
     private readonly ILocalSettingsService _localSettingsService;
 
     #endregion
@@ -26,16 +22,15 @@ public class AppUISettings
     {
         _localSettingsService = localSettingsService;
 
-        _uISettings = new UISettings();
-        _uISettings.TextScaleFactorChanged += UISettings_TextScaleFactorChanged;
+        InitializeTheme();
 
-        Initialize();
+        FontSizeManager.TextScaleEnabled = true;
     }
 
-    private async void Initialize()
-    {
-        UpdateFontSizes();
+    #region Methods
 
+    private async void InitializeTheme()
+    {
         var themeName = await _localSettingsService.ReadSettingAsync<string>(SettingsKey);
 
         if (!Enum.TryParse(themeName, out ElementTheme cacheTheme))
@@ -44,10 +39,8 @@ public class AppUISettings
         }
 
         AppTheme = cacheTheme;
-        ThemeManager.RequestedTheme  = AppTheme;
+        ThemeManager.RequestedTheme = AppTheme;
     }
-
-    #region Methods
 
     public async void SetAppTheme(ElementTheme appTheme)
     {
@@ -55,37 +48,6 @@ public class AppUISettings
 
         AppTheme = appTheme;
         ThemeManager.RequestedTheme = AppTheme;
-    }
-
-    private void UpdateFontSizes()
-    {
-        for (var i = 9; i < 43; i++)
-        {
-            var currentFontSizeKey = string.Format(FontSizeKey, i);
-
-            if (!Application.Current.Resources.Contains(currentFontSizeKey))
-            {
-                continue;
-            }
-
-            var fontSize = (double)i;
-            fontSize *= _uISettings.TextScaleFactor;
-
-            // Remove the old value
-            Application.Current.Resources.Remove(currentFontSizeKey);
-
-            // Add the updated value
-            Application.Current.Resources.Add(currentFontSizeKey, fontSize);
-        }
-    }
-
-    #endregion
-
-    #region Events Subscriptions
-
-    private void UISettings_TextScaleFactorChanged(UISettings sender, object args)
-    {
-        UpdateFontSizes();
     }
 
     #endregion

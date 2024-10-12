@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DevToolbox.Wpf.Theming;
+namespace DevToolbox.Wpf.Markup;
 
 /// <summary>
 /// A markup extension that serves as a key for theme parts, 

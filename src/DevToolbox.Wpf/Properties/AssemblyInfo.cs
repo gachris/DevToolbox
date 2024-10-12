@@ -6,7 +6,8 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition("http://devtoolbox.wpf/winfx/2021/xaml/presentation", "DevToolbox.Wpf.Controls")]
 [assembly: XmlnsDefinition("http://devtoolbox.wpf/winfx/2021/xaml/presentation", "DevToolbox.Wpf.Converters")]
 [assembly: XmlnsDefinition("http://devtoolbox.wpf/winfx/2021/xaml/presentation", "DevToolbox.Wpf.Helpers")]
-[assembly: XmlnsDefinition("http://devtoolbox.wpf/winfx/2021/xaml/presentation", "DevToolbox.Wpf.Theming")]
+[assembly: XmlnsDefinition("http://devtoolbox.wpf/winfx/2021/xaml/presentation", "DevToolbox.Wpf.Media")]
+[assembly: XmlnsDefinition("http://devtoolbox.wpf/winfx/2021/xaml/presentation", "DevToolbox.Wpf.Markup")]
 [assembly: XmlnsDefinition("http://devtoolbox.wpf/winfx/2021/xaml/presentation", "DevToolbox.Wpf.Windows")]
 
 [assembly: ThemeInfo(

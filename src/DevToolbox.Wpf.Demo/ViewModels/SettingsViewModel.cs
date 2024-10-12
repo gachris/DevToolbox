@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DevToolbox.Wpf.Theming;
+using DevToolbox.Wpf.Media;
 
 namespace DevToolbox.Wpf.Demo.ViewModels;
 
@@ -13,7 +13,7 @@ public partial class SettingsViewModel : ObservableObject
     private readonly AppUISettings _appUISettings;
 
     #endregion
-    
+
     #region Properties
 
     public string ApplicationVersion { get; }

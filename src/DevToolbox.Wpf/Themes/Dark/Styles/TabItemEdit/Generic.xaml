@@ -3,10 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
     xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters"
-    xmlns:extensions="clr-namespace:DevToolbox.Wpf.Markup"
-    xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
+    xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers"
+    xmlns:markup="clr-namespace:DevToolbox.Wpf.Markup">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/TabItemEdit.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/TabItemEdit.xaml}" />
     </ResourceDictionary.MergedDictionaries>
 
     <converters:TabItemCloseButtonShowModeConverter x:Key="TabItemCloseButtonShowModeConverter" />

@@ -2,67 +2,66 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
-    xmlns:extensions="clr-namespace:DevToolbox.Wpf.Markup"
-    xmlns:system="clr-namespace:System;assembly=mscorlib"
-    xmlns:theming="clr-namespace:DevToolbox.Wpf.Theming">
+    xmlns:markup="clr-namespace:DevToolbox.Wpf.Markup"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <ResourceDictionary.MergedDictionaries>
-        <theming:ThemePartResourceDictionary>
-            <theming:ThemePartResourceDictionary.Key>
-                <theming:ThemePartKeyExtension
+        <markup:ThemePartResourceDictionary>
+            <markup:ThemePartResourceDictionary.Key>
+                <markup:ThemePartKeyExtension
                     AssemblyName="DevToolbox.Wpf"
                     Path="/Themes/Default/Generic.xaml"
                     ThemeName="Default" />
-            </theming:ThemePartResourceDictionary.Key>
-        </theming:ThemePartResourceDictionary>
-        <theming:ThemePartResourceDictionary>
-            <theming:ThemePartResourceDictionary.Key>
-                <theming:ThemePartKeyExtension
+            </markup:ThemePartResourceDictionary.Key>
+        </markup:ThemePartResourceDictionary>
+        <markup:ThemePartResourceDictionary>
+            <markup:ThemePartResourceDictionary.Key>
+                <markup:ThemePartKeyExtension
                     AssemblyName="DevToolbox.Wpf"
                     Path="/Themes/Dark/Generic.xaml"
                     ThemeName="Dark" />
-            </theming:ThemePartResourceDictionary.Key>
-        </theming:ThemePartResourceDictionary>
-        <theming:ThemePartResourceDictionary>
-            <theming:ThemePartResourceDictionary.Key>
-                <theming:ThemePartKeyExtension
+            </markup:ThemePartResourceDictionary.Key>
+        </markup:ThemePartResourceDictionary>
+        <markup:ThemePartResourceDictionary>
+            <markup:ThemePartResourceDictionary.Key>
+                <markup:ThemePartKeyExtension
                     AssemblyName="DevToolbox.Wpf"
                     Path="/Themes/Light/Generic.xaml"
                     ThemeName="Light" />
-            </theming:ThemePartResourceDictionary.Key>
-        </theming:ThemePartResourceDictionary>
-        <theming:ThemePartResourceDictionary>
-            <theming:ThemePartResourceDictionary.Key>
-                <theming:ThemePartKeyExtension
+            </markup:ThemePartResourceDictionary.Key>
+        </markup:ThemePartResourceDictionary>
+        <markup:ThemePartResourceDictionary>
+            <markup:ThemePartResourceDictionary.Key>
+                <markup:ThemePartKeyExtension
                     AssemblyName="DevToolbox.Wpf"
                     Path="/Themes/HighContrast/Generic.xaml"
                     ThemeName="HighContrast" />
-            </theming:ThemePartResourceDictionary.Key>
-        </theming:ThemePartResourceDictionary>
+            </markup:ThemePartResourceDictionary.Key>
+        </markup:ThemePartResourceDictionary>
 
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/WindowEx.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/TabsWindow.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/SidePanelWindow.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/WindowEx.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/TabsWindow.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/SidePanelWindow.xaml}" />
 
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ColorChip.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ColorPicker.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/Connector.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ColorComponents.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/DesignCanvas.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/DesignLayer.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/DiagramLayer.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/DropDown.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/EditBox.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/EyeDropper.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/FontGlyph.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/NumberBox.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ProgressRing.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/SplitView.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/SpeechBalloon.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/TabControlEdit.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/TabItemEdit.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/WaitingIndicator.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ZoomAndPanControl.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ZoomAndPanViewBox.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ColorChip.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ColorPicker.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/Connector.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ColorComponents.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DesignCanvas.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DesignLayer.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DiagramLayer.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DropDown.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/EditBox.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/EyeDropper.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/FontGlyph.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/NumberBox.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ProgressRing.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/SplitView.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/SpeechBalloon.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/TabControlEdit.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/TabItemEdit.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/WaitingIndicator.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ZoomAndPanControl.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ZoomAndPanViewBox.xaml}" />
 
     </ResourceDictionary.MergedDictionaries>
 

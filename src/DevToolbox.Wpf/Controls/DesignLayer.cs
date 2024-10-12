@@ -71,7 +71,7 @@ public class DesignLayer : ContentControl, ISelectable, IGroupable
     /// <summary>
     /// Dependency property for the resize decorator template.
     /// </summary>
-    public static readonly DependencyProperty ResizeDecoratorTemplateProperty = 
+    public static readonly DependencyProperty ResizeDecoratorTemplateProperty =
         DependencyProperty.Register(nameof(ResizeDecoratorTemplate), typeof(ControlTemplate), typeof(DesignLayer));
 
     #endregion

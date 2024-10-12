@@ -59,7 +59,7 @@
                         HorizontalLines="6"
                         IsItemsHost="True"
                         Scale="{Binding Path=ViewportZoom, RelativeSource={RelativeSource AncestorType=controls:DesignCanvas}}"
-                        Show="True"
+                        Show="False"
                         StrokeBrush="Green"
                         StrokeThickness="2"
                         VerticalLines="6" />

@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using DevToolbox.Wpf.Interop;
-using DevToolbox.Wpf.Theming;
+using DevToolbox.Wpf.Media;
 
 namespace DevToolbox.Wpf.Windows.Effects;
 

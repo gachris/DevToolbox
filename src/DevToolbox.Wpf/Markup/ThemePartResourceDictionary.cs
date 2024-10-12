@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
+using DevToolbox.Wpf.Media;
 
-namespace DevToolbox.Wpf.Theming;
+namespace DevToolbox.Wpf.Markup;
 
 /// <summary>
 /// Represents a resource dictionary that supports theming in the application.
@@ -148,7 +149,7 @@ public class ThemePartResourceDictionary : ResourceDictionary
             }
         }
 
-        ThemePartResourceDictionary.ResourceDictionaries.Add(this);
+        ResourceDictionaries.Add(this);
     }
 
     #endregion

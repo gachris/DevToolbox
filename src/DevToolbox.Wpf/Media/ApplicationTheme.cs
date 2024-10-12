@@ -1,4 +1,4 @@
-﻿namespace DevToolbox.Wpf.Theming;
+﻿namespace DevToolbox.Wpf.Media;
 
 /// <summary>
 /// Enum representing different themes for the application.
