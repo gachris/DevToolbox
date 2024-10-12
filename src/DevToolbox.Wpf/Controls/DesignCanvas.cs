@@ -1120,7 +1120,7 @@ public partial class DesignCanvas : MultiSelector
     /// Adds a new item to the canvas and initializes it if necessary.
     /// </summary>
     /// <returns>The newly added item, or null if unable to add.</returns>
-    internal object? AddNewItem()
+    internal protected object? AddNewItem()
     {
         object? newItem = null;
         var isReadOnly = ((IList)Items).IsReadOnly;

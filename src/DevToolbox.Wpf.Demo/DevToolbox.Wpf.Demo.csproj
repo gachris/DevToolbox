@@ -4,10 +4,8 @@
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
 		<WindowsSdkPackageVersion>10.0.19041.42</WindowsSdkPackageVersion>
-		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<LangVersion>latest</LangVersion>
 		<ApplicationIcon>Assets\icon.ico</ApplicationIcon>
 		<ExcludeFoldersFromDeployment>Examples</ExcludeFoldersFromDeployment>
 	</PropertyGroup>
