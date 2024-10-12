@@ -142,7 +142,7 @@ internal partial class CroppingAdorner : Adorner
             var top = Math.Max(rcProposed.Top, rcExterior.Top);
             var width = Math.Min(rcProposed.Right, rcExterior.Right) - left;
             var height = Math.Min(rcProposed.Bottom, rcExterior.Bottom) - top;
-            
+
             if (width <= 0 || height <= 0)
             {
                 // Set to a default value (1x1 rectangle) or return an appropriate result
@@ -233,11 +233,11 @@ internal partial class CroppingAdorner : Adorner
     private static readonly double _dpiY;
 
     public static readonly DependencyProperty FillProperty = Shape.FillProperty.AddOwner(typeof(CroppingAdorner));
-    
-    public static readonly DependencyProperty ShowCornersProperty = 
+
+    public static readonly DependencyProperty ShowCornersProperty =
         DependencyProperty.Register(nameof(ShowCorners), typeof(bool), typeof(CroppingAdorner), new FrameworkPropertyMetadata(default(bool), (d, e) => ((CroppingAdorner)d).OnShowCornersChanged(e)));
-   
-    public static readonly RoutedEvent CropChangedEvent = 
+
+    public static readonly RoutedEvent CropChangedEvent =
         EventManager.RegisterRoutedEvent(nameof(CropChanged), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(CroppingAdorner));
 
     #endregion

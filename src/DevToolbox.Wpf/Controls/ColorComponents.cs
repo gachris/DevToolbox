@@ -82,7 +82,7 @@ internal partial class ColorComponents : Control
 
         Hex = new HexColor();
         Hex.PropertyChanged += HexColorChanged;
-    
+
         _hsvConverter_D65_2 = ConverterBuilder.Create(new ColorConverterOptions() { Illuminant = Illuminants.D65_2 })
             .ToColor<Hsv>()
             .Build();

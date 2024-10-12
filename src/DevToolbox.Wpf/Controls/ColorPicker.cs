@@ -88,7 +88,7 @@ public partial class ColorPicker : Control
     /// </summary>
     public static readonly DependencyProperty SelectedColorProperty =
         DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPicker), new FrameworkPropertyMetadata(Colors.Black, OnSelectedColorChanged));
-    
+
     /// <summary>
     /// DependencyProperty for MinNormal. It represents the minimum value for the normal component.
     /// </summary>
