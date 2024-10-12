@@ -14,12 +14,7 @@ public static class IocConfiguration
     public static void Setup()
     {
         AppHost = Host.CreateDefaultBuilder()
-            //.ConfigureAppConfiguration((hostContext, configureDelegate) =>
-            //{
-            //    var baseDirectory = Directory.GetCurrentDirectory();
-            //    configureDelegate.SetBasePath(baseDirectory);
-            //    configureDelegate.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-            //})
+            .UseContentRoot(AppContext.BaseDirectory)
             .ConfigureServices((hostContext, services) =>
             {
                 if (SynchronizationContext.Current is not null)
@@ -29,7 +24,7 @@ public static class IocConfiguration
 
                 services.AddSingleton<IFileService, FileService>();
                 services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
-                services.AddSingleton(t => new AppUISettings(System.Windows.Application.Current, t.GetService<ILocalSettingsService>()!));
+                services.AddSingleton(t => new AppUISettings(t.GetService<ILocalSettingsService>()!));
                 services.AddSingleton(t => ServiceLocator.Current);
                 services.AddSingleton<MainViewModel>();
                 services.AddSingleton<SettingsViewModel>();

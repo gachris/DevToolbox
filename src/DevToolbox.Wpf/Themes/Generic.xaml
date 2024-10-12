@@ -30,6 +30,14 @@
                     ThemeName="Light" />
             </theming:ThemePartResourceDictionary.Key>
         </theming:ThemePartResourceDictionary>
+        <theming:ThemePartResourceDictionary>
+            <theming:ThemePartResourceDictionary.Key>
+                <theming:ThemePartKeyExtension
+                    AssemblyName="DevToolbox.Wpf"
+                    Path="/Themes/HighContrast/Generic.xaml"
+                    ThemeName="HighContrast" />
+            </theming:ThemePartResourceDictionary.Key>
+        </theming:ThemePartResourceDictionary>
 
         <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/WindowEx.xaml}" />
         <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/TabsWindow.xaml}" />

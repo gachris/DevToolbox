@@ -51,12 +51,10 @@
                                             <TextBlock
                                                 FontSize="16"
                                                 FontWeight="SemiBold"
-                                                Foreground="{DynamicResource ExampleGategory.Foreground}"
                                                 Text="{Binding Header}"
                                                 TextWrapping="Wrap" />
                                             <TextBlock
                                                 FontSize="12"
-                                                Foreground="{DynamicResource ExampleGategory.Foreground}"
                                                 Text="{Binding Description}"
                                                 TextWrapping="Wrap" />
                                         </StackPanel>

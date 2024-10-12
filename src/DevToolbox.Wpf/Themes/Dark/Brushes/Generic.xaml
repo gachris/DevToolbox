@@ -38,7 +38,7 @@
 
     <!--#endregion-->
 
-    <!--#region TreeView-->
+    <!--#region Expander-->
 
     <SolidColorBrush x:Key="Expander.Background" Color="Transparent" />
     <SolidColorBrush x:Key="Expander.Foreground" Color="#F1F1F1" />
@@ -74,22 +74,22 @@
 
     <SolidColorBrush x:Key="TreeViewItem.Background" Color="Transparent" />
     <SolidColorBrush x:Key="TreeViewItem.BorderBrush" Color="Transparent" />
-    <SolidColorBrush x:Key="TreeViewItem.Foreground" Color="#FFF1F1F1" />
-    <SolidColorBrush x:Key="TreeViewItem.SelectedBackground" Color="#FF007ACC" />
-    <SolidColorBrush x:Key="TreeViewItem.SelectedBorderBrush" Color="#FF007ACC" />
-    <SolidColorBrush x:Key="TreeViewItem.SelectedForeground" Color="#FFF1F1F1" />
-    <SolidColorBrush x:Key="TreeViewItem.MouseOverSelectedBackground" Color="#FF007ACC" />
-    <SolidColorBrush x:Key="TreeViewItem.MouseOverSelectedBorderBrush" Color="#FF007ACC" />
-    <SolidColorBrush x:Key="TreeViewItem.MouseOverSelectedForeground" Color="#FFF1F1F1" />
+    <SolidColorBrush x:Key="TreeViewItem.Foreground" Color="#F1F1F1" />
+    <SolidColorBrush x:Key="TreeViewItem.SelectedBackground" Color="#007ACC" />
+    <SolidColorBrush x:Key="TreeViewItem.SelectedBorderBrush" Color="#007ACC" />
+    <SolidColorBrush x:Key="TreeViewItem.SelectedForeground" Color="#F1F1F1" />
+    <SolidColorBrush x:Key="TreeViewItem.MouseOverSelectedBackground" Color="#007ACC" />
+    <SolidColorBrush x:Key="TreeViewItem.MouseOverSelectedBorderBrush" Color="#007ACC" />
+    <SolidColorBrush x:Key="TreeViewItem.MouseOverSelectedForeground" Color="#F1F1F1" />
     <SolidColorBrush x:Key="TreeViewItem.MouseOverBackground" Color="Transparent" />
     <SolidColorBrush x:Key="TreeViewItem.MouseOverBorderBrush" Color="Transparent" />
-    <SolidColorBrush x:Key="TreeViewItem.MouseOverForeground" Color="#FFF1F1F1" />
-    <SolidColorBrush x:Key="TreeViewItem.InactiveBackground" Color="#FF3F3F46" />
-    <SolidColorBrush x:Key="TreeViewItem.InactiveBorderBrush" Color="#FF3F3F46" />
-    <SolidColorBrush x:Key="TreeViewItem.InactiveForeground" Color="#FFF1F1F1" />
+    <SolidColorBrush x:Key="TreeViewItem.MouseOverForeground" Color="#F1F1F1" />
+    <SolidColorBrush x:Key="TreeViewItem.InactiveBackground" Color="#3F3F46" />
+    <SolidColorBrush x:Key="TreeViewItem.InactiveBorderBrush" Color="#3F3F46" />
+    <SolidColorBrush x:Key="TreeViewItem.InactiveForeground" Color="#F1F1F1" />
     <SolidColorBrush x:Key="TreeViewItem.DisabledBackground" Color="Transparent" />
     <SolidColorBrush x:Key="TreeViewItem.DisabledBorderBrush" Color="Transparent" />
-    <SolidColorBrush x:Key="TreeViewItem.DisabledForeground" Color="#FF656565" />
+    <SolidColorBrush x:Key="TreeViewItem.DisabledForeground" Color="#656565" />
 
     <!--#endregion-->
 

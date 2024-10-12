@@ -7,22 +7,30 @@ namespace DevToolbox.Wpf.Demo.ViewModels;
 
 public partial class SettingsViewModel : ObservableObject
 {
-    private Theme _theme;
+    #region Fields/Conts
+
+    private ElementTheme _theme;
     private readonly AppUISettings _appUISettings;
+
+    #endregion
+    
+    #region Properties
 
     public string ApplicationVersion { get; }
 
-    public Theme Theme
+    public ElementTheme Theme
     {
         get => _theme;
         private set => SetProperty(ref _theme, value, nameof(Theme));
     }
 
+    #endregion
+
     public SettingsViewModel(AppUISettings appUISettings)
     {
         _appUISettings = appUISettings;
 
-        ThemeManager.ApplicationThemeChanged += ThemeManager_ApplicationThemeChanged;
+        ThemeManager.RequestedThemeChanged += ThemeManager_RequestedThemeChanged;
 
         ApplicationVersion = GetApplicationVersion();
     }
@@ -40,7 +48,7 @@ public partial class SettingsViewModel : ObservableObject
     #region Relay Commands
 
     [RelayCommand]
-    private void ChangeTheme(Theme theme)
+    private void ChangeTheme(ElementTheme theme)
     {
         _appUISettings.SetAppTheme(theme);
     }
@@ -49,7 +57,7 @@ public partial class SettingsViewModel : ObservableObject
 
     #region Events Subscriptions
 
-    private void ThemeManager_ApplicationThemeChanged(object? sender, EventArgs e)
+    private void ThemeManager_RequestedThemeChanged(object? sender, EventArgs e)
     {
         Theme = _appUISettings.AppTheme;
     }

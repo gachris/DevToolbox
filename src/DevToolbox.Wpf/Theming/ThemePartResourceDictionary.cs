@@ -100,24 +100,7 @@ public class ThemePartResourceDictionary : ResourceDictionary
 
     static ThemePartResourceDictionary()
     {
-        // Subscribes to the ApplicationThemeChanged event to handle theme changes.
-        ThemeManager.ApplicationThemeChanged += ThemeManager_ApplicationThemeChanged;
-    }
-
-    /// <summary>
-    /// Handles the <see cref="ThemeManager.ApplicationThemeChanged"/> event.
-    /// Disables all resource dictionaries and enables those that match the new theme.
-    /// </summary>
-    private static void ThemeManager_ApplicationThemeChanged(object? sender, EventArgs e)
-    {
-        ResourceDictionaries.ForEach(x => x.IsEnabled = false);
-
-        var themes = ResourceDictionaries.Where(x => x.Key is ThemePartKeyExtension key && key.ThemeName == ThemeManager.ApplicationTheme.ToString()).ToArray();
-
-        foreach (var partResourceDictionary in themes)
-        {
-            partResourceDictionary.IsEnabled = true;
-        }
+        ThemeManager.ApplicationThemeCoreChanged += ThemeManager_ApplicationThemeCoreChanged;
     }
 
     #region Methods
@@ -134,19 +117,19 @@ public class ThemePartResourceDictionary : ResourceDictionary
             {
                 Application.Current.Resources.MergedDictionaries.Remove(_disabledSource);
             });
+
             return;
         }
 
-        if (Key is ThemePartKeyExtension key && key.ThemeName != ThemeManager.ApplicationTheme.ToString())
+        var key = Key as ThemePartKeyExtension;
+        if (key?.ThemeName == ThemeManager.ApplicationThemeNameCore)
         {
-            return;
+            Dispatcher.CurrentDispatcher.BeginInvoke(() =>
+            {
+                _disabledSource = new ResourceDictionary() { Source = DisabledSource };
+                Application.Current.Resources.MergedDictionaries.Add(_disabledSource);
+            });
         }
-
-        Dispatcher.CurrentDispatcher.BeginInvoke(() =>
-        {
-            _disabledSource = new ResourceDictionary() { Source = DisabledSource };
-            Application.Current.Resources.MergedDictionaries.Add(_disabledSource);
-        });
     }
 
     /// <summary>
@@ -159,13 +142,33 @@ public class ThemePartResourceDictionary : ResourceDictionary
         {
             DisabledSource = key.Uri;
 
-            if (key.ThemeName == ThemeManager.ApplicationTheme.ToString())
+            if (key.ThemeName == ThemeManager.ApplicationThemeNameCore)
             {
                 IsEnabled = true;
             }
         }
 
         ThemePartResourceDictionary.ResourceDictionaries.Add(this);
+    }
+
+    #endregion
+
+    #region Events Subscriptions
+
+    /// <summary>
+    /// Handles the <see cref="ThemeManager.ApplicationThemeChanged"/> event.
+    /// Disables all resource dictionaries and enables those that match the new theme.
+    /// </summary>
+    private static void ThemeManager_ApplicationThemeCoreChanged(object? sender, EventArgs e)
+    {
+        ResourceDictionaries.ForEach(x => x.IsEnabled = false);
+
+        var themes = ResourceDictionaries.Where(x => x.Key is ThemePartKeyExtension key && key.ThemeName == ThemeManager.ApplicationThemeNameCore).ToArray();
+
+        foreach (var partResourceDictionary in themes)
+        {
+            partResourceDictionary.IsEnabled = true;
+        }
     }
 
     #endregion

@@ -43,7 +43,7 @@
                             HorizontalAlignment="Left"
                             VerticalContentAlignment="Center"
                             Command="{Binding ChangeThemeCommand}"
-                            CommandParameter="{x:Static devtoolbox:Theme.Light}"
+                            CommandParameter="{x:Static devtoolbox:ElementTheme.Light}"
                             IsChecked="{Binding Path=Theme, Mode=OneWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Light'}"
                             Style="{DynamicResource RadioButton.Style}">
                             <TextBlock
@@ -56,7 +56,7 @@
                             HorizontalAlignment="Left"
                             VerticalContentAlignment="Center"
                             Command="{Binding ChangeThemeCommand}"
-                            CommandParameter="{x:Static devtoolbox:Theme.Dark}"
+                            CommandParameter="{x:Static devtoolbox:ElementTheme.Dark}"
                             IsChecked="{Binding Path=Theme, Mode=OneWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Dark'}"
                             Style="{DynamicResource RadioButton.Style}">
                             <TextBlock
@@ -69,7 +69,7 @@
                             HorizontalAlignment="Left"
                             VerticalContentAlignment="Center"
                             Command="{Binding ChangeThemeCommand}"
-                            CommandParameter="{x:Static devtoolbox:Theme.Default}"
+                            CommandParameter="{x:Static devtoolbox:ElementTheme.Default}"
                             IsChecked="{Binding Path=Theme, Mode=OneWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Default'}"
                             Style="{DynamicResource RadioButton.Style}">
                             <TextBlock
@@ -82,14 +82,13 @@
                             HorizontalAlignment="Left"
                             VerticalContentAlignment="Center"
                             Command="{Binding ChangeThemeCommand}"
-                            CommandParameter="{x:Static devtoolbox:Theme.System}"
-                            IsChecked="{Binding Path=Theme, Mode=OneWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='System'}"
-                            IsEnabled="False"
+                            CommandParameter="{x:Static devtoolbox:ElementTheme.WindowsDefault}"
+                            IsChecked="{Binding Path=Theme, Mode=OneWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='WindowsDefault'}"
                             Style="{DynamicResource RadioButton.Style}">
                             <TextBlock
                                 FontSize="{DynamicResource FontSize16}"
                                 Style="{DynamicResource TextBlock.Regular.Style}"
-                                Text="System" />
+                                Text="Windows Default" />
                         </RadioButton>
                     </StackPanel>
                     <StackPanel Margin="0,0,0,14">

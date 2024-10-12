@@ -12,61 +12,58 @@ public class AppUISettings
     private const string SettingsKey = "AppBackgroundRequestedTheme";
 
     private readonly UISettings _uISettings;
-    private readonly Application _application;
     private readonly ILocalSettingsService _localSettingsService;
 
     #endregion
 
     #region Properties
 
-    public Theme AppTheme { get; private set; }
+    public ElementTheme AppTheme { get; private set; }
 
     #endregion
 
-    public AppUISettings(Application application, ILocalSettingsService localSettingsService)
+    public AppUISettings(ILocalSettingsService localSettingsService)
     {
-        _application = application;
         _localSettingsService = localSettingsService;
 
         _uISettings = new UISettings();
         _uISettings.TextScaleFactorChanged += UISettings_TextScaleFactorChanged;
-        _uISettings.ColorValuesChanged += UISettings_ColorValuesChanged;
 
-        LoadTheme();
-        UpdateFontSizes();
+        Initialize();
     }
 
-    private async void LoadTheme()
+    private async void Initialize()
     {
+        UpdateFontSizes();
+
         var themeName = await _localSettingsService.ReadSettingAsync<string>(SettingsKey);
 
-        if (!Enum.TryParse(themeName, out Theme cacheTheme))
+        if (!Enum.TryParse(themeName, out ElementTheme cacheTheme))
         {
-            cacheTheme = Theme.Default;
+            cacheTheme = ElementTheme.Default;
         }
 
         AppTheme = cacheTheme;
-        UpdateTheme();
+        ThemeManager.RequestedTheme  = AppTheme;
     }
 
     #region Methods
 
-    public async void SetAppTheme(Theme appTheme)
+    public async void SetAppTheme(ElementTheme appTheme)
     {
-        AppTheme = appTheme;
-
         await _localSettingsService.SaveSettingAsync(SettingsKey, appTheme.ToString());
 
-        UpdateTheme();
+        AppTheme = appTheme;
+        ThemeManager.RequestedTheme = AppTheme;
     }
 
     private void UpdateFontSizes()
     {
-        for (int i = 9; i < 43; i++)
+        for (var i = 9; i < 43; i++)
         {
             var currentFontSizeKey = string.Format(FontSizeKey, i);
 
-            if (!_application.Resources.Contains(currentFontSizeKey))
+            if (!Application.Current.Resources.Contains(currentFontSizeKey))
             {
                 continue;
             }
@@ -75,22 +72,10 @@ public class AppUISettings
             fontSize *= _uISettings.TextScaleFactor;
 
             // Remove the old value
-            _application.Resources.Remove(currentFontSizeKey);
+            Application.Current.Resources.Remove(currentFontSizeKey);
 
             // Add the updated value
-            _application.Resources.Add(currentFontSizeKey, fontSize);
-        }
-    }
-
-    private void UpdateTheme()
-    {
-        if (SystemParameters.HighContrast)
-        {
-
-        }
-        else
-        {
-            _application.ApplyTheme(AppTheme);
+            Application.Current.Resources.Add(currentFontSizeKey, fontSize);
         }
     }
 
@@ -101,11 +86,6 @@ public class AppUISettings
     private void UISettings_TextScaleFactorChanged(UISettings sender, object args)
     {
         UpdateFontSizes();
-    }
-
-    private void UISettings_ColorValuesChanged(UISettings sender, object args)
-    {
-        UpdateTheme();
     }
 
     #endregion

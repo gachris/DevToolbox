@@ -1,0 +1,5 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:extensions="clr-namespace:DevToolbox.Wpf.Markup">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/Generic.xaml}" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
