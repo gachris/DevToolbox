@@ -277,7 +277,7 @@ internal partial class ColorComponents : Control
 
         var hex = Hex.Value ?? string.Empty;
 
-        if (hex.StartsWith('#'))
+        if (hex.StartsWith("#"))
         {
             hex = hex.Replace("#", string.Empty);
         }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetFrameworks>net462;net6.0-windows</TargetFrameworks>
 		<UseWPF>true</UseWPF>
 		<UseWindowsForms>true</UseWindowsForms>
 	</PropertyGroup>
@@ -31,6 +31,10 @@
 
 	<ItemGroup>
 	  <PackageReference Include="ColorSpace.Net" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">
+	  <Reference Include="PresentationFramework.Royale" />
 	</ItemGroup>
 
 	<ItemGroup>

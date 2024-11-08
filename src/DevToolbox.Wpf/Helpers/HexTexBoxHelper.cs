@@ -43,7 +43,7 @@ internal class HexTexBoxHelper
         var textBox = (TextBox)sender;
         var hex = textBox.Text ?? string.Empty;
 
-        if (hex.StartsWith('#'))
+        if (hex.StartsWith("#"))
         {
             hex = hex.Replace("#", string.Empty);
         }

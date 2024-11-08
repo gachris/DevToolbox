@@ -12,7 +12,7 @@ internal class HexColorCharacterHidingConverter : IValueConverter
         {
             if (hexColor.StartsWith("#"))
             {
-                return hexColor[1..].ToLower();
+                return hexColor.Substring(1).ToLower();
             }
         }
 
