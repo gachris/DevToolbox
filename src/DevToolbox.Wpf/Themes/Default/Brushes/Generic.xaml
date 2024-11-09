@@ -2,9 +2,9 @@
 
     <!--#region DataGrid-->
 
-    <SolidColorBrush x:Key="DataGrid.Background" Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="DataGrid.Foreground" Color="#FF1E1E1E" />
-    <SolidColorBrush x:Key="DataGrid.BorderBrush" Color="#FF707070" />
+    <SolidColorBrush x:Key="DataGrid.Background" Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" />
+    <SolidColorBrush x:Key="DataGrid.Foreground" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}" />
+    <SolidColorBrush x:Key="DataGrid.BorderBrush" Color="#FF688CAF" />
     <SolidColorBrush x:Key="DataGrid.RowBackground" Color="#FFC4E5F6" />
     <SolidColorBrush x:Key="DataGrid.AlternatingRowBackground" Color="#FFDDDDDD" />
     <SolidColorBrush x:Key="DataGrid.VerticalGridLinesBrush" Color="#FF1E1E1E" />

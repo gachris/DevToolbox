@@ -737,7 +737,7 @@ public partial class DesignCanvas : MultiSelector
             {
                 foreach (var item in _dragItems)
                 {
-                    var itemsPresenter = DependencyObjectExtensions.GetVisualChild<ItemsPresenter>(this);
+                    var itemsPresenter = this.FindVisualChild<ItemsPresenter>();
                     var itemsPanel = VisualTreeHelper.GetChild(itemsPresenter, 0) as Panel;
                     var currentPosition = e.GetPosition(itemsPanel);
 

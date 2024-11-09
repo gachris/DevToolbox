@@ -35,7 +35,6 @@ public class GlobalExceptionHandler
         System.Windows.Application.Current.DispatcherUnhandledException += (s, e) =>
         {
             ShowErrorDialog(e.Exception);
-            e.Handled = true;
         };
 
         TaskScheduler.UnobservedTaskException += (s, e) =>
@@ -48,12 +47,6 @@ public class GlobalExceptionHandler
     private static void ShowErrorDialog(Exception exception)
     {
         System.Windows.Forms.MessageBox.Show(exception.Message);
-        //var dialogService = ServiceLocator.Current.GetService<IDialogService>();
-
-        //ArgumentNullException.ThrowIfNull(dialogService, nameof(dialogService));
-
-        //var view = new ErrorDialogView(exception.Message, exception.StackTrace);
-        //dialogService.ShowDialog(null, view, ErrorDialogOptions);
     }
 
     #endregion

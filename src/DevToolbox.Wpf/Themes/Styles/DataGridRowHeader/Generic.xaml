@@ -30,7 +30,7 @@
 
     <Style x:Key="DataGridRowHeaderStyle" TargetType="{x:Type DataGridRowHeader}">
         <Setter Property="FontSize" Value="11" />
-        <Setter Property="BorderThickness" Value="0,0,1,1" />
+        <Setter Property="BorderThickness" Value="1,0,1,1" />
         <Setter Property="Background" Value="{DynamicResource DataGridRowHeader.Background}" />
         <Setter Property="Foreground" Value="{DynamicResource DataGridRowHeader.Foreground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource DataGridRowHeader.BorderBrush}" />
@@ -49,7 +49,7 @@
                             Orientation="Horizontal"
                             SeparatorBrush="{TemplateBinding SeparatorBrush}"
                             SeparatorVisibility="{TemplateBinding SeparatorVisibility}">
-                            <StackPanel Orientation="Horizontal">
+                            <Grid>
                                 <ContentPresenter
                                     x:Name="PART_Number"
                                     HorizontalAlignment="Center"
@@ -60,12 +60,10 @@
                                     Width="12"
                                     Height="12"
                                     HorizontalAlignment="Center"
-                                    VerticalAlignment="Center" />
-                                <Control
-                                    SnapsToDevicePixels="false"
-                                    Template="{Binding ValidationErrorTemplate, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
-                                    Visibility="{Binding (Validation.HasError), Converter={StaticResource bool2VisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
-                            </StackPanel>
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            </Grid>
                         </theme:DataGridHeaderBorder>
                         <Thumb
                             x:Name="PART_TopHeaderGripper"
@@ -160,6 +158,6 @@
         </Setter>
     </Style>
 
-    <Style BasedOn="{StaticResource DataGridRowHeaderStyle1}" TargetType="{x:Type DataGridRowHeader}" />
+    <Style BasedOn="{StaticResource DataGridRowHeaderStyle}" TargetType="{x:Type DataGridRowHeader}" />
 
 </ResourceDictionary>
