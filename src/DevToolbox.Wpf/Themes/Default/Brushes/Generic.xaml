@@ -1,5 +1,17 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!--#region SummariesTable-->
+
+    <SolidColorBrush x:Key="SummariesTable.Background" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="SummariesTable.Foreground" Color="#FF1E1E1E" />
+    <SolidColorBrush x:Key="SummariesTable.BorderBrush" Color="#FF707070" />
+    <SolidColorBrush x:Key="SummariesTable.RowBackground" Color="#FFDDDDDD" />
+    <SolidColorBrush x:Key="SummariesTable.AlternatingRowBackground" Color="#FFDDDDDD" />
+    <SolidColorBrush x:Key="SummariesTable.VerticalGridLinesBrush" Color="#FF1E1E1E" />
+    <SolidColorBrush x:Key="SummariesTable.HorizontalGridLinesBrush" Color="#FF707070" />
+
+    <!--#endregion-->
+
     <!--#region DataGridColumnHeaderFilter-->
 
     <SolidColorBrush x:Key="DataGridColumnHeaderFilter.Background" Color="Transparent" />

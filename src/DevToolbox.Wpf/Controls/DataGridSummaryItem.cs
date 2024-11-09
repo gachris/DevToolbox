@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Data;
+using System;
+using System.Windows;
 
 namespace DevToolbox.Wpf.Controls;
 
@@ -8,6 +10,13 @@ namespace DevToolbox.Wpf.Controls;
 public class DataGridSummaryItem : DependencyObject
 {
     #region Fields/Consts
+
+    /// <summary>
+    /// Identifies the <see cref="CustomCallback"/> dependency property.
+    /// Specifies a custom callback function to compute the summary value for the custom summary type.
+    /// </summary>
+    public static readonly DependencyProperty CustomCallbackProperty =
+        DependencyProperty.Register(nameof(CustomCallback), typeof(Func<DataTable, string, object>), typeof(DataGridSummaryItem), new FrameworkPropertyMetadata(null));
 
     /// <summary>
     /// Identifies the <see cref="Tag"/> dependency property.
@@ -61,6 +70,16 @@ public class DataGridSummaryItem : DependencyObject
     #endregion
 
     #region Properties
+
+    /// <summary>
+    /// Gets or sets the custom callback function to compute the summary value for the custom summary type.
+    /// The callback receives the <see cref="DataTable"/> and the field name as arguments.
+    /// </summary>
+    public Func<DataTable, string, object>? CustomCallback
+    {
+        get => (Func<DataTable, string, object>?)GetValue(CustomCallbackProperty);
+        set => SetValue(CustomCallbackProperty, value);
+    }
 
     /// <summary>
     /// Gets or sets a custom tag object associated with the summary item.
