@@ -47,6 +47,7 @@ public class GlobalExceptionHandler
 
     private static void ShowErrorDialog(Exception exception)
     {
+        System.Windows.Forms.MessageBox.Show(exception.Message);
         //var dialogService = ServiceLocator.Current.GetService<IDialogService>();
 
         //ArgumentNullException.ThrowIfNull(dialogService, nameof(dialogService));

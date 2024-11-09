@@ -1,5 +1,65 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!--#region DataGrid-->
+
+    <SolidColorBrush x:Key="DataGrid.Background" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="DataGrid.Foreground" Color="#FF1E1E1E" />
+    <SolidColorBrush x:Key="DataGrid.BorderBrush" Color="#FF707070" />
+    <SolidColorBrush x:Key="DataGrid.RowBackground" Color="#FFC4E5F6" />
+    <SolidColorBrush x:Key="DataGrid.AlternatingRowBackground" Color="#FFDDDDDD" />
+    <SolidColorBrush x:Key="DataGrid.VerticalGridLinesBrush" Color="#FF1E1E1E" />
+    <SolidColorBrush x:Key="DataGrid.HorizontalGridLinesBrush" Color="#FF707070" />
+    <SolidColorBrush x:Key="{x:Static DataGrid.FocusBorderBrushKey}" Color="#FF000000" />
+
+    <!--#endregion-->
+
+    <!--#region DataGridCell-->
+
+    <SolidColorBrush x:Key="DataGridCell.Background" Color="Transparent" />
+    <SolidColorBrush x:Key="DataGridCell.Foreground" Color="#FF1E1E1E" />
+    <SolidColorBrush x:Key="DataGridCell.BorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="DataGridCell.SelectedBackground" Color="#FFC4E5F6" />
+    <SolidColorBrush x:Key="DataGridCell.SelectedForeground" Color="#FF1E1E1E" />
+    <SolidColorBrush x:Key="DataGridCell.SelectedBorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="DataGridCell.InactiveBackground" Color="#FFDDDDDD" />
+    <SolidColorBrush x:Key="DataGridCell.InactiveForeground" Color="#FF1E1E1E" />
+    <SolidColorBrush x:Key="DataGridCell.InactiveBorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="DataGridCell.DisabledBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="DataGridCell.DisabledForeground" Color="#FF1E1E1E" />
+    <SolidColorBrush x:Key="DataGridCell.DisabledBorderBrush" Color="Transparent" />
+
+    <!--#endregion-->
+
+    <!--#region DataGridColumnHeader-->
+
+    <SolidColorBrush x:Key="DataGridColumnHeader.Background" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="DataGridColumnHeader.Foreground" Color="#FF1E1E1E" />
+    <SolidColorBrush x:Key="DataGridColumnHeader.BorderBrush" Color="#FF707070" />
+    <SolidColorBrush x:Key="DataGridColumnHeader.MouseOverBackground" Color="#FFCDE6F7" />
+    <SolidColorBrush x:Key="DataGridColumnHeader.PressedBackground" Color="#FF92C0E0" />
+    <SolidColorBrush x:Key="DataGridColumnHeader.SeparatorBrush" Color="#FF707070" />
+    <SolidColorBrush x:Key="DataGridColumnHeader.SortGlyph" Color="#1E1E1E" />
+
+    <!--#endregion-->
+
+    <!--#region DataGridRow-->
+
+    <SolidColorBrush x:Key="DataGridRow.Background" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="DataGridRow.Foreground" Color="#FF1E1E1E" />
+    <SolidColorBrush x:Key="DataGridRow.BorderBrush" Color="Transparent" />
+
+    <!--#endregion-->
+
+    <!--#region DataGridRowHeader-->
+
+    <SolidColorBrush x:Key="DataGridRowHeader.Background" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="DataGridRowHeader.Foreground" Color="#FF1E1E1E" />
+    <SolidColorBrush x:Key="DataGridRowHeader.BorderBrush" Color="#FF707070" />
+    <SolidColorBrush x:Key="DataGridRowHeader.EditGlyph" Color="#F1F1F1" />
+    <SolidColorBrush x:Key="DataGridRowHeader.RowHeaderGlyph" Color="#1E1E1E" />
+
+    <!--#endregion-->
+
     <!--#region ColorChip-->
 
     <SolidColorBrush x:Key="ColorChip.ChipBorderBrush" Color="#FFCACACA" />
