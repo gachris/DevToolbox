@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace DevToolbox.Wpf.Data;
 
-internal abstract class NotifyPropertyChanged : INotifyPropertyChanged, INotifyDataErrorInfo
+public abstract class NotifyPropertyChanged : INotifyPropertyChanged, INotifyDataErrorInfo
 {
     #region Fields/Consts
 

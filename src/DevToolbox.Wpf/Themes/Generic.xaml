@@ -43,9 +43,10 @@
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/SidePanelWindow.xaml}" />
 
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ColorChip.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ColorComponents.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ColorPicker.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/Connector.xaml}" />
-        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ColorComponents.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DataGridColumnHeaderFilter.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DesignCanvas.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DesignLayer.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DiagramLayer.xaml}" />

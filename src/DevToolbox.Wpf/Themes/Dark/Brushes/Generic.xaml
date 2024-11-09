@@ -1,5 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!--#region DataGridColumnHeaderFilter-->
+
+    <SolidColorBrush x:Key="DataGridColumnHeaderFilter.Background" Color="Transparent" />
+    <SolidColorBrush x:Key="DataGridColumnHeaderFilter.Foreground" Color="#F1F1F1" />
+    <SolidColorBrush x:Key="DataGridColumnHeaderFilter.BorderBrush" Color="#3F3F46" />
+
+    <!--#endregion-->
+
     <!--#region DataGrid-->
 
     <SolidColorBrush x:Key="DataGrid.Background" Color="#252526" />
@@ -44,7 +52,7 @@
 
     <!--#region DataGridRow-->
 
-    <SolidColorBrush x:Key="DataGridRow.Background" Color="#252526" />
+    <SolidColorBrush x:Key="DataGridRow.Background" Color="Transparent" />
     <SolidColorBrush x:Key="DataGridRow.Foreground" Color="#F1F1F1" />
     <SolidColorBrush x:Key="DataGridRow.BorderBrush" Color="Transparent" />
 
