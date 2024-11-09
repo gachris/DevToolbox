@@ -152,7 +152,7 @@ public class DataGridColumnHeaderFilter : Control
             else
             {
                 SelectAllItems();
-                autoFilter.RemoveAllFilter(dataGrid, sortMemberPath);
+                autoFilter.RemoveAllFilter(sortMemberPath);
             }
         }
 

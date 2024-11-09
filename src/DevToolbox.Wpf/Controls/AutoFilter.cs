@@ -17,35 +17,22 @@ public class AutoFilter : DependencyObject
 {
     #region Fields/Consts
 
-    private string? _filterExpression;
+    private readonly DataGrid _currentGrid;
     private ICollectionView? _view;
     private DataTable? _collectionViewDt;
-    private string? _rowFilter;
-    private readonly DataGrid _currentGrid;
 
     public static readonly DependencyProperty AutoFilterProperty =
         DependencyProperty.RegisterAttached("AutoFilter", typeof(AutoFilter), typeof(AutoFilter), new PropertyMetadata(default));
 
+    public static readonly DependencyProperty FilterExpressionProperty =
+        DependencyProperty.Register("FilterExpression", typeof(string), typeof(AutoFilter), new FrameworkPropertyMetadata(default, OnFilterExpressionChanged));
+
     #endregion
 
-    public string? FilterExpression
+    public string FilterExpression
     {
-        get => _filterExpression;
-        set
-        {
-            _filterExpression = value;
-            UpdateFilter();
-            _view.Filter = null;
-            if (!string.IsNullOrEmpty(_filterExpression))
-            {
-                _view.Filter = FilterPredicate;
-            }
-        }
-    }
-
-    private void SetRowFilter(string value)
-    {
-        _rowFilter = value;
+        get { return (string)GetValue(FilterExpressionProperty); }
+        set { SetValue(FilterExpressionProperty, value); }
     }
 
     public AutoFilter(DataGrid grid)
@@ -61,6 +48,29 @@ public class AutoFilter : DependencyObject
     public static void SetAutoFilter(DependencyObject obj, AutoFilter value)
     {
         obj.SetValue(AutoFilterProperty, value);
+    }
+
+    private static void OnFilterExpressionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var autoFilter = (AutoFilter)d;
+        autoFilter.OnFilterExpressionChanged((string)e.OldValue, (string)e.NewValue);
+    }
+
+    private void OnFilterExpressionChanged(string oldValue, string newValue)
+    {
+        if (_view is null)
+        {
+            return;
+        }
+
+        UpdateFilter();
+
+        _view.Filter = null;
+
+        if (!string.IsNullOrEmpty(newValue))
+        {
+            _view.Filter = FilterPredicate;
+        }
     }
 
     public ObservableCollection<FilterListItem>? GetDistictValues(DataGrid grid, string columnName)
@@ -161,7 +171,8 @@ public class AutoFilter : DependencyObject
                 else
                     itemsSource.RowFilter = "[" + columnName + "]" + " " + " IN " + "(" + "'" + value + "'" + ")";
             }
-            SetRowFilter(itemsSource.RowFilter);
+
+            FilterExpression = itemsSource.RowFilter;
         }
         else if (CollectionViewSource.GetDefaultView(grid.ItemsSource) != null)
         {
@@ -208,7 +219,6 @@ public class AutoFilter : DependencyObject
                     }
                 }
             }
-            SetRowFilter(FilterExpression);
         }
     }
 
@@ -635,18 +645,18 @@ public class AutoFilter : DependencyObject
         return new List<string>();
     }
 
-    public void RemoveAllFilter(DataGrid currentGrid, string currentColumn)
+    public void RemoveAllFilter(string currentColumn)
     {
-        if (currentGrid.ItemsSource == null) return;
+        if (_currentGrid.ItemsSource == null) return;
         string? newFilter = null;
-        if (currentGrid.ItemsSource is DataView)
+        if (_currentGrid.ItemsSource is DataView)
         {
-            var itemsSource = (DataView)currentGrid.ItemsSource;
+            var itemsSource = (DataView)_currentGrid.ItemsSource;
             newFilter = itemsSource.RowFilter;
         }
-        else if (CollectionViewSource.GetDefaultView(currentGrid.ItemsSource) != null)
+        else if (CollectionViewSource.GetDefaultView(_currentGrid.ItemsSource) != null)
         {
-            newFilter = GetAutoFilter(currentGrid).FilterExpression;
+            newFilter = FilterExpression;
         }
 
         if (newFilter is null || string.IsNullOrEmpty(newFilter))
@@ -702,30 +712,32 @@ public class AutoFilter : DependencyObject
                 {
                     newFilter = "";
 
-                    if (currentGrid.ItemsSource is DataView itemsSource)
+                    if (_currentGrid.ItemsSource is DataView itemsSource)
                     {
                         itemsSource.RowFilter = CorrectRowFilter(newFilter);
                     }
-                    else if (CollectionViewSource.GetDefaultView(currentGrid.ItemsSource) != null)
+                    else if (CollectionViewSource.GetDefaultView(_currentGrid.ItemsSource) != null)
                     {
-                        GetAutoFilter(currentGrid).FilterExpression = CorrectRowFilter(newFilter);
+                        FilterExpression = CorrectRowFilter(newFilter);
                     }
                     return;
                 }
             }
         }
+     
         newFilter = RemoveIsNullAndBlankFilter(newFilter, currentColumn);
-        if (currentGrid.ItemsSource is DataView)
+
+        if (_currentGrid.ItemsSource is DataView)
         {
-            var itemsSource = (DataView)currentGrid.ItemsSource;
+            var itemsSource = (DataView)_currentGrid.ItemsSource;
             itemsSource.RowFilter = CorrectRowFilter(newFilter);
-            SetRowFilter(itemsSource.RowFilter);
+            FilterExpression = itemsSource.RowFilter;
         }
-        else if (CollectionViewSource.GetDefaultView(currentGrid.ItemsSource) != null)
+        else if (CollectionViewSource.GetDefaultView(_currentGrid.ItemsSource) != null)
         {
-            GetAutoFilter(currentGrid).FilterExpression = CorrectRowFilter(newFilter);
-            SetRowFilter(FilterExpression);
+            FilterExpression = CorrectRowFilter(newFilter);
         }
+
         _currentGrid.Items.Refresh();
     }
 
@@ -1369,10 +1381,10 @@ public class AutoFilter : DependencyObject
     private void UpdateFilter()
     {
         _collectionViewDt = null;
-        var enumerator = _view.GetEnumerator();
+        var enumerator = _view?.GetEnumerator() ?? _currentGrid.ItemsSource.GetEnumerator();
         enumerator.MoveNext(); // sets it to the first element
         var firstElement = enumerator.Current;
-        if (firstElement != null && !string.IsNullOrEmpty(_filterExpression))
+        if (firstElement != null && !string.IsNullOrEmpty(FilterExpression))
         {
             // build/rebuild data table
             var dt = new DataTable();
@@ -1382,7 +1394,7 @@ public class AutoFilter : DependencyObject
             }
 
             // add calculated column
-            dt.Columns.Add("_filter", typeof(bool), _filterExpression);
+            dt.Columns.Add("_filter", typeof(bool), FilterExpression);
 
             // create a single row for evaluating expressions
             if (dt.Rows.Count == 0)
