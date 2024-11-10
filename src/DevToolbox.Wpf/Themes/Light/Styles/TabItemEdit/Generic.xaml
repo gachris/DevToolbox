@@ -95,8 +95,11 @@
                             </Grid.ColumnDefinitions>
                             <Image
                                 Grid.Column="0"
+                                Width="16"
+                                Height="16"
+                                Margin="0,0,4,0"
                                 Source="{TemplateBinding Icon}"
-                                Stretch="None" />
+                                Stretch="Uniform" />
                             <ContentPresenter
                                 x:Name="contentPresenter"
                                 ContentSource="Header"

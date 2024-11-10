@@ -3,5 +3,8 @@
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/Generic.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Dark/Styles/TabControlEdit/Generic.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Dark/Styles/TabItemEdit/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Dark/Styles/DocumentControl/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Dark/Styles/DocumentItem/Generic.xaml}" />
     </ResourceDictionary.MergedDictionaries>
+
 </ResourceDictionary>

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using DevToolbox.Wpf.Demo.Helpers;
+using DevToolbox.Wpf.Media;
 
 namespace DevToolbox.Wpf.Demo;
 
@@ -26,6 +27,8 @@ public partial class App : Application
 
     public App()
     {
+        ThemeManager.RequestedTheme = ElementTheme.Dark;
+
         _singletonApplicationManager = new SingletonApplicationManager(UniqueEventName, UniqueMutexName);
     }
 

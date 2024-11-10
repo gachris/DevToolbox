@@ -37,11 +37,6 @@
                     ThemeName="HighContrast" />
             </markup:ThemePartResourceDictionary.Key>
         </markup:ThemePartResourceDictionary>
-
-        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/WindowEx.xaml}" />
-        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/TabsWindow.xaml}" />
-        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/SidePanelWindow.xaml}" />
-
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ColorChip.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ColorComponents.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ColorPicker.xaml}" />
@@ -51,21 +46,36 @@
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DesignCanvas.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DesignLayer.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DiagramLayer.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DockableControl.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DockableItem.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DockableOverlayControl.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DockableWindow.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DockingButton.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DockingButtonGroupControl.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DockManager.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DocumentControl.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DocumentItem.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DocumentList.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DocumentWindow.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DropDown.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/EditBox.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/EyeDropper.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/FontGlyph.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/GridControl.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/NumberBox.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/OverlayButton.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/OverlayWindow.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ProgressRing.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/SplitView.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/SidePanelWindow.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/SpeechBalloon.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/TabControlEdit.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/TabItemEdit.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/TabsWindow.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/WaitingIndicator.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/WindowEx.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ZoomAndPanControl.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ZoomAndPanViewBox.xaml}" />
-
     </ResourceDictionary.MergedDictionaries>
 
     <FontFamily x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type controls:FontGlyph}, ResourceId=FontFamilyKey}">

@@ -1,0 +1,90 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels">
+
+    <DataTemplate DataType="{x:Type viewModels:ColorPaletteViewModel}">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <WrapPanel
+                Margin="10"
+                VerticalAlignment="Top"
+                Orientation="Horizontal">
+                <!--  Color Item 1  -->
+                <Border
+                    Width="50"
+                    Height="50"
+                    Margin="5"
+                    Background="Red">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="Red" />
+                </Border>
+                <!--  Color Item 2  -->
+                <Border
+                    Width="50"
+                    Height="50"
+                    Margin="5"
+                    Background="Green">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="Green" />
+                </Border>
+                <!--  Color Item 3  -->
+                <Border
+                    Width="50"
+                    Height="50"
+                    Margin="5"
+                    Background="Blue">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="Blue" />
+                </Border>
+                <!--  Color Item 4  -->
+                <Border
+                    Width="50"
+                    Height="50"
+                    Margin="5"
+                    Background="Yellow">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="Black"
+                        Text="Yellow" />
+                </Border>
+                <!--  Color Item 5  -->
+                <Border
+                    Width="50"
+                    Height="50"
+                    Margin="5"
+                    Background="Orange">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="Orange" />
+                </Border>
+                <!--  Color Item 6  -->
+                <Border
+                    Width="50"
+                    Height="50"
+                    Margin="5"
+                    Background="Purple">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="Purple" />
+                </Border>
+            </WrapPanel>
+        </ScrollViewer>
+    </DataTemplate>
+
+
+</ResourceDictionary>
