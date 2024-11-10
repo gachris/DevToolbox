@@ -20,24 +20,24 @@ internal class NativeMethods
     {
         int num = 0;
 
-        if (NativeMethods.IsKeyPressed(1))
+        if (IsKeyPressed(1))
             num |= 1;
 
-        if (NativeMethods.IsKeyPressed(2))
+        if (IsKeyPressed(2))
             num |= 2;
 
-        if (NativeMethods.IsKeyPressed(4))
+        if (IsKeyPressed(4))
             num |= 0x10;
 
-        if (NativeMethods.IsKeyPressed(5))
+        if (IsKeyPressed(5))
             num |= 0x20;
 
-        if (NativeMethods.IsKeyPressed(6))
+        if (IsKeyPressed(6))
             num |= 0x40;
 
-        var point = NativeMethods.GetMousePosition();
+        var point = GetMousePosition();
         User32.ScreenToClient(hWnd, ref point);
-        User32.SendMessage(hWnd, msg, new IntPtr(num), NativeMethods.MakeParam(point.X, point.Y));
+        User32.SendMessage(hWnd, msg, new IntPtr(num), MakeParam(point.X, point.Y));
     }
 
     public static bool IsKeyPressed(int vKey) => User32.GetKeyState(vKey) < 0;

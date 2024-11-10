@@ -1,4 +1,4 @@
-﻿namespace DevToolbox.Wpf.Demo;
+﻿namespace DevToolbox.Wpf.Demo.Contract;
 
 public interface ILocalSettingsService
 {

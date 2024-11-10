@@ -1,4 +1,4 @@
-﻿namespace DevToolbox.Wpf.Demo;
+﻿namespace DevToolbox.Wpf.Demo.Config;
 
 public class LocalSettingsOptions
 {

@@ -1,4 +1,6 @@
 ﻿using CommonServiceLocator;
+using DevToolbox.Wpf.Demo.Contract;
+using DevToolbox.Wpf.Demo.Services;
 using DevToolbox.Wpf.Demo.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

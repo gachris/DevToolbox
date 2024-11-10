@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace DevToolbox.Wpf.Demo;
+namespace DevToolbox.Wpf.Demo.Helpers;
 
 internal static class Json
 {

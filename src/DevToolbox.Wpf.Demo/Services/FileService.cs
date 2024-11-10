@@ -1,8 +1,9 @@
 ﻿using System.IO;
 using System.Text;
+using DevToolbox.Wpf.Demo.Contract;
 using Newtonsoft.Json;
 
-namespace DevToolbox.Wpf.Demo;
+namespace DevToolbox.Wpf.Demo.Services;
 
 public class FileService : IFileService
 {

@@ -1,7 +1,10 @@
 ﻿using System.IO;
+using DevToolbox.Wpf.Demo.Config;
+using DevToolbox.Wpf.Demo.Contract;
+using DevToolbox.Wpf.Demo.Helpers;
 using Microsoft.Extensions.Options;
 
-namespace DevToolbox.Wpf.Demo;
+namespace DevToolbox.Wpf.Demo.Services;
 
 public class LocalSettingsService : ILocalSettingsService
 {

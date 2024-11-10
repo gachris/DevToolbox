@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using DevToolbox.Wpf.Demo.ViewModels;
 
-namespace DevToolbox.Wpf.Demo;
+namespace DevToolbox.Wpf.Demo.Windows;
 
 public partial class DataGridWindow
 {
