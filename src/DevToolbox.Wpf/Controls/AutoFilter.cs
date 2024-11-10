@@ -724,7 +724,7 @@ public class AutoFilter : DependencyObject
                 }
             }
         }
-     
+
         newFilter = RemoveIsNullAndBlankFilter(newFilter, currentColumn);
 
         if (_currentGrid.ItemsSource is DataView)

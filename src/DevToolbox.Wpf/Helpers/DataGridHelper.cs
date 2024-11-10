@@ -397,7 +397,7 @@ public class DataGridHelper
     #endregion
 
     #region Events Subscriptions
-    
+
     /// <summary>
     /// Handles the <see cref="UIElement.PreviewKeyDown"/> event for the <see cref="DataGrid"/>.
     /// Suppresses the default copy action (Ctrl + C) if the <see cref="AllowUserToCopyProperty"/> is set to <c>false</c>.
