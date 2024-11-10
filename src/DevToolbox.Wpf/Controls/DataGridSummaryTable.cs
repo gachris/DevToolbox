@@ -118,7 +118,7 @@ public class DataGridSummaryTable : ItemsControl
                 rowCountByColumn[showInColumn] = ++index;
             }
 
-            _columns.First(c => c.ColumnName == showInColumn).Cells.Insert(index, new DataGridSummaryTableCell
+            _columns.FirstOrDefault(c => c.ColumnName == showInColumn)?.Cells.Insert(index, new DataGridSummaryTableCell
             {
                 Value = value,
                 Style = gridSummaryItem.Style

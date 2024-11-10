@@ -1,0 +1,225 @@
+﻿<devtoolbox:WindowEx
+    x:Class="DevToolbox.Wpf.Demo.DataGridWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels"
+    Title="DataGrid demo"
+    Width="1200"
+    Height="800"
+    d:DataContext="{d:DesignInstance viewModels:ExampleDataGridViewModel}"
+    ResizeMode="CanResizeWithGrip"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <devtoolbox:WindowEx.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/DevToolbox.Wpf;component/Themes/Styles/DataGridColumnHeader/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style BasedOn="{StaticResource DataGridColumnHeaderStyle}" TargetType="{x:Type DataGridColumnHeader}">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem
+                                Command="{x:Static devtoolbox:GridControl.AddGroupByColumnCommand}"
+                                CommandParameter="{Binding PlacementTarget, RelativeSource={RelativeSource AncestorLevel=1, AncestorType=ContextMenu}}"
+                                CommandTarget="{Binding PlacementTarget, RelativeSource={RelativeSource AncestorLevel=1, AncestorType=ContextMenu}}"
+                                Header="Group By Selected Column" />
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding}" />
+                                <devtoolbox:DataGridColumnHeaderFilter />
+                            </StackPanel>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="DataGridSummaryItemStyle" TargetType="ContentControl">
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ContentControl">
+                            <Border
+                                Margin="4,2"
+                                BorderBrush="#3F3F46"
+                                BorderThickness="1"
+                                CornerRadius="2">
+                                <ContentControl Margin="2" Content="{TemplateBinding Content}" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </devtoolbox:WindowEx.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <devtoolbox:GridControl
+            Name="gridControl"
+            Margin="5"
+            devtoolbox:DataGridHelper.AllowColumnChooser="True"
+            devtoolbox:DataGridHelper.AllowUserToCopy="False"
+            devtoolbox:DataGridHelper.ShowRowNumber="True"
+            AllowDrop="True"
+            AreRowDetailsFrozen="False"
+            AutoGenerateColumns="True"
+            CanUserAddRows="False"
+            CanUserResizeRows="True"
+            EnableColumnVirtualization="False"
+            EnableRowVirtualization="False"
+            FrozenColumnCount="2"
+            FrozenRowCount="8"
+            HeadersVisibility="All"
+            IsReadOnly="False"
+            IsSynchronizedWithCurrentItem="True"
+            ItemsSource="{Binding SourceTable}"
+            OnlyTwoWaySorting="False"
+            RowHeaderWidth="18"
+            SelectionMode="Extended"
+            SelectionUnit="FullRow"
+            ShowGroupPanel="True"
+            ShowSummaries="True"
+            VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+            VirtualizingPanel.ScrollUnit="Item"
+            VirtualizingPanel.VirtualizationMode="Recycling">
+            <devtoolbox:GridControl.TotalSummary>
+                <devtoolbox:DataGridSummaryItem
+                    DisplayFormat="Max {0:c2}"
+                    FieldName="Points"
+                    ShowInColumn="GameName"
+                    Style="{StaticResource DataGridSummaryItemStyle}"
+                    SummaryType="Max" />
+                <devtoolbox:DataGridSummaryItem
+                    DisplayFormat="Max {0:c2}"
+                    FieldName="Points"
+                    ShowInColumn="Publisher"
+                    Style="{StaticResource DataGridSummaryItemStyle}"
+                    SummaryType="Max" />
+                <devtoolbox:DataGridSummaryItem
+                    DisplayFormat="Max {0}"
+                    FieldName="Points"
+                    ShowInColumn="Points"
+                    Style="{StaticResource DataGridSummaryItemStyle}"
+                    SummaryType="Max" />
+                <devtoolbox:DataGridSummaryItem
+                    DisplayFormat="Sum {0}"
+                    FieldName="Points"
+                    ShowInColumn="Points"
+                    Style="{StaticResource DataGridSummaryItemStyle}"
+                    SummaryType="Sum" />
+                <devtoolbox:DataGridSummaryItem
+                    DisplayFormat="Min {0}"
+                    FieldName="Points"
+                    ShowInColumn="Points"
+                    Style="{StaticResource DataGridSummaryItemStyle}"
+                    SummaryType="Min" />
+                <devtoolbox:DataGridSummaryItem
+                    DisplayFormat="Count {0}"
+                    FieldName="Points"
+                    ShowInColumn="Publisher"
+                    Style="{StaticResource DataGridSummaryItemStyle}"
+                    SummaryType="Count" />
+                <devtoolbox:DataGridSummaryItem
+                    DisplayFormat="Average {0}"
+                    FieldName="Points"
+                    ShowInColumn="Points"
+                    Style="{StaticResource DataGridSummaryItemStyle}"
+                    SummaryType="Average" />
+                <devtoolbox:DataGridSummaryItem
+                    DisplayFormat="Smallest {0}"
+                    FieldName="Points"
+                    ShowInColumn="Points"
+                    Style="{StaticResource DataGridSummaryItemStyle}"
+                    SummaryType="Smallest" />
+                <devtoolbox:DataGridSummaryItem
+                    DisplayFormat="Largest {0}"
+                    FieldName="Points"
+                    ShowInColumn="Publisher"
+                    Style="{StaticResource DataGridSummaryItemStyle}"
+                    SummaryType="Largest" />
+            </devtoolbox:GridControl.TotalSummary>
+            <devtoolbox:GridControl.FooterDataTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="4" Orientation="Horizontal">
+                        <TextBlock FontWeight="Bold" Text="Rows Count: " />
+                        <TextBlock Margin="3,0,0,0" Text="{Binding ElementName=gridControl, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                    </StackPanel>
+                </DataTemplate>
+            </devtoolbox:GridControl.FooterDataTemplate>
+            <devtoolbox:ScrollingPreviewService.VerticalScrollingPreviewTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontWeight="Bold" Text="Game Name:" />
+                            <TextBlock Margin="5,0,0,0" Text="{Binding Path=FirstItem.GameName}" />
+                        </StackPanel>
+                        <Rectangle
+                            Height="1"
+                            Margin="0,2,0,2"
+                            Fill="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                            SnapsToDevicePixels="True" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontWeight="Bold" Text="Game Name:" />
+                            <TextBlock Margin="5,0,0,0" Text="{Binding Path=LastItem.GameName}" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </devtoolbox:ScrollingPreviewService.VerticalScrollingPreviewTemplate>
+            <devtoolbox:GridControl.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <Expander
+                                            x:Name="PART_ExpanderEdit"
+                                            HorizontalAlignment="Stretch"
+                                            BorderThickness="0,0,0,1">
+                                            <Expander.Header>
+                                                <TextBlock
+                                                    Padding="8"
+                                                    HorizontalAlignment="Stretch"
+                                                    FontWeight="Bold"
+                                                    Text="{Binding Name}" />
+                                            </Expander.Header>
+                                            <Border BorderBrush="#3F3F46" BorderThickness="0,1,0,0">
+                                                <ItemsPresenter />
+                                            </Border>
+                                        </Expander>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger SourceName="PART_ExpanderEdit" Property="IsExpanded" Value="False">
+                                                <Setter TargetName="PART_ExpanderEdit" Property="BorderBrush" Value="#3F3F46" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </devtoolbox:GridControl.GroupStyle>
+        </devtoolbox:GridControl>
+        <ToggleButton
+            Grid.Row="1"
+            Checked="Button_Checked"
+            Content="Change Source"
+            IsChecked="True"
+            Unchecked="Button_Unchecked" />
+    </Grid>
+</devtoolbox:WindowEx>
