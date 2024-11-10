@@ -64,7 +64,7 @@
 
     <!--#region DataGridRow-->
 
-    <SolidColorBrush x:Key="DataGridRow.Background" Color="Transparent" />
+    <SolidColorBrush x:Key="DataGridRow.Background" Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" />
     <SolidColorBrush x:Key="DataGridRow.Foreground" Color="#FF1E1E1E" />
     <SolidColorBrush x:Key="DataGridRow.BorderBrush" Color="Transparent" />
 
