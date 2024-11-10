@@ -10,7 +10,7 @@ namespace DevToolbox.Wpf.Controls;
 /// A control representing a color chip that allows users to switch, reset, or choose colors using a dialog.
 /// This control provides commands for color manipulation and displays primary and secondary colors.
 /// </summary>
-public partial class ColorChip : Control
+public class ColorChip : Control
 {
     #region Fields/Consts
 

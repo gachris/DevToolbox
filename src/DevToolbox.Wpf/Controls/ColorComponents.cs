@@ -10,7 +10,7 @@ using DevToolbox.Wpf.Data;
 
 namespace DevToolbox.Wpf.Controls;
 
-internal partial class ColorComponents : Control
+internal class ColorComponents : Control
 {
     private enum ColorSourceChange
     {

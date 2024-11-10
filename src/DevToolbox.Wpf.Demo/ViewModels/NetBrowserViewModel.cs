@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace DevToolbox.Wpf.Demo.ViewModels;
 
-public partial class NetBrowserViewModel : ObservableObject
+public class NetBrowserViewModel : ObservableObject
 {
     private static bool _isFirst = false;
 

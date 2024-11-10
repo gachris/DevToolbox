@@ -11,7 +11,7 @@ namespace DevToolbox.Wpf.Controls;
 /// A customizable tab panel that supports different view modes for tab arrangement,
 /// including scrolling and stretching of tab items.
 /// </summary>
-public partial class TabPanelEdit : TabPanel
+public class TabPanelEdit : TabPanel
 {
     #region Fields/Consts
 

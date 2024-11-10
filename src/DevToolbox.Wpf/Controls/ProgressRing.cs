@@ -10,7 +10,7 @@ namespace DevToolbox.Wpf.Controls;
 /// </summary>
 [TemplateVisualState(GroupName = GroupActiveStates, Name = StateInactive)]
 [TemplateVisualState(GroupName = GroupActiveStates, Name = StateActive)]
-public partial class ProgressRing : Control
+public class ProgressRing : Control
 {
     #region Fields/Consts
 

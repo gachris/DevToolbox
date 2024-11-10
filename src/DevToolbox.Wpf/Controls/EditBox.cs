@@ -12,7 +12,7 @@ namespace DevToolbox.Wpf.Controls;
 /// </summary>
 [TemplatePart(Name = "PART_TextBlockPart", Type = typeof(TextBlock))]
 [TemplatePart(Name = "PART_TextBox", Type = typeof(TextBox))]
-public partial class EditBox : Control
+public class EditBox : Control
 {
     #region Fields/Consts
 

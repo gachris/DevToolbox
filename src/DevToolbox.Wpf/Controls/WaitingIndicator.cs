@@ -8,7 +8,7 @@ namespace DevToolbox.Wpf.Controls;
 /// Represents a waiting indicator control that can display a message 
 /// and show a progress ring with customizable styles and colors.
 /// </summary>
-public partial class WaitingIndicator : ContentControl
+public class WaitingIndicator : ContentControl
 {
     #region Fields/Consts
 

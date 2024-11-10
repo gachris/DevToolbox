@@ -7,7 +7,7 @@ namespace DevToolbox.Wpf.Controls;
 /// <summary>
 /// Represents a customizable tab item with editing capabilities, including an icon and a style for a close button.
 /// </summary>
-public partial class TabItemEdit : TabItem
+public class TabItemEdit : TabItem
 {
     #region Fields/Consts
 

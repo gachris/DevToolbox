@@ -24,7 +24,7 @@ namespace DevToolbox.Wpf.Controls;
 /// panning, and item manipulation within a WPF application.
 /// </summary>
 [TemplatePart(Name = PART_ZoomAndPanControl, Type = typeof(ZoomAndPanControl))]
-public partial class DesignCanvas : MultiSelector
+public class DesignCanvas : MultiSelector
 {
     #region Fields/Consts
 

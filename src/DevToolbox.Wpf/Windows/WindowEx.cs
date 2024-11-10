@@ -11,7 +11,7 @@ namespace DevToolbox.Wpf.Windows;
 /// Represents an extended window that provides additional functionality
 /// and customization options beyond the standard Window class in WPF.
 /// </summary>
-public partial class WindowEx : Window
+public class WindowEx : Window
 {
     #region Fields/Consts
 
