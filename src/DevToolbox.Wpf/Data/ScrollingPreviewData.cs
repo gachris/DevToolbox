@@ -1,10 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using DevToolbox.Wpf.Data;
 using DevToolbox.Wpf.Extensions;
 
-namespace DevToolbox.Wpf.Controls;
+namespace DevToolbox.Wpf.Data;
 
 /// <summary>
 /// Provides data that should be useful to templates displaying

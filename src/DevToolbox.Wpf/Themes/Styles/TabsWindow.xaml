@@ -6,6 +6,7 @@
     xmlns:windows="clr-namespace:DevToolbox.Wpf.Windows">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <converters:ScrollLimitConverter x:Key="ScrollLimitConverter" />
 
     <Style x:Key="BaseTabControlButton" TargetType="{x:Type Button}">
         <Setter Property="Margin" Value="4" />

@@ -5,8 +5,8 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using DevToolbox.Wpf.Controls.Utils;
 using DevToolbox.Wpf.Extensions;
+using DevToolbox.Wpf.Utils;
 
 namespace DevToolbox.Wpf.Controls;
 

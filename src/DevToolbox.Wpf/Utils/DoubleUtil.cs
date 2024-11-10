@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DevToolbox.Wpf.Controls.Utils;
+namespace DevToolbox.Wpf.Utils;
 
 internal static class DoubleUtil
 {

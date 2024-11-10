@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
-using DevToolbox.Wpf.Controls;
+using DevToolbox.Wpf.Data;
 using DevToolbox.Wpf.Extensions;
 
 namespace DevToolbox.Wpf.Helpers;
