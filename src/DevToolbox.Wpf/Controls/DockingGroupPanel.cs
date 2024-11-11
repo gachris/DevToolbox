@@ -29,7 +29,7 @@ public class DockingGroupPanel : Grid, ILayoutSerializable
 
     #endregion
 
-    #region Arrange
+    #region Methods
 
     internal void AttachDocumentList(UIElement listControl)
     {
@@ -198,8 +198,6 @@ public class DockingGroupPanel : Grid, ILayoutSerializable
         ArrangeLayout();
     }
 
-    #endregion
-
     private void AttachToOwner()
     {
         if (_owner != null) _owner.ItemContainerGenerator.ItemsChanged -= ItemContainerGenerator_ItemsChanged;
@@ -245,27 +243,6 @@ public class DockingGroupPanel : Grid, ILayoutSerializable
         ArrangeLayout();
     }
 
-    #region ILayoutSerializable
-
-    public void Serialize(XmlDocument doc, XmlNode parentNode)
-    {
-        var node_rootGroup = doc.CreateElement("_dockablePaneGroup");
-
-        _dockableGroup?.Serialize(doc, parentNode);
-
-        parentNode.AppendChild(node_rootGroup);
-    }
-
-    public void Deserialize(DockManager managerToAttach, XmlNode node, GetContentFromTypeString getObjectHandler)
-    {
-        _dockableGroup = new DockingGroup();
-        _dockableGroup.Deserialize(managerToAttach, node, getObjectHandler);
-
-        //_docsPane = FindDocumentsPane(_rootGroup);
-
-        InvalidateArrange();
-    }
-
     private static DocumentControl? FindDocumentsPane(DockingGroup? group)
     {
         if (group == null)
@@ -285,6 +262,29 @@ public class DockingGroupPanel : Grid, ILayoutSerializable
         }
 
         return null;
+    }
+
+    #endregion
+
+    #region ILayoutSerializable
+
+    public void Serialize(XmlDocument doc, XmlNode parentNode)
+    {
+        var node_rootGroup = doc.CreateElement("_dockablePaneGroup");
+
+        _dockableGroup?.Serialize(doc, parentNode);
+
+        parentNode.AppendChild(node_rootGroup);
+    }
+
+    public void Deserialize(DockManager managerToAttach, XmlNode node, GetContentFromTypeString getObjectHandler)
+    {
+        _dockableGroup = new DockingGroup();
+        _dockableGroup.Deserialize(managerToAttach, node, getObjectHandler);
+
+        //_docsPane = FindDocumentsPane(_rootGroup);
+
+        InvalidateArrange();
     }
 
     #endregion
