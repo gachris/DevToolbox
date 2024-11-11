@@ -3,7 +3,7 @@
 /// <summary>
 /// Enum representing different themes for the application.
 /// </summary>
-public enum ApplicationTheme
+public enum ElementTheme
 {
     /// <summary>
     /// Default theme.
@@ -18,5 +18,10 @@ public enum ApplicationTheme
     /// <summary>
     /// Light theme.
     /// </summary>
-    Light = 2
+    Light = 2,
+
+    /// <summary>
+    /// Windows Default theme.
+    /// </summary>
+    WindowsDefault = 3,
 }
