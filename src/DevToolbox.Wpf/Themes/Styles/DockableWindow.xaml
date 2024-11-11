@@ -7,6 +7,7 @@
     xmlns:windows="clr-namespace:DevToolbox.Wpf.Windows">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/WindowEx.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/Button/Generic.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -17,6 +18,19 @@
             VerticalAlignment="Center"
             Content="{TemplateBinding Content}" />
     </ControlTemplate>
+
+    <Style
+        x:Key="DockableWindowButtonStyle"
+        BasedOn="{StaticResource ButtonStyle}"
+        TargetType="Button">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="#D6D6D6" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="#FAFAFA" />
+        <Setter Property="helpers:UIElementHelper.MouseOverForeground" Value="#1A1A1A" />
+        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="#FAFAFA" />
+        <Setter Property="helpers:UIElementHelper.PressedForeground" Value="#1A1A1A" />
+    </Style>
 
     <Style BasedOn="{StaticResource ResourceKey={x:Type windows:WindowEx}}" TargetType="{x:Type windows:DockableWindow}">
         <Setter Property="Width" Value="300" />
@@ -130,19 +144,9 @@
                                                     Width="14"
                                                     Height="14"
                                                     Padding="0"
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
                                                     helpers:ButtonHelper.ShowContextMenuOnLeftClick="True"
-                                                    helpers:UIElementHelper.MouseOverBackground="#FFFAFAFA"
-                                                    helpers:UIElementHelper.MouseOverBorderBrush="#FFFAFAFA"
-                                                    helpers:UIElementHelper.MouseOverForeground="#FF1A1A1A"
-                                                    helpers:UIElementHelper.PressedBackground="#FFFAFAFA"
-                                                    helpers:UIElementHelper.PressedBorderBrush="#FFFAFAFA"
-                                                    helpers:UIElementHelper.PressedForeground="#FF1A1A1A"
-                                                    Background="Transparent"
-                                                    BorderThickness="0"
                                                     ContextMenuService.Placement="Bottom"
-                                                    Foreground="#FFD6D6D6"
+                                                    Style="{StaticResource DockableWindowButtonStyle}"
                                                     WindowChrome.IsHitTestVisibleInChrome="True">
                                                     <Button.ContextMenu>
                                                         <ContextMenu>
@@ -184,10 +188,9 @@
                                                         </ContextMenu>
                                                     </Button.ContextMenu>
                                                     <controls:FontGlyph
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
                                                         Code="{x:Static controls:Symbol.GlyphDown}"
-                                                        FontSize="14" />
+                                                        FontSize="14"
+                                                        Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
                                                 </Button>
                                                 <Button
                                                     x:Name="PART_Maximize"
@@ -197,25 +200,15 @@
                                                     Padding="0"
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
-                                                    helpers:UIElementHelper.MouseOverBackground="#FFFAFAFA"
-                                                    helpers:UIElementHelper.MouseOverBorderBrush="#FFFAFAFA"
-                                                    helpers:UIElementHelper.MouseOverForeground="#FF1A1A1A"
-                                                    helpers:UIElementHelper.PressedBackground="#FFFAFAFA"
-                                                    helpers:UIElementHelper.PressedBorderBrush="#FFFAFAFA"
-                                                    helpers:UIElementHelper.PressedForeground="#FF1A1A1A"
                                                     windows:WindowEx.HitTestResult="Max"
-                                                    Background="Transparent"
-                                                    BorderBrush="Transparent"
-                                                    BorderThickness="0"
                                                     Command="{x:Static SystemCommands.MaximizeWindowCommand}"
-                                                    Foreground="#FFD6D6D6"
+                                                    Style="{StaticResource DockableWindowButtonStyle}"
                                                     WindowChrome.IsHitTestVisibleInChrome="True">
                                                     <controls:FontGlyph
                                                         x:Name="maxicon"
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
                                                         Code="{x:Static controls:Symbol.ChromeMaximize}"
-                                                        FontSize="14" />
+                                                        FontSize="14"
+                                                        Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
                                                 </Button>
                                                 <Button
                                                     x:Name="PART_CloseButton"
@@ -224,25 +217,15 @@
                                                     Padding="0"
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
-                                                    helpers:UIElementHelper.MouseOverBackground="#FFFAFAFA"
-                                                    helpers:UIElementHelper.MouseOverBorderBrush="#FFFAFAFA"
-                                                    helpers:UIElementHelper.MouseOverForeground="#FF1A1A1A"
-                                                    helpers:UIElementHelper.PressedBackground="#FFFAFAFA"
-                                                    helpers:UIElementHelper.PressedBorderBrush="#FFFAFAFA"
-                                                    helpers:UIElementHelper.PressedForeground="#FF1A1A1A"
                                                     windows:WindowEx.HitTestResult="Close"
-                                                    Background="Transparent"
-                                                    BorderBrush="Transparent"
-                                                    BorderThickness="0"
                                                     Command="{x:Static controls:DockableControl.HideCommand}"
                                                     CommandTarget="{Binding}"
-                                                    Foreground="#FFD6D6D6"
+                                                    Style="{StaticResource DockableWindowButtonStyle}"
                                                     WindowChrome.IsHitTestVisibleInChrome="True">
                                                     <controls:FontGlyph
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
                                                         Code="{x:Static controls:Symbol.ChromeClose}"
-                                                        FontSize="14" />
+                                                        FontSize="14"
+                                                        Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
                                                 </Button>
                                             </StackPanel>
                                         </Grid>
@@ -260,9 +243,9 @@
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <DataTrigger Binding="{Binding ElementName=PART_OptionsButton, Path=ContextMenu.IsOpen}" Value="True">
-                                        <Setter TargetName="PART_OptionsButton" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBackground)}" />
-                                        <Setter TargetName="PART_OptionsButton" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBorderBrush)}" />
-                                        <Setter TargetName="PART_OptionsButton" Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedForeground)}" />
+                                        <Setter TargetName="PART_OptionsButton" Property="Background" Value="{Binding ElementName=PART_OptionsButton, Path=(helpers:UIElementHelper.PressedBackground)}" />
+                                        <Setter TargetName="PART_OptionsButton" Property="BorderBrush" Value="{Binding ElementName=PART_OptionsButton, Path=(helpers:UIElementHelper.PressedBorderBrush)}" />
+                                        <Setter TargetName="PART_OptionsButton" Property="Foreground" Value="{Binding ElementName=PART_OptionsButton, Path=(helpers:UIElementHelper.PressedForeground)}" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="CanResizeWithGrip">
                                         <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Visible" />
@@ -279,7 +262,7 @@
                                     <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="Maximized">
                                         <Setter TargetName="PART_Maximize" Property="windows:WindowEx.HitTestResult" Value="Restore" />
                                         <Setter TargetName="PART_Maximize" Property="Command" Value="{x:Static SystemCommands.RestoreWindowCommand}" />
-                                        <Setter TargetName="maxicon" Property="Code" Value="e90b" />
+                                        <Setter TargetName="maxicon" Property="Code" Value="{x:Static controls:Symbol.ChromeRestore}" />
                                     </DataTrigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>

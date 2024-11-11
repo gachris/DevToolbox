@@ -20,7 +20,7 @@
         <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="#FAFAFA" />
         <Setter Property="helpers:UIElementHelper.MouseOverForeground" Value="#1A1A1A" />
         <Setter Property="helpers:UIElementHelper.PressedBackground" Value="#FAFAFA" />
-        <Setter Property="helpers:UIElementHelper.PressedForeground" Value="#D6D6D6" />
+        <Setter Property="helpers:UIElementHelper.PressedForeground" Value="#1A1A1A" />
     </Style>
 
     <Style BasedOn="{StaticResource ResourceKey={x:Type controls:TabControlEdit}}" TargetType="{x:Type controls:DockableControl}">
@@ -276,7 +276,10 @@
                                                             </MenuItem>
                                                         </ContextMenu>
                                                     </Button.ContextMenu>
-                                                    <controls:FontGlyph Code="{x:Static controls:Symbol.GlyphDown}" FontSize="14" />
+                                                    <controls:FontGlyph
+                                                        Code="{x:Static controls:Symbol.GlyphDown}"
+                                                        FontSize="14"
+                                                        Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
                                                 </Button>
                                                 <Button
                                                     x:Name="PART_AutoHideButton"
@@ -352,9 +355,9 @@
                         </DataTrigger>
 
                         <DataTrigger Binding="{Binding ElementName=PART_OptionsButton, Path=ContextMenu.IsOpen}" Value="True">
-                            <Setter TargetName="PART_OptionsButton" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBackground)}" />
-                            <Setter TargetName="PART_OptionsButton" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBorderBrush)}" />
-                            <Setter TargetName="PART_OptionsButton" Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedForeground)}" />
+                            <Setter TargetName="PART_OptionsButton" Property="Background" Value="{Binding ElementName=PART_OptionsButton, Path=(helpers:UIElementHelper.PressedBackground)}" />
+                            <Setter TargetName="PART_OptionsButton" Property="BorderBrush" Value="{Binding ElementName=PART_OptionsButton, Path=(helpers:UIElementHelper.PressedBorderBrush)}" />
+                            <Setter TargetName="PART_OptionsButton" Property="Foreground" Value="{Binding ElementName=PART_OptionsButton, Path=(helpers:UIElementHelper.PressedForeground)}" />
                         </DataTrigger>
 
                         <Trigger Property="CloseButtonShowMode" Value="InTabControl">

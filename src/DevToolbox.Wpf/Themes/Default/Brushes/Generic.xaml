@@ -625,9 +625,9 @@
 
     <!--#region ContextMenu-->
 
-    <SolidColorBrush x:Key="ContextMenu.Background" Color="#2E2E2E" />
-    <SolidColorBrush x:Key="ContextMenu.Foreground" Color="#D6D6D6" />
-    <SolidColorBrush x:Key="ContextMenu.BorderBrush" Color="#424242" />
+    <SolidColorBrush x:Key="ContextMenu.Background" Color="#F0F0F0" />
+    <SolidColorBrush x:Key="ContextMenu.Foreground" Color="#000000" />
+    <SolidColorBrush x:Key="ContextMenu.BorderBrush" Color="#999999" />
     <DropShadowEffect
         x:Key="ContextMenu.DropShadow"
         BlurRadius="3"
