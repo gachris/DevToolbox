@@ -1,0 +1,144 @@
+﻿<devtoolbox:WindowEx
+    x:Class="DevToolbox.Wpf.Demo.Windows.TestWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels"
+    Title="DockManager Demo"
+    Width="1200"
+    Height="800"
+    FontFamily="Segoe UI"
+    ResizeMode="CanResizeWithGrip"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <devtoolbox:TabControlEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 1">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 1" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 2">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 2" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 3">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 3" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 4">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 4" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 5">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 5" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 6">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 6" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 7">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 7" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 8">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 8" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 9">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 9" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 10">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 10" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 11">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 11" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 12">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 12" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 13">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 13" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 14">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 14" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 15">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 15" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 16">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 16" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 17">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 17" />
+        </devtoolbox:TabItemEdit>
+        <devtoolbox:TabItemEdit Header="Tab Item 18">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 18" />
+        </devtoolbox:TabItemEdit>
+    </devtoolbox:TabControlEdit>
+</devtoolbox:WindowEx>

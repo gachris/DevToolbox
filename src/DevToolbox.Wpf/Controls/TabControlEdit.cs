@@ -321,7 +321,7 @@ public class TabControlEdit : TabControl
     /// Handles the execution of the Swap command.
     /// </summary>
     /// <param name="e">Event arguments containing data related to the command execution.</param>
-    protected virtual void SwapExecuted(ExecutedRoutedEventArgs e) => SwapTabs();
+    protected virtual void SwapExecuted(ExecutedRoutedEventArgs e) => SwapTabs(e.Parameter);
 
     /// <summary>
     /// Determines whether the Swap command can execute based on the current state.
@@ -446,9 +446,30 @@ public class TabControlEdit : TabControl
     /// Swaps the currently selected tabs in the tab control.
     /// This method should be implemented to define the swapping behavior.
     /// </summary>
-    private void SwapTabs()
+    private void SwapTabs(object item)
     {
-        // Implement the swap logic here
+        if (item == null || SelectedItem == null || Items.Count < 2)
+            return;
+
+        // Set the selected item
+        SelectedItem = item;
+
+        // Get the container for the specified item
+        if (ItemContainerGenerator.ContainerFromItem(item) is TabItemEdit container)
+        {
+            // Scroll the item into view using BringIntoView
+            container.BringIntoView();
+        }
+        else
+        {
+            // Optionally, scroll using the ScrollViewer if available
+            if (Template.FindName("PART_ScrollViewer", this) is ScrollViewer scrollViewer)
+            {
+                int itemIndex = Items.IndexOf(item);
+                double offset = (double)itemIndex / Items.Count;
+                scrollViewer.ScrollToHorizontalOffset(offset * scrollViewer.ExtentWidth);
+            }
+        }
     }
 
     /// <summary>

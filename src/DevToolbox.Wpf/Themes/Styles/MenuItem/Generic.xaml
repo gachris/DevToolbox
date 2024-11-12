@@ -561,4 +561,3 @@
     <Style BasedOn="{StaticResource MenuItemStyle}" TargetType="{x:Type MenuItem}" />
 
 </ResourceDictionary>
-
