@@ -2,6 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
-    Padding="8,4">
+    Padding="8,4"
+    HorizontalAlignment="Left">
     <devtoolbox:FontGlyph Code="{x:Static devtoolbox:Symbol.XAMLInteractiveBehaviors}" />
 </Button>

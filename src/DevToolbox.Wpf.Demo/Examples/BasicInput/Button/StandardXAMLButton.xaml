@@ -1,4 +1,5 @@
 ﻿<Button
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     Padding="8,4"
+    HorizontalAlignment="Left"
     Content="Standard XAML button" />

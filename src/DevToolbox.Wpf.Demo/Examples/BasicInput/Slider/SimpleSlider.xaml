@@ -1,7 +1,8 @@
 ﻿<Grid
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation">
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    HorizontalAlignment="Left">
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="auto" />
         <ColumnDefinition Width="*" />

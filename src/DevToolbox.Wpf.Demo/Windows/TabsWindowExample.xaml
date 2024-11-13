@@ -6,7 +6,7 @@
     xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels"
-    Title="MainWindow"
+    Title="Tabs Window"
     Width="1200"
     Height="800"
     HorizontalContentAlignment="Left"
