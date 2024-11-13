@@ -68,6 +68,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Image
+                    x:Name="PART_Image"
                     Grid.Column="0"
                     Width="16"
                     Height="16"
@@ -76,6 +77,7 @@
                     Stretch="Uniform" />
                 <ContentPresenter
                     x:Name="contentPresenter"
+                    Grid.Column="1"
                     Margin="0,0,8,0"
                     ContentSource="Header"
                     Focusable="False"
@@ -97,6 +99,9 @@
             </Grid>
         </Border>
         <ControlTemplate.Triggers>
+            <Trigger Property="Icon" Value="{x:Null}">
+                <Setter TargetName="PART_Image" Property="Visibility" Value="Collapsed" />
+            </Trigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
@@ -269,6 +274,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Image
+                                x:Name="PART_Image"
                                 Grid.Column="0"
                                 Width="16"
                                 Height="16"
@@ -277,6 +283,8 @@
                                 Stretch="Uniform" />
                             <ContentPresenter
                                 x:Name="contentPresenter"
+                                Grid.Column="1"
+                                Margin="0,0,8,0"
                                 HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                 VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                 ContentSource="Header"
@@ -288,7 +296,6 @@
                                 Grid.Column="2"
                                 Width="14"
                                 Height="14"
-                                Margin="8,0,0,0"
                                 Command="{x:Static controls:TabControlEdit.CloseCommand}"
                                 Style="{TemplateBinding CloseTabButtonStyle}"
                                 ToolTip="Close">
@@ -303,6 +310,9 @@
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="Icon" Value="{x:Null}">
+                            <Setter TargetName="PART_Image" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
