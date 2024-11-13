@@ -135,9 +135,9 @@
                                     </Grid>
                                 </Grid>
                                 <Button
-                                    x:Name="PART_SwapButton"
+                                    x:Name="PART_SelectTabButton"
                                     Margin="4"
-                                    Command="{x:Static controls:TabControlEdit.SwapCommand}"
+                                    Command="{x:Static controls:TabControlEdit.SelectTabCommand}"
                                     Style="{TemplateBinding SwapTabsButtonStyle}" />
                             </Grid>
                             <Border
@@ -373,7 +373,7 @@
                         </Trigger>
 
                         <Trigger Property="SwapTabsButtonShowMode" Value="Hidden">
-                            <Setter TargetName="PART_SwapButton" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Visibility" Value="Collapsed" />
                         </Trigger>
 
                         <MultiTrigger>
@@ -414,7 +414,7 @@
                                 <Condition Property="SwapTabsButtonShowMode" Value="WhenHiddenTabsExisting" />
                                 <Condition SourceName="PART_ScrollViewer" Property="ScrollableWidth" Value="0" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_SwapButton" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Visibility" Value="Collapsed" />
                         </MultiTrigger>
 
                         <MultiTrigger>
@@ -423,7 +423,7 @@
                                 <Condition Property="SwapTabsButtonShowMode" Value="WhenHiddenTabsExisting" />
                                 <Condition SourceName="PART_ScrollViewer" Property="ScrollableWidth" Value="0" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_SwapButton" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Visibility" Value="Collapsed" />
                         </MultiTrigger>
 
                         <MultiTrigger>
@@ -432,7 +432,7 @@
                                 <Condition Property="SwapTabsButtonShowMode" Value="WhenHiddenTabsExisting" />
                                 <Condition SourceName="PART_ScrollViewer" Property="ScrollableHeight" Value="0" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_SwapButton" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Visibility" Value="Collapsed" />
                         </MultiTrigger>
 
                         <MultiTrigger>
@@ -441,7 +441,7 @@
                                 <Condition Property="SwapTabsButtonShowMode" Value="WhenHiddenTabsExisting" />
                                 <Condition SourceName="PART_ScrollViewer" Property="ScrollableHeight" Value="0" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_SwapButton" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Visibility" Value="Collapsed" />
                         </MultiTrigger>
 
                         <!--#region Tab Strip Placement-->
@@ -460,10 +460,10 @@
                             <Setter TargetName="PART_CaptionButtonsPanel" Property="Grid.Row" Value="0" />
                             <Setter TargetName="PART_CaptionButtonsPanel" Property="Grid.RowSpan" Value="2" />
 
-                            <Setter TargetName="PART_SwapButton" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="PART_SwapButton" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="PART_SwapButton" Property="Grid.RowSpan" Value="2" />
-                            <Setter TargetName="PART_SwapButton" Property="VerticalAlignment" Value="Bottom" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Grid.RowSpan" Value="2" />
+                            <Setter TargetName="PART_SelectTabButton" Property="VerticalAlignment" Value="Bottom" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Bottom">
                             <Setter TargetName="PART_HeaderPanel" Property="Grid.Row" Value="1" />
@@ -485,10 +485,10 @@
                             <Setter TargetName="PART_CaptionButtonsPanel" Property="Grid.Row" Value="0" />
                             <Setter TargetName="PART_CaptionButtonsPanel" Property="Grid.RowSpan" Value="2" />
 
-                            <Setter TargetName="PART_SwapButton" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="PART_SwapButton" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="PART_SwapButton" Property="Grid.RowSpan" Value="2" />
-                            <Setter TargetName="PART_SwapButton" Property="VerticalAlignment" Value="Top" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Grid.RowSpan" Value="2" />
+                            <Setter TargetName="PART_SelectTabButton" Property="VerticalAlignment" Value="Top" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Left">
                             <Setter TargetName="PART_HeaderPanel" Property="Grid.Row" Value="0" />
@@ -515,10 +515,10 @@
                             <Setter TargetName="PART_CaptionButtonsPanel" Property="Grid.Column" Value="0" />
                             <Setter TargetName="PART_CaptionButtonsPanel" Property="HorizontalAlignment" Value="Right" />
 
-                            <Setter TargetName="PART_SwapButton" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="PART_SwapButton" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="PART_SwapButton" Property="Grid.ColumnSpan" Value="2" />
-                            <Setter TargetName="PART_SwapButton" Property="HorizontalAlignment" Value="Right" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Grid.ColumnSpan" Value="2" />
+                            <Setter TargetName="PART_SelectTabButton" Property="HorizontalAlignment" Value="Right" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Right">
                             <Setter TargetName="PART_HeaderPanel" Property="Grid.Row" Value="0" />
@@ -545,10 +545,10 @@
                             <Setter TargetName="PART_CaptionButtonsPanel" Property="Grid.ColumnSpan" Value="2" />
                             <Setter TargetName="PART_CaptionButtonsPanel" Property="HorizontalAlignment" Value="Left" />
 
-                            <Setter TargetName="PART_SwapButton" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="PART_SwapButton" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="PART_SwapButton" Property="Grid.ColumnSpan" Value="2" />
-                            <Setter TargetName="PART_SwapButton" Property="HorizontalAlignment" Value="Left" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_SelectTabButton" Property="Grid.ColumnSpan" Value="2" />
+                            <Setter TargetName="PART_SelectTabButton" Property="HorizontalAlignment" Value="Left" />
                         </Trigger>
                         <!--#endregion-->
 

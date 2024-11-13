@@ -251,13 +251,15 @@
                             Margin="0"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="1,1,1,0">
+                            BorderThickness="1,1,1,0"
+                            CornerRadius="{TemplateBinding CornerRadius}">
                             <Border
                                 x:Name="innerBorder"
                                 Margin="-1"
                                 Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedBackground)}"
                                 BorderBrush="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedBorderBrush)}"
                                 BorderThickness="1,1,1,0"
+                                CornerRadius="{TemplateBinding CornerRadius}"
                                 Opacity="0" />
                         </Border>
                         <Grid Margin="{TemplateBinding Padding}">

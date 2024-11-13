@@ -3,178 +3,96 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
     xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters"
+    xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers"
+    xmlns:media="clr-namespace:DevToolbox.Wpf.Media"
     xmlns:windows="clr-namespace:DevToolbox.Wpf.Windows">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/TabControlEdit.xaml" />
+    </ResourceDictionary.MergedDictionaries>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:ScrollLimitConverter x:Key="ScrollLimitConverter" />
 
-    <Style x:Key="BaseTabControlButton" TargetType="{x:Type Button}">
+    <Style
+        x:Key="TabsWindow.BaseButtonStyle"
+        BasedOn="{StaticResource ButtonStyle}"
+        TargetType="{x:Type Button}">
         <Setter Property="Margin" Value="4" />
         <Setter Property="Width" Value="28" />
         <Setter Property="Height" Value="28" />
-        <Setter Property="Padding" Value="0" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="Transparent" />
+        <!--<Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="#38FFFFFF" />
+        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="#52FFFFFF" />-->
         <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="RenderOptions.EdgeMode" Value="Aliased" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-        <Setter Property="Template">
+        <Setter Property="ContentTemplate">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border
-                        Width="{TemplateBinding Width}"
-                        Height="{TemplateBinding Height}"
-                        Padding="{TemplateBinding Padding}"
-                        Background="{TemplateBinding Background}"
-                        CornerRadius="2">
-                        <ContentPresenter ContentSource="Content" ContentTemplate="{TemplateBinding ContentTemplate}" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" Value="#38ffffff" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" Value="#52ffffff" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
+                <DataTemplate>
+                    <controls:FontGlyph
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Code="{Binding}"
+                        Foreground="{Binding RelativeSource={RelativeSource AncestorType=ButtonBase}, Path=Foreground}" />
+                </DataTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <DataTemplate x:Key="AddTabButtonTemplate">
-        <controls:FontGlyph
-            x:Name="PART_Image"
-            Code="{x:Static controls:Symbol.Add}"
-            FontSize="16"
-            Foreground="#FFB8B9C2" />
-        <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button, Mode=FindAncestor}, Path=IsMouseOver}" Value="true">
-                <Setter TargetName="PART_Image" Property="Foreground" Value="#FFCACAD0" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button, Mode=FindAncestor}, Path=IsPressed}" Value="true">
-                <Setter TargetName="PART_Image" Property="Foreground" Value="#FFD2D3D6" />
-            </DataTrigger>
-        </DataTemplate.Triggers>
-    </DataTemplate>
-
-    <DataTemplate x:Key="SwapTabsButtonStyleTemplate">
-        <controls:FontGlyph
-            x:Name="PART_Image"
-            Code="{x:Static controls:Symbol.ExpandDownlg}"
-            FontSize="16"
-            Foreground="#FFB8B9C2" />
-        <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button, Mode=FindAncestor}, Path=IsMouseOver}" Value="true">
-                <Setter TargetName="PART_Image" Property="Foreground" Value="#FFCACAD0" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button, Mode=FindAncestor}, Path=IsPressed}" Value="true">
-                <Setter TargetName="PART_Image" Property="Foreground" Value="#FFD2D3D6" />
-            </DataTrigger>
-        </DataTemplate.Triggers>
-    </DataTemplate>
-
-    <DataTemplate x:Key="CloseTabControlButtonStyleTemplate">
-        <controls:FontGlyph
-            x:Name="PART_Image"
-            Code="{x:Static controls:Symbol.ChromeClose}"
-            FontSize="16"
-            Foreground="#FFB8B9C2" />
-        <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button, Mode=FindAncestor}, Path=IsMouseOver}" Value="true">
-                <Setter TargetName="PART_Image" Property="Foreground" Value="#FFCACAD0" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button, Mode=FindAncestor}, Path=IsPressed}" Value="true">
-                <Setter TargetName="PART_Image" Property="Foreground" Value="#FFD2D3D6" />
-            </DataTrigger>
-        </DataTemplate.Triggers>
-    </DataTemplate>
-
-    <Style x:Key="ScrollViewerStyle" TargetType="{x:Type ScrollViewer}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ScrollViewer}">
-                    <Grid x:Name="PART_Grid" Background="{TemplateBinding Background}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="auto" />
-                        </Grid.RowDefinitions>
-                        <RepeatButton
-                            x:Name="PART_LineLeftRepeatButton"
-                            Grid.Row="1"
-                            Grid.RowSpan="3"
-                            Grid.Column="0"
-                            Command="ScrollBar.LineLeftCommand"
-                            Style="{Binding TabLeftScrollButtonStyle, RelativeSource={RelativeSource AncestorType=controls:TabControlEdit}}"
-                            Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}">
-                            <RepeatButton.IsEnabled>
-                                <MultiBinding Converter="{StaticResource ScrollLimitConverter}" ConverterParameter="{x:Static Dock.Left}">
-                                    <Binding Path="HorizontalOffset" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                </MultiBinding>
-                            </RepeatButton.IsEnabled>
-                        </RepeatButton>
-                        <RepeatButton
-                            x:Name="PART_LineTopRepeatButton"
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="3"
-                            Command="ScrollBar.LineUpCommand"
-                            Style="{Binding TabTopScrollButtonStyle, RelativeSource={RelativeSource AncestorType=controls:TabControlEdit}}"
-                            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}">
-                            <RepeatButton.IsEnabled>
-                                <MultiBinding Converter="{StaticResource ScrollLimitConverter}" ConverterParameter="{x:Static Dock.Top}">
-                                    <Binding Path="VerticalOffset" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                </MultiBinding>
-                            </RepeatButton.IsEnabled>
-                        </RepeatButton>
-                        <ScrollContentPresenter
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Panel.ZIndex="1" />
-                        <RepeatButton
-                            x:Name="PART_LineRightRepeatButton"
-                            Grid.Row="1"
-                            Grid.RowSpan="3"
-                            Grid.Column="2"
-                            Command="ScrollBar.LineRightCommand"
-                            Style="{Binding TabRightScrollButtonStyle, RelativeSource={RelativeSource AncestorType=controls:TabControlEdit}}"
-                            Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}">
-                            <RepeatButton.IsEnabled>
-                                <MultiBinding Converter="{StaticResource ScrollLimitConverter}" ConverterParameter="{x:Static Dock.Right}">
-                                    <Binding Path="HorizontalOffset" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                    <Binding Path="ScrollableWidth" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                </MultiBinding>
-                            </RepeatButton.IsEnabled>
-                        </RepeatButton>
-                        <RepeatButton
-                            x:Name="PART_LineBottomRepeatButton"
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="3"
-                            Command="ScrollBar.LineDownCommand"
-                            Style="{Binding TabBottomScrollButtonStyle, RelativeSource={RelativeSource AncestorType=controls:TabControlEdit}}"
-                            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}">
-                            <RepeatButton.IsEnabled>
-                                <MultiBinding Converter="{StaticResource ScrollLimitConverter}" ConverterParameter="{x:Static Dock.Bottom}">
-                                    <Binding Path="VerticalOffset" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                    <Binding Path="ScrollableHeight" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                </MultiBinding>
-                            </RepeatButton.IsEnabled>
-                        </RepeatButton>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+    <Style
+        x:Key="TabsWindow.AddTabItemButtonStyle"
+        BasedOn="{StaticResource TabsWindow.BaseButtonStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Content" Value="{x:Static controls:Symbol.Add}" />
     </Style>
+
+    <Style
+        x:Key="TabsWindow.SwapTabsButtonStyle"
+        BasedOn="{StaticResource TabsWindow.BaseButtonStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Content" Value="{x:Static controls:Symbol.ExpandDownlg}" />
+    </Style>
+
+    <Style
+        x:Key="TabsWindow.CloseTabItemButtonStyle"
+        BasedOn="{StaticResource TabsWindow.BaseButtonStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Content" Value="{x:Static controls:Symbol.ChromeClose}" />
+    </Style>
+
+    <DataTemplate x:Key="IconTemplate">
+        <ContentPresenter
+            Width="24"
+            Height="24"
+            Margin="8,0,0,0"
+            VerticalAlignment="Center"
+            Content="{Binding}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="HeaderTemplate">
+        <TextBlock
+            x:Name="TextBlockTitle"
+            Padding="8,4"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Foreground="{DynamicResource Window.Active.Title.Foreground}"
+            Text="{Binding}"
+            TextTrimming="CharacterEllipsis" />
+        <DataTemplate.Triggers>
+            <Trigger SourceName="TextBlockTitle" Property="Text" Value="">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger SourceName="TextBlockTitle" Property="Text" Value="{x:Null}">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="False">
+                <Setter TargetName="TextBlockTitle" Property="Foreground" Value="{DynamicResource Window.Inactive.Title.Foreground}" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
 
     <ControlTemplate x:Key="TabControlEditTemplate" TargetType="{x:Type controls:TabControlEdit}">
         <Grid
@@ -183,14 +101,14 @@
             ClipToBounds="true"
             KeyboardNavigation.TabNavigation="Local"
             SnapsToDevicePixels="true">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="ColumnDefinition0" />
-                <ColumnDefinition x:Name="ColumnDefinition1" Width="0" />
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="RowDefinition0" Height="Auto" />
                 <RowDefinition x:Name="RowDefinition1" Height="*" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="ColumnDefinition0" />
+                <ColumnDefinition x:Name="ColumnDefinition1" Width="0" />
+            </Grid.ColumnDefinitions>
             <Grid
                 x:Name="PART_HeaderPanel"
                 Grid.Row="0"
@@ -211,7 +129,8 @@
                 <ContentControl
                     x:Name="PART_Icon"
                     Grid.Column="0"
-                    Template="{Binding Path=IconTemplate, RelativeSource={RelativeSource AncestorType={x:Type windows:WindowEx}}}">
+                    ContentTemplate="{Binding Path=IconTemplate, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
+                    Focusable="False">
                     <Image Visibility="{Binding ShowIcon, RelativeSource={RelativeSource AncestorType={x:Type windows:WindowEx}}, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Image.Source>
                             <MultiBinding Converter="{converters:WindowIconConverter}">
@@ -225,9 +144,11 @@
                     Grid.Column="1"
                     Margin="4,0,4,0"
                     VerticalAlignment="Center"
-                    Content="{Binding RelativeSource={RelativeSource AncestorType=windows:WindowEx}, Path=Header}" />
+                    Content="{Binding RelativeSource={RelativeSource AncestorType=windows:WindowEx}, Path=Header}"
+                    ContentTemplate="{Binding RelativeSource={RelativeSource AncestorType=windows:WindowEx}, Path=HeaderTemplate}" />
                 <Grid
                     x:Name="PART_ScrollViewerAndCaption"
+                    Grid.Column="2"
                     HorizontalAlignment="{TemplateBinding TabPanelHorizontalAlignment}"
                     VerticalAlignment="{TemplateBinding TabPanelVerticalAlignment}">
                     <Grid.ColumnDefinitions>
@@ -265,39 +186,56 @@
                         <Button
                             x:Name="PART_CloseButton"
                             Grid.Column="0"
+                            Margin="4"
                             Command="{x:Static controls:TabControlEdit.CloseCommand}"
                             Style="{TemplateBinding CloseTabControlButtonStyle}"
                             Visibility="Collapsed" />
                         <Button
                             x:Name="PART_AddButton"
                             Grid.Column="1"
+                            Margin="4"
                             Command="{x:Static controls:TabControlEdit.AddCommand}"
                             Style="{TemplateBinding AddTabButtonStyle}"
                             Visibility="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ShowAddTabButton, Converter={StaticResource BooleanToVisibilityConverter}}" />
                     </Grid>
                 </Grid>
                 <Button
-                    x:Name="PART_SwapButton"
+                    x:Name="PART_SelectTabButton"
                     Grid.Column="3"
-                    Command="{x:Static controls:TabControlEdit.SwapCommand}"
+                    helpers:ButtonHelper.ShowContextMenuOnLeftClick="True"
+                    ContextMenuService.Placement="Bottom"
                     Style="{TemplateBinding SwapTabsButtonStyle}">
                     <Button.ContextMenu>
-                        <ContextMenu ItemsSource="{Binding Items, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                        <ContextMenu ItemsSource="{Binding Items, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                            <ContextMenu.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource MenuItemStyle}" TargetType="MenuItem">
+                                    <Setter Property="Command" Value="{x:Static controls:TabControlEdit.SelectTabCommand}" />
+                                    <Setter Property="CommandParameter" Value="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=Self}}" />
+                                </Style>
+                            </ContextMenu.ItemContainerStyle>
+                            <ContextMenu.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Header}" />
+                                </DataTemplate>
+                            </ContextMenu.ItemTemplate>
+                        </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
                 <StackPanel
-                    x:Name="Captions"
                     Grid.Column="4"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
                     <Button
                         x:Name="PART_Help"
+                        Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Path=Chrome.CaptionHeight}"
                         windows:WindowEx.HitTestResult="Help"
+                        CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                         Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type windows:WindowEx},
                                                                       ResourceId=HelpButtonStyleKey}}"
                         Visibility="Collapsed" />
                     <Button
                         x:Name="PART_Minimize"
+                        Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Path=Chrome.CaptionHeight}"
                         windows:WindowEx.HitTestResult="Min"
                         Command="{x:Static SystemCommands.MinimizeWindowCommand}"
                         CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
@@ -305,6 +243,7 @@
                                                                       ResourceId=MinimizeButtonStyleKey}}" />
                     <Button
                         x:Name="PART_Maximize"
+                        Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Path=Chrome.CaptionHeight}"
                         windows:WindowEx.HitTestResult="Max"
                         Command="{x:Static SystemCommands.MaximizeWindowCommand}"
                         CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
@@ -312,6 +251,7 @@
                                                                       ResourceId=MaximizeButtonStyleKey}}" />
                     <Button
                         x:Name="PART_Close"
+                        Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Path=Chrome.CaptionHeight}"
                         windows:WindowEx.HitTestResult="Close"
                         Command="{x:Static SystemCommands.CloseWindowCommand}"
                         CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
@@ -336,36 +276,119 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     ContentSource="SelectedContent"
-                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                    Visibility="Visible" />
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
             </Border>
         </Grid>
         <ControlTemplate.Triggers>
 
-            <DataTrigger Binding="{Binding WindowStyle, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="None">
-                <Setter TargetName="Captions" Property="Visibility" Value="Collapsed" />
-                <Setter TargetName="PART_Header" Property="Visibility" Value="Collapsed" />
-                <Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
+            <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="CanMinimize">
+                <Setter TargetName="PART_Maximize" Property="IsEnabled" Value="False" />
             </DataTrigger>
-
+            <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="NoResize">
+                <Setter TargetName="PART_Minimize" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_Maximize" Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding WindowStyle, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="ToolWindow">
+                <Setter TargetName="PART_Minimize" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_Maximize" Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+            <Trigger SourceName="PART_Help" Property="IsEnabled" Value="False">
+                <Setter TargetName="PART_Help" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <DataTrigger Binding="{Binding WindowStyle, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="None">
+                <Setter TargetName="PART_Header" Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
             <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="Maximized">
+                <Setter TargetName="PART_Maximize" Property="windows:WindowEx.HitTestResult" Value="Restore" />
                 <Setter TargetName="PART_Maximize" Property="Command" Value="{x:Static SystemCommands.RestoreWindowCommand}" />
             </DataTrigger>
-
-            <Trigger Property="TabPanelViewMode" Value="Scroll">
-                <Setter TargetName="PART_ScrollViewer" Property="VerticalScrollBarVisibility" Value="Visible" />
-                <Setter TargetName="PART_ScrollViewer" Property="HorizontalScrollBarVisibility" Value="Visible" />
-            </Trigger>
+            <DataTrigger Binding="{Binding Path=IsTitleBarVisible, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}" Value="False">
+                <Setter TargetName="RowDefinition0" Property="Height" Value="0" />
+            </DataTrigger>
 
             <Trigger Property="CloseButtonShowMode" Value="InTabControl">
                 <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Visible" />
             </Trigger>
+
             <Trigger Property="CloseButtonShowMode" Value="InAllTabsAndTabControl">
                 <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Visible" />
             </Trigger>
+
             <Trigger Property="CloseButtonShowMode" Value="InActiveAndMouseOverTabsAndTabControl">
                 <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Visible" />
             </Trigger>
+
+            <Trigger Property="SwapTabsButtonShowMode" Value="Hidden">
+                <Setter TargetName="PART_SelectTabButton" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="TabPanelViewMode" Value="Scroll" />
+                    <Condition Property="TabStripPlacement" Value="Top" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_ScrollViewer" Property="HorizontalScrollBarVisibility" Value="Auto" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="TabPanelViewMode" Value="Scroll" />
+                    <Condition Property="TabStripPlacement" Value="Bottom" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_ScrollViewer" Property="HorizontalScrollBarVisibility" Value="Auto" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="TabPanelViewMode" Value="Scroll" />
+                    <Condition Property="TabStripPlacement" Value="Left" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_ScrollViewer" Property="VerticalScrollBarVisibility" Value="Auto" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="TabPanelViewMode" Value="Scroll" />
+                    <Condition Property="TabStripPlacement" Value="Right" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_ScrollViewer" Property="VerticalScrollBarVisibility" Value="Auto" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="TabStripPlacement" Value="Top" />
+                    <Condition Property="SwapTabsButtonShowMode" Value="WhenHiddenTabsExisting" />
+                    <Condition SourceName="PART_ScrollViewer" Property="ScrollableWidth" Value="0" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_SelectTabButton" Property="Visibility" Value="Collapsed" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="TabStripPlacement" Value="Bottom" />
+                    <Condition Property="SwapTabsButtonShowMode" Value="WhenHiddenTabsExisting" />
+                    <Condition SourceName="PART_ScrollViewer" Property="ScrollableWidth" Value="0" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_SelectTabButton" Property="Visibility" Value="Collapsed" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="TabStripPlacement" Value="Left" />
+                    <Condition Property="SwapTabsButtonShowMode" Value="WhenHiddenTabsExisting" />
+                    <Condition SourceName="PART_ScrollViewer" Property="ScrollableHeight" Value="0" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_SelectTabButton" Property="Visibility" Value="Collapsed" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="TabStripPlacement" Value="Right" />
+                    <Condition Property="SwapTabsButtonShowMode" Value="WhenHiddenTabsExisting" />
+                    <Condition SourceName="PART_ScrollViewer" Property="ScrollableHeight" Value="0" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_SelectTabButton" Property="Visibility" Value="Collapsed" />
+            </MultiTrigger>
 
             <!--#region Tab Strip Placement-->
             <Trigger Property="TabStripPlacement" Value="Top">
@@ -383,15 +406,103 @@
                 <Setter TargetName="PART_CaptionButtonsPanel" Property="Grid.Row" Value="0" />
                 <Setter TargetName="PART_CaptionButtonsPanel" Property="Grid.RowSpan" Value="2" />
 
-                <Setter TargetName="PART_SwapButton" Property="Grid.Column" Value="3" />
-                <Setter TargetName="PART_SwapButton" Property="Grid.Row" Value="0" />
-                <Setter TargetName="PART_SwapButton" Property="Grid.RowSpan" Value="2" />
-                <Setter TargetName="PART_SwapButton" Property="VerticalAlignment" Value="Bottom" />
+                <Setter TargetName="PART_SelectTabButton" Property="Grid.Column" Value="3" />
+                <Setter TargetName="PART_SelectTabButton" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_SelectTabButton" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_SelectTabButton" Property="VerticalAlignment" Value="Bottom" />
             </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Bottom">
+                <Setter TargetName="PART_HeaderPanel" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_ContentPanel" Property="Grid.Row" Value="0" />
+                <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
+                <Setter TargetName="RowDefinition1" Property="Height" Value="Auto" />
 
+                <Setter TargetName="PART_ScrollViewer" Property="Margin" Value="0,-2,0,0" />
+                <Setter TargetName="PART_ScrollViewer" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_ScrollViewer" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_ScrollViewer" Property="Grid.RowSpan" Value="2" />
+
+                <Setter TargetName="PART_ScrollViewerAndCaption" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_ScrollViewerAndCaption" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_ScrollViewerAndCaption" Property="Grid.RowSpan" Value="2" />
+
+                <Setter TargetName="PART_CaptionButtonsPanel" Property="VerticalAlignment" Value="Top" />
+                <Setter TargetName="PART_CaptionButtonsPanel" Property="Grid.Column" Value="1" />
+                <Setter TargetName="PART_CaptionButtonsPanel" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_CaptionButtonsPanel" Property="Grid.RowSpan" Value="2" />
+
+                <Setter TargetName="PART_SelectTabButton" Property="Grid.Column" Value="1" />
+                <Setter TargetName="PART_SelectTabButton" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_SelectTabButton" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_SelectTabButton" Property="VerticalAlignment" Value="Top" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Left">
+                <Setter TargetName="PART_HeaderPanel" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_ContentPanel" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_HeaderPanel" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_ContentPanel" Property="Grid.Column" Value="1" />
+                <Setter TargetName="ColumnDefinition0" Property="Width" Value="Auto" />
+                <Setter TargetName="ColumnDefinition1" Property="Width" Value="*" />
+                <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
+                <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
+                <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
+                <Setter TargetName="PART_HeaderPanel" Property="Height" Value="auto" />
+
+                <Setter TargetName="PART_ScrollViewer" Property="Margin" Value="0,0,-2,0" />
+                <Setter TargetName="PART_ScrollViewer" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_ScrollViewer" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_ScrollViewer" Property="Grid.ColumnSpan" Value="2" />
+
+                <Setter TargetName="PART_ScrollViewerAndCaption" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_ScrollViewerAndCaption" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_ScrollViewerAndCaption" Property="Grid.ColumnSpan" Value="2" />
+
+                <Setter TargetName="PART_CaptionButtonsPanel" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_CaptionButtonsPanel" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_CaptionButtonsPanel" Property="HorizontalAlignment" Value="Right" />
+
+                <Setter TargetName="PART_SelectTabButton" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_SelectTabButton" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_SelectTabButton" Property="Grid.ColumnSpan" Value="2" />
+                <Setter TargetName="PART_SelectTabButton" Property="HorizontalAlignment" Value="Right" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Right">
+                <Setter TargetName="PART_HeaderPanel" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_ContentPanel" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_HeaderPanel" Property="Grid.Column" Value="1" />
+                <Setter TargetName="PART_ContentPanel" Property="Grid.Column" Value="0" />
+                <Setter TargetName="ColumnDefinition0" Property="Width" Value="*" />
+                <Setter TargetName="ColumnDefinition1" Property="Width" Value="Auto" />
+                <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
+                <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
+                <Setter TargetName="PART_HeaderPanel" Property="Height" Value="auto" />
+
+                <Setter TargetName="PART_ScrollViewer" Property="Margin" Value="-2,0,0,0" />
+                <Setter TargetName="PART_ScrollViewer" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_ScrollViewer" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_ScrollViewer" Property="Grid.ColumnSpan" Value="2" />
+
+                <Setter TargetName="PART_ScrollViewerAndCaption" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_ScrollViewerAndCaption" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_ScrollViewerAndCaption" Property="Grid.ColumnSpan" Value="2" />
+
+                <Setter TargetName="PART_CaptionButtonsPanel" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_CaptionButtonsPanel" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_CaptionButtonsPanel" Property="Grid.ColumnSpan" Value="2" />
+                <Setter TargetName="PART_CaptionButtonsPanel" Property="HorizontalAlignment" Value="Left" />
+
+                <Setter TargetName="PART_SelectTabButton" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_SelectTabButton" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_SelectTabButton" Property="Grid.ColumnSpan" Value="2" />
+                <Setter TargetName="PART_SelectTabButton" Property="HorizontalAlignment" Value="Left" />
+            </Trigger>
+            <!--#endregion-->
+
+            <!--#region Is Enabled-->
             <Trigger Property="IsEnabled" Value="false">
                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
             </Trigger>
+            <!--#endregion-->
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
@@ -407,70 +518,22 @@
                 <ContentPresenter ContentSource="Content" />
                 <ResizeGrip
                     x:Name="PART_ResizeGrip"
-                    Grid.Row="1"
-                    Margin="2"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
                     Panel.ZIndex="2"
+                    Visibility="Collapsed"
                     WindowChrome.ResizeGripDirection="BottomRight" />
             </Grid>
         </Border>
-
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="CanResizeWithGrip">
+                <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Visible" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="Maximized">
+                <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
-
-    <Style x:Key="CloseTabButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Width" Value="16" />
-        <Setter Property="Height" Value="16" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="ToolTip" Value="Close" />
-        <Setter Property="Margin" Value="0,0,3.5,0" />
-        <Setter Property="RenderOptions.EdgeMode" Value="Aliased" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border
-                        Width="{TemplateBinding Width}"
-                        Height="{TemplateBinding Height}"
-                        Background="{TemplateBinding Background}">
-                        <controls:FontGlyph
-                            x:Name="PART_Image"
-                            Code="{x:Static controls:Symbol.ChromeClose}"
-                            FontSize="12"
-                            Foreground="#FFD0E6F5" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="PART_Image" Property="Foreground" Value="#FFFFFFFF" />
-                        </Trigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorLevel=1, Mode=FindAncestor, AncestorType=TabItem}}" Value="False" />
-                                <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=Self}}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <MultiDataTrigger.Setters>
-                                <Setter Property="Background" Value="#52B0EF" />
-                            </MultiDataTrigger.Setters>
-                        </MultiDataTrigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorLevel=1, Mode=FindAncestor, AncestorType=TabItem}}" Value="True" />
-                                <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=Self}}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <MultiDataTrigger.Setters>
-                                <Setter Property="Background" Value="#1C97EA" />
-                            </MultiDataTrigger.Setters>
-                        </MultiDataTrigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="#0E6198" />
-                            <Setter TargetName="PART_Image" Property="Foreground" Value="#FFFFFFFF" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 
     <!--<SolidColorBrush x:Key="{local:TabItemEditThemeKey ResourceKey=Background}" Color="Transparent" />
     <SolidColorBrush x:Key="{local:TabItemEditThemeKey ResourceKey=BorderBrush}" Color="Transparent" />
@@ -492,11 +555,18 @@
                 TopRight="4" />-->
 
     <Style TargetType="{x:Type windows:TabsWindow}">
-        <Setter Property="Background" Value="#524E47" />
-        <Setter Property="WindowChrome.CaptionHeight" Value="44" />
-        <Setter Property="AddTabButtonStyle" Value="{StaticResource BaseTabControlButton}" />
-        <Setter Property="SwapTabsButtonStyle" Value="{StaticResource BaseTabControlButton}" />
-        <Setter Property="CloseTabControlButtonStyle" Value="{StaticResource BaseTabControlButton}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="{DynamicResource Window.Background}" />
+        <Setter Property="AddTabButtonStyle" Value="{StaticResource TabsWindow.AddTabItemButtonStyle}" />
+        <Setter Property="SwapTabsButtonStyle" Value="{StaticResource TabsWindow.SwapTabsButtonStyle}" />
+        <Setter Property="CloseTabControlButtonStyle" Value="{StaticResource TabsWindow.CloseTabItemButtonStyle}" />
+        <Setter Property="TabRightScrollButtonStyle" Value="{StaticResource TabRightScrollButtonStyle}" />
+        <Setter Property="TabLeftScrollButtonStyle" Value="{StaticResource TabLeftScrollButtonStyle}" />
+        <Setter Property="TabTopScrollButtonStyle" Value="{StaticResource TabTopScrollButtonStyle}" />
+        <Setter Property="TabBottomScrollButtonStyle" Value="{StaticResource TabBottomScrollButtonStyle}" />
+        <Setter Property="IconTemplate" Value="{StaticResource IconTemplate}" />
+        <Setter Property="HeaderTemplate" Value="{StaticResource HeaderTemplate}" />
+        <Setter Property="Header" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Title}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type windows:TabsWindow}">
@@ -504,6 +574,7 @@
                         Background="{TemplateBinding Background}"
                         Focusable="{TemplateBinding Focusable}"
                         Header="{TemplateBinding Title}"
+                        HeaderTemplate="{TemplateBinding HeaderTemplate}"
                         Style="{TemplateBinding HeaderedContentControlStyle}"
                         Template="{StaticResource HeaderedWindowContentControlTemplate}">
                         <controls:TabControlEdit
@@ -530,9 +601,19 @@
                             TabTopScrollButtonStyle="{TemplateBinding TabTopScrollButtonStyle}"
                             Template="{StaticResource TabControlEditTemplate}" />
                     </HeaderedContentControl>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="windows:WindowBehaviour.HasEffect" Value="True">
+                            <Setter Property="Background" Value="Transparent" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Source={x:Static media:ThemeManager.ApplicationTheme}}" Value="Dark">
+                <Setter Property="BorderThickness" Value="0,2,0,0" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

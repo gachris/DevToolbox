@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using DevToolbox.Wpf.Demo.Helpers;
-using DevToolbox.Wpf.Media;
 
 namespace DevToolbox.Wpf.Demo;
 
