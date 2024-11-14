@@ -20,5 +20,8 @@ public partial class MainWindow : WindowEx
         Chrome.CaptionHeight = 44;
     }
 
-    private async void MainWindow_ContentRendered(object? sender, EventArgs e) => await _mainViewModel.Initialize();
+    private async void MainWindow_ContentRendered(object? sender, EventArgs e)
+    {
+        await _mainViewModel.Initialize();
+    }
 }

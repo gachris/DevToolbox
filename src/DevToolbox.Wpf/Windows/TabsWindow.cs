@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Markup;
 using DevToolbox.Wpf.Controls;
 
@@ -346,13 +345,17 @@ public class TabsWindow : WindowEx
     /// <summary>
     /// Static constructor that overrides the default style key for the <see cref="TabsWindow"/>.
     /// </summary>
-    static TabsWindow() => DefaultStyleKeyProperty.OverrideMetadata(typeof(TabsWindow), new FrameworkPropertyMetadata(typeof(TabsWindow)));
+    static TabsWindow()
+    {
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(TabsWindow), new FrameworkPropertyMetadata(typeof(TabsWindow)));
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TabsWindow"/> class.
     /// </summary>
     public TabsWindow()
     {
+        Chrome.CaptionHeight = 44;
     }
 
     #endregion
@@ -367,100 +370,12 @@ public class TabsWindow : WindowEx
         base.OnApplyTemplate();
 
         _tabControl = Template.FindName("PART_TabControl", this) as TabControlEdit;
-
-        if (_tabControl != null)
-        {
-            _tabControl.GiveFeedback += OnGiveFeedback;
-            _tabControl.PreviewGiveFeedback += OnGiveFeedback;
-            // Uncomment to enable drag-and-drop functionality
-            // _tabControl.DragCancelled += OnDragCancelled;
-            // _tabControl.DragDropOperationFinished += OnDragFinished;
-        }
     }
 
     /// <summary>
     /// Gets the content of the currently selected tab.
     /// </summary>
     public new object Content => TabControl?.SelectedItem!;
-
-    /// <summary>
-    /// Creates or identifies the window used to display the given docking item.
-    /// </summary>
-    /// <returns>The window that is used to display the given docking item.</returns>
-    protected internal virtual TabsWindow GetContainerForOverride() => new TabsWindow();
-
-    /// <summary>
-    /// Prepares the container for an item to be added to the tab control.
-    /// </summary>
-    /// <param name="element">The element that represents the item.</param>
-    /// <param name="item">The item to be added.</param>
-    protected virtual void PrepareContainerForItemOverride(DependencyObject element, object item)
-    {
-    }
-
-    /// <summary>
-    /// Clears the container for an item that is removed from the tab control.
-    /// </summary>
-    /// <param name="element">The element that represents the item.</param>
-    /// <param name="item">The item to be removed.</param>
-    protected virtual void ClearContainerForItemOverride(DependencyObject element, object item)
-    {
-    }
-
-    // Uncomment to implement drag-and-drop functionality
-    // private void OnDragFinished(object sender, DragRoutedEventArgs e)
-    // {
-    //     if (_tabControl.Items.Count == 0)
-    //         Close();
-    // }
-
-    // private void OnDragCancelled(object sender, DragRoutedEventArgs e)
-    // {
-    //     POINT p = new POINT();
-    //     User32.GetCursorPos(ref p);
-    //     _tabControl.Remove(e.DragInfo.Data);
-    //     TabsWindow parentWindow = CreateTabWindow(p.X - 50, p.Y - 10, ActualWidth, ActualHeight, e.DragInfo.Data);
-    //     parentWindow.Show();
-    // 
-    //     parentWindow._tabControl.Add(e.DragInfo.Data);
-    // 
-    //     parentWindow.Activate();
-    //     parentWindow.Focus();
-    //     e.Handled = true;
-    // }
-
-    /// <summary>
-    /// Handles feedback during drag-and-drop operations.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The event data.</param>
-    private void OnGiveFeedback(object sender, GiveFeedbackEventArgs e)
-    {
-        Mouse.SetCursor(Cursors.Arrow);
-        e.Handled = true;
-    }
-
-    /// <summary>
-    /// Creates a new <see cref="TabsWindow"/> at the specified location with the given content.
-    /// </summary>
-    /// <param name="left">The left position of the new window.</param>
-    /// <param name="top">The top position of the new window.</param>
-    /// <param name="width">The width of the new window.</param>
-    /// <param name="height">The height of the new window.</param>
-    /// <param name="content">The content to be displayed in the new window.</param>
-    /// <returns>A new instance of <see cref="TabsWindow"/>.</returns>
-    internal TabsWindow CreateTabWindow(double left, double top, double width, double height, object content)
-    {
-        TabsWindow tabWin = GetContainerForOverride();
-        tabWin.WindowStartupLocation = WindowStartupLocation.Manual;
-        tabWin.Width = width;
-        tabWin.Height = height;
-        tabWin.Left = left;
-        tabWin.Top = top;
-        if (WindowState == WindowState.Maximized)
-            tabWin.WindowState = WindowState.Maximized;
-        return tabWin;
-    }
 
     #endregion
 }

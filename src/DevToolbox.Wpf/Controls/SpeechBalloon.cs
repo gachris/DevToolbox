@@ -10,7 +10,7 @@ namespace DevToolbox.Wpf.Controls;
 /// Represents a speech balloon control that can display content in a pop-up style.
 /// It provides properties for positioning and customizing the appearance of the balloon.
 /// </summary>
-public partial class SpeechBalloon : ContentControl
+public class SpeechBalloon : ContentControl
 {
     #region Fields/Consts
 

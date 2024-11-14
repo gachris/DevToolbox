@@ -19,7 +19,7 @@ namespace DevToolbox.Wpf.Controls;
 [TemplatePart(Name = "PART_ColorPlaneControl", Type = typeof(ContentControl))]
 [TemplatePart(Name = "PART_NormalSlider", Type = typeof(Slider))]
 [TemplatePart(Name = "PART_AlphaSlider", Type = typeof(Slider))]
-public partial class ColorPicker : Control
+public class ColorPicker : Control
 {
     private enum ColorChangeSource
     {

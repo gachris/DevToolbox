@@ -93,7 +93,7 @@
             </devtoolbox:DiagramCanvas.ItemContainerStyle>
             <devtoolbox:DiagramCanvas.Background>
                 <ImageBrush
-                    ImageSource="pack://application:,,,/DevToolbox.Wpf.Demo;component/Assets/default_back.png"
+                    ImageSource="pack://application:,,,/DevToolbox.Wpf.Demo;component/Assets/chess-background.png"
                     TileMode="Tile"
                     Viewport="0.1, 0.1, 600, 600"
                     ViewportUnits="Absolute" />

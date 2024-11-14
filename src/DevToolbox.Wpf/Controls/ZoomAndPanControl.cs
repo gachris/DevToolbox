@@ -22,7 +22,7 @@ namespace DevToolbox.Wpf.Controls;
 [TemplatePart(Name = PART_Content, Type = typeof(ContentPresenter))]
 [TemplatePart(Name = PART_DragZoomBorder, Type = typeof(Border))]
 [TemplatePart(Name = PART_DragZoomCanvas, Type = typeof(Canvas))]
-public partial class ZoomAndPanControl : ContentControl, IScrollInfo
+public class ZoomAndPanControl : ContentControl, IScrollInfo
 {
     private enum CurrentZoomType
     {

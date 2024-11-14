@@ -22,7 +22,7 @@
             ZoomAndPanInitialPosition="FitScreen">
             <devtoolbox:DesignCanvas.Background>
                 <ImageBrush
-                    ImageSource="pack://application:,,,/DevToolbox.Wpf.Demo;component/Assets/default_back.png"
+                    ImageSource="pack://application:,,,/DevToolbox.Wpf.Demo;component/Assets/chess-background.png"
                     TileMode="Tile"
                     Viewport="0.1, 0.1, 600, 600"
                     ViewportUnits="Absolute" />
@@ -32,3 +32,154 @@
         </devtoolbox:DesignCanvas>
     </Grid>
 </UserControl>
+
+<!--<devtoolbox:DesignCanvas
+    x:Name="PART_Portrait"
+    Grid.Column="0"
+    ItemsSource="{Binding PortraitItemViewModes}"
+    LasoGeometryType="Rectangle"
+    OuterBackground="#282828"
+    ScrollViewer.HorizontalScrollBarVisibility="Visible"
+    ScrollViewer.VerticalScrollBarVisibility="Visible"
+    SelectionType="Lasso"
+    UseScopedSelection="False"
+    ViewPanelHeight="1000"
+    ViewPanelWidth="2000"
+    ZoomAndPanInitialPosition="FitScreen">
+    <devtoolbox:DesignCanvas.ItemContainerStyle>
+        <Style TargetType="{x:Type devtoolbox:DesignLayer}">
+            <Setter Property="Width" Value="{Binding Width}" />
+            <Setter Property="Height" Value="{Binding Height}" />
+            <Setter Property="Content" Value="{Binding Source}" />
+        </Style>
+    </devtoolbox:DesignCanvas.ItemContainerStyle>
+    <devtoolbox:DesignCanvas.ItemTemplate>
+        <DataTemplate>
+            <Image Source="{Binding}" Stretch="Fill" />
+        </DataTemplate>
+    </devtoolbox:DesignCanvas.ItemTemplate>
+    <devtoolbox:DesignCanvas.Background>
+        <ImageBrush
+            ImageSource="pack://application:,,,/DevToolbox.Wpf.Demo;component/Assets/chess-background.png"
+            TileMode="Tile"
+            Viewport="0.1, 0.1, 600, 600"
+            ViewportUnits="Absolute" />
+    </devtoolbox:DesignCanvas.Background>
+</devtoolbox:DesignCanvas>
+
+<ctrs:ZoomAndPanViewBox
+                    Grid.Row="1"
+                    Width="200"
+                    Height="100"
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    OverlayBrush="#AACCCCCC"
+                    Visual="{Binding ElementName=PART_Portrait, Path=ZoomAndPanControl.Content}"
+                    ZoomAndPanControl="{Binding ElementName=PART_Portrait, Path=ZoomAndPanControl}" />-->
+
+<!--<Menu
+      Grid.Column="0"
+      MaxHeight="160"
+      VerticalAlignment="Center"
+      dwnd:ChromeWindow.IsHitTestVisibleInChrome="True">
+      <MenuItem Header="File">
+          <MenuItem
+              Command="{x:Static ApplicationCommands.New}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="New" />
+          <MenuItem
+              Command="{x:Static ApplicationCommands.Open}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Open" />
+          <MenuItem
+              Command="{x:Static ApplicationCommands.Save}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Save" />
+          <MenuItem
+              Command="{x:Static ApplicationCommands.Print}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Print" />
+      </MenuItem>
+      <MenuItem Header="Edit">
+          <MenuItem
+              Command="{x:Static ApplicationCommands.Paste}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Paste" />
+          <MenuItem
+              Command="{x:Static ApplicationCommands.Cut}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Cut" />
+          <MenuItem
+              Command="{x:Static ApplicationCommands.Copy}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Copy" />
+          <MenuItem
+              Command="{x:Static ApplicationCommands.Delete}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Delete" />
+      </MenuItem>
+      <MenuItem Header="Alignment">
+          <MenuItem
+              Command="{x:Static prt:DesignerControl.AlignLeftCommand}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Left" />
+          <MenuItem
+              Command="{x:Static prt:DesignerControl.AlignHorizontalCentersCommand}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Center" />
+          <MenuItem
+              Command="{x:Static prt:DesignerControl.AlignRightCommand}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Right" />
+          <Separator />
+          <MenuItem
+              Command="{x:Static prt:DesignerControl.AlignTopCommand}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Top" />
+          <MenuItem
+              Command="{x:Static prt:DesignerControl.AlignVerticalCentersCommand}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Center" />
+          <MenuItem
+              Command="{x:Static prt:DesignerControl.AlignBottomCommand}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Bottom" />
+          <Separator />
+          <MenuItem
+              Command="{x:Static prt:DesignerControl.DistributeHorizontalCommand}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Horizontal" />
+          <MenuItem
+              Command="{x:Static prt:DesignerControl.DistributeVerticalCommand}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Vertical" />
+      </MenuItem>
+      <MenuItem Header="Arrange">
+          <MenuItem
+              Command="{x:Static prt:DesignerControl.GroupCommand}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Group" />
+          <MenuItem
+              Command="{x:Static prt:DesignerControl.UngroupCommand}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Ungroup" />
+          <Separator />
+          <MenuItem
+              Command="{x:Static prt:DesignerControl.BringForwardCommand}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Forward" />
+          <MenuItem
+              Command="{x:Static prt:DesignerControl.BringToFrontCommand}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="To Front" />
+          <Separator />
+          <MenuItem
+              Command="{x:Static prt:DesignerControl.SendBackwardCommand}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="Backward" />
+          <MenuItem
+              Command="{x:Static prt:DesignerControl.SendToBackCommand}"
+              CommandTarget="{Binding ElementName=MyDesigner}"
+              Header="To Back" />
+      </MenuItem>
+  </Menu>-->

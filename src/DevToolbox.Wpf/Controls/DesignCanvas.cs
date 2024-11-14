@@ -24,7 +24,7 @@ namespace DevToolbox.Wpf.Controls;
 /// panning, and item manipulation within a WPF application.
 /// </summary>
 [TemplatePart(Name = PART_ZoomAndPanControl, Type = typeof(ZoomAndPanControl))]
-public partial class DesignCanvas : MultiSelector
+public class DesignCanvas : MultiSelector
 {
     #region Fields/Consts
 
@@ -737,7 +737,7 @@ public partial class DesignCanvas : MultiSelector
             {
                 foreach (var item in _dragItems)
                 {
-                    var itemsPresenter = DependencyObjectExtensions.GetVisualChild<ItemsPresenter>(this);
+                    var itemsPresenter = this.FindVisualChild<ItemsPresenter>();
                     var itemsPanel = VisualTreeHelper.GetChild(itemsPresenter, 0) as Panel;
                     var currentPosition = e.GetPosition(itemsPanel);
 

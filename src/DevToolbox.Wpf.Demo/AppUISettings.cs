@@ -1,4 +1,5 @@
-﻿using DevToolbox.Wpf.Media;
+﻿using DevToolbox.Wpf.Demo.Contract;
+using DevToolbox.Wpf.Media;
 
 namespace DevToolbox.Wpf.Demo;
 

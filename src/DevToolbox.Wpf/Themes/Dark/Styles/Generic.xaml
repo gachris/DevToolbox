@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:markup="clr-namespace:DevToolbox.Wpf.Markup">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/Generic.xaml}" />
-        <ResourceDictionary Source="{markup:AssemblyResource Themes/Dark/Styles/TabControlEdit/Generic.xaml}" />
-        <ResourceDictionary Source="{markup:AssemblyResource Themes/Dark/Styles/TabItemEdit/Generic.xaml}" />
     </ResourceDictionary.MergedDictionaries>
+
 </ResourceDictionary>

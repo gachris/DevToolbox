@@ -1,0 +1,92 @@
+﻿<ResourceDictionary
+    x:Class="DevToolbox.Wpf.Demo.Views.DiagramCanvasView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels">
+
+    <DataTemplate DataType="{x:Type viewModels:DiagramCanvasViewModel}">
+        <devtoolbox:DiagramCanvas
+            x:Name="MyDesigner"
+            AllowDrop="True"
+            Drop="DiagramCanvas_Drop"
+            ItemsSource="{Binding Items}"
+            LasoGeometryType="Rectangle"
+            OuterBackground="#282828"
+            ScrollViewer.HorizontalScrollBarVisibility="Visible"
+            ScrollViewer.VerticalScrollBarVisibility="Visible"
+            SelectionType="Lasso"
+            UseScopedSelection="False"
+            ViewPanelHeight="1000"
+            ViewPanelWidth="2000"
+            ZoomAndPanInitialPosition="FitScreen">
+            <devtoolbox:DiagramCanvas.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="{x:Static ApplicationCommands.Paste}" Header="Paste" />
+                    <MenuItem Command="{x:Static devtoolbox:DesignCanvas.SelectAllCommand}" Header="Select All" />
+                </ContextMenu>
+            </devtoolbox:DiagramCanvas.ContextMenu>
+            <devtoolbox:DiagramCanvas.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding}" />
+                </DataTemplate>
+            </devtoolbox:DiagramCanvas.ItemTemplate>
+            <devtoolbox:DiagramCanvas.ItemContainerStyle>
+                <Style TargetType="{x:Type devtoolbox:DiagramLayer}">
+                    <Setter Property="Width" Value="{Binding Width}" />
+                    <Setter Property="Height" Value="{Binding Height}" />
+                    <Setter Property="Content" Value="{Binding Source}" />
+                    <Style.Triggers>
+                        <Trigger Property="IsConnection" Value="False">
+                            <Setter Property="ContextMenu">
+                                <Setter.Value>
+                                    <ContextMenu>
+                                        <MenuItem Command="{x:Static devtoolbox:DesignCanvas.CutCommand}" Header="Cut" />
+                                        <MenuItem Command="{x:Static devtoolbox:DesignCanvas.CopyCommand}" Header="Copy" />
+                                        <MenuItem Command="{x:Static devtoolbox:DesignCanvas.PasteCommand}" Header="Paste" />
+                                        <MenuItem Command="{x:Static devtoolbox:DesignCanvas.DeleteCommand}" Header="Delete" />
+                                        <Separator />
+                                        <MenuItem Header="Grouping">
+                                            <MenuItem Command="{x:Static devtoolbox:DesignCanvas.GroupCommand}" Header="Group" />
+                                            <MenuItem Command="{x:Static devtoolbox:DesignCanvas.UngroupCommand}" Header="Ungroup" />
+                                        </MenuItem>
+                                        <MenuItem Header="Order">
+                                            <MenuItem Command="{x:Static devtoolbox:DesignCanvas.BringForwardCommand}" Header="Bring Forward" />
+                                            <MenuItem Command="{x:Static devtoolbox:DesignCanvas.BringToFrontCommand}" Header="Bring To Front" />
+                                            <MenuItem Command="{x:Static devtoolbox:DesignCanvas.SendBackwardCommand}" Header="Send Backward" />
+                                            <MenuItem Command="{x:Static devtoolbox:DesignCanvas.SendToBackCommand}" Header="Send To Back" />
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsConnection" Value="True">
+                            <Setter Property="ContextMenu">
+                                <Setter.Value>
+                                    <ContextMenu>
+                                        <MenuItem Command="{x:Static devtoolbox:DesignCanvas.DeleteCommand}" Header="Delete" />
+                                        <Separator />
+                                        <MenuItem Header="Order">
+                                            <MenuItem Command="{x:Static devtoolbox:DesignCanvas.BringForwardCommand}" Header="Bring Forward" />
+                                            <MenuItem Command="{x:Static devtoolbox:DesignCanvas.BringToFrontCommand}" Header="Bring To Front" />
+                                            <MenuItem Command="{x:Static devtoolbox:DesignCanvas.SendBackwardCommand}" Header="Send Backward" />
+                                            <MenuItem Command="{x:Static devtoolbox:DesignCanvas.SendToBackCommand}" Header="Send To Back" />
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </devtoolbox:DiagramCanvas.ItemContainerStyle>
+            <devtoolbox:DiagramCanvas.Background>
+                <ImageBrush
+                    ImageSource="pack://application:,,,/DevToolbox.Wpf.Demo;component/Assets/chess-background.png"
+                    TileMode="Tile"
+                    Viewport="0.1, 0.1, 600, 600"
+                    ViewportUnits="Absolute" />
+            </devtoolbox:DiagramCanvas.Background>
+        </devtoolbox:DiagramCanvas>
+    </DataTemplate>
+
+</ResourceDictionary>

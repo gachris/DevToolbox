@@ -1,24 +1,29 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:extensions="clr-namespace:DevToolbox.Wpf.Markup">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:markup="clr-namespace:DevToolbox.Wpf.Markup">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/Button/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/Calendar/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/CheckBox/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ComboBox/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ComboBoxItem/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ContextMenu/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/DatePicker/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/Expander/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/GroupBox/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/Menu/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/MenuItem/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/PasswordBox/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/RadioButton/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/RepeatButton/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ScrollViewer/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/TextBox/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ToggleButton/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/ToolBar/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/TreeView/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/Styles/TreeViewItem/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/Button/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/Calendar/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/CheckBox/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ComboBox/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ComboBoxItem/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ContextMenu/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DataGrid/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DataGridCell/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DataGridColumnHeader/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DataGridRow/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DataGridRowHeader/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/DatePicker/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/Expander/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/GroupBox/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/Menu/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/MenuItem/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/PasswordBox/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/RadioButton/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/RepeatButton/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ScrollViewer/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/TextBox/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ToggleButton/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ToolBar/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/TreeView/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/TreeViewItem/Generic.xaml}" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

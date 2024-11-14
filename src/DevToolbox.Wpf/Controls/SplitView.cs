@@ -13,7 +13,7 @@ namespace DevToolbox.Wpf.Controls;
 /// Represents a split view that can expand and collapse, 
 /// providing animation effects and properties for docking and auto-hiding behavior.
 /// </summary>
-public partial class SplitView : ContentControl
+public class SplitView : ContentControl
 {
     #region Fields/Consts
 

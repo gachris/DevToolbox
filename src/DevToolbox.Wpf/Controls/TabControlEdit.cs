@@ -3,15 +3,13 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace DevToolbox.Wpf.Controls;
 
 /// <summary>
-/// Represents a customizable tab control that supports adding, removing, and swapping tabs.
-/// This control allows for enhanced tab management features such as showing and hiding buttons,
-/// customizing the appearance of tabs, and handling events related to tab actions.
+/// Represents a customizable tab control that supports adding and removing tabs.
+/// This control allows for enhanced tab management features, customizing the appearance of tabs, and handling events related to tab actions.
 /// </summary>
 public class TabControlEdit : TabControl
 {
@@ -19,7 +17,7 @@ public class TabControlEdit : TabControl
 
     private static readonly RoutedUICommand _addCommand = ApplicationCommands.New;
     private static readonly RoutedUICommand _closeCommand = ApplicationCommands.Close;
-    private static readonly RoutedUICommand _swapCommand = new(nameof(SwapCommand), nameof(SwapCommand), typeof(TabControlEdit));
+    private static readonly RoutedUICommand _selectTab = new(nameof(SelectTabCommand), nameof(SelectTabCommand), typeof(TabControlEdit));
 
     /// <summary>
     /// Occurs when the tab control is closing, allowing for cancellation of the operation.
@@ -136,9 +134,9 @@ public class TabControlEdit : TabControl
     public static RoutedUICommand CloseCommand => _closeCommand;
 
     /// <summary>
-    /// Gets the command for swapping tabs.
+    /// Gets the command for selecting a tab.
     /// </summary>
-    public static RoutedCommand SwapCommand => _swapCommand;
+    public static RoutedCommand SelectTabCommand => _selectTab;
 
     /// <summary>
     /// Gets the editable items in the tab control.
@@ -278,14 +276,9 @@ public class TabControlEdit : TabControl
 
         DefaultStyleKeyProperty.OverrideMetadata(typeFromHandle, new FrameworkPropertyMetadata(typeFromHandle));
 
-        CommandManager.RegisterClassCommandBinding(typeFromHandle,
-            new(AddCommand, (sender, e) => (sender as TabControlEdit)?.AddExecuted(e), (sender, e) => (sender as TabControlEdit)?.AddCanExecute(e)));
-
-        CommandManager.RegisterClassCommandBinding(typeFromHandle,
-            new(SwapCommand, (sender, e) => (sender as TabControlEdit)?.SwapExecuted(e), (sender, e) => (sender as TabControlEdit)?.SwapCanExecute(e)));
-
-        CommandManager.RegisterClassCommandBinding(typeFromHandle,
-            new(CloseCommand, (sender, e) => (sender as TabControlEdit)?.CloseExecuted(e), (sender, e) => (sender as TabControlEdit)?.CloseCanExecute(e)));
+        CommandManager.RegisterClassCommandBinding(typeFromHandle, new(AddCommand, AddExecuted, AddCanExecute));
+        CommandManager.RegisterClassCommandBinding(typeFromHandle, new(SelectTabCommand, SelectTabExecuted, SelectTabCanExecute));
+        CommandManager.RegisterClassCommandBinding(typeFromHandle, new(CloseCommand, CloseExecuted, CloseCanExecute));
     }
 
     #region Methods Overrides
@@ -294,66 +287,33 @@ public class TabControlEdit : TabControl
     /// Gets the container for each item in the tab control.
     /// </summary>
     /// <returns>A new instance of the <see cref="TabItemEdit"/> class.</returns>
-    protected override DependencyObject GetContainerForItemOverride() => new TabItemEdit();
+    protected override DependencyObject GetContainerForItemOverride()
+    {
+        return new TabItemEdit();
+    }
 
     #endregion
 
     #region Methods
 
     /// <summary>
-    /// Handles the execution of the Add command.
-    /// Creates a new item and selects it.
-    /// </summary>
-    /// <param name="e">Event arguments containing data related to the command execution.</param>
-    protected virtual void AddExecuted(ExecutedRoutedEventArgs e)
-    {
-        var item = AddNewItem();
-        SelectedIndex = Items.IndexOf(item);
-    }
-
-    /// <summary>
-    /// Determines whether the Add command can execute based on the current state.
-    /// </summary>
-    /// <param name="e">Event arguments that indicate whether the command can execute.</param>
-    protected virtual void AddCanExecute(CanExecuteRoutedEventArgs e) => e.CanExecute = EditableItems.CanAddNew || !((IList)Items).IsReadOnly;
-
-    /// <summary>
-    /// Handles the execution of the Swap command.
-    /// </summary>
-    /// <param name="e">Event arguments containing data related to the command execution.</param>
-    protected virtual void SwapExecuted(ExecutedRoutedEventArgs e) => SwapTabs();
-
-    /// <summary>
-    /// Determines whether the Swap command can execute based on the current state.
-    /// </summary>
-    /// <param name="e">Event arguments that indicate whether the command can execute.</param>
-    protected virtual void SwapCanExecute(CanExecuteRoutedEventArgs e) => e.CanExecute = Items.Count >= 2;
-
-    /// <summary>
-    /// Handles the execution of the Close command.
-    /// Closes the currently selected item.
-    /// </summary>
-    /// <param name="e">Event arguments containing data related to the command execution.</param>
-    protected virtual void CloseExecuted(ExecutedRoutedEventArgs e) => Close(SelectedItem);
-
-    /// <summary>
-    /// Determines whether the Close command can execute based on the current state.
-    /// </summary>
-    /// <param name="e">Event arguments that indicate whether the command can execute.</param>
-    protected virtual void CloseCanExecute(CanExecuteRoutedEventArgs e) => e.CanExecute = EditableItems.CanRemove || !((IList)Items).IsReadOnly && SelectedItem != null;
-
-    /// <summary>
     /// Adds a new item to the tab control.
     /// </summary>
     /// <returns>The newly created item.</returns>
-    public object Add() => AddNewItem();
+    public object Add()
+    {
+        return AddNewItem();
+    }
 
     /// <summary>
     /// Adds a new item to the tab control with the specified object.
     /// </summary>
     /// <param name="item">The item to be added.</param>
     /// <returns>The newly created item.</returns>
-    public object Add(object item) => AddNewItem(item);
+    public object Add(object item)
+    {
+        return AddNewItem(item);
+    }
 
     /// <summary>
     /// Adds a new item to the tab control, optionally using the provided object.
@@ -374,19 +334,12 @@ public class TabControlEdit : TabControl
 
         if (!isReadOnly)
         {
-            if (item is null)
-            {
-                var generator = ItemContainerGenerator as IItemContainerGenerator;
-
-                item = GetContainerForItemOverride();
-                generator.PrepareItemContainer((DependencyObject)item);
-            }
-            else Items.Add(item);
+            item ??= GetContainerForItemOverride();
+            Items.Add(item);
         }
         else
         {
             item = item is not null ? addNewItem.AddNewItem(item) : EditableItems.AddNew();
-
             EditableItems.CommitNew();
         }
 
@@ -406,8 +359,13 @@ public class TabControlEdit : TabControl
         var isReadOnly = ((IList)Items).IsReadOnly;
 
         if (!isReadOnly)
+        {
             Items.Remove(item);
-        else EditableItems.Remove(item);
+        }
+        else
+        {
+            EditableItems.Remove(item);
+        }
     }
 
     /// <summary>
@@ -419,36 +377,31 @@ public class TabControlEdit : TabControl
         var e = new CancelEventArgs();
 
         Closing?.Invoke(item, e);
-        OnClosing(item, e);
 
-        if (!e.Cancel)
-            Closed?.Invoke(item, new EventArgs());
-    }
-
-    /// <summary>
-    /// Handles the closing logic for the specified item.
-    /// </summary>
-    /// <param name="item">The item to close.</param>
-    /// <param name="e">Event arguments indicating whether the closing should be canceled.</param>
-    private void OnClosing(object item, CancelEventArgs e)
-    {
         if (!e.Cancel)
         {
-            var isReadOnly = ((IList)Items).IsReadOnly;
-
-            if (!isReadOnly)
-                Items.Remove(item);
-            else EditableItems.Remove(item);
+            Remove(item);
+            Closed?.Invoke(item, new EventArgs());
         }
     }
 
     /// <summary>
-    /// Swaps the currently selected tabs in the tab control.
-    /// This method should be implemented to define the swapping behavior.
+    /// Sets the specified item as the selected tab in the tab control and brings it into view if possible.
     /// </summary>
-    private void SwapTabs()
+    /// <param name="item">The tab item to be selected.</param>
+    private void SelectTab(object item)
     {
-        // Implement the swap logic here
+        if (item == null || SelectedItem == null || Items.Count < 2)
+        {
+            return;
+        }
+
+        SelectedItem = item;
+
+        if (ItemContainerGenerator.ContainerFromItem(item) is TabItemEdit container)
+        {
+            container.BringIntoView();
+        }
     }
 
     /// <summary>
@@ -459,7 +412,10 @@ public class TabControlEdit : TabControl
     /// The default implementation raises the AddingNewItem event.
     /// </remarks>
     /// <param name="e">Event arguments that provide access to the new item.</param>
-    protected virtual void OnAddingNewItem(AddingNewItemEventArgs e) => AddingNewItem?.Invoke(this, e);
+    protected virtual void OnAddingNewItem(AddingNewItemEventArgs e)
+    {
+        AddingNewItem?.Invoke(this, e);
+    }
 
     /// <summary>
     /// A method that is called when a new item is created so that
@@ -469,8 +425,107 @@ public class TabControlEdit : TabControl
     /// The default implementation raises the InitializingNewItem event.
     /// </remarks>
     /// <param name="e">Event arguments that provide access to the new item.</param>
-    protected virtual void OnInitializingNewItem(InitializingNewItemEventArgs e) => InitializingNewItem?.Invoke(this, e);
+    protected virtual void OnInitializingNewItem(InitializingNewItemEventArgs e)
+    {
+        InitializingNewItem?.Invoke(this, e);
+    }
 
+    #endregion
+
+    #region Commands
+
+    private static void AddExecuted(object sender, ExecutedRoutedEventArgs e)
+    {
+        var tabControlEdit = (TabControlEdit)sender;
+        tabControlEdit.AddExecuted(e);
+    }
+
+    private static void AddCanExecute(object sender, CanExecuteRoutedEventArgs e)
+    {
+        var tabControlEdit = (TabControlEdit)sender;
+        tabControlEdit.AddCanExecute(e);
+    }
+
+    private static void SelectTabExecuted(object sender, ExecutedRoutedEventArgs e)
+    {
+        var tabControlEdit = (TabControlEdit)sender;
+        tabControlEdit.SelectTabExecuted(e);
+    }
+
+    private static void SelectTabCanExecute(object sender, CanExecuteRoutedEventArgs e)
+    {
+        var tabControlEdit = (TabControlEdit)sender;
+        tabControlEdit.SelectTabCanExecute(e);
+    }
+
+    private static void CloseExecuted(object sender, ExecutedRoutedEventArgs e)
+    {
+        var tabControlEdit = (TabControlEdit)sender;
+        tabControlEdit.CloseExecuted(e);
+    }
+
+    private static void CloseCanExecute(object sender, CanExecuteRoutedEventArgs e)
+    {
+        var tabControlEdit = (TabControlEdit)sender;
+        tabControlEdit.CloseCanExecute(e);
+    }
+
+    /// <summary>
+    /// Handles the execution of the Add command.
+    /// Creates a new item and selects it.
+    /// </summary>
+    /// <param name="e">Event arguments containing data related to the command execution.</param>
+    protected virtual void AddExecuted(ExecutedRoutedEventArgs e)
+    {
+        var item = AddNewItem();
+        SelectedIndex = Items.IndexOf(item);
+    }
+
+    /// <summary>
+    /// Determines whether the Add command can execute based on the current state.
+    /// </summary>
+    /// <param name="e">Event arguments that indicate whether the command can execute.</param>
+    protected virtual void AddCanExecute(CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = EditableItems.CanAddNew || !((IList)Items).IsReadOnly;
+    }
+
+    /// <summary>
+    /// Executes the SelectTab command, changing the selected tab to the specified item.
+    /// </summary>
+    /// <param name="e">Event arguments containing the command parameter used to select the tab item.</param>
+    protected virtual void SelectTabExecuted(ExecutedRoutedEventArgs e)
+    {
+        SelectTab(e.Parameter);
+    }
+
+    /// <summary>
+    /// Determines whether the SelectTab command can be executed based on the current state of the tab control.
+    /// </summary>
+    /// <param name="e">Event arguments used to indicate whether the command can execute.</param>
+    protected virtual void SelectTabCanExecute(CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = Items.Count > 1;
+    }
+
+    /// <summary>
+    /// Handles the execution of the Close command.
+    /// Closes the currently selected item.
+    /// </summary>
+    /// <param name="e">Event arguments containing data related to the command execution.</param>
+    protected virtual void CloseExecuted(ExecutedRoutedEventArgs e)
+    {
+        Close(SelectedItem);
+    }
+
+    /// <summary>
+    /// Determines whether the Close command can execute based on the current state.
+    /// </summary>
+    /// <param name="e">Event arguments that indicate whether the command can execute.</param>
+    protected virtual void CloseCanExecute(CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = EditableItems.CanRemove || !((IList)Items).IsReadOnly && SelectedItem != null;
+    }
 
     #endregion
 }

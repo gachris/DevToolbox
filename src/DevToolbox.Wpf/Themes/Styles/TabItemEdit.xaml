@@ -3,33 +3,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
     xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters"
-    xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
+    xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers"
+    xmlns:media="clr-namespace:DevToolbox.Wpf.Media">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/Button/Generic.xaml" />
+    </ResourceDictionary.MergedDictionaries>
 
     <converters:TabItemCloseButtonShowModeConverter x:Key="TabItemCloseButtonShowModeConverter" />
-
-    <Style x:Key="CloseTabButtonStyle" TargetType="{x:Type ButtonBase}">
-        <Setter Property="Width" Value="14" />
-        <Setter Property="Height" Value="14" />
-        <Setter Property="ToolTip" Value="Close" />
-        <Setter Property="Margin" Value="8,0,0,0" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Content" Value="{x:Static controls:Symbol.Close}" />
-        <Setter Property="FontSize" Value="10" />
-        <Setter Property="ContentTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <controls:FontGlyph
-                        x:Name="fontGlyph"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Code="{Binding}" />
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 
     <Style x:Key="FocusVisual">
         <Setter Property="Control.Template">
@@ -46,8 +26,209 @@
         </Setter>
     </Style>
 
+    <Style
+        x:Key="TabItemEdit.Close.Button.Style"
+        BasedOn="{StaticResource ButtonStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Content" Value="{x:Static controls:Symbol.Close}" />
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <controls:FontGlyph
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Code="{Binding}"
+                        Foreground="{Binding RelativeSource={RelativeSource AncestorType=ButtonBase}, Path=Foreground}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="TabItemEditThemedTemplate" TargetType="{x:Type controls:TabItemEdit}">
+        <Border
+            x:Name="mainBorder"
+            Margin="1"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="0,2,0,0"
+            SnapsToDevicePixels="true">
+            <Grid
+                Margin="{TemplateBinding Padding}"
+                HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Image
+                    x:Name="PART_Image"
+                    Grid.Column="0"
+                    Width="16"
+                    Height="16"
+                    Margin="0,0,4,0"
+                    Source="{TemplateBinding Icon}"
+                    Stretch="Uniform" />
+                <ContentPresenter
+                    x:Name="contentPresenter"
+                    Grid.Column="1"
+                    Margin="0,0,8,0"
+                    ContentSource="Header"
+                    Focusable="False"
+                    RecognizesAccessKey="True"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                <Button
+                    x:Name="PART_CloseButton"
+                    Grid.Column="2"
+                    Command="{x:Static controls:TabControlEdit.CloseCommand}"
+                    Style="{TemplateBinding CloseTabButtonStyle}">
+                    <Button.Visibility>
+                        <MultiBinding Converter="{StaticResource TabItemCloseButtonShowModeConverter}">
+                            <Binding Path="CloseButtonShowMode" RelativeSource="{RelativeSource AncestorType=controls:TabControlEdit}" />
+                            <Binding Path="IsSelected" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                            <Binding Path="IsMouseOver" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                        </MultiBinding>
+                    </Button.Visibility>
+                </Button>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Icon" Value="{x:Null}">
+                <Setter TargetName="PART_Image" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="mainBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBackground)}" />
+                <Setter TargetName="mainBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBorderBrush)}" />
+                <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverForeground)}" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="2,0,0,0" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="mainBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBackground)}" />
+                <Setter TargetName="mainBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBorderBrush)}" />
+                <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverForeground)}" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="0,0,0,2" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="mainBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBackground)}" />
+                <Setter TargetName="mainBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBorderBrush)}" />
+                <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverForeground)}" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="0,0,2,0" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="mainBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBackground)}" />
+                <Setter TargetName="mainBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBorderBrush)}" />
+                <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverForeground)}" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="0,2,0,0" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="False" />
+                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="contentPresenter" Property="Opacity" Value="0.56" />
+                <Setter TargetName="mainBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBackground)}" />
+                <Setter TargetName="mainBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBorderBrush)}" />
+                <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledForeground)}" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="2,0,0,0" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="False" />
+                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="contentPresenter" Property="Opacity" Value="0.56" />
+                <Setter TargetName="mainBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBackground)}" />
+                <Setter TargetName="mainBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBorderBrush)}" />
+                <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledForeground)}" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="0,0,0,2" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="False" />
+                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="contentPresenter" Property="Opacity" Value="0.56" />
+                <Setter TargetName="mainBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBackground)}" />
+                <Setter TargetName="mainBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBorderBrush)}" />
+                <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledForeground)}" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="0,0,2,0" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="False" />
+                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="contentPresenter" Property="Opacity" Value="0.56" />
+                <Setter TargetName="mainBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBackground)}" />
+                <Setter TargetName="mainBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBorderBrush)}" />
+                <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledForeground)}" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="0,2,0,0" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True" />
+                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="2,0,0,0" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True" />
+                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="0,0,0,2" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True" />
+                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="0,0,2,0" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True" />
+                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="0,2,0,0" />
+            </MultiDataTrigger>
+            <Trigger Property="IsSelected" Value="False">
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="0" />
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Panel.ZIndex" Value="1" />
+                <Setter TargetName="contentPresenter" Property="TextElement.FontWeight" Value="SemiBold" />
+                <Setter TargetName="mainBorder" Property="Margin" Value="0" />
+                <Setter TargetName="mainBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedBackground)}" />
+                <Setter TargetName="mainBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedBorderBrush)}" />
+                <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedForeground)}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
     <Style x:Key="TabItemEditStyle" TargetType="{x:Type controls:TabItemEdit}">
-        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
         <Setter Property="Foreground" Value="{DynamicResource TabItemEdit.Foreground}" />
         <Setter Property="Background" Value="{DynamicResource TabItemEdit.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TabItemEdit.BorderBrush}" />
@@ -60,11 +241,12 @@
         <Setter Property="helpers:UIElementHelper.SelectedBackground" Value="{DynamicResource TabItemEdit.SelectedBackground}" />
         <Setter Property="helpers:UIElementHelper.SelectedForeground" Value="{DynamicResource TabItemEdit.SelectedForeground}" />
         <Setter Property="helpers:UIElementHelper.SelectedBorderBrush" Value="{DynamicResource TabItemEdit.SelectedBorderBrush}" />
-        <Setter Property="CloseTabButtonStyle" Value="{StaticResource CloseTabButtonStyle}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="6,2,6,2" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="CloseTabButtonStyle" Value="{StaticResource TabItemEdit.Close.Button.Style}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:TabItemEdit}">
@@ -74,13 +256,15 @@
                             Margin="0"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="1,1,1,0">
+                            BorderThickness="1,1,1,0"
+                            CornerRadius="{TemplateBinding CornerRadius}">
                             <Border
                                 x:Name="innerBorder"
                                 Margin="-1"
                                 Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedBackground)}"
                                 BorderBrush="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SelectedBorderBrush)}"
                                 BorderThickness="1,1,1,0"
+                                CornerRadius="{TemplateBinding CornerRadius}"
                                 Opacity="0" />
                         </Border>
                         <Grid Margin="{TemplateBinding Padding}">
@@ -90,11 +274,17 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Image
+                                x:Name="PART_Image"
                                 Grid.Column="0"
+                                Width="16"
+                                Height="16"
+                                Margin="0,0,4,0"
                                 Source="{TemplateBinding Icon}"
-                                Stretch="None" />
+                                Stretch="Uniform" />
                             <ContentPresenter
                                 x:Name="contentPresenter"
+                                Grid.Column="1"
+                                Margin="0,0,8,0"
                                 HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                 VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                 ContentSource="Header"
@@ -104,8 +294,11 @@
                             <Button
                                 x:Name="PART_CloseButton"
                                 Grid.Column="2"
+                                Width="14"
+                                Height="14"
                                 Command="{x:Static controls:TabControlEdit.CloseCommand}"
-                                Style="{TemplateBinding CloseTabButtonStyle}">
+                                Style="{TemplateBinding CloseTabButtonStyle}"
+                                ToolTip="Close">
                                 <Button.Visibility>
                                     <MultiBinding Converter="{StaticResource TabItemCloseButtonShowModeConverter}">
                                         <Binding Path="CloseButtonShowMode" RelativeSource="{RelativeSource AncestorType=controls:TabControlEdit}" />
@@ -117,6 +310,9 @@
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="Icon" Value="{x:Null}">
+                            <Setter TargetName="PART_Image" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
@@ -289,6 +485,14 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Source={x:Static media:ThemeManager.ApplicationTheme}}" Value="Dark">
+                <Setter Property="Template" Value="{StaticResource TabItemEditThemedTemplate}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Source={x:Static media:ThemeManager.ApplicationTheme}}" Value="Light">
+                <Setter Property="Template" Value="{StaticResource TabItemEditThemedTemplate}" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style BasedOn="{StaticResource TabItemEditStyle}" TargetType="{x:Type controls:TabItemEdit}" />

@@ -4,7 +4,7 @@
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
     xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/DevToolbox.Wpf;component/Themes/Styles/Calendar/Generic.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/Calendar/Generic.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type DatePickerTextBox}">

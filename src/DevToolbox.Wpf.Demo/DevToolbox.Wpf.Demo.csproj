@@ -6,7 +6,7 @@
 		<WindowsSdkPackageVersion>10.0.19041.42</WindowsSdkPackageVersion>
 		<UseWPF>true</UseWPF>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<ApplicationIcon>Assets\icon.ico</ApplicationIcon>
+		<ApplicationIcon>Assets\application-icon.ico</ApplicationIcon>
 		<ExcludeFoldersFromDeployment>Examples</ExcludeFoldersFromDeployment>
 	</PropertyGroup>
 
@@ -15,8 +15,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Remove="Assets\default_back.png" />
-		<None Remove="Assets\icon.ico" />
+		<None Remove="Assets\application-icon.ico" />
+		<None Remove="Assets\chess-background.png" />
+		<None Remove="Assets\color-palette.ico" />
+		<None Remove="Assets\color-picker.ico" />
+		<None Remove="Assets\flow-chart.ico" />
 		<None Remove="Assets\photo_1.jpg" />
 		<None Remove="Assets\photo_2.jpg" />
 		<None Remove="examples.json" />
@@ -212,8 +215,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Resource Include="Assets\default_back.png" />
-		<Resource Include="Assets\icon.ico" />
+		<Resource Include="Assets\color-palette.ico" />
+		<Resource Include="Assets\color-picker.ico" />
+		<Resource Include="Assets\chess-background.png" />
+		<Resource Include="Assets\flow-chart.ico" />
+		<Resource Include="Assets\application-icon.ico" />
 		<Resource Include="Assets\photo_1.jpg" />
 		<Resource Include="Assets\photo_2.jpg" />
 		<EmbeddedResource Include="examples.json">
@@ -236,10 +242,6 @@
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Resources.resx</DependentUpon>
-	  </Compile>
-	  <Compile Update="PropertyDataTemplateSelector.cs">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>PropertyDataTemplateSelector.Designer.cs</LastGenOutput>
 	  </Compile>
 	</ItemGroup>
 

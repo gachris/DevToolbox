@@ -2,6 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:controls="clr-namespace:DevToolbox.Wpf.Demo.Controls"
     xmlns:demo="clr-namespace:DevToolbox.Wpf.Demo"
     xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
     xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels"
@@ -29,7 +30,7 @@
         </StackPanel>
     </DataTemplate>
 
-    <demo:PropertyDataTemplateSelector
+    <controls:PropertyDataTemplateSelector
         x:Key="PropertyDataTemplateSelector"
         CheckBoxDataTemplate="{StaticResource CheckBoxPropertyDataTemplate}"
         CornerRadiusDataTemplate="{StaticResource CornerRadiusPropertyDataTemplate}" />
@@ -69,7 +70,6 @@
                             <ContentControl
                                 Grid.Column="0"
                                 Margin="12,28"
-                                HorizontalAlignment="Left"
                                 Content="{Binding View}" />
                             <Border
                                 Grid.Column="1"

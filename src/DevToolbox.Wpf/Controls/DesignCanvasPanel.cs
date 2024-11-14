@@ -8,7 +8,7 @@ namespace DevToolbox.Wpf.Controls;
 /// <summary>
 /// Represents a canvas panel that draws a customizable grid with horizontal and vertical lines.
 /// </summary>
-public partial class DesignCanvasPanel : Canvas
+public class DesignCanvasPanel : Canvas
 {
     #region Fields/Consts
 

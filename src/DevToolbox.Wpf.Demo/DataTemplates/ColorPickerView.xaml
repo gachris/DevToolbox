@@ -1,0 +1,17 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels">
+
+    <DataTemplate DataType="{x:Type viewModels:ColorPickerViewModel}">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <devtoolbox:ColorPicker
+                x:Name="picker"
+                Margin="8"
+                VerticalAlignment="Top"
+                ColorPickerStyle="Standard" />
+        </ScrollViewer>
+    </DataTemplate>
+
+</ResourceDictionary>

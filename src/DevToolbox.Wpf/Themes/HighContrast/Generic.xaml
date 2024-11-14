@@ -1,6 +1,6 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:extensions="clr-namespace:DevToolbox.Wpf.Markup">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:markup="clr-namespace:DevToolbox.Wpf.Markup">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/HighContrast/Brushes/Generic.xaml}" />
-        <ResourceDictionary Source="{extensions:AssemblyResource Themes/HighContrast/Styles/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/HighContrast/Brushes/Generic.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/HighContrast/Styles/Generic.xaml}" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -1,1 +1,4 @@
-﻿<DatePicker xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Width="100" />
+﻿<DatePicker
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    Width="100"
+    HorizontalAlignment="Left" />

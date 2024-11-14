@@ -11,7 +11,7 @@ using Point = System.Drawing.Point;
 
 namespace DevToolbox.Wpf.Documents;
 
-internal partial class CroppingAdorner : Adorner
+internal class CroppingAdorner : Adorner
 {
     #region CropThumb
 

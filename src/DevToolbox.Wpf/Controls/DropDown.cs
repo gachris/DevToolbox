@@ -27,7 +27,7 @@ namespace DevToolbox.Wpf.Controls;
 [TemplatePart(Name = PART_PopupContent, Type = typeof(FrameworkElement))]
 [TemplatePart(Name = PART_ResizeThumb, Type = typeof(Thumb))]
 [TemplatePart(Name = PART_ContentPresenter, Type = typeof(ContentPresenter))]
-public partial class DropDown : HeaderedContentControl, ICommandSource
+public class DropDown : HeaderedContentControl, ICommandSource
 {
     #region Fields/Consts
 

@@ -4,6 +4,7 @@
     xmlns:system="clr-namespace:System;assembly=netstandard"
     Width="200"
     Padding="8,4"
+    HorizontalAlignment="Left"
     devtoolbox:UIElementHelper.CornerRadius="4">
     <system:String>Blue</system:String>
     <system:String>Green</system:String>

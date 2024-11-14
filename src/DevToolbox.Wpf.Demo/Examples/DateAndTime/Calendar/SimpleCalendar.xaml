@@ -1,1 +1,1 @@
-﻿<Calendar xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+﻿<Calendar xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" HorizontalAlignment="Left" />
