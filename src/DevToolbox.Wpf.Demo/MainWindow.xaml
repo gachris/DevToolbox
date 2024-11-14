@@ -33,7 +33,6 @@
                 BasedOn="{StaticResource ResourceKey={x:Type TreeViewItem}}"
                 TargetType="TreeViewItem">
                 <Setter Property="IsSelected" Value="{Binding IsSelected}" />
-                <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True" />
                 <Setter Property="devtoolbox:UIElementHelper.CornerRadius" Value="4" />
                 <Setter Property="Padding" Value="6" />
             </Style>
