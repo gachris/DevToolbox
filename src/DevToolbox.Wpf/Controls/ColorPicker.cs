@@ -91,6 +91,12 @@ public class ColorPicker : Control
         DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPicker), new FrameworkPropertyMetadata(Colors.Black, OnSelectedColorChanged));
 
     /// <summary>
+    /// DependencyProperty for the SelectedColor.
+    /// </summary>
+    public static readonly DependencyProperty InitialColorProperty =
+        DependencyProperty.Register(nameof(InitialColor), typeof(Color), typeof(ColorPicker), new FrameworkPropertyMetadata(Colors.Black));
+    
+    /// <summary>
     /// DependencyProperty for MinNormal. It represents the minimum value for the normal component.
     /// </summary>
     public static readonly DependencyProperty MinNormalProperty = MinNormalPropertyKey.DependencyProperty;
@@ -129,11 +135,6 @@ public class ColorPicker : Control
     private bool IsAlphaEnabled => ColorPickerStyle is ColorPickerStyle.StandardWithAlpha or ColorPickerStyle.FullWithAlpha;
 
     /// <summary>
-    /// Gets or sets the initial color of the color picker.
-    /// </summary>
-    public Color InitialColor { get; set; }
-
-    /// <summary>
     /// Gets the minimum normal value.
     /// </summary>
     public int MinNormal => (int)GetValue(MinNormalProperty);
@@ -168,6 +169,15 @@ public class ColorPicker : Control
     {
         get => (Color)GetValue(SelectedColorProperty);
         set => SetValue(SelectedColorProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the initial color of the color picker.
+    /// </summary>
+    public Color InitialColor
+    {
+        get => (Color)GetValue(InitialColorProperty);
+        set => SetValue(InitialColorProperty, value);
     }
 
     /// <summary>
