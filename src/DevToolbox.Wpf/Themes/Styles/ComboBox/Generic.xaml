@@ -97,7 +97,6 @@
         <Setter Property="helpers:UIElementHelper.PopupBackground" Value="{DynamicResource ComboBox.PopupBackground}" />
         <Setter Property="helpers:UIElementHelper.PopupForeground" Value="{DynamicResource ComboBox.PopupForeground}" />
         <Setter Property="helpers:UIElementHelper.PopupBorderBrush" Value="{DynamicResource ComboBox.PopupBorderBrush}" />
-        <Setter Property="helpers:UIElementHelper.PopupEffect" Value="{DynamicResource ComboBox.DropShadow}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
