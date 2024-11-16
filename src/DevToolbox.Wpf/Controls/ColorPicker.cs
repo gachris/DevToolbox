@@ -24,13 +24,12 @@ public class ColorPicker : Control
     private enum ColorChangeSource
     {
         MouseDown,
-        Normal,
-        SelectionChanging
+        Normal
     }
 
     #region Fields/Consts
 
-    private INormalComponent _normalComponent = default!;
+    private INormalComponent? _normalComponent;
     private ColorChangeSource? _colorChangeSource;
     private int _lastNormal = -1;
     private string _lastComponentName = string.Empty;
@@ -95,7 +94,7 @@ public class ColorPicker : Control
     /// </summary>
     public static readonly DependencyProperty InitialColorProperty =
         DependencyProperty.Register(nameof(InitialColor), typeof(Color), typeof(ColorPicker), new FrameworkPropertyMetadata(Colors.Black));
-    
+
     /// <summary>
     /// DependencyProperty for MinNormal. It represents the minimum value for the normal component.
     /// </summary>
@@ -258,7 +257,7 @@ public class ColorPicker : Control
         _normalSlider = Template.FindName("PART_NormalSlider", this) as Slider;
         _alphaSlider = Template.FindName("PART_AlphaSlider", this) as Slider;
 
-        OnNormalComponentTypeChanged(NormalComponentType, NormalComponentType);
+        UpdateNormalComponent();
     }
 
     #endregion
@@ -267,7 +266,7 @@ public class ColorPicker : Control
 
     private void UpdateColorCanvasBitmap(int normal)
     {
-        if (_colorCanvas is null)
+        if (_colorCanvas is null || _normalComponent is null)
             return;
 
         if (_lastNormal != normal || _lastComponentName != _normalComponent.Name)
@@ -290,7 +289,7 @@ public class ColorPicker : Control
 
     private void UpdateSliderNormalBitmap(System.Drawing.Color color)
     {
-        if (_normalSlider is null)
+        if (_normalSlider is null || _normalComponent is null)
             return;
 
         var width = 18;
@@ -307,7 +306,7 @@ public class ColorPicker : Control
 
     private void UpdateSliderAlphaBitmap(System.Drawing.Color color)
     {
-        if (_alphaSlider is null)
+        if (_alphaSlider is null || _normalComponent is null)
             return;
 
         var width = 18;
@@ -339,6 +338,9 @@ public class ColorPicker : Control
 
     private void UpdateFromPoint(PointEx point)
     {
+        if (_normalComponent is null)
+            return;
+
         SelectionPoint = CoercePoint(point);
 
         var drawColor = _normalComponent.ColorAtPoint(SelectionPoint, Normal);
@@ -350,6 +352,38 @@ public class ColorPicker : Control
         }
     }
 
+    private void UpdateNormalComponent()
+    {
+        if (_colorComponents is null)
+            return;
+
+        var drawColor = ColorPickerHelper.ConvertToDrawingColor(SelectedColor);
+
+        EnsureComponent(NormalComponentType);
+        _normalComponent = Components[NormalComponentType];
+
+        SetValue(MinNormalPropertyKey, _normalComponent.MinValue);
+        SetValue(MaxNormalPropertyKey, _normalComponent.MaxValue);
+
+        _colorComponents.UpdateAllFromColor(SelectedColor);
+
+        Alpha = drawColor.A;
+        SelectionPoint = _normalComponent.PointFromColor(drawColor);
+        Normal = _colorComponents.GetNormal();
+
+        UpdateColorCanvasBitmap(Normal);
+        UpdateSliderNormalBitmap(drawColor);
+        UpdateSliderAlphaBitmap(drawColor);
+    }
+
+    private void EnsureComponent(NormalComponentType normalComponentType)
+    {
+        if (!Components.ContainsKey(normalComponentType))
+        {
+            Components[normalComponentType] = NormalComponentFactory.CreateNormalComponent(normalComponentType);
+        }
+    }
+
     private void OnAlphaChanged(byte oldValue, byte newValue)
     {
         SelectedColor = Color.FromArgb(newValue, SelectedColor.R, SelectedColor.G, SelectedColor.B);
@@ -358,6 +392,9 @@ public class ColorPicker : Control
 
     private void OnNormalChanged(int oldValue, int newValue)
     {
+        if (_normalComponent is null)
+            return;
+
         _colorChangeSource = ColorChangeSource.Normal;
 
         _colorComponents?.SetNormal(newValue);
@@ -365,58 +402,40 @@ public class ColorPicker : Control
 
         UpdateColorCanvasBitmap(newValue);
 
+        if (!_normalComponent.IsNormalIndependantOfColor)
+        {
+            var drawColor = ColorPickerHelper.ConvertToDrawingColor(SelectedColor);
+            UpdateSliderNormalBitmap(drawColor);
+        }
+
         _colorChangeSource = null;
     }
 
     private void OnNormalComponentTypeChanged(NormalComponentType oldValue, NormalComponentType newValue)
     {
-        var drawColor = ColorPickerHelper.ConvertToDrawingColor(SelectedColor);
-
-        EnsureComponent(newValue);
-        _normalComponent = Components[newValue];
-
-        SetValue(MinNormalPropertyKey, _normalComponent.MinValue);
-        SetValue(MaxNormalPropertyKey, _normalComponent.MaxValue);
-
-        SelectionPoint = _normalComponent.PointFromColor(drawColor);
-
-        Normal = _colorComponents?.GetNormal() ?? -1;
-
-        UpdateColorCanvasBitmap(Normal);
-        UpdateSliderNormalBitmap(drawColor);
-        UpdateSliderAlphaBitmap(drawColor);
-
-        void EnsureComponent(NormalComponentType normalComponentType)
-        {
-            if (!Components.ContainsKey(normalComponentType))
-            {
-                Components[normalComponentType] = NormalComponentFactory.CreateNormalComponent(normalComponentType);
-            }
-        }
+        UpdateNormalComponent();
     }
 
     private void OnSelectedColorChanged(Color oldValue, Color newValue)
     {
+        if (_colorComponents is null || _normalComponent is null)
+            return;
+
         var drawColor = ColorPickerHelper.ConvertToDrawingColor(newValue);
 
         Alpha = drawColor.A;
         UpdateSliderAlphaBitmap(drawColor);
 
-        if (_colorChangeSource is not ColorChangeSource.Normal)
+        if (_colorChangeSource is ColorChangeSource.MouseDown)
         {
-            _colorComponents?.UpdateFromColor(newValue);
+            _colorComponents.UpdateFromColor(newValue);
         }
-
-        if (_colorChangeSource is null && _normalComponent is not null)
+        else if (_colorChangeSource is not ColorChangeSource.Normal)
         {
-            SelectionPoint = _normalComponent.PointFromColor(drawColor);
-            Normal = _colorComponents?.GetNormal() ?? -1;
-            UpdateColorCanvasBitmap(Normal);
+            _colorComponents.UpdateAllFromColor(newValue);
 
-            if (!_normalComponent.IsNormalIndependantOfColor)
-            {
-                UpdateSliderNormalBitmap(drawColor);
-            }
+            SelectionPoint = _normalComponent.PointFromColor(drawColor);
+            Normal = _colorComponents.GetNormal();
         }
 
         SelectedColorChanged?.Invoke(this, EventArgs.Empty);

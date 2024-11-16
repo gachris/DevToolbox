@@ -18,8 +18,7 @@ internal class ColorComponents : Control
         FromRgb,
         FromLab,
         FromCmyk,
-        FromHex,
-        FromColor
+        FromHex
     }
 
     #region Fields/Consts
@@ -158,7 +157,87 @@ internal class ColorComponents : Control
 
     public void UpdateFromColor(Color color)
     {
-        UpdateFromColor(color, ColorSourceChange.FromColor);
+        if (_colorUpdating)
+            return;
+
+        _colorUpdating = true;
+
+        var rgb = ColorSpace.Net.Colors.Rgb.FromRgb(color.R, color.G, color.B);
+        var hsv = _hsvConverter.ConvertFrom(rgb);
+        var lab = _labConverter.ConvertFrom(rgb);
+        var cmyk = _cmykConverter.ConvertFrom(rgb);
+
+        if (NormalComponentType is not NormalComponentType.Hsv_H)
+            Hsv.Hue = (int)Math.Round(hsv.H);
+        if (NormalComponentType is not NormalComponentType.Hsv_S)
+            Hsv.Saturation = (int)Math.Round(hsv.S * 100m);
+        if (NormalComponentType is not NormalComponentType.Hsv_V)
+            Hsv.Value = (int)Math.Round(hsv.V * 100m);
+
+        if (NormalComponentType is not NormalComponentType.Rgb_R)
+            Rgb.Red = rgb.R;
+        if (NormalComponentType is not NormalComponentType.Rgb_G)
+            Rgb.Green = rgb.G;
+        if (NormalComponentType is not NormalComponentType.Rgb_B)
+            Rgb.Blue = rgb.B;
+
+        if (NormalComponentType is not NormalComponentType.Lab_L)
+            Lab.Lightness = (int)Math.Round(lab.L);
+        if (NormalComponentType is not NormalComponentType.Lab_A)
+            Lab.A = (int)Math.Round(lab.A);
+        if (NormalComponentType is not NormalComponentType.Lab_B)
+            Lab.B = (int)Math.Round(lab.B);
+
+        Cmyk.Cyan = (int)Math.Round(cmyk.C * 100m);
+        Cmyk.Magenta = (int)Math.Round(cmyk.M * 100m);
+        Cmyk.Yellow = (int)Math.Round(cmyk.Y * 100m);
+        Cmyk.Key = (int)Math.Round(cmyk.K * 100m);
+
+        Hex.Value = color.ToString();
+
+        _color = color;
+
+        ColorChanged?.Invoke(this, EventArgs.Empty);
+
+        _colorUpdating = false;
+    }
+
+    public void UpdateAllFromColor(Color color)
+    {
+        if (_colorUpdating)
+            return;
+
+        _colorUpdating = true;
+
+        var rgb = ColorSpace.Net.Colors.Rgb.FromRgb(color.R, color.G, color.B);
+        var hsv = _hsvConverter.ConvertFrom(rgb);
+        var lab = _labConverter.ConvertFrom(rgb);
+        var cmyk = _cmykConverter.ConvertFrom(rgb);
+
+        Hsv.Hue = (int)Math.Round(hsv.H);
+        Hsv.Saturation = (int)Math.Round(hsv.S * 100m);
+        Hsv.Value = (int)Math.Round(hsv.V * 100m);
+
+        Rgb.Red = rgb.R;
+        Rgb.Green = rgb.G;
+        Rgb.Blue = rgb.B;
+
+        Lab.Lightness = (int)Math.Round(lab.L);
+        Lab.A = (int)Math.Round(lab.A);
+        Lab.B = (int)Math.Round(lab.B);
+
+        Cmyk.Cyan = (int)Math.Round(cmyk.C * 100m);
+        Cmyk.Magenta = (int)Math.Round(cmyk.M * 100m);
+        Cmyk.Yellow = (int)Math.Round(cmyk.Y * 100m);
+        Cmyk.Key = (int)Math.Round(cmyk.K * 100m);
+
+        Hex.Value = color.ToString();
+
+        _color = color;
+
+        ColorChanged?.Invoke(this, EventArgs.Empty);
+
+        _colorUpdating = false;
     }
 
     private void UpdateFromColor(Color color, ColorSourceChange colorSourceChange)
@@ -175,32 +254,23 @@ internal class ColorComponents : Control
 
         if (colorSourceChange is not ColorSourceChange.FromHsv)
         {
-            if (NormalComponentType is not NormalComponentType.Hsv_H)
-                Hsv.Hue = (int)Math.Round(hsv.H);
-            if (NormalComponentType is not NormalComponentType.Hsv_S)
-                Hsv.Saturation = (int)Math.Round(hsv.S * 100m);
-            if (NormalComponentType is not NormalComponentType.Hsv_V)
-                Hsv.Value = (int)Math.Round(hsv.V * 100m);
+            Hsv.Hue = (int)Math.Round(hsv.H);
+            Hsv.Saturation = (int)Math.Round(hsv.S * 100m);
+            Hsv.Value = (int)Math.Round(hsv.V * 100m);
         }
 
         if (colorSourceChange is not ColorSourceChange.FromRgb)
         {
-            if (NormalComponentType is not NormalComponentType.Rgb_R)
-                Rgb.Red = rgb.R;
-            if (NormalComponentType is not NormalComponentType.Rgb_G)
-                Rgb.Green = rgb.G;
-            if (NormalComponentType is not NormalComponentType.Rgb_B)
-                Rgb.Blue = rgb.B;
+            Rgb.Red = rgb.R;
+            Rgb.Green = rgb.G;
+            Rgb.Blue = rgb.B;
         }
 
         if (colorSourceChange is not ColorSourceChange.FromLab)
         {
-            if (NormalComponentType is not NormalComponentType.Lab_L)
-                Lab.Lightness = (int)Math.Round(lab.L);
-            if (NormalComponentType is not NormalComponentType.Lab_A)
-                Lab.A = (int)Math.Round(lab.A);
-            if (NormalComponentType is not NormalComponentType.Lab_B)
-                Lab.B = (int)Math.Round(lab.B);
+            Lab.Lightness = (int)Math.Round(lab.L);
+            Lab.A = (int)Math.Round(lab.A);
+            Lab.B = (int)Math.Round(lab.B);
         }
 
         if (colorSourceChange is not ColorSourceChange.FromCmyk)
