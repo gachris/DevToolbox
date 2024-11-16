@@ -487,6 +487,8 @@
     <SolidColorBrush x:Key="MenuItem.SubMenuBorderBrush" Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
     <SolidColorBrush x:Key="MenuItem.DisabledForeground" Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}" />
     <SolidColorBrush x:Key="MenuItem.SeparatorBrush" Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
+    <SolidColorBrush x:Key="MenuItem.PressedBackground" Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" />
+    <SolidColorBrush x:Key="MenuItem.PressedBorderBrush" Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
 
     <!--#endregion-->
 

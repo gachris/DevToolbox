@@ -641,6 +641,8 @@
     <SolidColorBrush x:Key="MenuItem.SubMenuBorderBrush" Color="#CCCEDB" />
     <SolidColorBrush x:Key="MenuItem.DisabledForeground" Color="#CCCCCF" />
     <SolidColorBrush x:Key="MenuItem.SeparatorBrush" Color="#E0E3E6" />
+    <SolidColorBrush x:Key="MenuItem.PressedBackground" Color="#F6F6F6" />
+    <SolidColorBrush x:Key="MenuItem.PressedBorderBrush" Color="#CCCEDB" />
 
     <!--#endregion-->
 

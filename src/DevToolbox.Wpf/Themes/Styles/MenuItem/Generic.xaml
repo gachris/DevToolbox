@@ -240,7 +240,6 @@
                                             KeyboardNavigation.DirectionalNavigation="Cycle"
                                             KeyboardNavigation.TabNavigation="Cycle"
                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-
                                     </Grid>
                                 </ScrollViewer>
                             </Border>
@@ -250,9 +249,8 @@
                                 Margin="1,0,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SubMenuBackground)}"
-                                BorderBrush="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.SubMenuBorderBrush)}"
-                                BorderThickness="1"
+                                Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBackground)}"
+                                BorderThickness="0"
                                 SnapsToDevicePixels="False" />
                         </Grid>
                     </themes:SystemDropShadowChrome>
@@ -279,8 +277,8 @@
                 <Setter TargetName="templateRoot" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.HighlightBorderBrush)}" />
             </Trigger>
             <DataTrigger Binding="{Binding Path=(MenuItem.IsSubmenuOpen), RelativeSource={RelativeSource Mode=Self}}" Value="True">
-                <Setter TargetName="templateRoot" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.HighlightBackground)}" />
-                <Setter TargetName="templateRoot" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.HighlightBorderBrush)}" />
+                <Setter TargetName="templateRoot" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBackground)}" />
+                <Setter TargetName="templateRoot" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBorderBrush)}" />
             </DataTrigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter TargetName="templateRoot" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledForeground)}" />
@@ -547,6 +545,8 @@
         <Setter Property="helpers:UIElementHelper.HighlightBorderBrush" Value="{DynamicResource MenuItem.HighlightBorderBrush}" />
         <Setter Property="helpers:UIElementHelper.SubMenuBackground" Value="{DynamicResource MenuItem.SubMenuBackground}" />
         <Setter Property="helpers:UIElementHelper.SubMenuBorderBrush" Value="{DynamicResource MenuItem.SubMenuBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="{DynamicResource MenuItem.PressedBackground}" />
+        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="{DynamicResource MenuItem.PressedBorderBrush}" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
         <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}" />
         <Style.Triggers>
