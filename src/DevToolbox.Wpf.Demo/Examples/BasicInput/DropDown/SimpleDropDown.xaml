@@ -4,9 +4,14 @@
     Padding="8,4"
     HorizontalAlignment="Left"
     devtoolbox:UIElementHelper.CornerRadius="4"
-    Content="Standard DropDown Content"
     DropDownCornerRadius="4"
     Header="Standard DropDown"
+    MaxDropDownWidth="300"
     SpeechBalloonPlacement="None"
     StaysOpen="True"
-    VerticalOffset="4" />
+    VerticalOffset="4">
+    <TextBlock
+        Margin="4"
+        Text="Sed fringilla ante felis, sed placerat massa elementum ac. Aliquam quis laoreet elit, et tincidunt sapien. Vivamus consequat aliquet eros, sit amet faucibus velit porttitor vitae. Aenean tellus turpis, porttitor non volutpat sit amet, porta at erat. In eget vehicula est, ut sagittis nisi. Quisque sed scelerisque ante. Aliquam scelerisque egestas turpis ac malesuada"
+        TextWrapping="Wrap" />
+</devtoolbox:DropDown>

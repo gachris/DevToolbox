@@ -73,12 +73,6 @@ public class UIElementHelper
         DependencyProperty.RegisterAttached("CornerRadius", typeof(CornerRadius), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
     /// <summary>
-    /// DependencyProperty for the effect to be applied to popups.
-    /// </summary>
-    public static readonly DependencyProperty PopupEffectProperty =
-        DependencyProperty.RegisterAttached("PopupEffect", typeof(Effect), typeof(UIElementHelper), new FrameworkPropertyMetadata());
-
-    /// <summary>
     /// DependencyProperty for the background color of popups.
     /// </summary>
     public static readonly DependencyProperty PopupBackgroundProperty =
@@ -288,12 +282,6 @@ public class UIElementHelper
     public static readonly DependencyProperty SubMenuBorderBrushProperty =
         DependencyProperty.RegisterAttached("SubMenuBorderBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
-    /// <summary>
-    /// DependencyProperty for the brush used for separators in menus.
-    /// </summary>
-    public static readonly DependencyProperty SeparatorBrushProperty =
-        DependencyProperty.RegisterAttached("SeparatorBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
-
     #endregion
 
     #region Methods
@@ -496,26 +484,6 @@ public class UIElementHelper
     public static CornerRadius GetCornerRadius(UIElement element)
     {
         return (CornerRadius)element.GetValue(CornerRadiusProperty);
-    }
-
-    /// <summary>
-    /// Sets the popup effect for the specified UIElement.
-    /// </summary>
-    /// <param name="element">The UIElement to set the popup effect for.</param>
-    /// <param name="value">The Effect to apply as the popup effect.</param>
-    public static void SetPopupEffect(UIElement element, Effect value)
-    {
-        element.SetValue(PopupEffectProperty, value);
-    }
-
-    /// <summary>
-    /// Gets the popup effect for the specified UIElement.
-    /// </summary>
-    /// <param name="element">The UIElement to get the popup effect from.</param>
-    /// <returns>The Effect applied as the popup effect.</returns>
-    public static Effect GetPopupEffect(UIElement element)
-    {
-        return (Effect)element.GetValue(PopupEffectProperty);
     }
 
     /// <summary>
@@ -1216,26 +1184,6 @@ public class UIElementHelper
     public static Brush GetSubMenuBorderBrush(UIElement element)
     {
         return (Brush)element.GetValue(SubMenuBorderBrushProperty);
-    }
-
-    /// <summary>
-    /// Sets the separator brush for the specified UIElement.
-    /// </summary>
-    /// <param name="element">The UIElement to set the separator brush for.</param>
-    /// <param name="value">The Brush to use as the separator brush.</param>
-    public static void SetSeparatorBrush(UIElement element, Brush value)
-    {
-        element.SetValue(SeparatorBrushProperty, value);
-    }
-
-    /// <summary>
-    /// Gets the separator brush for the specified UIElement.
-    /// </summary>
-    /// <param name="element">The UIElement to get the separator brush from.</param>
-    /// <returns>The Brush used as the separator brush.</returns>
-    public static Brush GetSeparatorBrush(UIElement element)
-    {
-        return (Brush)element.GetValue(SeparatorBrushProperty);
     }
 
     #endregion

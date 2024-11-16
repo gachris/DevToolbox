@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
     xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters"
-    xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
+    xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers"
+    xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Royale">
 
     <converters:InvertBoolConverter x:Key="InvertBoolConverter" />
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -59,7 +60,6 @@
         <Setter Property="helpers:UIElementHelper.PopupBackground" Value="{DynamicResource DropDown.PopupBackground}" />
         <Setter Property="helpers:UIElementHelper.PopupForeground" Value="{DynamicResource DropDown.PopupForeground}" />
         <Setter Property="helpers:UIElementHelper.PopupBorderBrush" Value="{DynamicResource DropDown.PopupBorderBrush}" />
-        <Setter Property="helpers:UIElementHelper.PopupEffect" Value="{DynamicResource DropDown.DropShadow}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:DropDown}">
@@ -99,73 +99,77 @@
                             PopupAnimation="{TemplateBinding PopupAnimation}"
                             StaysOpen="{TemplateBinding StaysOpen}"
                             VerticalOffset="{TemplateBinding VerticalOffset}">
-                            <controls:SpeechBalloon
-                                Margin="6"
-                                Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupBackground)}"
-                                BorderBrush="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupBorderBrush)}"
-                                CornerRadius="{TemplateBinding DropDownCornerRadius}"
-                                Effect="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupEffect)}"
-                                FocusVisualStyle="{x:Null}"
-                                Foreground="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupForeground)}"
-                                HorizontalOffset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HorizontalOffset}"
-                                IsTabStop="False"
-                                Placement="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Placement}"
-                                PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlacementTarget}"
-                                SpeechBalloonHorizontalOffset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SpeechBalloonHorizontalOffset}"
-                                SpeechBalloonPlacement="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SpeechBalloonPlacement}"
-                                SpeechBalloonVerticalOffset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SpeechBalloonVerticalOffset}"
-                                VerticalOffset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VerticalOffset}">
-                                <Grid
-                                    x:Name="PART_PopupContent"
-                                    Width="{Binding Path=DropDownWidth, RelativeSource={RelativeSource TemplatedParent}}"
-                                    Height="{Binding Path=DropDownHeight, RelativeSource={RelativeSource TemplatedParent}}"
-                                    MinWidth="{Binding Path=MinDropDownWidth, RelativeSource={RelativeSource TemplatedParent}}"
-                                    MinHeight="{Binding Path=MinDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}"
-                                    MaxWidth="{Binding Path=MaxDropDownWidth, RelativeSource={RelativeSource TemplatedParent}}"
-                                    MaxHeight="{Binding Path=MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="auto" />
-                                        <RowDefinition Height="auto" />
-                                    </Grid.RowDefinitions>
-                                    <ScrollViewer
-                                        x:Name="DropDownScrollViewer"
-                                        Background="Transparent"
-                                        VerticalScrollBarVisibility="Auto">
-                                        <ContentPresenter
-                                            x:Name="PART_ContentPresenter"
-                                            Grid.Row="0"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Stretch"
-                                            ContentSource="Content"
+                            <themes:SystemDropShadowChrome x:Name="shadow" Color="Transparent">
+                                <controls:SpeechBalloon
+                                    Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupBackground)}"
+                                    BorderBrush="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupBorderBrush)}"
+                                    CornerRadius="{TemplateBinding DropDownCornerRadius}"
+                                    FocusVisualStyle="{x:Null}"
+                                    Foreground="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupForeground)}"
+                                    HorizontalOffset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HorizontalOffset}"
+                                    IsTabStop="False"
+                                    Placement="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Placement}"
+                                    PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlacementTarget}"
+                                    SpeechBalloonHorizontalOffset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SpeechBalloonHorizontalOffset}"
+                                    SpeechBalloonPlacement="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SpeechBalloonPlacement}"
+                                    SpeechBalloonVerticalOffset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SpeechBalloonVerticalOffset}"
+                                    VerticalOffset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VerticalOffset}">
+                                    <Grid
+                                        x:Name="PART_PopupContent"
+                                        Width="{Binding Path=DropDownWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Height="{Binding Path=DropDownHeight, RelativeSource={RelativeSource TemplatedParent}}"
+                                        MinWidth="{Binding Path=MinDropDownWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                                        MinHeight="{Binding Path=MinDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}"
+                                        MaxWidth="{Binding Path=MaxDropDownWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                                        MaxHeight="{Binding Path=MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <ScrollViewer
+                                            x:Name="DropDownScrollViewer"
+                                            Background="Transparent"
+                                            VerticalScrollBarVisibility="Auto">
+                                            <ContentPresenter
+                                                x:Name="PART_ContentPresenter"
+                                                Grid.Row="0"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch"
+                                                ContentSource="Content"
+                                                Focusable="False"
+                                                RecognizesAccessKey="True"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                        </ScrollViewer>
+                                        <Separator
+                                            Grid.Row="1"
+                                            BorderBrush="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupBorderBrush)}"
                                             Focusable="False"
-                                            RecognizesAccessKey="True"
-                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                    </ScrollViewer>
-                                    <Separator
-                                        Grid.Row="1"
-                                        BorderBrush="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupBorderBrush)}"
-                                        Focusable="False"
-                                        Visibility="{Binding Path=AllowResize, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                    <Thumb
-                                        x:Name="PART_ResizeThumb"
-                                        Grid.Row="2"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Bottom"
-                                        Background="Transparent"
-                                        Cursor="SizeNWSE"
-                                        Visibility="{Binding Path=AllowResize, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                        <Thumb.Template>
-                                            <ControlTemplate TargetType="{x:Type Thumb}">
-                                                <ResizeGrip />
-                                            </ControlTemplate>
-                                        </Thumb.Template>
-                                    </Thumb>
-                                </Grid>
-                            </controls:SpeechBalloon>
+                                            Visibility="{Binding Path=AllowResize, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                        <Thumb
+                                            x:Name="PART_ResizeThumb"
+                                            Grid.Row="2"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Bottom"
+                                            Background="Transparent"
+                                            Cursor="SizeNWSE"
+                                            Visibility="{Binding Path=AllowResize, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                            <Thumb.Template>
+                                                <ControlTemplate TargetType="{x:Type Thumb}">
+                                                    <ResizeGrip />
+                                                </ControlTemplate>
+                                            </Thumb.Template>
+                                        </Thumb>
+                                    </Grid>
+                                </controls:SpeechBalloon>
+                            </themes:SystemDropShadowChrome>
                         </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="true">
+                            <Setter TargetName="shadow" Property="Margin" Value="0,0,5,5" />
+                            <Setter TargetName="shadow" Property="Color" Value="#71000000" />
+                        </Trigger>
                         <Trigger Property="StaysOpen" Value="True">
                             <Setter TargetName="PART_ToggleButton" Property="IsHitTestVisible" Value="True" />
                         </Trigger>

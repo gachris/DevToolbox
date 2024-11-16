@@ -19,6 +19,8 @@ public class EyeDropper : ContentControl
 {
     #region Fields/Consts
 
+    private const int ViewportZoom = 10;
+
     private Window? _virtualScreenFrame;
     private Popup? _popup;
     private Image? _image;
@@ -67,6 +69,23 @@ public class EyeDropper : ContentControl
     /// </summary>
     private static readonly DependencyPropertyKey FormattedColorPropertyKey =
         DependencyProperty.RegisterReadOnly(nameof(FormattedColor), typeof(string), typeof(EyeDropper), new FrameworkPropertyMetadata(default));
+
+    /// <summary>
+    /// Dependency property that holds the string format for the color string.
+    /// </summary>
+    public static readonly DependencyProperty ColorFormatTemplateProperty =
+        DependencyProperty.Register(nameof(ColorFormatTemplate), typeof(string), typeof(EyeDropper), new FrameworkPropertyMetadata(default(string)));
+   
+    /// <summary>
+    /// Dependency property that holds the string format precision for the color string (min: 1, max: 11).
+    /// </summary>
+    public static readonly DependencyProperty ColorFormatPrecisionProperty =
+        DependencyProperty.Register(
+            nameof(ColorFormatPrecision),
+            typeof(int),
+            typeof(EyeDropper),
+            new FrameworkPropertyMetadata(11, FrameworkPropertyMetadataOptions.None),
+            ValidatePrecision);
 
     /// <summary>
     /// Dependency property that indicates whether the eye-dropper is actively capturing colors.
@@ -161,6 +180,24 @@ public class EyeDropper : ContentControl
     }
 
     /// <summary>
+    /// Gets or sets the string format used to format the color string.
+    /// </summary>
+    public string ColorFormatTemplate
+    {
+        get => (string)GetValue(ColorFormatTemplateProperty);
+        set => SetValue(ColorFormatTemplateProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the precision used to format the color string.
+    /// </summary>
+    public int ColorFormatPrecision
+    {
+        get => (int)GetValue(ColorFormatPrecisionProperty);
+        set => SetValue(ColorFormatPrecisionProperty, value);
+    }
+    
+    /// <summary>
     /// Gets a value indicating whether the EyeDropper is currently capturing.
     /// </summary>
     public bool IsCapturing
@@ -229,7 +266,7 @@ public class EyeDropper : ContentControl
         {
             _zoomAndPanControl = zoomAndPanControl;
             _zoomAndPanControl.Content = _canvas;
-            _zoomAndPanControl.ZoomTo(10);
+            _zoomAndPanControl.ViewportZoom = ViewportZoom;
         }
 
         PreviewMouseDown += OnPreviewMouseDown;
@@ -292,8 +329,7 @@ public class EyeDropper : ContentControl
 
         if (CopyColorToClipboard)
         {
-            var stringColor = Color.ToString();
-            Clipboard.SetText(stringColor);
+            Clipboard.SetText(FormattedColor);
         }
 
         IsCapturing = false;
@@ -321,8 +357,8 @@ public class EyeDropper : ContentControl
 
         if (_zoomAndPanControl != null)
         {
-            _canvas.Width = _lastBitmap.Width + _zoomAndPanControl.Width / 10;
-            _canvas.Height = _lastBitmap.Height + _zoomAndPanControl.Height / 10;
+            _canvas.Width = _lastBitmap.Width + _zoomAndPanControl.Width / ViewportZoom;
+            _canvas.Height = _lastBitmap.Height + _zoomAndPanControl.Height / ViewportZoom;
         }
 
         var left = (_canvas.Width - _image.Width) / 2;
@@ -380,13 +416,22 @@ public class EyeDropper : ContentControl
         eyeDropper.OnColorChanged((Brush)e.OldValue, (Brush)e.NewValue);
     }
 
+    /// <summary>
+    /// Validation callback for ColorFormatPrecisionProperty to ensure the value is between 1 and 11.
+    /// </summary>
+    private static bool ValidatePrecision(object value)
+    {
+        if (value is int precision)
+        {
+            return precision is >= 1 and <= 11;
+        }
+        return false;
+    }
+
     private void OnColorChanged(Brush oldValue, Brush newValue)
     {
         var brush = (SolidColorBrush)newValue;
-
-        string? formattedColor = EyeDropperHelper.GetFormattedColor(brush, ColorFormat);
-
-        FormattedColor = formattedColor;
+        FormattedColor = EyeDropperHelper.GetFormattedColor(brush, ColorFormat, ColorFormatTemplate, ColorFormatPrecision);
         ColorChanged?.Invoke(this, new ColorChangedEventArgs(oldValue, newValue));
     }
 

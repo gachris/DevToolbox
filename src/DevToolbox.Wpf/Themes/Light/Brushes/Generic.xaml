@@ -493,11 +493,6 @@
     <SolidColorBrush x:Key="DropDown.PopupBackground" Color="#F6F6F6" />
     <SolidColorBrush x:Key="DropDown.PopupForeground" Color="#1E1E1E" />
     <SolidColorBrush x:Key="DropDown.PopupBorderBrush" Color="#CCCEDB" />
-    <DropShadowEffect
-        x:Key="DropDown.DropShadow"
-        BlurRadius="8"
-        ShadowDepth="0"
-        Color="#71000000" />
 
     <!--#endregion-->
 
@@ -622,13 +617,6 @@
     <SolidColorBrush x:Key="ContextMenu.Background" Color="#F6F6F6" />
     <SolidColorBrush x:Key="ContextMenu.Foreground" Color="#1E1E1E" />
     <SolidColorBrush x:Key="ContextMenu.BorderBrush" Color="#CCCEDB" />
-    <DropShadowEffect
-        x:Key="ContextMenu.DropShadow"
-        BlurRadius="3"
-        Opacity="0.7"
-        RenderingBias="Quality"
-        ShadowDepth="3"
-        Color="#CCCEDB" />
 
     <!--#endregion-->
 
