@@ -1,0 +1,26 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="File">
+                <MenuItem Header="New" ToolTip="Create a new document" />
+                <MenuItem Header="Open" ToolTip="Open an existing document" />
+                <MenuItem Header="Save" ToolTip="Save the current document" />
+                <Separator />
+                <MenuItem Header="Exit" ToolTip="Exit the application" />
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Undo" ToolTip="Undo the last action" />
+                <MenuItem Header="Redo" ToolTip="Redo the last undone action" />
+                <Separator />
+                <MenuItem Header="Cut" ToolTip="Cut the selected text" />
+                <MenuItem Header="Copy" ToolTip="Copy the selected text" />
+                <MenuItem Header="Paste" ToolTip="Paste from the clipboard" />
+            </MenuItem>
+            <Separator />
+            <MenuItem Header="Help">
+                <MenuItem Header="About" ToolTip="About this application" />
+            </MenuItem>
+        </ContextMenu>
+    </UserControl.ContextMenu>
+    <TextBlock Text="Right click to open context menu"/>
+</UserControl>

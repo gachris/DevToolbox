@@ -46,6 +46,7 @@
 	  <Page Remove="Examples\Layout\GroupBox\SimpleGroupBox.xaml" />
 	  <Page Remove="Examples\Layout\SpeechBalloon\SimpleSpeechBalloon.xaml" />
 	  <Page Remove="Examples\Layout\SplitView\SimpleSplitView.xaml" />
+	  <Page Remove="Examples\MenusAndToolbars\ContextMenu\SimpleContextMenu.xaml" />
 	  <Page Remove="Examples\MenusAndToolbars\Menu\SimpleMenu.xaml" />
 	  <Page Remove="Examples\MenusAndToolbars\ToolBar\SimpleToolBar.xaml" />
 	  <Page Remove="Examples\Navigation\TabControlEdit\SimpleTabControlEdit.xaml" />
@@ -153,6 +154,11 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </Content>
 	  <Content Include="Examples\Layout\SplitView\SimpleSplitView.xaml">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <SubType>Designer</SubType>
+	    <Generator>MSBuild:Compile</Generator>
+	  </Content>
+	  <Content Include="Examples\MenusAndToolbars\ContextMenu\SimpleContextMenu.xaml">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	    <SubType>Designer</SubType>
 	    <Generator>MSBuild:Compile</Generator>

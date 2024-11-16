@@ -288,7 +288,13 @@
         "Header": "ContextMenu",
         "Description": "Shows a contextual list of simple commands or options.",
         "Icon": "ContextMenu",
-        "Namespace": "System.Windows.Controls"
+        "Namespace": "System.Windows.Controls",
+        "Examples": [
+          {
+            "Header": "A simple ContextMenu.",
+            "SourceCode": "\\Examples\\MenusAndToolbars\\ContextMenu\\SimpleContextMenu.xaml"
+          }
+        ]
       },
       {
         "Header": "Menu",

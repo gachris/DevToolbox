@@ -346,7 +346,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="{x:Type windows:WindowEx}" TargetType="{x:Type windows:WindowEx}">
+    <Style x:Key="WindowExStyle" TargetType="{x:Type windows:WindowEx}">
         <Setter Property="Focusable" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Header" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Title}" />
@@ -376,5 +376,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style BasedOn="{StaticResource WindowExStyle}" TargetType="{x:Type windows:WindowEx}" />
 
 </ResourceDictionary>
