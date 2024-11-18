@@ -67,11 +67,11 @@ internal class EyeDropperHelper
         return bitmap;
     }
 
-    public static System.Drawing.Point GetRelativeCoordinates(System.Windows.Forms.Screen screen, System.Drawing.Point absoluteCoordinates)
+    public static System.Drawing.Point GetRelativeCoordinatesToVirtualScreen(System.Drawing.Point absoluteCoordinates)
     {
-        var x = absoluteCoordinates.X + SystemParameters.VirtualScreenWidth - screen.Bounds.Width;
-        var y = absoluteCoordinates.Y + SystemParameters.VirtualScreenHeight - screen.Bounds.Height;
-        return new System.Drawing.Point((int)x, (int)y);
+        var x = absoluteCoordinates.X - (int)SystemParameters.VirtualScreenLeft;
+        var y = absoluteCoordinates.Y - (int)SystemParameters.VirtualScreenTop;
+        return new System.Drawing.Point(x, y);
     }
 
     public static string GetFormattedColor(SolidColorBrush brush, ColorFormat colorFormat, string template, int precision)
