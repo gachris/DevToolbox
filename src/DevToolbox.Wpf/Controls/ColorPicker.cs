@@ -16,9 +16,11 @@ namespace DevToolbox.Wpf.Controls;
 /// <summary>
 /// A control representing a color picker for selecting colors, supporting different color components and normal maps.
 /// </summary>
-[TemplatePart(Name = "PART_ColorPlaneControl", Type = typeof(ContentControl))]
-[TemplatePart(Name = "PART_NormalSlider", Type = typeof(Slider))]
-[TemplatePart(Name = "PART_AlphaSlider", Type = typeof(Slider))]
+[TemplatePart(Name = PART_ColorPlaneEllipse, Type = typeof(Ellipse))]
+[TemplatePart(Name = PART_ColorCanvas, Type = typeof(ContentControl))]
+[TemplatePart(Name = PART_ColorComponents, Type = typeof(ContentPresenter))]
+[TemplatePart(Name = PART_NormalSlider, Type = typeof(Slider))]
+[TemplatePart(Name = PART_AlphaSlider, Type = typeof(Slider))]
 public class ColorPicker : Control
 {
     private enum ColorChangeSource
@@ -28,6 +30,12 @@ public class ColorPicker : Control
     }
 
     #region Fields/Consts
+
+    private const string PART_ColorPlaneEllipse = nameof(PART_ColorPlaneEllipse);
+    private const string PART_ColorCanvas = nameof(PART_ColorCanvas);
+    private const string PART_ColorComponents = nameof(PART_ColorComponents);
+    private const string PART_NormalSlider = nameof(PART_NormalSlider);
+    private const string PART_AlphaSlider = nameof(PART_AlphaSlider);
 
     private INormalComponent? _normalComponent;
     private ColorChangeSource? _colorChangeSource;
@@ -213,7 +221,7 @@ public class ColorPicker : Control
     {
         base.OnApplyTemplate();
 
-        _colorPlaneEllipse = Template.FindName("PART_ColorPlaneEllipse", this) as Ellipse;
+        _colorPlaneEllipse = Template.FindName(PART_ColorPlaneEllipse, this) as Ellipse;
 
         if (_colorCanvas is not null)
         {
@@ -222,7 +230,7 @@ public class ColorPicker : Control
             _colorCanvas.MouseUp -= ColorCanvas_MouseUp;
         }
 
-        _colorCanvas = Template.FindName("PART_ColorCanvas", this) as ContentControl;
+        _colorCanvas = Template.FindName(PART_ColorCanvas, this) as ContentControl;
 
         if (_colorCanvas is not null)
         {
@@ -237,7 +245,7 @@ public class ColorPicker : Control
         }
 
         _colorComponents = null;
-        _colorComponentsWrapper = Template.FindName("PART_ColorComponents", this) as ContentPresenter;
+        _colorComponentsWrapper = Template.FindName(PART_ColorComponents, this) as ContentPresenter;
 
         if (_colorComponentsWrapper is not null)
         {
@@ -254,8 +262,8 @@ public class ColorPicker : Control
             });
         }
 
-        _normalSlider = Template.FindName("PART_NormalSlider", this) as Slider;
-        _alphaSlider = Template.FindName("PART_AlphaSlider", this) as Slider;
+        _normalSlider = Template.FindName(PART_NormalSlider, this) as Slider;
+        _alphaSlider = Template.FindName(PART_AlphaSlider, this) as Slider;
 
         UpdateNormalComponent();
     }
@@ -365,7 +373,7 @@ public class ColorPicker : Control
         SetValue(MinNormalPropertyKey, _normalComponent.MinValue);
         SetValue(MaxNormalPropertyKey, _normalComponent.MaxValue);
 
-        _colorComponents.UpdateAllFromColor(SelectedColor);
+        _colorComponents.UpdateFromColor(SelectedColor);
 
         Alpha = drawColor.A;
         SelectionPoint = _normalComponent.PointFromColor(drawColor);
@@ -428,11 +436,11 @@ public class ColorPicker : Control
 
         if (_colorChangeSource is ColorChangeSource.MouseDown)
         {
-            _colorComponents.UpdateFromColor(newValue);
+            _colorComponents.UpdateFromColorWithoutChangeNormalValue(newValue);
         }
         else if (_colorChangeSource is not ColorChangeSource.Normal)
         {
-            _colorComponents.UpdateAllFromColor(newValue);
+            _colorComponents.UpdateFromColor(newValue);
 
             SelectionPoint = _normalComponent.PointFromColor(drawColor);
             Normal = _colorComponents.GetNormal();

@@ -69,18 +69,15 @@ internal class ColorComponents : Control
     public ColorComponents()
     {
         Hsv = new HsvColor();
-        Hsv.PropertyChanged += HsvColorChanged;
-
         Rgb = new RgbColor();
-        Rgb.PropertyChanged += RgbColorChanged;
-
         Lab = new LabColor();
-        Lab.PropertyChanged += LabColorChanged;
-
         Cmyk = new CmykColor();
-        Cmyk.PropertyChanged += CmykColorChanged;
-
         Hex = new HexColor();
+
+        Hsv.PropertyChanged += HsvColorChanged;
+        Rgb.PropertyChanged += RgbColorChanged;
+        Lab.PropertyChanged += LabColorChanged;
+        Cmyk.PropertyChanged += CmykColorChanged;
         Hex.PropertyChanged += HexColorChanged;
 
         _hsvConverter = ConverterBuilder.Create(new ColorConverterOptions() { Illuminant = Illuminants.D65_2 })
@@ -155,7 +152,7 @@ internal class ColorComponents : Control
         }
     }
 
-    public void UpdateFromColor(Color color)
+    public void UpdateFromColorWithoutChangeNormalValue(Color color)
     {
         if (_colorUpdating)
             return;
@@ -202,45 +199,12 @@ internal class ColorComponents : Control
         _colorUpdating = false;
     }
 
-    public void UpdateAllFromColor(Color color)
+    public void UpdateFromColor(Color color)
     {
-        if (_colorUpdating)
-            return;
-
-        _colorUpdating = true;
-
-        var rgb = ColorSpace.Net.Colors.Rgb.FromRgb(color.R, color.G, color.B);
-        var hsv = _hsvConverter.ConvertFrom(rgb);
-        var lab = _labConverter.ConvertFrom(rgb);
-        var cmyk = _cmykConverter.ConvertFrom(rgb);
-
-        Hsv.Hue = (int)Math.Round(hsv.H);
-        Hsv.Saturation = (int)Math.Round(hsv.S * 100m);
-        Hsv.Value = (int)Math.Round(hsv.V * 100m);
-
-        Rgb.Red = rgb.R;
-        Rgb.Green = rgb.G;
-        Rgb.Blue = rgb.B;
-
-        Lab.Lightness = (int)Math.Round(lab.L);
-        Lab.A = (int)Math.Round(lab.A);
-        Lab.B = (int)Math.Round(lab.B);
-
-        Cmyk.Cyan = (int)Math.Round(cmyk.C * 100m);
-        Cmyk.Magenta = (int)Math.Round(cmyk.M * 100m);
-        Cmyk.Yellow = (int)Math.Round(cmyk.Y * 100m);
-        Cmyk.Key = (int)Math.Round(cmyk.K * 100m);
-
-        Hex.Value = color.ToString();
-
-        _color = color;
-
-        ColorChanged?.Invoke(this, EventArgs.Empty);
-
-        _colorUpdating = false;
+        UpdateFromColor(color, null);
     }
 
-    private void UpdateFromColor(Color color, ColorSourceChange colorSourceChange)
+    private void UpdateFromColor(Color color, ColorSourceChange? colorSourceChange)
     {
         if (_colorUpdating)
             return;
@@ -252,28 +216,28 @@ internal class ColorComponents : Control
         var lab = _labConverter.ConvertFrom(rgb);
         var cmyk = _cmykConverter.ConvertFrom(rgb);
 
-        if (colorSourceChange is not ColorSourceChange.FromHsv)
+        if (colorSourceChange is not ColorSourceChange.FromHsv or null)
         {
             Hsv.Hue = (int)Math.Round(hsv.H);
             Hsv.Saturation = (int)Math.Round(hsv.S * 100m);
             Hsv.Value = (int)Math.Round(hsv.V * 100m);
         }
 
-        if (colorSourceChange is not ColorSourceChange.FromRgb)
+        if (colorSourceChange is not ColorSourceChange.FromRgb or null)
         {
             Rgb.Red = rgb.R;
             Rgb.Green = rgb.G;
             Rgb.Blue = rgb.B;
         }
 
-        if (colorSourceChange is not ColorSourceChange.FromLab)
+        if (colorSourceChange is not ColorSourceChange.FromLab or null)
         {
             Lab.Lightness = (int)Math.Round(lab.L);
             Lab.A = (int)Math.Round(lab.A);
             Lab.B = (int)Math.Round(lab.B);
         }
 
-        if (colorSourceChange is not ColorSourceChange.FromCmyk)
+        if (colorSourceChange is not ColorSourceChange.FromCmyk or null)
         {
             Cmyk.Cyan = (int)Math.Round(cmyk.C * 100m);
             Cmyk.Magenta = (int)Math.Round(cmyk.M * 100m);
@@ -281,7 +245,7 @@ internal class ColorComponents : Control
             Cmyk.Key = (int)Math.Round(cmyk.K * 100m);
         }
 
-        if (colorSourceChange is not ColorSourceChange.FromHex)
+        if (colorSourceChange is not ColorSourceChange.FromHex or null)
         {
             Hex.Value = color.ToString();
         }
@@ -292,7 +256,7 @@ internal class ColorComponents : Control
 
         _colorUpdating = false;
     }
-
+    
     #endregion
 
     #region Events Subscription
