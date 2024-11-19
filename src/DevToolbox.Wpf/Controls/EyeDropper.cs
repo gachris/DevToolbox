@@ -371,14 +371,7 @@ public class EyeDropper : ContentControl
     private void CaptureNextColor()
     {
         _cursorPosition = NativeMethods.GetCursorPosition();
-
-        var monitorFromPoint = System.Windows.Forms.Screen.FromPoint(_cursorPosition);
-        if (monitorFromPoint is null)
-        {
-            return;
-        }
-
-        _relativeCursorPosition = EyeDropperHelper.GetRelativeCoordinates(monitorFromPoint, _cursorPosition);
+        _relativeCursorPosition = EyeDropperHelper.GetRelativeCoordinatesToVirtualScreen(_cursorPosition);
 
         if (_lastBitmap is not null)
         {
