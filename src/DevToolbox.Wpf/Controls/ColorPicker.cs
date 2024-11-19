@@ -377,7 +377,7 @@ public class ColorPicker : Control
 
         Alpha = drawColor.A;
         SelectionPoint = _normalComponent.PointFromColor(drawColor);
-        Normal = _colorComponents.GetNormal();
+        Normal = _colorComponents.Normal;
 
         UpdateColorCanvasBitmap(Normal);
         UpdateSliderNormalBitmap(drawColor);
@@ -400,12 +400,12 @@ public class ColorPicker : Control
 
     private void OnNormalChanged(int oldValue, int newValue)
     {
-        if (_normalComponent is null)
+        if (_normalComponent is null || _colorComponents is  null)
             return;
 
         _colorChangeSource = ColorChangeSource.Normal;
 
-        _colorComponents?.SetNormal(newValue);
+        _colorComponents.Normal = newValue;
         SelectedColor = ColorPickerHelper.ConvertToMediaColor(_normalComponent.ColorAtPoint(SelectionPoint, newValue), Alpha);
 
         UpdateColorCanvasBitmap(newValue);
@@ -443,7 +443,7 @@ public class ColorPicker : Control
             _colorComponents.UpdateFromColor(newValue);
 
             SelectionPoint = _normalComponent.PointFromColor(drawColor);
-            Normal = _colorComponents.GetNormal();
+            Normal = _colorComponents.Normal;
         }
 
         SelectedColorChanged?.Invoke(this, EventArgs.Empty);

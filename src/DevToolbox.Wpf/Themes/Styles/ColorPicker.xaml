@@ -219,9 +219,7 @@
                                 <Slider
                                     x:Name="PART_AlphaSlider"
                                     Width="20"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch"
-                                    HorizontalContentAlignment="Stretch"
+                                    Height="258"
                                     helpers:SliderHelper.IsMoveToPointOnDragEnabled="True"
                                     BorderBrush="{DynamicResource ColorPicker.PaneBorderBrush}"
                                     BorderThickness="1"
@@ -231,6 +229,7 @@
                                     Minimum="0"
                                     Orientation="Vertical"
                                     Style="{StaticResource Slider}"
+                                    TickFrequency="1"
                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Alpha, Converter={StaticResource DoubleToBytesConverter}}" />
                             </Border>
                             <StackPanel
