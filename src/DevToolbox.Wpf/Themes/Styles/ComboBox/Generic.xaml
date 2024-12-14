@@ -122,7 +122,8 @@
                                     x:Name="dropDownBorder"
                                     Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupBackground)}"
                                     BorderBrush="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupBorderBrush)}"
-                                    BorderThickness="1">
+                                    BorderThickness="1"
+                                    CornerRadius="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.CornerRadius)}">
                                     <ScrollViewer x:Name="DropDownScrollViewer">
                                         <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
                                             <Canvas
@@ -151,7 +152,8 @@
                             Grid.ColumnSpan="2"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.CornerRadius)}">
                             <Grid>
                                 <ToggleButton
                                     x:Name="ToggleButton"
