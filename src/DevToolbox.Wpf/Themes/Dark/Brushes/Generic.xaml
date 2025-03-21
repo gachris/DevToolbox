@@ -711,7 +711,7 @@
 
     <!--#endregion-->
 
-    <!--#region FontGlyph-->
+    <!--#region ZoomAndPanControl-->
 
     <SolidColorBrush x:Key="ZoomAndPanControl.Background" Color="#252526" />
     <SolidColorBrush x:Key="ZoomAndPanControl.BorderBrush" Color="#5E5E5E" />
