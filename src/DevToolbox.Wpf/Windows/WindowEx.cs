@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shell;
 using DevToolbox.Wpf.Controls;
@@ -18,44 +19,72 @@ public class WindowEx : Window
     /// <summary>
     /// Identifies the HeaderTemplate dependency property.
     /// </summary>
-    public static readonly DependencyProperty HeaderTemplateProperty =
-        DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(WindowEx), new FrameworkPropertyMetadata(null));
+    public static readonly DependencyProperty HeaderTemplateProperty = HeaderedContentControl.HeaderTemplateProperty.AddOwner(typeof(WindowEx));
 
     /// <summary>
     /// Identifies the Header dependency property.
     /// </summary>
-    public static readonly DependencyProperty HeaderProperty =
-        DependencyProperty.Register("Header", typeof(object), typeof(WindowEx), new FrameworkPropertyMetadata(null));
+    public static readonly DependencyProperty HeaderProperty = HeaderedContentControl.HeaderProperty.AddOwner(typeof(WindowEx));
 
     /// <summary>
     /// Identifies the ShowIcon dependency property.
     /// </summary>
     public static readonly DependencyProperty ShowIconProperty =
-        DependencyProperty.Register("ShowIcon", typeof(bool), typeof(WindowEx), new FrameworkPropertyMetadata(true));
+        DependencyProperty.Register(nameof(ShowIcon), typeof(bool), typeof(WindowEx), new PropertyMetadata(true));
+
+    /// <summary>
+    /// Identifies the ShowTitle dependency property.
+    /// </summary>
+    public static readonly DependencyProperty ShowTitleProperty =
+        DependencyProperty.Register(nameof(ShowTitle), typeof(bool), typeof(WindowEx), new PropertyMetadata(true));
+
+    /// <summary>
+    /// Identifies the ShowBackButton dependency property.
+    /// </summary>
+    public static readonly DependencyProperty ShowBackButtonProperty =
+        DependencyProperty.Register(nameof(ShowBackButton), typeof(bool), typeof(WindowEx), new PropertyMetadata(false));
+
+    /// <summary>
+    /// Identifies the TitleForeground dependency property.
+    /// </summary>
+    public static readonly DependencyProperty TitleTextBlockStyleProperty =
+        DependencyProperty.Register(nameof(TitleTextBlockStyle), typeof(Style), typeof(WindowEx), new FrameworkPropertyMetadata(default));
 
     /// <summary>
     /// Identifies the IconTemplate dependency property.
     /// </summary>
     public static readonly DependencyProperty IconTemplateProperty =
-        DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(WindowEx), new FrameworkPropertyMetadata(null));
-
-    /// <summary>
-    /// Identifies the IsTitleBarVisible attached dependency property.
-    /// </summary>
-    public static readonly DependencyProperty IsTitleBarVisibleProperty =
-        DependencyProperty.RegisterAttached("IsTitleBarVisible", typeof(bool), typeof(WindowEx), new FrameworkPropertyMetadata(true));
+        DependencyProperty.Register(nameof(IconTemplate), typeof(DataTemplate), typeof(WindowEx), new PropertyMetadata(default));
 
     /// <summary>
     /// Identifies the HeaderedContentControlStyle dependency property.
     /// </summary>
     public static readonly DependencyProperty HeaderedContentControlStyleProperty =
-        DependencyProperty.Register("HeaderedContentControlStyle", typeof(Style), typeof(WindowEx), new FrameworkPropertyMetadata(null));
+        DependencyProperty.Register(nameof(HeaderedContentControlStyle), typeof(Style), typeof(WindowEx), new FrameworkPropertyMetadata(default));
+
+    /// <summary>
+    /// Identifies the BackButtonCommand dependency property.
+    /// </summary>
+    public static readonly DependencyProperty BackButtonCommandProperty =
+        DependencyProperty.Register(nameof(BackButtonCommand), typeof(ICommand), typeof(WindowEx), new PropertyMetadata(null));
+
+    /// <summary>
+    /// Identifies the BackButtonCommandParameter dependency property.
+    /// </summary>
+    public static readonly DependencyProperty BackButtonCommandParameterProperty =
+        DependencyProperty.Register(nameof(BackButtonCommandParameter), typeof(object), typeof(WindowEx), new PropertyMetadata(null));
+
+    /// <summary>
+    /// Identifies the IsTitleBarVisible attached dependency property.
+    /// </summary>
+    public static readonly DependencyProperty IsTitleBarVisibleProperty =
+        DependencyProperty.RegisterAttached(nameof(IsTitleBarVisible), typeof(bool), typeof(WindowEx), new PropertyMetadata(true));
 
     /// <summary>
     /// Identifies the HitTestResult attached dependency property.
     /// </summary>
     public static readonly DependencyProperty HitTestResultProperty =
-        DependencyProperty.RegisterAttached("HitTestResult", typeof(HitTestResult), typeof(WindowEx), new PropertyMetadata(default(HitTestResult)));
+        DependencyProperty.RegisterAttached(nameof(HitTestResult), typeof(HitTestResult), typeof(WindowEx), new PropertyMetadata(default(HitTestResult)));
 
     #endregion
 
@@ -109,6 +138,33 @@ public class WindowEx : Window
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the window title should be displayed.
+    /// </summary>
+    public bool ShowTitle
+    {
+        get => (bool)GetValue(ShowTitleProperty);
+        set => SetValue(ShowTitleProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the window back button should be displayed.
+    /// </summary>
+    public bool ShowBackButton
+    {
+        get => (bool)GetValue(ShowBackButtonProperty);
+        set => SetValue(ShowBackButtonProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the window title style.
+    /// </summary>
+    public Style TitleTextBlockStyle
+    {
+        get => (Style)GetValue(TitleTextBlockStyleProperty);
+        set => SetValue(TitleTextBlockStyleProperty, value);
+    }
+
+    /// <summary>
     /// Gets or sets the template for the window icon.
     /// </summary>
     public DataTemplate IconTemplate
@@ -117,6 +173,22 @@ public class WindowEx : Window
         set => SetValue(IconTemplateProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the command to be executed when the back button is clicked.
+    /// </summary>
+    public ICommand BackButtonCommand
+    {
+        get => (ICommand)GetValue(BackButtonCommandProperty);
+        set => SetValue(BackButtonCommandProperty, value);
+    }
+    /// <summary>
+    /// Gets or sets the parameter to be passed to the back button command.
+    /// </summary>
+    public object BackButtonCommandParameter
+    {
+        get => GetValue(BackButtonCommandParameterProperty);
+        set => SetValue(BackButtonCommandParameterProperty, value);
+    }
     /// <summary>
     /// Gets or sets a value indicating whether the title bar is visible.
     /// </summary>
@@ -170,23 +242,15 @@ public class WindowEx : Window
         if (DesignerProperties.GetIsInDesignMode(this))
             return;
 
-        // Attach a handler for when the WindowChrome property changes
-        var dpdWindowChrome = DependencyPropertyDescriptor.FromProperty(WindowChrome.WindowChromeProperty, typeof(WindowEx));
-        dpdWindowChrome?.AddValueChanged(this, (sender, e) =>
-        {
-            // TODO: Refresh WindowExBehaviour
-        });
-
-        // Configure WindowChrome settings
         Chrome = new WindowChrome
         {
             UseAeroCaptionButtons = false,
             GlassFrameThickness = new Thickness(-1),
-            CaptionHeight = 33
+            CaptionHeight = 48
         };
 
-        var windowExBehaviour = new WindowExBehaviour();
-        WindowExBehaviour.SetWindowExBehaviour(this, windowExBehaviour);
+        var windowExBehavior = new WindowExBehavior();
+        WindowExBehavior.SetWindowExBehavior(this, windowExBehavior);
     }
 
     #region Methods Overrides

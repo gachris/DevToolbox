@@ -312,7 +312,10 @@ public class EditBox : Control
     /// <summary>
     /// Static constructor to override the default style for the EditBox control.
     /// </summary>
-    static EditBox() => DefaultStyleKeyProperty.OverrideMetadata(typeof(EditBox), new FrameworkPropertyMetadata(typeof(EditBox)));
+    static EditBox()
+    {
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(EditBox), new FrameworkPropertyMetadata(typeof(EditBox)));
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EditBox"/> class.
@@ -392,7 +395,7 @@ public class EditBox : Control
 
     private object IsEditingCoerceValue(bool value)
     {
-        return !IsReadOnly && value;
+        return !IsReadOnly && value && ((BeginEditCommand?.CanExecute(BeginEditCommandParameter)) ?? true);
     }
 
     private void OnTextChanged(string oldValue, string newValue)

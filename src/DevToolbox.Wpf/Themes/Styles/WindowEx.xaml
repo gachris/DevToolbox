@@ -183,192 +183,23 @@
         </Style.Triggers>
     </Style>
 
-    <DataTemplate x:Key="HeaderTemplate">
-        <TextBlock
-            x:Name="TextBlockTitle"
-            Padding="8,4"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Foreground="{DynamicResource Window.Active.Title.Foreground}"
-            Text="{Binding}"
-            TextTrimming="CharacterEllipsis" />
-        <DataTemplate.Triggers>
-            <Trigger SourceName="TextBlockTitle" Property="Text" Value="">
-                <Setter Property="Visibility" Value="Collapsed" />
-            </Trigger>
-            <Trigger SourceName="TextBlockTitle" Property="Text" Value="{x:Null}">
-                <Setter Property="Visibility" Value="Collapsed" />
-            </Trigger>
-            <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="False">
-                <Setter TargetName="TextBlockTitle" Property="Foreground" Value="{DynamicResource Window.Inactive.Title.Foreground}" />
-            </DataTrigger>
-        </DataTemplate.Triggers>
-    </DataTemplate>
-
-    <DataTemplate x:Key="IconTemplate">
-        <ContentPresenter
-            Width="24"
-            Height="24"
-            Margin="8,0,0,0"
-            VerticalAlignment="Center"
-            Content="{Binding}" />
-    </DataTemplate>
-
-    <Style x:Key="WindowHeaderedContentControlStyle" TargetType="{x:Type HeaderedContentControl}">
-        <Setter Property="Focusable" Value="False" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type HeaderedContentControl}">
-                    <Border
-                        x:Name="PART_Border"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        Focusable="{TemplateBinding Focusable}"
-                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition x:Name="CaptionRowDefinition" Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Path=Chrome.CaptionHeight}" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Grid
-                                x:Name="PART_Header"
-                                Grid.Row="0"
-                                Visibility="{Binding Path=IsTitleBarVisible, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-                                <ContentControl
-                                    Grid.Column="0"
-                                    ContentTemplate="{Binding Path=IconTemplate, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
-                                    Focusable="False">
-                                    <Image x:Name="PART_Icon" Visibility="{Binding ShowIcon, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                        <Image.Source>
-                                            <MultiBinding Converter="{converters:WindowIconConverter}">
-                                                <Binding Path="Icon" RelativeSource="{RelativeSource AncestorType={x:Type Window}}" />
-                                            </MultiBinding>
-                                        </Image.Source>
-                                    </Image>
-                                </ContentControl>
-                                <ContentPresenter
-                                    Grid.Column="1"
-                                    Margin="4,0,4,0"
-                                    VerticalAlignment="Stretch"
-                                    ContentSource="Header"
-                                    Focusable="False" />
-                                <StackPanel
-                                    Grid.Column="2"
-                                    HorizontalAlignment="Right"
-                                    Orientation="Horizontal">
-                                    <Button
-                                        x:Name="PART_Help"
-                                        windows:WindowEx.HitTestResult="Help"
-                                        Command="{x:Static ApplicationCommands.Help}"
-                                        CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
-                                        Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type windows:WindowEx},
-                                                                                      ResourceId=HelpButtonStyleKey}}" />
-                                    <Button
-                                        x:Name="PART_Minimize"
-                                        windows:WindowEx.HitTestResult="Min"
-                                        Command="{x:Static SystemCommands.MinimizeWindowCommand}"
-                                        CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
-                                        Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type windows:WindowEx},
-                                                                                      ResourceId=MinimizeButtonStyleKey}}" />
-                                    <Button
-                                        x:Name="PART_Maximize"
-                                        windows:WindowEx.HitTestResult="Max"
-                                        Command="{x:Static SystemCommands.MaximizeWindowCommand}"
-                                        CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
-                                        Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type windows:WindowEx},
-                                                                                      ResourceId=MaximizeButtonStyleKey}}" />
-                                    <Button
-                                        x:Name="PART_Close"
-                                        windows:WindowEx.HitTestResult="Close"
-                                        Command="{x:Static SystemCommands.CloseWindowCommand}"
-                                        CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
-                                        Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type windows:WindowEx},
-                                                                                      ResourceId=CloseButtonStyleKey}}" />
-                                </StackPanel>
-                            </Grid>
-                            <ContentPresenter
-                                Grid.Row="1"
-                                ContentSource="Content"
-                                Focusable="False" />
-                            <ResizeGrip
-                                x:Name="PART_ResizeGrip"
-                                Grid.Row="1"
-                                Margin="2"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Bottom"
-                                Panel.ZIndex="2"
-                                Visibility="Collapsed"
-                                WindowChrome.ResizeGripDirection="BottomRight" />
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="CanResizeWithGrip">
-                            <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Visible" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="CanMinimize">
-                            <Setter TargetName="PART_Maximize" Property="IsEnabled" Value="False" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="NoResize">
-                            <Setter TargetName="PART_Minimize" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="PART_Maximize" Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding WindowStyle, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="ToolWindow">
-                            <Setter TargetName="PART_Minimize" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="PART_Maximize" Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                        <Trigger SourceName="PART_Help" Property="IsEnabled" Value="False">
-                            <Setter TargetName="PART_Help" Property="Visibility" Value="Collapsed" />
-                        </Trigger>
-                        <DataTrigger Binding="{Binding WindowStyle, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="None">
-                            <Setter TargetName="PART_Header" Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="Maximized">
-                            <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="PART_Maximize" Property="windows:WindowEx.HitTestResult" Value="Restore" />
-                            <Setter TargetName="PART_Maximize" Property="Command" Value="{x:Static SystemCommands.RestoreWindowCommand}" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=IsTitleBarVisible, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}" Value="False">
-                            <Setter TargetName="CaptionRowDefinition" Property="Height" Value="0" />
-                        </DataTrigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="WindowExStyle" TargetType="{x:Type windows:WindowEx}">
-        <Setter Property="Focusable" Value="True" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Header" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Title}" />
         <Setter Property="Background" Value="{DynamicResource Window.Background}" />
-        <Setter Property="IconTemplate" Value="{StaticResource IconTemplate}" />
-        <Setter Property="HeaderTemplate" Value="{StaticResource HeaderTemplate}" />
-        <Setter Property="HeaderedContentControlStyle" Value="{StaticResource WindowHeaderedContentControlStyle}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type windows:WindowEx}">
                     <AdornerDecorator>
-                        <HeaderedContentControl
+                        <controls:WindowHeaderedContentControl
                             Background="{TemplateBinding Background}"
-                            Focusable="{TemplateBinding Focusable}"
+                            Focusable="False"
                             Header="{TemplateBinding Header}"
                             HeaderTemplate="{TemplateBinding HeaderTemplate}"
                             Style="{TemplateBinding HeaderedContentControlStyle}">
                             <ContentPresenter />
-                        </HeaderedContentControl>
+                        </controls:WindowHeaderedContentControl>
                     </AdornerDecorator>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="windows:WindowBehaviour.HasEffect" Value="True">
+                        <Trigger Property="windows:WindowBehavior.HasEffect" Value="True">
                             <Setter Property="Background" Value="Transparent" />
                         </Trigger>
                     </ControlTemplate.Triggers>

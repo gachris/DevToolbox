@@ -12,21 +12,21 @@ namespace DevToolbox.Wpf.Windows;
 /// Provides attached properties and behaviors for customizing window effects
 /// and border colors in WPF applications.
 /// </summary>
-public class WindowBehaviour
+public class WindowBehavior
 {
-    #region Fields
+    #region Fields/Consts
 
     /// <summary>
     /// Attached Dependency Property for setting the window effect.
     /// </summary>
     public static readonly DependencyProperty EffectProperty =
-        DependencyProperty.RegisterAttached("Effect", typeof(Effect), typeof(WindowBehaviour), new PropertyMetadata(null, OnWindowEffectChanged));
+        DependencyProperty.RegisterAttached("Effect", typeof(Effect), typeof(WindowBehavior), new PropertyMetadata(null, OnWindowEffectChanged));
 
     /// <summary>
     /// Read-only Dependency Property Key for indicating if a window has an effect applied.
     /// </summary>
     public static readonly DependencyPropertyKey HasEffectPropertyKey =
-        DependencyProperty.RegisterAttachedReadOnly("HasEffect", typeof(bool), typeof(WindowBehaviour), new PropertyMetadata(false));
+        DependencyProperty.RegisterAttachedReadOnly("HasEffect", typeof(bool), typeof(WindowBehavior), new PropertyMetadata(false));
 
     /// <summary>
     /// Read-only Dependency Property indicating whether the window has an effect applied.
@@ -37,7 +37,7 @@ public class WindowBehaviour
     /// Attached Dependency Property for setting the border brush of the window.
     /// </summary>
     public static readonly DependencyProperty BorderBrushProperty =
-        DependencyProperty.RegisterAttached("BorderBrush", typeof(Brush), typeof(WindowBehaviour), new FrameworkPropertyMetadata(Brushes.Transparent, OnBorderBrushChanged));
+        DependencyProperty.RegisterAttached("BorderBrush", typeof(Brush), typeof(WindowBehavior), new FrameworkPropertyMetadata(Brushes.Transparent, OnBorderBrushChanged));
 
     #endregion
 
@@ -95,12 +95,16 @@ public class WindowBehaviour
     /// <param name="e">The event data for the property change.</param>
     private static void OnWindowEffectChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
+        var window = (Window)d;
+
         if (!IsSupported())
         {
-            throw new Exception("Incompatible Windows build. This demonstration requires Windows 11 Insider Preview build 22621 or newer.");
+            // Revert to previous value or remove the effect
+            window.ClearValue(EffectProperty);
+            window.SetValue(HasEffectPropertyKey, false);
+            return;
         }
 
-        var window = (Window)d;
         var oldEffect = e.OldValue as Effect;
         var newEffect = e.NewValue as Effect;
 

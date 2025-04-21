@@ -297,7 +297,7 @@
     <!--#region ChromeWindow-->
 
     <SolidColorBrush x:Key="Window.Background" Color="#FFFFFF" />
-    <SolidColorBrush x:Key="Window.Active.Title.Foreground" Color="#2D2D2D" />
+    <SolidColorBrush x:Key="Window.Title.Foreground" Color="#2D2D2D" />
     <SolidColorBrush x:Key="Window.Inactive.Title.Foreground" Color="#929496" />
 
     <SolidColorBrush x:Key="Button.Chrome.Background" Color="Transparent" />

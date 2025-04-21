@@ -22,7 +22,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type windows:DocumentWindow}">
-                    <HeaderedContentControl
+                    <controls:WindowHeaderedContentControl
                         Background="{TemplateBinding Background}"
                         Focusable="{TemplateBinding Focusable}"
                         Header="{Binding Content.SelectedItem.Header, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}}"
@@ -31,7 +31,7 @@
                         <AdornerDecorator>
                             <ContentPresenter />
                         </AdornerDecorator>
-                    </HeaderedContentControl>
+                    </controls:WindowHeaderedContentControl>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

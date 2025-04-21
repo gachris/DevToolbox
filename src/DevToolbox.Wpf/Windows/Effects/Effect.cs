@@ -57,16 +57,14 @@ public abstract class Effect
             {
                 _hwnd = new WindowInteropHelper(_window).Handle;
                 _hwndSource = HwndSource.FromHwnd(_hwnd);
+
+                Apply();
             };
         }
 
         if (_window.IsLoaded)
         {
             Apply();
-        }
-        else
-        {
-            _window.Loaded += (sender, e) => Apply();
         }
     }
 
@@ -131,7 +129,7 @@ public abstract class Effect
     /// </summary>
     private void RefreshDarkMode()
     {
-        var flag = ThemeManager.RequestedTheme == ElementTheme.Dark ? 1 : 0;
+        var flag = ThemeManager.ApplicationTheme is ApplicationTheme.Dark ? 1 : 0;
         _ = Dwmapi.DwmSetWindowAttribute(_hwnd, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, ref flag, Marshal.SizeOf<int>());
     }
 

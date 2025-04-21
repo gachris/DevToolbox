@@ -132,9 +132,10 @@
                     Focusable="False">
                     <Image Visibility="{Binding ShowIcon, RelativeSource={RelativeSource AncestorType={x:Type windows:WindowEx}}, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Image.Source>
-                            <MultiBinding Converter="{converters:WindowIconConverter}">
-                                <Binding Path="Icon" RelativeSource="{RelativeSource AncestorType={x:Type Window}}" />
-                            </MultiBinding>
+                            <Binding
+                                Converter="{converters:WindowIconConverter}"
+                                Path="Icon"
+                                RelativeSource="{RelativeSource AncestorType={x:Type Window}}" />
                         </Image.Source>
                     </Image>
                 </ContentControl>
@@ -505,7 +506,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="HeaderedWindowContentControlTemplate" TargetType="{x:Type HeaderedContentControl}">
+    <ControlTemplate x:Key="HeaderedWindowContentControlTemplate" TargetType="{x:Type controls:WindowHeaderedContentControl}">
         <Border
             x:Name="PART_Border"
             Background="{TemplateBinding Background}"
@@ -569,7 +570,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type windows:TabsWindow}">
-                    <HeaderedContentControl
+                    <controls:WindowHeaderedContentControl
                         Background="{TemplateBinding Background}"
                         Focusable="{TemplateBinding Focusable}"
                         Header="{TemplateBinding Title}"
@@ -599,9 +600,9 @@
                             TabRightScrollButtonStyle="{TemplateBinding TabRightScrollButtonStyle}"
                             TabTopScrollButtonStyle="{TemplateBinding TabTopScrollButtonStyle}"
                             Template="{StaticResource TabControlEditTemplate}" />
-                    </HeaderedContentControl>
+                    </controls:WindowHeaderedContentControl>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="windows:WindowBehaviour.HasEffect" Value="True">
+                        <Trigger Property="windows:WindowBehavior.HasEffect" Value="True">
                             <Setter Property="Background" Value="Transparent" />
                         </Trigger>
                     </ControlTemplate.Triggers>

@@ -137,7 +137,7 @@
     <!--#region ChromeWindow-->
 
     <SolidColorBrush x:Key="Window.Background" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}" />
-    <SolidColorBrush x:Key="Window.Active.Title.Foreground" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}" />
+    <SolidColorBrush x:Key="Window.Active.Foreground" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}" />
     <SolidColorBrush x:Key="Window.Inactive.Title.Foreground" Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}" />
 
     <SolidColorBrush x:Key="Button.Chrome.Background" Color="Transparent" />

@@ -74,6 +74,7 @@
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/TabsWindow.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/WaitingIndicator.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/WindowEx.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/WindowHeaderedContentControl.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ZoomAndPanControl.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ZoomAndPanViewBox.xaml}" />
     </ResourceDictionary.MergedDictionaries>

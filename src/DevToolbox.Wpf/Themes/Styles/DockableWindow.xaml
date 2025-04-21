@@ -39,20 +39,20 @@
         <Setter Property="ShowInTaskbar" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="WindowChrome.CaptionHeight" Value="33" />
-        <Setter Property="windows:WindowBehaviour.BorderBrush" Value="#7160E8" />
+        <Setter Property="windows:WindowBehavior.BorderBrush" Value="#7160E8" />
         <Setter Property="IconTemplate" Value="{StaticResource IconTemplate}" />
         <Setter Property="Icon" Value="{Binding Content.SelectedItem.Icon, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=Self}}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type windows:DockableWindow}">
-                    <HeaderedContentControl
+                    <controls:WindowHeaderedContentControl
                         Background="{TemplateBinding Background}"
                         Focusable="{TemplateBinding Focusable}"
                         Header="{Binding Content.SelectedItem.Header, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                         HeaderTemplate="{TemplateBinding HeaderTemplate}"
                         Style="{TemplateBinding HeaderedContentControlStyle}">
-                        <HeaderedContentControl.Template>
-                            <ControlTemplate TargetType="{x:Type HeaderedContentControl}">
+                        <controls:WindowHeaderedContentControl.Template>
+                            <ControlTemplate TargetType="{x:Type controls:WindowHeaderedContentControl}">
                                 <Border
                                     x:Name="PART_Border"
                                     Background="{TemplateBinding Background}"
@@ -124,9 +124,10 @@
                                                     Height="16"
                                                     Visibility="{Binding ShowIcon, RelativeSource={RelativeSource AncestorType={x:Type windows:WindowEx}}, Converter={StaticResource BooleanToVisibilityConverter}}">
                                                     <Image.Source>
-                                                        <MultiBinding Converter="{converters:WindowIconConverter}">
-                                                            <Binding Path="Icon" RelativeSource="{RelativeSource AncestorType={x:Type Window}}" />
-                                                        </MultiBinding>
+                                                        <Binding
+                                                            Converter="{converters:WindowIconConverter}"
+                                                            Path="Icon"
+                                                            RelativeSource="{RelativeSource AncestorType={x:Type Window}}" />
                                                     </Image.Source>
                                                 </Image>
                                             </ContentControl>
@@ -266,11 +267,11 @@
                                     </DataTrigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
-                        </HeaderedContentControl.Template>
+                        </controls:WindowHeaderedContentControl.Template>
                         <AdornerDecorator>
                             <ContentPresenter />
                         </AdornerDecorator>
-                    </HeaderedContentControl>
+                    </controls:WindowHeaderedContentControl>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

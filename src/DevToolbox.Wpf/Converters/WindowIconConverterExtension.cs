@@ -15,9 +15,26 @@ namespace DevToolbox.Wpf.Converters;
 /// <summary>
 /// A markup extension for converting various image sources into a suitable window icon.
 /// </summary>
-public class WindowIconConverterExtension : MarkupExtension, IMultiValueConverter
+public class WindowIconConverterExtension : MarkupExtension, IValueConverter
 {
+    #region Fields/Consts
+
     private static WindowIconConverterExtension? _converter;
+
+    #endregion
+
+    #region Methods Overrides
+
+    /// <summary>
+    /// Provides the value for the markup extension.
+    /// </summary>
+    /// <param name="serviceProvider">The service provider.</param>
+    /// <returns>The instance of this converter.</returns>
+    public override object ProvideValue(IServiceProvider serviceProvider) => _converter ??= new WindowIconConverterExtension();
+
+    #endregion
+
+    #region Methods
 
     /// <summary>
     /// Converts the provided values into an appropriate icon image.
@@ -28,11 +45,9 @@ public class WindowIconConverterExtension : MarkupExtension, IMultiValueConverte
     /// <param name="culture">The culture information for the conversion.</param>
     /// <returns>The converted image source.</returns>
     [SecuritySafeCritical]
-    public object Convert(object[] value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var obj = value[0];
-
-        switch (obj)
+        switch (value)
         {
             case BitmapFrame bitmapFrame:
                 // Return the first frame of the bitmap that matches 16x16 size
@@ -64,12 +79,7 @@ public class WindowIconConverterExtension : MarkupExtension, IMultiValueConverte
     /// <param name="parameter">Optional parameter for the conversion.</param>
     /// <param name="culture">The culture information for the conversion.</param>
     /// <returns>Throws NotImplementedException.</returns>
-    public object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
 
-    /// <summary>
-    /// Provides the value for the markup extension.
-    /// </summary>
-    /// <param name="serviceProvider">The service provider.</param>
-    /// <returns>The instance of this converter.</returns>
-    public override object ProvideValue(IServiceProvider serviceProvider) => _converter ??= new WindowIconConverterExtension();
+    #endregion
 }

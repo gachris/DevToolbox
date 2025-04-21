@@ -15,44 +15,26 @@ namespace DevToolbox.Wpf.Windows;
 
 internal delegate IntPtr MessageHandler(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled);
 
-internal class WindowExBehaviour : DependencyObject
+internal class WindowExBehavior : DependencyObject
 {
     #region Fields
 
     private readonly List<HANDLE_MESSAGE> _messageTable;
-    private WindowEx? _WindowEx;
+    private WindowEx? _windowEx;
     private IntPtr _hwnd;
     private UIElement? _trackedControl;
     private TRACKMOUSEEVENT _trackMouseEvent;
     private HwndSource? _hwndSource;
 
+    public static readonly DependencyProperty WindowExBehaviorProperty = DependencyProperty.RegisterAttached(
+        "WindowExBehavior",
+        typeof(WindowExBehavior),
+        typeof(WindowExBehavior),
+        new PropertyMetadata(null, OnWindowExBehaviorChanged));
+
     #endregion
 
-    public static readonly DependencyProperty WindowExBehaviourProperty = DependencyProperty.RegisterAttached(
-        "WindowExBehaviour",
-        typeof(WindowExBehaviour),
-        typeof(WindowExBehaviour),
-        new PropertyMetadata(null, OnWindowExBehaviourChanged));
-
-    private static void OnWindowExBehaviourChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-        var w = (WindowEx)d;
-        var cw = (WindowExBehaviour)e.NewValue;
-
-        cw.SetWindow(w);
-    }
-
-    public static WindowExBehaviour GetWindowExBehaviour(WindowEx window)
-    {
-        return (WindowExBehaviour)window.GetValue(WindowExBehaviourProperty);
-    }
-
-    public static void SetWindowExBehaviour(WindowEx window, WindowExBehaviour chrome)
-    {
-        window.SetValue(WindowExBehaviourProperty, chrome);
-    }
-
-    public WindowExBehaviour()
+    public WindowExBehavior()
     {
         _messageTable =
         [
@@ -68,47 +50,6 @@ internal class WindowExBehaviour : DependencyObject
             new HANDLE_MESSAGE(WM.NCRBUTTONDOWN,         HandleNCRBUTTONDOWN),
             new HANDLE_MESSAGE(WM.NCRBUTTONDBLCLK,       HandleNCRBUTTONDBLCLK),
         ];
-    }
-
-    private void SetWindow(WindowEx WindowEx)
-    {
-        _WindowEx = WindowEx;
-
-        _hwnd = new WindowInteropHelper(WindowEx).Handle;
-
-        if (IntPtr.Zero != _hwnd)
-        {
-            // We've seen that the HwndSource can't always be retrieved from the HWND, so cache it early.
-            // Specifically it seems to sometimes disappear when the OS theme is changing.
-            _hwndSource = HwndSource.FromHwnd(_hwnd);
-            ApplyNewCustomChrome();
-
-            _hwndSource.AddHook(WndProc);
-        }
-        else
-        {
-            WindowEx.SourceInitialized += (sender, e) =>
-            {
-                _hwnd = new WindowInteropHelper(WindowEx).Handle;
-                _hwndSource = HwndSource.FromHwnd(_hwnd);
-                ApplyNewCustomChrome();
-
-                _hwndSource.AddHook(WndProc);
-            };
-        }
-    }
-
-    private void ApplyNewCustomChrome()
-    {
-        if (_WindowEx is null)
-        {
-            throw new ArgumentNullException(nameof(_WindowEx));
-        }
-
-        // Remove AeroCaptionButtons
-        var hwnd_style = (WS)NativeMethods.GetWindowLongPtr(_hwnd, GWL.STYLE);
-        var hwnd_new_style = hwnd_style & ~WS.SYSMENU;
-        NativeMethods.SetWindowLongPtr(_hwnd, GWL.STYLE, (IntPtr)hwnd_new_style);
     }
 
     #region WindowProc and Message Handlers
@@ -128,12 +69,12 @@ internal class WindowExBehaviour : DependencyObject
 
     private IntPtr HandleNCHitTest(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
     {
-        if (_WindowEx is null)
+        if (_windowEx is null)
         {
-            throw new ArgumentNullException(nameof(_WindowEx));
+            throw new ArgumentNullException(nameof(_windowEx));
         }
 
-        if (GetControlUnderMouse(_WindowEx, out var res) != null && res != HT.CAPTION)
+        if (GetControlUnderMouse(_windowEx, out var res) != null && res != HT.CAPTION)
         {
             handled = true;
             return new IntPtr((int)res);
@@ -145,16 +86,16 @@ internal class WindowExBehaviour : DependencyObject
 
     private IntPtr HandleNCRButtonUp(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
     {
-        if (_WindowEx is null)
+        if (_windowEx is null)
         {
-            throw new ArgumentNullException(nameof(_WindowEx));
+            throw new ArgumentNullException(nameof(_windowEx));
         }
 
         // Emulate the system behavior of clicking the right mouse button over the caption area
         // to bring up the system menu.
         if ((HT)wParam.ToInt32() is HT.MAXBUTTON or HT.MINBUTTON or HT.CLOSE or HT.HELP)
         {
-            ShowSystemMenuPhysicalCoordinates(_WindowEx, new Point(NativeMethods.GET_X_LPARAM(lParam), NativeMethods.GET_Y_LPARAM(lParam)));
+            ShowSystemMenuPhysicalCoordinates(_windowEx, new Point(NativeMethods.GET_X_LPARAM(lParam), NativeMethods.GET_Y_LPARAM(lParam)));
         }
 
         handled = false;
@@ -164,14 +105,14 @@ internal class WindowExBehaviour : DependencyObject
     private IntPtr HandleSize(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
     {
         handled = false;
-        var visualChildrenCount = VisualTreeHelper.GetChildrenCount(_WindowEx);
+        var visualChildrenCount = VisualTreeHelper.GetChildrenCount(_windowEx);
 
         if (visualChildrenCount < 1)
         {
             return IntPtr.Zero;
         }
 
-        if (VisualTreeHelper.GetChild(_WindowEx, 0) is not FrameworkElement child)
+        if (VisualTreeHelper.GetChild(_windowEx, 0) is not FrameworkElement child)
         {
             return IntPtr.Zero;
         }
@@ -254,6 +195,65 @@ internal class WindowExBehaviour : DependencyObject
 
     #region Methods
 
+    private static void OnWindowExBehaviorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var w = (WindowEx)d;
+        var cw = (WindowExBehavior)e.NewValue;
+
+        cw.SetWindow(w);
+    }
+
+    public static WindowExBehavior GetWindowExBehavior(WindowEx window)
+    {
+        return (WindowExBehavior)window.GetValue(WindowExBehaviorProperty);
+    }
+
+    public static void SetWindowExBehavior(WindowEx window, WindowExBehavior chrome)
+    {
+        window.SetValue(WindowExBehaviorProperty, chrome);
+    }
+
+    private void SetWindow(WindowEx WindowEx)
+    {
+        _windowEx = WindowEx;
+
+        _hwnd = new WindowInteropHelper(WindowEx).Handle;
+
+        if (IntPtr.Zero != _hwnd)
+        {
+            // We've seen that the HwndSource can't always be retrieved from the HWND, so cache it early.
+            // Specifically it seems to sometimes disappear when the OS theme is changing.
+            _hwndSource = HwndSource.FromHwnd(_hwnd);
+            ApplyNewCustomChrome();
+
+            _hwndSource.AddHook(WndProc);
+        }
+        else
+        {
+            WindowEx.SourceInitialized += (sender, e) =>
+            {
+                _hwnd = new WindowInteropHelper(WindowEx).Handle;
+                _hwndSource = HwndSource.FromHwnd(_hwnd);
+                ApplyNewCustomChrome();
+
+                _hwndSource.AddHook(WndProc);
+            };
+        }
+    }
+
+    private void ApplyNewCustomChrome()
+    {
+        if (_windowEx is null)
+        {
+            throw new ArgumentNullException(nameof(_windowEx));
+        }
+
+        // Remove AeroCaptionButtons
+        var hwnd_style = (WS)NativeMethods.GetWindowLongPtr(_hwnd, GWL.STYLE);
+        var hwnd_new_style = hwnd_style & ~WS.SYSMENU;
+        NativeMethods.SetWindowLongPtr(_hwnd, GWL.STYLE, (IntPtr)hwnd_new_style);
+    }
+
     private bool RaiseMouseMessage(WM wM)
     {
         if (_trackedControl is null)
@@ -287,7 +287,7 @@ internal class WindowExBehaviour : DependencyObject
 
     private bool HoverTrackedControl()
     {
-        var controlUnderMouse = _WindowEx is null ? throw new ArgumentNullException(nameof(_WindowEx)) : GetControlUnderMouse(_WindowEx, out _);
+        var controlUnderMouse = _windowEx is null ? throw new ArgumentNullException(nameof(_windowEx)) : GetControlUnderMouse(_windowEx, out _);
         if (controlUnderMouse == _trackedControl)
             return true;
 
@@ -356,7 +356,10 @@ internal class WindowExBehaviour : DependencyObject
         return owner.PointFromScreen(new Point(mousePosition.X, mousePosition.Y));
     }
 
-    private static DependencyObject? GetVisualOrLogicalParent(DependencyObject sourceElement) => sourceElement is Visual ? VisualTreeHelper.GetParent(sourceElement) ?? LogicalTreeHelper.GetParent(sourceElement) : null;
+    private static DependencyObject? GetVisualOrLogicalParent(DependencyObject sourceElement)
+    {
+        return sourceElement is Visual ? VisualTreeHelper.GetParent(sourceElement) ?? LogicalTreeHelper.GetParent(sourceElement) : null;
+    }
 
     #endregion
 }

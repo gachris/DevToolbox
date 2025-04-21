@@ -40,6 +40,6 @@ public partial class SystemBackdrop : UserControl
                 break;
         }
 
-        WindowBehaviour.SetWindowEffect(window, windowEffect);
+        WindowBehavior.SetWindowEffect(window, windowEffect);
     }
 }
