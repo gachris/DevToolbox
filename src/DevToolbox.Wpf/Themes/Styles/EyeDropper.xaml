@@ -36,6 +36,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.CornerRadius)}"
                             SnapsToDevicePixels="True">
                             <ContentPresenter
                                 x:Name="contentPresenter"
