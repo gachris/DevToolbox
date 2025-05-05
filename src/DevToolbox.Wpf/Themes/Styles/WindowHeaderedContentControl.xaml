@@ -78,7 +78,8 @@
                                     Foreground="{DynamicResource Window.Title.Foreground}"
                                     Style="{Binding TitleTextBlockStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, UpdateSourceTrigger=PropertyChanged}"
                                     Text="{Binding Title, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
-                                    TextTrimming="CharacterEllipsis" />
+                                    TextTrimming="CharacterEllipsis"
+                                    Visibility="{Binding ShowTitle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                 <ContentPresenter
                                     Grid.Column="3"
                                     VerticalAlignment="Stretch"
