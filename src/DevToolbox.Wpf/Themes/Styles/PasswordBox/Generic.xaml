@@ -44,6 +44,7 @@
                         <Grid x:Name="PART_Grid" Focusable="False">
                             <ScrollViewer
                                 x:Name="PART_ContentHost"
+                                Background="Transparent"
                                 Focusable="false"
                                 HorizontalScrollBarVisibility="Hidden"
                                 VerticalScrollBarVisibility="Hidden" />

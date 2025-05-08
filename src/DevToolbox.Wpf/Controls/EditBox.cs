@@ -511,6 +511,11 @@ public class EditBox : Control
 
     private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
     {
+        if (!IsLoaded)
+        {
+            return;
+        }
+
         if (CancelOnLostFocus)
         {
             CancelEdit();
@@ -523,6 +528,11 @@ public class EditBox : Control
 
     private void OnTextBoxLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
     {
+        if (!IsLoaded)
+        {
+            return;
+        }
+
         if (CancelOnLostFocus)
         {
             CancelEdit();

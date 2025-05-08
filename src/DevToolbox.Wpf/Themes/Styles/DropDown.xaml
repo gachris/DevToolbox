@@ -99,7 +99,7 @@
                             PopupAnimation="{TemplateBinding PopupAnimation}"
                             StaysOpen="{TemplateBinding StaysOpen}"
                             VerticalOffset="{TemplateBinding VerticalOffset}">
-                            <themes:SystemDropShadowChrome x:Name="shadow" Color="Transparent">
+                            <Border x:Name="shadow">
                                 <controls:SpeechBalloon
                                     Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupBackground)}"
                                     BorderBrush="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PopupBorderBrush)}"
@@ -162,13 +162,17 @@
                                         </Thumb>
                                     </Grid>
                                 </controls:SpeechBalloon>
-                            </themes:SystemDropShadowChrome>
+                            </Border>
                         </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="true">
+                            <Setter TargetName="shadow" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Opacity="0.4" Color="#71000000" />
+                                </Setter.Value>
+                            </Setter>
                             <Setter TargetName="shadow" Property="Margin" Value="0,0,5,5" />
-                            <Setter TargetName="shadow" Property="Color" Value="#71000000" />
                         </Trigger>
                         <Trigger Property="StaysOpen" Value="True">
                             <Setter TargetName="PART_ToggleButton" Property="IsHitTestVisible" Value="True" />
