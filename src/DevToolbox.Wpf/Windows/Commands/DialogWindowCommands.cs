@@ -3,39 +3,31 @@
 namespace DevToolbox.Wpf.Windows.Commands;
 
 /// <summary>
-/// Defines the standard routed commands used by dialog windows, such as OK and Cancel.
+/// Defines the standard routed commands used by dialog windows, such as OK, Cancel, Yes, and No.
 /// </summary>
-public class DialogWindowCommands
+public static class DialogWindowCommands
 {
-    #region Fields/Consts
+    #region Routed Commands
 
     /// <summary>
-    /// Backing field for the <see cref="Cancel"/> routed command.
+    /// Gets the <see cref="RoutedCommand"/> that signals a dialog window should cancel/close without applying changes.
     /// </summary>
-    private static readonly RoutedCommand _cancel = new(nameof(Cancel), typeof(DialogWindow));
+    public static RoutedCommand Cancel { get; } = new(nameof(Cancel), typeof(DialogWindow));
 
     /// <summary>
-    /// Backing field for the <see cref="OK"/> routed command.
+    /// Gets the <see cref="RoutedCommand"/> that signals a dialog window should accept/apply changes and close.
     /// </summary>
-    private static readonly RoutedCommand _ok = new(nameof(OK), typeof(DialogWindow));
-
-    #endregion
-
-    #region Properties
+    public static RoutedCommand OK { get; } = new(nameof(OK), typeof(DialogWindow));
 
     /// <summary>
-    /// Gets the routed command that signals a dialog window should cancel/close without applying changes.
+    /// Gets the <see cref="RoutedCommand"/> that signals a positive response (Yes) in a dialog window.
     /// </summary>
-    public static RoutedCommand Cancel => _cancel;
+    public static RoutedCommand Yes { get; } = new(nameof(Yes), typeof(DialogWindowCommands));
 
     /// <summary>
-    /// Gets the routed command that signals a dialog window should accept/apply changes and close.
+    /// Gets the <see cref="RoutedCommand"/> that signals a negative response (No) in a dialog window.
     /// </summary>
-    public static RoutedCommand OK => _ok;
-
-    public static readonly RoutedCommand Yes = new(nameof(Yes), typeof(DialogWindowCommands));
-
-    public static readonly RoutedCommand No = new(nameof(No), typeof(DialogWindowCommands));
+    public static RoutedCommand No { get; } = new(nameof(No), typeof(DialogWindowCommands));
 
     #endregion
 }
