@@ -10,7 +10,7 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>DevToolbox.Wpf</Title>
 		<Description>$(MSBuildProjectName) is a WPF .NET library.</Description>
-		<PackageTags></PackageTags>
+		<PackageTags>WPF</PackageTags>
 	</PropertyGroup>
 
 	<PropertyGroup Label="Output">
@@ -18,7 +18,15 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
+	<PropertyGroup Label="Sign Assembly">
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>$(SolutionDir)SignAssemblyKey.snk</AssemblyOriginatorKeyFile>
+	</PropertyGroup>
+
 	<ItemGroup>
+		<None Remove="Assets\error-100.png" />
+		<None Remove="Assets\info-100.png" />
+		<None Remove="Assets\warning-100.png" />
 		<None Remove="SymbolThemeFont\fonts\SymbolThemeFont.ttf" />
 	</ItemGroup>
 
@@ -31,6 +39,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="ColorSpace.Net" />
+		<PackageReference Include="CommunityToolkit.Mvvm" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">
@@ -40,6 +50,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\DevToolbox.Core\DevToolbox.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="Assets\error-100.png" />
+		<Resource Include="Assets\info-100.png" />
+		<Resource Include="Assets\warning-100.png" />
 		<Resource Include="SymbolThemeFont\fonts\SymbolThemeFont.ttf">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Resource>

@@ -1,7 +1,7 @@
 ﻿using CommonServiceLocator;
-using DevToolbox.Wpf.Demo.Contract;
-using DevToolbox.Wpf.Demo.Services;
-using DevToolbox.Wpf.Demo.ViewModels;
+using DevToolbox.Core;
+using DevToolbox.Core.Contracts;
+using DevToolbox.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -17,19 +17,15 @@ public static class IocConfiguration
     {
         AppHost = Host.CreateDefaultBuilder()
             .UseContentRoot(AppContext.BaseDirectory)
-            .ConfigureServices((hostContext, services) =>
+            .ConfigureServices((context, services) =>
             {
-                if (SynchronizationContext.Current is not null)
-                {
-                    services.AddSingleton(SynchronizationContext.Current);
-                }
+                var localSettingsOptionsConfiguration = context.Configuration.GetSection(nameof(LocalSettingsOptions));
 
-                services.AddSingleton<IFileService, FileService>();
-                services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
-                services.AddSingleton(t => new AppUISettings(t.GetService<ILocalSettingsService>()!));
-                services.AddSingleton(t => ServiceLocator.Current);
-                services.AddSingleton<MainViewModel>();
-                services.AddSingleton<SettingsViewModel>();
+                services.AddSynchronizationContext();
+                services.Configure<LocalSettingsOptions>(localSettingsOptionsConfiguration);
+                services.AddSingleton<IApplication>(_ => (App)System.Windows.Application.Current);
+                services.AddSingleton(_ => ServiceLocator.Current);
+                services.AddUI();
             })
             .Build();
 

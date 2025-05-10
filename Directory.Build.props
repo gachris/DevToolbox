@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<PropertyGroup Label="Project Configuration">
-		<AssemblyVersion>1.0.1.13</AssemblyVersion>
+		<AssemblyVersion>1.0.2.0</AssemblyVersion>
 		<FileVersion>$(AssemblyVersion)</FileVersion>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
@@ -16,14 +16,9 @@
 		<PackageId>$(MSBuildProjectName)</PackageId>
 		<Product>$(MSBuildProjectName)</Product>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<RepositoryUrl>https://github.com/gachris/DevToolbox.Wpf</RepositoryUrl>
-		<PackageProjectUrl>https://github.com/gachris/DevToolbox.Wpf/tree/master/src/$(MSBuildProjectName)</PackageProjectUrl>
-		<PackageOutputPath>$(MSBuildThisFileDirectory)nupkgs</PackageOutputPath>
-	</PropertyGroup>
-
-	<PropertyGroup Label="Sign Assembly">
-		<SignAssembly>true</SignAssembly>
-		<AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)SignAssemblyKey.snk</AssemblyOriginatorKeyFile>
+		<RepositoryUrl>https://github.com/gachris/DevToolbox</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/gachris/DevToolbox/tree/master/src/$(MSBuildProjectName)</PackageProjectUrl>
+		<PackageOutputPath>$(SolutionDir)nupkgs</PackageOutputPath>
 	</PropertyGroup>
 
 </Project>

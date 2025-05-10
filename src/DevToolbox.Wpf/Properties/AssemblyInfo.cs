@@ -9,6 +9,7 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition("http://devtoolbox.wpf/winfx/2021/xaml/presentation", "DevToolbox.Wpf.Media")]
 [assembly: XmlnsDefinition("http://devtoolbox.wpf/winfx/2021/xaml/presentation", "DevToolbox.Wpf.Markup")]
 [assembly: XmlnsDefinition("http://devtoolbox.wpf/winfx/2021/xaml/presentation", "DevToolbox.Wpf.Windows")]
+[assembly: XmlnsDefinition("http://devtoolbox.wpf/winfx/2021/xaml/presentation", "DevToolbox.Wpf.Behaviors")]
 
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, //where theme specific resource dictionaries are located

@@ -1,55 +1,67 @@
+## DevToolbox
 
-# DevToolbox.Wpf
+**DevToolbox** is a collection of custom controls and core logic designed to enhance your development experience across both WPF and WinUI applications. Currently in preview, this project will evolve with upcoming updates, including new controls and features to improve functionality and usability.
 
-**DevToolbox.Wpf** is a collection of custom WPF controls designed to enhance your development experience. Currently in preview status, this project aims to evolve significantly with upcoming updates, including new controls and features to improve functionality and usability.
+### Key Components
+
+* **WPF Controls:** A diverse set of controls tailored for WPF applications.
+* **WinUI Controls:** Parallel set of controls optimized for WinUI, leveraging the latest Windows app frameworks.
+* **Core Logic Library:** Shared core functionality powering both WPF and WinUI implementations, promoting code reuse and consistency.
 
 ## Features
 
-- **Variety of Controls:** A diverse set of WPF controls catering to different development needs.
-- **Easy Integration:** Seamless integration with existing WPF applications, ensuring minimal setup time.
-- **Customizable Properties and Events:** Enhance control behavior through customizable properties and event handlers, providing flexibility for developers.
-- **Theme Support:** Built-in support for light, dark, and high contrast themes, allowing for easy customization based on user preferences or accessibility requirements.
+* **Variety of Controls:** Custom WPF and WinUI controls catering to different development needs.
+* **Easy Integration:** Seamless integration with existing WPF and WinUI applications, ensuring minimal setup time.
+* **Customizable Properties and Events:** Enhance control behavior through adjustable properties and event handlers for both platforms.
+* **Theme Support:** Built-in support for light, dark, and high contrast themes, easily customizable for accessibility requirements.
 
 ## Demo Project
 
-Explore the capabilities of the controls in the included demo project. The demo showcases practical use cases, allowing you to see the controls in action.
+Explore the capabilities of the controls in the included demo projects:
+
+* **WPF Demo:** Showcases WPF controls in action.
+* **WinUI Demo:** Demonstrates WinUI controls usage.
 
 ![Demo Project Image](assets/demo.png)
 
 ## Future Plans
 
-- **Performance Enhancements:** Major updates to existing controls to improve performance and usability.
-- **New Controls:** Ongoing development to broaden the functionality of the toolkit.
-- **User Feedback:** Continuous refinement of controls based on user input and contributions.
+* **Performance Enhancements:** Updates to controls for improved performance across both WPF and WinUI.
+* **New Controls:** Expanding the toolkit with additional platform-specific and shared controls.
+* **User Feedback:** Continuous refinement based on user input and contributions.
 
 ## Installation
 
 ### Option 1: Using NuGet
 
-You can easily add **DevToolbox.Wpf** to your project via NuGet. Run the following command in the Package Manager Console:
+Install the WPF and WinUI packages via NuGet:
 
 ```bash
 Install-Package DevToolbox.Wpf
+Install-Package DevToolbox.WinUI
 ```
 
 ### Option 2: Cloning the Repository
 
-If you prefer to work with the source code directly, you can clone the repository and build the solution:
+Clone the repository to work with the source code directly:
 
 ```bash
-git clone https://github.com/gachris/DevToolbox.Wpf.git
-cd DevToolbox.Wpf
+git clone https://github.com/gachris/DevToolbox.git
+cd DevToolbox
 ```
 
-After cloning the repository, go to the project folder and double-click on the solution file (`DevToolbox.Wpf.sln`) to open it in Visual Studio. From there, you can build the solution to compile the necessary DLL files.
+Open the solution (`DevToolbox.sln`) in Visual Studio and build to compile the required libraries.
 
 ## Usage
 
-For usage instructions, refer to the included demo project. The demo provides practical examples of how to integrate and utilize the controls in your applications.
+Refer to the respective demo projects for practical examples on integrating and using the controls:
+
+* **`Demo.Wpf`**
+* **`Demo.WinUI`**
 
 ## Contributing
 
-Contributions are welcome! If you have suggestions for improvements or new features, please open an issue or submit a pull request. Your input is invaluable in making **DevToolbox.Wpf** better for everyone.
+Contributions are welcome! If you have suggestions for improvements or new features, please open an issue or submit a pull request. Your input is invaluable for enhancing **DevToolbox** across both platforms.
 
 ## License
 

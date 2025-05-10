@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using CommunityToolkit.Mvvm.ComponentModel;
-using DevToolbox.Wpf.Demo.JsonHelpers;
+using DevToolbox.Wpf.Demo.Json;
 
 namespace DevToolbox.Wpf.Demo.ViewModels;
 

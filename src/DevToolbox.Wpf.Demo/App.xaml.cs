@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using CommonServiceLocator;
+using DevToolbox.Core.Contracts;
 using DevToolbox.Wpf.Demo.Helpers;
 
 namespace DevToolbox.Wpf.Demo;
@@ -6,7 +8,7 @@ namespace DevToolbox.Wpf.Demo;
 /// <summary>
 /// Interaction logic for App.xaml
 /// </summary>
-public partial class App : Application
+public partial class App : Application, IApplication
 {
     #region Fields/Consts
 
@@ -35,11 +37,14 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
-        _singletonApplicationManager.Register(this, () =>
+        _singletonApplicationManager.Register(this, async () =>
         {
             IocConfiguration.Setup();
             GlobalExceptionHandler.SetupExceptionHandling();
-        });
+
+            var appUISettings = ServiceLocator.Current.GetInstance<IAppUISettings>();
+            await appUISettings.InitializeAsync();
+        }, () => { });
     }
 
     #endregion

@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DevToolbox.Core.Contracts;
+using DevToolbox.Core.Media;
 using DevToolbox.Wpf.Media;
 
 namespace DevToolbox.Wpf.Demo.ViewModels;
@@ -9,8 +11,8 @@ public partial class SettingsViewModel : ObservableObject
 {
     #region Fields/Conts
 
-    private ElementTheme _theme;
-    private readonly AppUISettings _appUISettings;
+    private Theme _theme;
+    private readonly IAppUISettings _appUISettings;
 
     #endregion
 
@@ -18,17 +20,18 @@ public partial class SettingsViewModel : ObservableObject
 
     public string ApplicationVersion { get; }
 
-    public ElementTheme Theme
+    public Theme Theme
     {
         get => _theme;
-        private set => SetProperty(ref _theme, value, nameof(Theme));
+        private set => SetProperty(ref _theme, value);
     }
 
     #endregion
 
-    public SettingsViewModel(AppUISettings appUISettings)
+    public SettingsViewModel(IAppUISettings appUISettings)
     {
         _appUISettings = appUISettings;
+        _theme = appUISettings.Theme;
 
         ThemeManager.RequestedThemeChanged += ThemeManager_RequestedThemeChanged;
 
@@ -48,9 +51,9 @@ public partial class SettingsViewModel : ObservableObject
     #region Relay Commands
 
     [RelayCommand]
-    private void ChangeTheme(ElementTheme theme)
+    private async Task ChangeTheme(Theme theme)
     {
-        _appUISettings.SetAppTheme(theme);
+        await _appUISettings.SetThemeAsync(theme);
     }
 
     #endregion
@@ -59,7 +62,7 @@ public partial class SettingsViewModel : ObservableObject
 
     private void ThemeManager_RequestedThemeChanged(object? sender, EventArgs e)
     {
-        Theme = _appUISettings.AppTheme;
+        Theme = _appUISettings.Theme;
     }
 
     #endregion

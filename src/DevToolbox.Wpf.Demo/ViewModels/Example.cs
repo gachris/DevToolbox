@@ -5,7 +5,7 @@ using System.Windows.Markup;
 using System.Xml;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DevToolbox.Wpf.Demo.JsonHelpers;
+using DevToolbox.Wpf.Demo.Json;
 
 namespace DevToolbox.Wpf.Demo.ViewModels;
 

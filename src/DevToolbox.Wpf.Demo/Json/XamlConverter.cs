@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace DevToolbox.Wpf.Demo.JsonHelpers;
+namespace DevToolbox.Wpf.Demo.Json;
 
 public class XamlConverter : JsonConverter<string>
 {

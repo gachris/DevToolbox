@@ -9,6 +9,11 @@
 		<ExcludeFoldersFromDeployment>Examples</ExcludeFoldersFromDeployment>
 	</PropertyGroup>
 
+	<PropertyGroup Label="Sign Assembly">
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>$(SolutionDir)SignAssemblyKey.snk</AssemblyOriginatorKeyFile>
+	</PropertyGroup>
+
 	<ItemGroup>
 	  <Compile Remove="Examples\Windowing\SidePanelWindow\SidePanelWindow.xaml.cs" />
 	</ItemGroup>
@@ -259,6 +264,12 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\DevToolbox.Wpf\DevToolbox.Wpf.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 </Project>

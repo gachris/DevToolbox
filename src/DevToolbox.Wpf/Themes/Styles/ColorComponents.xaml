@@ -5,7 +5,7 @@
     xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters"
     xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
 
-    <converters:EnumBooleanConverter x:Key="EnumBooleanConverter" />
+    <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     <converters:HexColorCharacterHidingConverter x:Key="HexColorCharacterHidingConverter" />
 
     <Style TargetType="{x:Type controls:ColorComponents}">
@@ -44,7 +44,7 @@
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
                                     Content="H:"
-                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Hsv_H'}"
+                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter='Hsv_H'}"
                                     Tag="{Binding NormalComponentType, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                                 <TextBox
                                     x:Name="PART_HsvHueNumberBox"
@@ -70,7 +70,7 @@
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
                                     Content="S:"
-                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Hsv_S'}"
+                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter='Hsv_S'}"
                                     Tag="{Binding NormalComponentType, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                                 <TextBox
                                     x:Name="PART_HsvSaturationTextBox"
@@ -96,7 +96,7 @@
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
                                     Content="B:"
-                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Hsv_V'}"
+                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter='Hsv_V'}"
                                     Tag="{Binding NormalComponentType, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                                 <TextBox
                                     x:Name="PART_HsvValueTextBox"
@@ -134,7 +134,7 @@
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
                                     Content="R:"
-                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Rgb_R'}"
+                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter='Rgb_R'}"
                                     Tag="{Binding NormalComponentType, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                                 <TextBox
                                     x:Name="PART_RgbRedTextBox"
@@ -153,7 +153,7 @@
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
                                     Content="G:"
-                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Rgb_G'}"
+                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter='Rgb_G'}"
                                     Tag="{Binding NormalComponentType, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                                 <TextBox
                                     x:Name="PART_RgbGreenTextBox"
@@ -172,7 +172,7 @@
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
                                     Content="B:"
-                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Rgb_B'}"
+                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter='Rgb_B'}"
                                     Tag="{Binding NormalComponentType, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                                 <TextBox
                                     x:Name="PART_RgbBlueTextBox"
@@ -209,7 +209,7 @@
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
                                     Content="L:"
-                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Lab_L'}"
+                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter='Lab_L'}"
                                     Tag="{Binding NormalComponentType, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                                 <TextBox
                                     x:Name="PART_LabLTextBox"
@@ -228,7 +228,7 @@
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
                                     Content="a:"
-                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Lab_A'}"
+                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter='Lab_A'}"
                                     Tag="{Binding NormalComponentType, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                                 <TextBox
                                     x:Name="PART_LabATextBox"
@@ -247,7 +247,7 @@
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
                                     Content="b:"
-                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Lab_B'}"
+                                    IsChecked="{Binding NormalComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter='Lab_B'}"
                                     Tag="{Binding NormalComponentType, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                                 <TextBox
                                     x:Name="PART_LabBTextBox"

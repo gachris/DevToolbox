@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using DevToolbox.Wpf.Demo.ViewModels;
 
-namespace DevToolbox.Wpf.Demo.JsonHelpers;
+namespace DevToolbox.Wpf.Demo.Json;
 
 public class ControlTypeConverter : JsonConverter<ControlType>
 {
