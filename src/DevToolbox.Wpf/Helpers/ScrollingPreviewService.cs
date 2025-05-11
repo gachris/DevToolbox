@@ -9,6 +9,7 @@ using DevToolbox.Wpf.Extensions;
 
 namespace DevToolbox.Wpf.Helpers;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 /// <summary>
 /// Displays a ToolTip next to the ScrollBar thumb while it is being dragged.
 /// </summary>
@@ -242,3 +243,4 @@ public static class ScrollingPreviewService
 
     #endregion
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

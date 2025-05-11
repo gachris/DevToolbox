@@ -6,7 +6,7 @@ public class TabItemContent : ObservableObject
 {
     public object Header { get; set; }
 
-    public object Content { get; set; }
+    public object? Content { get; set; }
 
     public bool IsSelected { get; set; }
 

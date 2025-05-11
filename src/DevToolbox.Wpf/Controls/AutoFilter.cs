@@ -11,15 +11,18 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using DevToolbox.Wpf.Data;
 
+#nullable disable
+
 namespace DevToolbox.Wpf.Controls;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class AutoFilter : DependencyObject
 {
     #region Fields/Consts
 
     private readonly DataGrid _currentGrid;
-    private ICollectionView? _view;
-    private DataTable? _collectionViewDt;
+    private ICollectionView _view;
+    private DataTable _collectionViewDt;
 
     public static readonly DependencyProperty AutoFilterProperty =
         DependencyProperty.RegisterAttached("AutoFilter", typeof(AutoFilter), typeof(AutoFilter), new PropertyMetadata(default));
@@ -73,7 +76,7 @@ public class AutoFilter : DependencyObject
         }
     }
 
-    public ObservableCollection<FilterListItem>? GetDistictValues(DataGrid grid, string columnName)
+    public ObservableCollection<FilterListItem> GetDistictValues(DataGrid grid, string columnName)
     {
         if (grid.ItemsSource is DataView itemsSource)
         {
@@ -648,7 +651,7 @@ public class AutoFilter : DependencyObject
     public void RemoveAllFilter(string currentColumn)
     {
         if (_currentGrid.ItemsSource == null) return;
-        string? newFilter = null;
+        string newFilter = null;
         if (_currentGrid.ItemsSource is DataView)
         {
             var itemsSource = (DataView)_currentGrid.ItemsSource;
@@ -772,7 +775,7 @@ public class AutoFilter : DependencyObject
             }
         }
         value = AddEscapeSequece(value);
-        string? rowFilter = null;
+        string rowFilter = null;
         if (grid.ItemsSource == null)
             return;
         if (grid.ItemsSource is DataView dataView)
@@ -1173,7 +1176,7 @@ public class AutoFilter : DependencyObject
 
     }
 
-    private static string? RemoveIsNullAndBlankFilter(string existingFilter, string columnName)
+    private static string RemoveIsNullAndBlankFilter(string existingFilter, string columnName)
     {
         var newFilter = existingFilter.Trim();
 
@@ -1235,7 +1238,7 @@ public class AutoFilter : DependencyObject
         return newFilter;
     }
 
-    private static string? CorrectRowFilter(string exsistingFilter)
+    private static string CorrectRowFilter(string exsistingFilter)
     {
         var newFilter = Convert.ToString(exsistingFilter);
 
@@ -1407,3 +1410,4 @@ public class AutoFilter : DependencyObject
         }
     }
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

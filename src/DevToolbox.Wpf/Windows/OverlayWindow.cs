@@ -5,6 +5,7 @@ using DevToolbox.Wpf.Controls;
 namespace DevToolbox.Wpf.Windows;
 
 [TemplatePart(Name = PART_Options, Type = typeof(ContentControl))]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class OverlayWindow : Window
 {
     #region Fields/Consts
@@ -123,3 +124,4 @@ public class OverlayWindow : Window
 
     #endregion
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

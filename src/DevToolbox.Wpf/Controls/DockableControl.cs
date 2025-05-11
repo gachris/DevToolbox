@@ -11,6 +11,7 @@ using DevToolbox.Wpf.Serialization;
 namespace DevToolbox.Wpf.Controls;
 
 [TemplatePart(Name = PART_Header, Type = typeof(ContentControl))]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
 {
     #region Fields/Consts
@@ -768,3 +769,4 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
 
     #endregion
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

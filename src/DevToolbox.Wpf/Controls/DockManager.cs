@@ -19,6 +19,7 @@ namespace DevToolbox.Wpf.Controls;
 [TemplatePart(Name = PART_BottomPanel, Type = typeof(DockingButtonGroupControl))]
 [TemplatePart(Name = PART_DockableOverlayControl, Type = typeof(DockableOverlayControl))]
 [TemplatePart(Name = PART_DockingPanel, Type = typeof(DockingGroupPanel))]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class DockManager : ItemsControl, IDropSurface
 {
     #region Fields/Consts
@@ -737,3 +738,4 @@ public class DockManager : ItemsControl, IDropSurface
 
     #endregion
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

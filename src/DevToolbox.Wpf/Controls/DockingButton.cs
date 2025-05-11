@@ -5,6 +5,7 @@ using System.Windows.Media;
 
 namespace DevToolbox.Wpf.Controls;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class DockingButton : Button
 {
     #region Fields/Consts
@@ -60,3 +61,4 @@ public class DockingButton : Button
         DefaultStyleKeyProperty.OverrideMetadata(typeof(DockingButton), new FrameworkPropertyMetadata(typeof(DockingButton)));
     }
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

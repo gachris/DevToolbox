@@ -2,6 +2,7 @@ using System.Windows;
 
 namespace DevToolbox.Wpf.Controls;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class DocumentItem : TabItemEdit
 {
     #region Fields/Consts
@@ -28,3 +29,4 @@ public class DocumentItem : TabItemEdit
         DefaultStyleKeyProperty.OverrideMetadata(typeof(DocumentItem), new FrameworkPropertyMetadata(typeof(DocumentItem)));
     }
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

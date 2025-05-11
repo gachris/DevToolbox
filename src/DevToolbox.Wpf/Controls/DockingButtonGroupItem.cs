@@ -3,6 +3,7 @@ using System.Windows.Controls;
 
 namespace DevToolbox.Wpf.Controls;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class DockingButtonGroupItem : ItemsControl
 {
     #region Properties
@@ -20,3 +21,4 @@ public class DockingButtonGroupItem : ItemsControl
 
     #endregion
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

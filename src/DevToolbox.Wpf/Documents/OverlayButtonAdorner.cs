@@ -5,6 +5,7 @@ using System.Windows.Media;
 
 namespace DevToolbox.Wpf.Documents;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class OverlayButtonAdorner : Adorner
 {
     private UIElement _child = null!;
@@ -52,3 +53,4 @@ public class OverlayButtonAdorner : Adorner
         return _child.DesiredSize;
     }
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

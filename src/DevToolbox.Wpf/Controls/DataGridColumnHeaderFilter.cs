@@ -11,6 +11,7 @@ namespace DevToolbox.Wpf.Controls;
 
 [TemplatePart(Name = "PART_DropDown", Type = typeof(DropDown))]
 [TemplatePart(Name = "PART_ListBox", Type = typeof(ListBox))]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class DataGridColumnHeaderFilter : Control
 {
     #region Fields/Consts
@@ -175,3 +176,4 @@ public class DataGridColumnHeaderFilter : Control
 
     #endregion
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

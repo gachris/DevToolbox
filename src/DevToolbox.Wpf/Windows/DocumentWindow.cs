@@ -6,6 +6,7 @@ using DevToolbox.Wpf.Interop;
 
 namespace DevToolbox.Wpf.Windows;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class DocumentWindow : DockManagerWindow
 {
     #region Properties
@@ -99,3 +100,4 @@ public class DocumentWindow : DockManagerWindow
 
     #endregion
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

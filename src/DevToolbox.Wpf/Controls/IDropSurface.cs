@@ -2,6 +2,7 @@ using System.Windows;
 
 namespace DevToolbox.Wpf.Controls;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public interface IDropSurface
 {
     Rect SurfaceRectangle { get; }
@@ -14,3 +15,4 @@ public interface IDropSurface
 
     bool OnDrop(Point point);
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

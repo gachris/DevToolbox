@@ -8,6 +8,7 @@ using DevToolbox.Wpf.Interop;
 
 namespace DevToolbox.Wpf.Windows;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class DockableWindow : DockManagerWindow
 {
     #region Fields/Consts
@@ -142,3 +143,4 @@ public class DockableWindow : DockManagerWindow
 
     #endregion
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
