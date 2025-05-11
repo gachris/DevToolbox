@@ -130,6 +130,11 @@ public class NavigationViewBehavior : Behavior<NavigationView>
 
     private void OnIsSettingsSelectedChanged(DependencyPropertyChangedEventArgs e)
     {
+        if (AssociatedObject is null)
+        {
+            return;
+        }
+
         if ((bool)e.NewValue)
         {
             AssociatedObject.SelectedItem = AssociatedObject.SettingsItem;
@@ -159,6 +164,11 @@ public class NavigationViewBehavior : Behavior<NavigationView>
     /// </summary>
     private void UpdateSelectedValue()
     {
+        if (AssociatedObject is null)
+        {
+            return;
+        }
+
         var selected = AssociatedObject.SelectedItem;
         if (!string.IsNullOrEmpty(SelectedValuePath))
         {
@@ -177,7 +187,7 @@ public class NavigationViewBehavior : Behavior<NavigationView>
     /// </summary>
     private void UpdateSelectedItem()
     {
-        if (IsSettingsSelected)
+        if (AssociatedObject is null || IsSettingsSelected)
             return;
 
         if (!string.IsNullOrEmpty(SelectedValuePath))
