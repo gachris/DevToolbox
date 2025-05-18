@@ -22,7 +22,7 @@ public static class IocConfiguration
                 var localSettingsOptionsConfiguration = context.Configuration.GetSection(nameof(LocalSettingsOptions));
 
                 services.AddSynchronizationContext();
-                services.Configure<LocalSettingsOptions>(localSettingsOptionsConfiguration);
+                services.AddSingleton(localSettingsOptionsConfiguration);
                 services.AddSingleton<IApplication>(_ => (App)System.Windows.Application.Current);
                 services.AddSingleton(_ => ServiceLocator.Current);
                 services.AddUI();

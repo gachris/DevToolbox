@@ -263,6 +263,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\DevToolbox.Extensions.DependencyInjection\DevToolbox.Extensions.DependencyInjection.csproj" />
 	  <ProjectReference Include="..\DevToolbox.Wpf\DevToolbox.Wpf.csproj" />
 	</ItemGroup>
 

@@ -1,11 +1,20 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Windows.Media;
 
 namespace DevToolbox.Wpf.Interop;
 
 internal class NativeMethods
 {
+    public static Version GetTrueOSVersion()
+    {
+        var osvi = new OSVERSIONINFOEX { dwOSVersionInfoSize = Marshal.SizeOf<OSVERSIONINFOEX>() };
+        if (ntdll.RtlGetVersion(ref osvi) == 0)
+            return new Version(osvi.dwMajorVersion, osvi.dwMinorVersion, osvi.dwBuildNumber);
+        return Environment.OSVersion.Version;
+    }
+
     public static System.Drawing.Point GetCursorPosition()
     {
         var point = new POINT();

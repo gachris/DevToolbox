@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using CommonServiceLocator;
 using DevToolbox.Core.Contracts;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace DevToolbox.WinUI;
 
@@ -47,7 +46,7 @@ public static class GlobalExceptionHandler
     /// <param name="exception">The exception to display in the error dialog.</param>
     private static async void ShowErrorDialog(Exception exception)
     {
-        var dialogService = ServiceLocator.Current.GetService<IDialogService>();
+        var dialogService = ServiceLocator.Current.GetService(typeof(IDialogService)) as IDialogService;
         ArgumentNullException.ThrowIfNull(dialogService, nameof(dialogService));
         await dialogService.ShowErrorAsync(exception).ConfigureAwait(false);
     }

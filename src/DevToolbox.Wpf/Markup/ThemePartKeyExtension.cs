@@ -50,7 +50,9 @@ public class ThemePartKeyExtension : ThemePartLoaderExtension
     public override bool Equals(object? obj)
     {
         return obj is ThemePartKeyExtension partKeyExtension &&
-               string.Equals(AssemblyName, partKeyExtension.AssemblyName, StringComparison.InvariantCultureIgnoreCase);
+               string.Equals(AssemblyName, partKeyExtension.AssemblyName, StringComparison.InvariantCultureIgnoreCase) &&
+               string.Equals(Path, partKeyExtension.Path, StringComparison.InvariantCultureIgnoreCase) &&
+               string.Equals(ThemeName, partKeyExtension.ThemeName, StringComparison.InvariantCultureIgnoreCase);
     }
 
     #endregion

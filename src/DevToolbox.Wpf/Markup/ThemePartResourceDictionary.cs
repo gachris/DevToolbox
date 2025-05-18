@@ -114,10 +114,15 @@ public class ThemePartResourceDictionary : ResourceDictionary
     {
         if (!IsEnabled)
         {
-            Dispatcher.CurrentDispatcher.BeginInvoke(() =>
+            if (Application.Current.Dispatcher.CheckAccess())
             {
                 Application.Current.Resources.MergedDictionaries.Remove(_disabledSource);
-            });
+            }
+            else
+            {
+                Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                    Application.Current.Resources.MergedDictionaries.Remove(_disabledSource)), DispatcherPriority.Normal);
+            }
 
             return;
         }
@@ -125,11 +130,19 @@ public class ThemePartResourceDictionary : ResourceDictionary
         var key = Key as ThemePartKeyExtension;
         if (key?.ThemeName == ThemeManager.ApplicationThemeNameCore)
         {
-            Dispatcher.CurrentDispatcher.BeginInvoke(() =>
+            if (Application.Current.Dispatcher.CheckAccess())
             {
                 _disabledSource = new ResourceDictionary() { Source = DisabledSource };
                 Application.Current.Resources.MergedDictionaries.Add(_disabledSource);
-            });
+            }
+            else
+            {
+                Application.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    _disabledSource = new ResourceDictionary() { Source = DisabledSource };
+                    Application.Current.Resources.MergedDictionaries.Add(_disabledSource);
+                }, DispatcherPriority.Normal);
+            }
         }
     }
 
@@ -149,7 +162,22 @@ public class ThemePartResourceDictionary : ResourceDictionary
             }
         }
 
-        ResourceDictionaries.Add(this);
+        // See if there’s already a dictionary with the same ThemePartKeyExtension
+        var existingIndex = _resourceDictionaries
+            .FindIndex(x =>
+                x.Key is ThemePartKeyExtension existingKey
+                && existingKey.Equals(Key));
+
+        if (existingIndex >= 0)
+        {
+            // Replace the old one in-place
+            _resourceDictionaries[existingIndex] = this;
+        }
+        else
+        {
+            // No match, just add
+            _resourceDictionaries.Add(this);
+        }
     }
 
     #endregion

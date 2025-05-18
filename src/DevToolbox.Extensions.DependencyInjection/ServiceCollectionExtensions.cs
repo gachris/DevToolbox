@@ -4,9 +4,8 @@ using System.Reflection;
 using System.Threading;
 using DevToolbox.Core.Contracts;
 using DevToolbox.Core.Services;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace DevToolbox.Core;
+namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
 /// Provides extension methods for registering core DevToolbox services into an <see cref="IServiceCollection"/>.

@@ -4,7 +4,6 @@ using System.IO;
 using System.Threading.Tasks;
 using DevToolbox.Core.Contracts;
 using DevToolbox.Core.Extensions;
-using Microsoft.Extensions.Options;
 
 namespace DevToolbox.Core.Services;
 
@@ -20,7 +19,7 @@ public class LocalSettingsService : ILocalSettingsService
     private const string _defaultLocalSettingsFile = "LocalSettings.json";
 
     private readonly IFileService _fileService;
-    private readonly LocalSettingsOptions _options;
+    private readonly LocalSettingsOptions? _options;
 
     private readonly string _localApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
     private readonly string _applicationDataFolder;
@@ -37,13 +36,13 @@ public class LocalSettingsService : ILocalSettingsService
     /// </summary>
     /// <param name="fileService">The file service used for reading and writing files.</param>
     /// <param name="options">The settings options specifying folders and filenames.</param>
-    public LocalSettingsService(IFileService fileService, IOptions<LocalSettingsOptions> options)
+    public LocalSettingsService(IFileService fileService, LocalSettingsOptions? options = null)
     {
         _fileService = fileService;
-        _options = options.Value;
+        _options = options;
 
-        _applicationDataFolder = Path.Combine(_localApplicationData, _options.ApplicationDataFolder ?? _defaultApplicationDataFolder);
-        _localSettingsFile = _options.LocalSettingsFile ?? _defaultLocalSettingsFile;
+        _applicationDataFolder = Path.Combine(_localApplicationData, _options?.ApplicationDataFolder ?? _defaultApplicationDataFolder);
+        _localSettingsFile = _options?.LocalSettingsFile ?? _defaultLocalSettingsFile;
 
         _settings = [];
     }

@@ -159,7 +159,11 @@ public class WindowBehavior
     /// Determines if the current OS version supports the window effect features.
     /// </summary>
     /// <returns>True if supported; otherwise, false.</returns>
-    private static bool IsSupported() => Environment.OSVersion.Version.Build >= 22621;
+    private static bool IsSupported()
+    {
+        var v = NativeMethods.GetTrueOSVersion();
+        return v.Build >= 22621;
+    }
 
     #endregion
 }

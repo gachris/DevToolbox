@@ -18,6 +18,13 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
+	<ItemGroup>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
 	<PropertyGroup Label="Sign Assembly">
 		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>$(SolutionDir)SignAssemblyKey.snk</AssemblyOriginatorKeyFile>
@@ -31,10 +38,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="..\..\README.md">
-			<Pack>True</Pack>
-			<PackagePath>\</PackagePath>
-		</None>
+		<Resource Include="Assets\error-100.png" />
+		<Resource Include="Assets\info-100.png" />
+		<Resource Include="Assets\warning-100.png" />
+		<Resource Include="SymbolThemeFont\fonts\SymbolThemeFont.ttf">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Resource>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -43,23 +52,14 @@
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\DevToolbox.Core\DevToolbox.Core.csproj" />
+	</ItemGroup>
+
 	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">
 		<Reference Include="PresentationFramework.Aero" />
 		<Reference Include="PresentationFramework.Aero2" />
 		<Reference Include="PresentationFramework.Royale" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\DevToolbox.Core\DevToolbox.Core.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Resource Include="Assets\error-100.png" />
-		<Resource Include="Assets\info-100.png" />
-		<Resource Include="Assets\warning-100.png" />
-		<Resource Include="SymbolThemeFont\fonts\SymbolThemeFont.ttf">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Resource>
 	</ItemGroup>
 
 </Project>

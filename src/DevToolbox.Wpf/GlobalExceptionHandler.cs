@@ -46,7 +46,7 @@ public static class GlobalExceptionHandler
     /// </exception>
     private static async void ShowErrorDialog(Exception exception)
     {
-        var dialogService = ServiceLocator.Current.GetInstance<IDialogService>();
+        var dialogService = ServiceLocator.Current.GetService(typeof(IDialogService)) as IDialogService;
         if (dialogService is not null)
             await dialogService.ShowErrorAsync(exception);
         else
