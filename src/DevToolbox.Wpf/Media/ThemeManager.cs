@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Threading;
+using DevToolbox.Wpf.Interop;
 using Microsoft.Win32;
 
 namespace DevToolbox.Wpf.Media;
@@ -124,12 +125,7 @@ public static class ThemeManager
     {
         try
         {
-            using var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
-            var value = key?.GetValue("AppsUseLightTheme");
-            if (value is int useLightTheme)
-            {
-                return useLightTheme == 1 ? ApplicationTheme.Light : ApplicationTheme.Dark;
-            }
+            return ActiveUserThemeReader.GetThemeForActiveUser();
         }
         catch (Exception ex)
         {
