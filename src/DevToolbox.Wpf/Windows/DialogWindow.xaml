@@ -126,7 +126,8 @@
             x:Name="WaitingAnimation"
             Content="{Binding}"
             Focusable="False"
-            InProgress="{Binding WaitingAnimationBusy}">
+            InProgress="{Binding WaitingAnimationBusy}"
+            Visibility="{Binding WaitingAnimationBusy, Converter={StaticResource BooleanToVisibilityConverter}}">
             <controls:WaitingIndicator.ContentTemplate>
                 <DataTemplate>
                     <StackPanel>
