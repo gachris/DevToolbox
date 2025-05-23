@@ -48,6 +48,19 @@ public static class ThemeManager
     #region Properties
 
     /// <summary>
+    /// Gets or sets a value indicating whether the application should override core theming.
+    /// When set to <c>true</c>, theme resource dictionaries originating from the DevToolbox assemblies
+    /// will be ignored during theme application. This allows application developers to fully customize
+    /// or replace the default DevToolbox-provided themes.
+    /// </summary>
+    /// <remarks>
+    /// Use this flag to prevent automatic loading of DevToolbox theme resources, especially when you want
+    /// to implement a custom theming system or fully control the visual appearance of the application
+    /// without interference from predefined styles.
+    /// </remarks>
+    public static bool OverrideCoreTheming { get; set; }
+
+    /// <summary>
     /// Gets or sets the current requested theme.
     /// Changing this property triggers theme updates and raises the appropriate events.
     /// </summary>
