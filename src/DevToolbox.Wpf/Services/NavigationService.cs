@@ -132,11 +132,11 @@ public class NavigationService : INavigationService
     /// <returns>True if the back entry was added; otherwise, false.</returns>
     public async Task<bool> AddBackEntryAsync(string pageKey)
     {
-        if (_frame?.NavigationService != null)
+        if (_frame != null)
         {
             var pageType = _pageService.GetPageType(pageKey);
 
-            _frame.NavigationService.AddBackEntry(new DIContentState(pageType, _serviceLocator));
+            _frame.AddBackEntry(new DIContentState(pageType, _serviceLocator));
 
             return await Task.FromResult(true);
         }
@@ -153,7 +153,7 @@ public class NavigationService : INavigationService
         if (!CanGoBack || _frame is null)
             return await Task.FromResult(false);
 
-        _frame.NavigationService.GoBack();
+        _frame.GoBack();
 
         return await Task.FromResult(true);
     }
@@ -183,12 +183,12 @@ public class NavigationService : INavigationService
         if (pageInstance is null)
             return false;
 
-        var navigated = _frame.NavigationService.Navigate(pageInstance, parameter);
+        var navigated = _frame.Navigate(pageInstance, parameter);
 
         if (clearNavigation && navigated)
         {
             while (_frame.CanGoBack)
-                _frame.NavigationService.RemoveBackEntry();
+                _frame.RemoveBackEntry();
         }
 
         return await Task.FromResult(navigated);
@@ -224,7 +224,7 @@ public class NavigationService : INavigationService
         {
             if (fe.DataContext is INavigationViewModelAware vm)
             {
-                vm.OnNavigated();
+                vm.OnNavigated(e.ExtraData);
             }
 
             _lastViews.Add(fe);

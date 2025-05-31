@@ -14,7 +14,7 @@ public interface INavigationViewModelAware
     /// <summary>
     /// Called when the view model's associated view has been navigated to.
     /// </summary>
-    void OnNavigated();
+    void OnNavigated(object? parameter = null);
 
     /// <summary>
     /// Called when the view model's associated view is being navigated away from.

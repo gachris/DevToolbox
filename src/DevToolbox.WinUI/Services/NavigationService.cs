@@ -193,7 +193,7 @@ public class NavigationService : INavigationService
         {
             if (fe.DataContext is INavigationViewModelAware vm)
             {
-                vm.OnNavigated();
+                vm.OnNavigated(e.Parameter);
             }
 
             _lastViews.Add(fe);
