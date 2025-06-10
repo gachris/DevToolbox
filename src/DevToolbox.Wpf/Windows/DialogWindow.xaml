@@ -94,7 +94,8 @@
             <Separator
                 Grid.Row="1"
                 Margin="0"
-                Style="{StaticResource SimpleHorizontalSeparatorStyle}" />
+                Style="{StaticResource SimpleHorizontalSeparatorStyle}"
+                Visibility="{Binding IsFooterVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <Grid
                 Grid.Row="2"
                 Margin="14"
