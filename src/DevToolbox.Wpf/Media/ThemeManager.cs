@@ -145,8 +145,8 @@ public static class ThemeManager
             Debug.WriteLine($"Error accessing registry for Windows theme settings: {ex.Message}");
         }
 
-        // Default to Dark theme if no theme is found or an error occurs
-        return ApplicationTheme.Dark;
+        // Default to Light theme if no theme is found or an error occurs
+        return ApplicationTheme.Light;
     }
 
     #endregion
