@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
@@ -10,33 +11,43 @@ namespace DevToolbox.Wpf.Interop;
 
 internal static class ActiveUserThemeReader
 {
-    [DllImport("kernel32.dll")]
-    static extern uint WTSGetActiveConsoleSessionId();
-
-    [DllImport("Wtsapi32.dll",
-        SetLastError = true,
-        CharSet = CharSet.Unicode   // ← ensure we call WTSQuerySessionInformationW
-    )]
-    static extern bool WTSQuerySessionInformation(
+    [DllImport("Wtsapi32.dll", SetLastError = true)]
+    static extern bool WTSEnumerateSessions(
         IntPtr hServer,
-        uint sessionId,
-        WTS_INFO_CLASS infoClass,
-        out IntPtr ppBuffer,
-        out uint pBytesReturned
+        int Reserved,
+        int Version,
+        out IntPtr ppSessionInfo,
+        out int pCount
     );
 
     [DllImport("Wtsapi32.dll")]
     static extern void WTSFreeMemory(IntPtr pointer);
 
-    [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+    [DllImport("Wtsapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+    static extern bool WTSQuerySessionInformation(
+        IntPtr hServer,
+        int sessionId,
+        WTS_INFO_CLASS infoClass,
+        out IntPtr ppBuffer,
+        out int pBytesReturned
+    );
+
+    [DllImport("advapi32.dll", SetLastError = true)]
     static extern bool LookupAccountName(
-        string lpSystemName,
+        string? lpSystemName,
         string lpAccountName,
         byte[] Sid,
         ref uint cbSid,
         StringBuilder ReferencedDomainName,
         ref uint cchReferencedDomainName,
-        out SID_NAME_USE peUse);
+        out SID_NAME_USE peUse
+    );
+
+    [DllImport("advapi32.dll", SetLastError = true)]
+    static extern int RegLoadKey(UIntPtr hKey, string lpSubKey, string lpFile);
+
+    [DllImport("advapi32.dll", SetLastError = true)]
+    static extern int RegUnLoadKey(UIntPtr hKey, string lpSubKey);
 
     enum WTS_INFO_CLASS
     {
@@ -46,25 +57,41 @@ internal static class ActiveUserThemeReader
 
     enum SID_NAME_USE
     {
-        SidTypeUser = 1,
-        // (others omitted)
+        SidTypeUser = 1
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct WTS_SESSION_INFO
+    {
+        public int SessionID;
+        public IntPtr pWinStationName;
+        public WTS_CONNECTSTATE_CLASS State;
+    }
+
+    enum WTS_CONNECTSTATE_CLASS
+    {
+        WTSActive,
+        WTSConnected,
+        WTSConnectQuery,
+        WTSShadow,
+        WTSDisconnected,
+        WTSIdle,
+        WTSListen,
+        WTSReset,
+        WTSDown,
+        WTSInit
     }
 
     public static ApplicationTheme GetThemeForActiveUser()
     {
-        // 1) Which session is the console user on?
-        uint sessionId = WTSGetActiveConsoleSessionId();
-        if (sessionId == uint.MaxValue)
-            throw new Win32Exception("No active console session.");
-
-        // 2) Get <Domain> and <User> for that session
+        int sessionId = GetActiveSessionId();
         string user = QuerySessionString(sessionId, WTS_INFO_CLASS.WTSUserName);
         string domain = QuerySessionString(sessionId, WTS_INFO_CLASS.WTSDomainName);
-
-        // 3) Turn "<domain>\<user>" into a SID string
         string sid = AccountNameToSid($"{domain}\\{user}");
 
-        // 4) Read their hive under HKEY_USERS\<SID>\...
+        string userProfilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile).Replace("Default", user));
+        LoadUserHiveIfNeeded(sid, userProfilePath);
+
         using var key = Registry.Users.OpenSubKey(
             $@"{sid}\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize",
             false);
@@ -73,23 +100,38 @@ internal static class ActiveUserThemeReader
         return (raw == 1) ? ApplicationTheme.Light : ApplicationTheme.Dark;
     }
 
-    static string QuerySessionString(uint sessionId, WTS_INFO_CLASS infoClass)
+    static int GetActiveSessionId()
     {
-        if (!WTSQuerySessionInformation(
-                IntPtr.Zero,
-                sessionId,
-                infoClass,
-                out var pBuffer,
-                out _))
-        {
+        if (!WTSEnumerateSessions(IntPtr.Zero, 0, 1, out var ppSessionInfo, out var count))
             throw new Win32Exception(Marshal.GetLastWin32Error());
-        }
 
         try
         {
-            // Marshal as Unicode (UTF-16) instead of ANSI
+            int dataSize = Marshal.SizeOf(typeof(WTS_SESSION_INFO));
+            for (int i = 0; i < count; i++)
+            {
+                var si = Marshal.PtrToStructure<WTS_SESSION_INFO>(ppSessionInfo + i * dataSize);
+                if (si.State == WTS_CONNECTSTATE_CLASS.WTSActive)
+                    return si.SessionID;
+            }
+        }
+        finally
+        {
+            WTSFreeMemory(ppSessionInfo);
+        }
+
+        throw new Exception("No active session found.");
+    }
+
+    static string QuerySessionString(int sessionId, WTS_INFO_CLASS infoClass)
+    {
+        if (!WTSQuerySessionInformation(IntPtr.Zero, sessionId, infoClass, out var pBuffer, out _))
+            throw new Win32Exception(Marshal.GetLastWin32Error());
+
+        try
+        {
             return Marshal.PtrToStringUni(pBuffer)
-                   ?? throw new Win32Exception("Unexpected null from WTSQuerySessionInformation");
+                   ?? throw new Win32Exception("Null result from WTSQuerySessionInformation");
         }
         finally
         {
@@ -99,20 +141,32 @@ internal static class ActiveUserThemeReader
 
     static string AccountNameToSid(string accountName)
     {
-        // First call to get required buffer sizes
         uint sidSize = 0, domSize = 0;
-        _ = LookupAccountName(null!, accountName, null!, ref sidSize, null!, ref domSize, out _);
+        _ = LookupAccountName(null, accountName, null!, ref sidSize, null!, ref domSize, out _);
 
-        if (Marshal.GetLastWin32Error() != 122) // ERROR_INSUFFICIENT_BUFFER
+        if (Marshal.GetLastWin32Error() != 122)
             throw new Win32Exception(Marshal.GetLastWin32Error());
 
         var sidBuf = new byte[sidSize];
         var domBuf = new StringBuilder((int)domSize);
-        if (!LookupAccountName(null!, accountName, sidBuf, ref sidSize, domBuf, ref domSize, out _))
+
+        if (!LookupAccountName(null, accountName, sidBuf, ref sidSize, domBuf, ref domSize, out _))
             throw new Win32Exception(Marshal.GetLastWin32Error());
 
-        // Convert to S-1-... string
-        var sid = new SecurityIdentifier(sidBuf, 0);
-        return sid.Value;
+        return new SecurityIdentifier(sidBuf, 0).Value;
+    }
+
+    static void LoadUserHiveIfNeeded(string sid, string userProfilePath)
+    {
+        if (Registry.Users.OpenSubKey(sid) != null)
+            return;
+
+        string ntUserDat = Path.Combine(userProfilePath, "NTUSER.DAT");
+        if (!File.Exists(ntUserDat))
+            throw new FileNotFoundException("NTUSER.DAT not found", ntUserDat);
+
+        int result = RegLoadKey((UIntPtr)0x80000003, sid, ntUserDat); // HKEY_USERS
+        if (result != 0)
+            throw new Win32Exception(result);
     }
 }
