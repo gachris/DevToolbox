@@ -97,7 +97,7 @@ internal static class ActiveUserThemeReader
             false);
 
         var raw = key?.GetValue("AppsUseLightTheme") as int?;
-        return (raw == 1) ? ApplicationTheme.Light : ApplicationTheme.Dark;
+        return (raw == 0) ? ApplicationTheme.Dark : ApplicationTheme.Light;
     }
 
     static int GetActiveSessionId()
