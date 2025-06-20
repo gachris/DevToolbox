@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
+using System.Windows.Media;
 using DevToolbox.Wpf.Media;
 using Microsoft.Win32;
 
@@ -98,6 +99,32 @@ internal static class ActiveUserThemeReader
 
         var raw = key?.GetValue("AppsUseLightTheme") as int?;
         return (raw == 0) ? ApplicationTheme.Dark : ApplicationTheme.Light;
+    }
+
+    public static SolidColorBrush? GetAccentBrushForActiveUser()
+    {
+        int sessionId = GetActiveSessionId();
+        string user = QuerySessionString(sessionId, WTS_INFO_CLASS.WTSUserName);
+        string domain = QuerySessionString(sessionId, WTS_INFO_CLASS.WTSDomainName);
+        string sid = AccountNameToSid($"{domain}\\{user}");
+
+        string userProfilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile).Replace("Default", user));
+        LoadUserHiveIfNeeded(sid, userProfilePath);
+
+        using var registryKey = Registry.Users.OpenSubKey(sid + "\\Software\\Microsoft\\Windows\\DWM", writable: false);
+        if (registryKey?.GetValue("AccentColor") is int raw)
+        {
+            byte a = (byte)((raw >> 24) & 0xFF);
+            byte r = (byte)(raw & 0xFF);
+            byte g = (byte)((raw >> 8) & 0xFF);
+            byte b = (byte)((raw >> 16) & 0xFF);
+            var c = Color.FromArgb(a, r, g, b);
+            var brush = new SolidColorBrush(c);
+            brush.Freeze();
+            return brush;
+        }
+
+        return null;
     }
 
     static int GetActiveSessionId()
