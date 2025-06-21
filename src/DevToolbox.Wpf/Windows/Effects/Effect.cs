@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -77,8 +76,8 @@ public abstract class Effect
         if (_hwnd == IntPtr.Zero)
             return;
 
-        var systemBackdropType = (int)DWM_SYSTEMBACKDROP_TYPE.DWMSBT_NONE;
-        _ = Dwmapi.DwmSetWindowAttribute(_hwnd, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref systemBackdropType, Marshal.SizeOf<int>());
+        var systemBackdropType = (uint)DWM_SYSTEMBACKDROP_TYPE.DWMSBT_NONE;
+        _ = Dwmapi.DwmSetWindowAttribute(_hwnd, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref systemBackdropType, sizeof(uint));
     }
 
     /// <summary>
@@ -97,8 +96,8 @@ public abstract class Effect
         RefreshFrame();
         RefreshDarkMode();
 
-        var systemBackdropType = (int)SystemBackdropType;
-        _ = Dwmapi.DwmSetWindowAttribute(_hwnd, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref systemBackdropType, Marshal.SizeOf<int>());
+        var systemBackdropType = (uint)SystemBackdropType;
+        _ = Dwmapi.DwmSetWindowAttribute(_hwnd, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref systemBackdropType, sizeof(uint));
     }
 
     /// <summary>
@@ -129,8 +128,8 @@ public abstract class Effect
     /// </summary>
     private void RefreshDarkMode()
     {
-        var flag = ThemeManager.ApplicationTheme is ApplicationTheme.Dark ? 1 : 0;
-        _ = Dwmapi.DwmSetWindowAttribute(_hwnd, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, ref flag, Marshal.SizeOf<int>());
+        var flag = ThemeManager.ApplicationTheme is ApplicationTheme.Dark ? (uint)1 : 0;
+        _ = Dwmapi.DwmSetWindowAttribute(_hwnd, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, ref flag, sizeof(uint));
     }
 
     #endregion
