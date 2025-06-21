@@ -71,4 +71,7 @@ internal static class User32
 
     [DllImport("user32", EntryPoint = "SetWindowPos")]
     public static extern int SetWindowPos(IntPtr hWnd, int hwndInsertAfter, int x, int y, int cx, int cy, int wFlags);
+
+    [DllImport("user32.dll")]
+    public static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
 }

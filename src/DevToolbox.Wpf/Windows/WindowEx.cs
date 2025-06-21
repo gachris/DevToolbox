@@ -1,4 +1,3 @@
-﻿using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -245,27 +244,14 @@ public class WindowEx : Window
         Chrome = new WindowChrome
         {
             UseAeroCaptionButtons = false,
-            GlassFrameThickness = new Thickness(-1),
-            CaptionHeight = 48
+            GlassFrameThickness = new Thickness(1),
+            CaptionHeight = 48,
+            NonClientFrameEdges = NonClientFrameEdges.None,
         };
 
         var windowExBehavior = new WindowExBehavior();
         WindowExBehavior.SetWindowExBehavior(this, windowExBehavior);
     }
-
-    #region Methods Overrides
-
-    /// <summary>
-    /// Invoked when the window's source is initialized.
-    /// </summary>
-    /// <param name="e">The event data.</param>
-    protected override void OnSourceInitialized(EventArgs e)
-    {
-        base.OnSourceInitialized(e);
-        InvalidateMeasure();
-    }
-
-    #endregion
 
     #region Methods
 

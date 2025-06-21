@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -151,8 +150,8 @@ public class WindowBehavior
     /// <param name="color">The color to set as the border.</param>
     private static void SetWindowBorderColor(IntPtr hwnd, Color? color)
     {
-        var pvattribute = color.HasValue ? NativeMethods.GetDWORD(color.Value) : 0x00;
-        _ = Dwmapi.DwmSetWindowAttribute(hwnd, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, ref pvattribute, Marshal.SizeOf(typeof(int)));
+        var pvattribute = color.HasValue ? (uint)NativeMethods.GetDWORD(color.Value) : 0x00;
+        _ = Dwmapi.DwmSetWindowAttribute(hwnd, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, ref pvattribute, sizeof(uint));
     }
 
     /// <summary>

@@ -44,6 +44,7 @@ internal class WindowExBehavior : DependencyObject
             new HANDLE_MESSAGE(WM.MOUSEMOVE,             HandleMOUSEMOVE),
             new HANDLE_MESSAGE(WM.NCHITTEST,             HandleNCHitTest),
             new HANDLE_MESSAGE(WM.NCRBUTTONUP,           HandleNCRButtonUp),
+            new HANDLE_MESSAGE(WM.NCCALCSIZE,            HandleNCCALCSIZE),
             new HANDLE_MESSAGE(WM.SIZE,                  HandleSize),
             new HANDLE_MESSAGE(WM.NCLBUTTONDOWN,         HandleNCLBUTTONDOWN),
             new HANDLE_MESSAGE(WM.NCLBUTTONDBLCLK,       HandleNCLBUTTONDBLCLK),
@@ -102,6 +103,29 @@ internal class WindowExBehavior : DependencyObject
         return IntPtr.Zero;
     }
 
+    private IntPtr HandleNCCALCSIZE(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+    {
+        var parameters = Marshal.PtrToStructure<NCCALCSIZE_PARAMS>(lParam)!;
+        var placement = new WINDOWPLACEMENT
+        {
+            length = Marshal.SizeOf(typeof(WINDOWPLACEMENT))
+        };
+        User32.GetWindowPlacement(_hwnd, ref placement);
+
+        if (placement.showCmd == (int)SW.SHOWNORMAL)
+        {
+            parameters.rgrc0.Top += 1;
+            parameters.rgrc0.Left += 1;
+            parameters.rgrc0.Right -= 1;
+
+            Marshal.StructureToPtr(parameters, lParam, true);
+        }
+
+        handled = true;
+
+        return IntPtr.Zero;
+    }
+
     private IntPtr HandleSize(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
     {
         handled = false;
@@ -124,7 +148,7 @@ internal class WindowExBehavior : DependencyObject
         }
         else if (wParam.ToInt32() == (int)WM_SIZE.RESTORED)
         {
-            child.Margin = new Thickness(0);
+            child.Margin = new Thickness(0, 0, 0, 1);
         }
 
         return IntPtr.Zero;
@@ -234,8 +258,11 @@ internal class WindowExBehavior : DependencyObject
             {
                 _hwnd = new WindowInteropHelper(WindowEx).Handle;
                 _hwndSource = HwndSource.FromHwnd(_hwnd);
+                _hwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
+
                 ApplyNewCustomChrome();
 
+                _windowEx.InvalidateMeasure();
                 _hwndSource.AddHook(WndProc);
             };
         }
@@ -252,6 +279,23 @@ internal class WindowExBehavior : DependencyObject
         var hwnd_style = (WS)NativeMethods.GetWindowLongPtr(_hwnd, GWL.STYLE);
         var hwnd_new_style = hwnd_style & ~WS.SYSMENU;
         NativeMethods.SetWindowLongPtr(_hwnd, GWL.STYLE, (IntPtr)hwnd_new_style);
+
+        // Remove the caption color from the window
+        if (IsSupported())
+        {
+            var color_none = 0xFFFFFFFE;
+            Dwmapi.DwmSetWindowAttribute(_hwnd, DWMWINDOWATTRIBUTE.DWMWA_CAPTION_COLOR, ref color_none, sizeof(uint));
+        }
+    }
+
+    /// <summary>
+    /// Determines if the current OS version supports the window effect features.
+    /// </summary>
+    /// <returns>True if supported; otherwise, false.</returns>
+    private static bool IsSupported()
+    {
+        var v = NativeMethods.GetTrueOSVersion();
+        return v.Build >= 22621;
     }
 
     private bool RaiseMouseMessage(WM wM)
