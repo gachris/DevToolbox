@@ -290,33 +290,35 @@
 
     <SolidColorBrush x:Key="Button.Chrome.Background" Color="Transparent" />
     <SolidColorBrush x:Key="Button.Chrome.Foreground" Color="#F1F1F1" />
-    <SolidColorBrush x:Key="Button.Chrome.BorderBrush" Color="#1F1F1F" />
-    <SolidColorBrush x:Key="Button.Chrome.MouseOverBackground" Color="#3D3D3D" />
+    <SolidColorBrush x:Key="Button.Chrome.BorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="Button.Chrome.MouseOverBackground" Color="#0FFFFFFF" />
     <SolidColorBrush x:Key="Button.Chrome.MouseOverForeground" Color="#FFFFFF" />
-    <SolidColorBrush x:Key="Button.Chrome.MouseOverBorderBrush" Color="#3D3D3D" />
-    <SolidColorBrush x:Key="Button.Chrome.PressedBackground" Color="#383838" />
+    <SolidColorBrush x:Key="Button.Chrome.MouseOverBorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="Button.Chrome.PressedBackground" Color="#0AFFFFFF" />
     <SolidColorBrush x:Key="Button.Chrome.PressedForeground" Color="#FFFFFF" />
-    <SolidColorBrush x:Key="Button.Chrome.PressedBorderBrush" Color="#383838" />
-    <SolidColorBrush x:Key="Button.Chrome.DisabledBackground" Color="#333337" />
+    <SolidColorBrush x:Key="Button.Chrome.PressedBorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="Button.Chrome.DisabledBackground" Color="#0BFFFFFF" />
     <SolidColorBrush x:Key="Button.Chrome.DisabledForeground" Color="#818183" />
-    <SolidColorBrush x:Key="Button.Chrome.DisabledBorderBrush" Color="#333337" />
+    <SolidColorBrush x:Key="Button.Chrome.DisabledBorderBrush" Color="Transparent" />
     <SolidColorBrush x:Key="Button.Chrome.InactiveBackground" Color="Transparent" />
-    <SolidColorBrush x:Key="Button.Chrome.InactiveForeground" Color="#80F1F1F1" />
+    <SolidColorBrush x:Key="Button.Chrome.InactiveForeground" Color="#80FFFFFF" />
     <SolidColorBrush x:Key="Button.Chrome.InactiveBorderBrush" Color="Transparent" />
 
     <SolidColorBrush x:Key="Button.Chrome.Close.Background" Color="Transparent" />
-    <SolidColorBrush x:Key="Button.Chrome.Close.Foreground" Color="#F1F1F1" />
-    <SolidColorBrush x:Key="Button.Chrome.Close.BorderBrush" Color="#1F1F1F" />
-    <SolidColorBrush x:Key="Button.Chrome.Close.MouseOverBackground" Color="#3D3D3D" />
+    <SolidColorBrush x:Key="Button.Chrome.Close.Foreground" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="Button.Chrome.Close.BorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="Button.Chrome.Close.MouseOverBackground" Color="#C42B1C" />
     <SolidColorBrush x:Key="Button.Chrome.Close.MouseOverForeground" Color="#FFFFFF" />
-    <SolidColorBrush x:Key="Button.Chrome.Close.MouseOverBorderBrush" Color="#3D3D3D" />
-    <SolidColorBrush x:Key="Button.Chrome.Close.PressedBackground" Color="#383838" />
+    <SolidColorBrush x:Key="Button.Chrome.Close.MouseOverBorderBrush" Color="#C42B1C" />
+    <SolidColorBrush x:Key="Button.Chrome.Close.PressedBackground" Color="#AF281C" />
     <SolidColorBrush x:Key="Button.Chrome.Close.PressedForeground" Color="#FFFFFF" />
-    <SolidColorBrush x:Key="Button.Chrome.Close.PressedBorderBrush" Color="#383838" />
-    <SolidColorBrush x:Key="Button.Chrome.Close.DisabledBackground" Color="#333337" />
+    <SolidColorBrush x:Key="Button.Chrome.Close.PressedBorderBrush" Color="#AF281C" />
+    <SolidColorBrush x:Key="Button.Chrome.Close.DisabledBackground" Color="#0BFFFFFF" />
     <SolidColorBrush x:Key="Button.Chrome.Close.DisabledForeground" Color="#818183" />
-    <SolidColorBrush x:Key="Button.Chrome.Close.DisabledBorderBrush" Color="#333337" />
-    <SolidColorBrush x:Key="Button.Chrome.Close.InactiveForeground" Color="#80F1F1F1" />
+    <SolidColorBrush x:Key="Button.Chrome.Close.DisabledBorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="Button.Chrome.Close.InactiveBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="Button.Chrome.Close.InactiveForeground" Color="#80FFFFFF" />
+    <SolidColorBrush x:Key="Button.Chrome.Close.InactiveBorderBrush" Color="Transparent" />
 
     <!--#endregion-->
 
