@@ -14,7 +14,6 @@
     Height="500"
     d:DataContext="{d:DesignInstance viewModels:DialogWindowViewModel}"
     FontFamily="Segoe UI"
-    Foreground="{DynamicResource DialogWindow.Foreground}"
     ShowIcon="False"
     SnapsToDevicePixels="True"
     UseLayoutRounding="True"
