@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
     Margin="50"
+    AutoHide="False"
     BorderThickness="1"
     Dock="Right"
     ExpandSize="500"

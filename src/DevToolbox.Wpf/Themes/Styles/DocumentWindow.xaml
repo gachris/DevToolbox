@@ -7,14 +7,6 @@
         <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/WindowEx.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <ControlTemplate x:Key="IconTemplate" TargetType="ContentControl">
-        <ContentPresenter
-            Width="24"
-            Height="24"
-            Margin="8,4,0,0"
-            Content="{TemplateBinding Content}" />
-    </ControlTemplate>
-
     <Style BasedOn="{StaticResource ResourceKey={x:Type windows:WindowEx}}" TargetType="{x:Type windows:DocumentWindow}">
         <Setter Property="Focusable" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

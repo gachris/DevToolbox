@@ -129,3 +129,6 @@ dotnet_naming_style.starts_with_underscore.required_prefix = _
 dotnet_naming_style.starts_with_underscore.required_suffix =
 dotnet_naming_style.starts_with_underscore.word_separator =
 dotnet_naming_style.starts_with_underscore.capitalization = camel_case
+
+# WPF0001: Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+dotnet_diagnostic.WPF0001.severity = silent

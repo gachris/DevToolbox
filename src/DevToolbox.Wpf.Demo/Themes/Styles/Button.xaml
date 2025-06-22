@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/Button/Generic.xaml" />
+        <devtoolbox:ThemeResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/Button/Generic.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style

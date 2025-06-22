@@ -12,13 +12,6 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <ControlTemplate x:Key="IconTemplate" TargetType="ContentControl">
-        <ContentPresenter
-            Margin="8,0,0,0"
-            VerticalAlignment="Center"
-            Content="{TemplateBinding Content}" />
-    </ControlTemplate>
-
     <Style
         x:Key="DockableWindowButtonStyle"
         BasedOn="{StaticResource ButtonStyle}"
@@ -40,7 +33,6 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="WindowChrome.CaptionHeight" Value="33" />
         <Setter Property="windows:WindowBehavior.BorderBrush" Value="#7160E8" />
-        <Setter Property="IconTemplate" Value="{StaticResource IconTemplate}" />
         <Setter Property="Icon" Value="{Binding Content.SelectedItem.Icon, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=Self}}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -114,23 +106,20 @@
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="auto" />
                                             </Grid.ColumnDefinitions>
-                                            <ContentControl
+                                            <Image
+                                                x:Name="PART_Icon"
                                                 Grid.Column="0"
+                                                Width="16"
+                                                Height="16"
                                                 VerticalAlignment="Center"
-                                                Template="{Binding IconTemplate, RelativeSource={RelativeSource AncestorType={x:Type windows:WindowEx}}}">
-                                                <Image
-                                                    x:Name="PART_Icon"
-                                                    Width="16"
-                                                    Height="16"
-                                                    Visibility="{Binding ShowIcon, RelativeSource={RelativeSource AncestorType={x:Type windows:WindowEx}}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                                    <Image.Source>
-                                                        <Binding
-                                                            Converter="{converters:WindowIconConverter}"
-                                                            Path="Icon"
-                                                            RelativeSource="{RelativeSource AncestorType={x:Type Window}}" />
-                                                    </Image.Source>
-                                                </Image>
-                                            </ContentControl>
+                                                Visibility="{Binding ShowIcon, RelativeSource={RelativeSource AncestorType={x:Type windows:WindowEx}}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                <Image.Source>
+                                                    <Binding
+                                                        Converter="{converters:WindowIconConverter}"
+                                                        Path="Icon"
+                                                        RelativeSource="{RelativeSource AncestorType={x:Type Window}}" />
+                                                </Image.Source>
+                                            </Image>
                                             <ContentPresenter
                                                 Grid.Column="1"
                                                 VerticalAlignment="Center"

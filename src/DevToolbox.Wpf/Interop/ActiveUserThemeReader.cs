@@ -127,6 +127,21 @@ internal static class ActiveUserThemeReader
         return null;
     }
 
+    public static bool ShowAccentColorOnTitleBarsAndWindows()
+    {
+        int sessionId = GetActiveSessionId();
+        string user = QuerySessionString(sessionId, WTS_INFO_CLASS.WTSUserName);
+        string domain = QuerySessionString(sessionId, WTS_INFO_CLASS.WTSDomainName);
+        string sid = AccountNameToSid($"{domain}\\{user}");
+
+        string userProfilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile).Replace("Default", user));
+        LoadUserHiveIfNeeded(sid, userProfilePath);
+
+        using var registryKey = Registry.Users.OpenSubKey(sid + "\\Software\\Microsoft\\Windows\\DWM", writable: false);
+        var raw = registryKey?.GetValue("ColorPrevalence") as int?;
+        return raw == 1;
+    }
+
     static int GetActiveSessionId()
     {
         if (!WTSEnumerateSessions(IntPtr.Zero, 0, 1, out var ppSessionInfo, out var count))

@@ -63,16 +63,6 @@
             <Setter Property="FontWeight" Value="SemiBold" />
         </Style>
     </windows:WindowEx.TitleTextBlockStyle>
-    <windows:WindowEx.IconTemplate>
-        <DataTemplate>
-            <ContentControl
-                Width="26"
-                Height="26"
-                Content="{Binding}"
-                Focusable="False"
-                IsTabStop="False" />
-        </DataTemplate>
-    </windows:WindowEx.IconTemplate>
     <b:Interaction.Behaviors>
         <behaviors:RoutedCommandBinding Command="{Binding YesCommand}" RoutedCommand="commands:DialogWindowCommands.Yes" />
         <behaviors:RoutedCommandBinding Command="{Binding NoCommand}" RoutedCommand="commands:DialogWindowCommands.No" />
@@ -94,7 +84,7 @@
             <Separator
                 Grid.Row="1"
                 Margin="0"
-                Style="{StaticResource SimpleHorizontalSeparatorStyle}"
+                Style="{DynamicResource SimpleHorizontalSeparatorStyle}"
                 Visibility="{Binding IsFooterVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <Grid
                 Grid.Row="2"
@@ -139,4 +129,4 @@
             </controls:WaitingIndicator.ContentTemplate>
         </controls:WaitingIndicator>
     </Grid>
-</windows:WindowEx> 
+</windows:WindowEx>

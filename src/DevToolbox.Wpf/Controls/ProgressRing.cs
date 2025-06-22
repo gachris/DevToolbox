@@ -39,9 +39,28 @@ public class ProgressRing : Control
         DependencyProperty.Register(nameof(ProgressRingStyle), typeof(ProgressRingStyle), typeof(ProgressRing),
             new PropertyMetadata(default(ProgressRingStyle), default));
 
+    /// <summary>
+    /// Identifies the <see cref="Size"/> dependency property.
+    /// </summary>
+    public static readonly DependencyProperty SizeProperty =
+        DependencyProperty.Register(
+            nameof(Size),
+            typeof(double),
+            typeof(ProgressRing),
+            new PropertyMetadata(40.0));
+
     #endregion
 
     #region Properties
+
+    /// <summary>
+    /// Gets or sets the size (width and height) of the progress ring.
+    /// </summary>
+    public double Size
+    {
+        get => (double)GetValue(SizeProperty);
+        set => SetValue(SizeProperty, value);
+    }
 
     /// <summary>
     /// Gets or sets a value that indicates whether the <see cref="ProgressRing"/> is showing progress.

@@ -10,7 +10,7 @@ internal class NativeMethods
     public static Version GetTrueOSVersion()
     {
         var osvi = new OSVERSIONINFOEX { dwOSVersionInfoSize = Marshal.SizeOf<OSVERSIONINFOEX>() };
-        if (ntdll.RtlGetVersion(ref osvi) == 0)
+        if (Ntdll.RtlGetVersion(ref osvi) == 0)
             return new Version(osvi.dwMajorVersion, osvi.dwMinorVersion, osvi.dwBuildNumber);
         return Environment.OSVersion.Version;
     }

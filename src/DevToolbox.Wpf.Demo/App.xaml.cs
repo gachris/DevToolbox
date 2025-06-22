@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using CommonServiceLocator;
 using DevToolbox.Core.Contracts;
-using DevToolbox.Wpf.Demo.Helpers;
 
 namespace DevToolbox.Wpf.Demo;
 

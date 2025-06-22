@@ -72,7 +72,9 @@ public class ButtonHelper
         if (button.ContextMenu != null)
         {
             // Create the ContextMenuEventArgs manually
+#pragma warning disable SYSLIB0050
             var contextMenuEventArgs = (ContextMenuEventArgs)FormatterServices.GetUninitializedObject(typeof(ContextMenuEventArgs));
+#pragma warning restore SYSLIB0050
             contextMenuEventArgs.RoutedEvent = FrameworkElement.ContextMenuOpeningEvent;
             contextMenuEventArgs.Source = button;
 

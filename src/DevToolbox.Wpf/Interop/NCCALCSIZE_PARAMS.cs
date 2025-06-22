@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace DevToolbox.Wpf.Interop;
 
+[StructLayout(LayoutKind.Sequential)]
 internal struct NCCALCSIZE_PARAMS
 {
     public RECT rgrc0;

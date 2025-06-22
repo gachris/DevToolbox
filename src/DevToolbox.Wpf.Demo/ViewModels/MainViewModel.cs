@@ -21,6 +21,8 @@ public partial class MainViewModel : ObservableObject
 
     public ObservableCollection<ExampleGategory>? ExampleCategories { get; private set; }
 
+    public bool IsSettingsSelected => SelectedItem is SettingsViewModel;
+
     #endregion
 
     public MainViewModel()
@@ -53,6 +55,11 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
+    partial void OnSelectedItemChanged(object? value)
+    {
+        OnPropertyChanged(nameof(IsSettingsSelected));
+    }
+
     #endregion
 
     #region Relay Commands
@@ -60,22 +67,10 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void OpenSettings()
     {
-        foreach (var exampleGategory in ExampleCategories?.ToArray() ?? [])
+        if (IsSettingsSelected)
         {
-            if (exampleGategory.IsSelected)
-            {
-                exampleGategory.IsSelected = false;
-                break;
-            }
-
-            foreach (var subGategory in exampleGategory.SubCategories?.ToArray() ?? [])
-            {
-                if (subGategory.IsSelected)
-                {
-                    subGategory.IsSelected = false;
-                    break;
-                }
-            }
+            SelectedItem = ExampleCategories?.FirstOrDefault();
+            return;
         }
 
         SelectedItem = ViewModelLocator.SettingsViewModel;

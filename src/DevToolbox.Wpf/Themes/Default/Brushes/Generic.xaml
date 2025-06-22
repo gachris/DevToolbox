@@ -1,5 +1,19 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!--  MessageBar Background Brushes  -->
+    <SolidColorBrush x:Key="MessageBarBackgroundError" Color="#FDE7E9" />
+    <SolidColorBrush x:Key="MessageBarBackgroundInfo" Color="#F3F2F1" />
+    <SolidColorBrush x:Key="MessageBarBackgroundSuccess" Color="#DFF6DD" />
+    <SolidColorBrush x:Key="MessageBarBackgroundWarning" Color="#FED9CC" />
+    <SolidColorBrush x:Key="MessageBarBackgroundProgress" Color="#D0E7FF" />
+
+    <!--  MessageBar Icon/Foreground Brushes  -->
+    <SolidColorBrush x:Key="MessageBarIconError" Color="#A80000" />
+    <SolidColorBrush x:Key="MessageBarIconInfo" Color="#60605C" />
+    <SolidColorBrush x:Key="MessageBarIconSuccess" Color="#107C10" />
+    <SolidColorBrush x:Key="MessageBarIconWarning" Color="#D83B01" />
+    <SolidColorBrush x:Key="MessageBarIconProgress" Color="#000000" />
+
     <!--#region DockManager-->
 
     <SolidColorBrush x:Key="DockManager.Background" Color="Transparent" />
@@ -296,7 +310,6 @@
 
     <!--#region ChromeWindow-->
 
-    <SolidColorBrush x:Key="Window.Background" Color="#FFFFFF" />
     <SolidColorBrush x:Key="Window.Title.Foreground" Color="#2D2D2D" />
     <SolidColorBrush x:Key="Window.Inactive.Title.Foreground" Color="#929496" />
 

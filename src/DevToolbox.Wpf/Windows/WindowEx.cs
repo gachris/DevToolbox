@@ -1,9 +1,8 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shell;
-using DevToolbox.Wpf.Controls;
 
 namespace DevToolbox.Wpf.Windows;
 
@@ -14,7 +13,7 @@ namespace DevToolbox.Wpf.Windows;
 public class WindowEx : Window
 {
     #region Fields/Consts
-
+ 
     /// <summary>
     /// Identifies the HeaderTemplate dependency property.
     /// </summary>
@@ -50,10 +49,10 @@ public class WindowEx : Window
         DependencyProperty.Register(nameof(TitleTextBlockStyle), typeof(Style), typeof(WindowEx), new FrameworkPropertyMetadata(default));
 
     /// <summary>
-    /// Identifies the IconTemplate dependency property.
+    /// Identifies the ImageStyle dependency property.
     /// </summary>
-    public static readonly DependencyProperty IconTemplateProperty =
-        DependencyProperty.Register(nameof(IconTemplate), typeof(DataTemplate), typeof(WindowEx), new PropertyMetadata(default));
+    public static readonly DependencyProperty ImageStyleProperty =
+        DependencyProperty.Register(nameof(ImageStyle), typeof(Style), typeof(WindowEx), new PropertyMetadata(default));
 
     /// <summary>
     /// Identifies the HeaderedContentControlStyle dependency property.
@@ -90,24 +89,34 @@ public class WindowEx : Window
     #region Properties
 
     /// <summary>
+    /// Gets the key for the Chrome Window style resource.
+    /// </summary>
+    public static ComponentResourceKey ChromeStyleKey => new(typeof(WindowEx), nameof(ChromeStyleKey));
+
+    /// <summary>
+    /// Gets the key for the Back button style resource.
+    /// </summary>
+    public static ComponentResourceKey BackButtonStyleKey => new(typeof(WindowEx), nameof(BackButtonStyleKey));
+
+    /// <summary>
     /// Gets the key for the Help button style resource.
     /// </summary>
-    public static ComponentResourceKey HelpButtonStyleKey => new(typeof(FontGlyph), nameof(HelpButtonStyleKey));
+    public static ComponentResourceKey HelpButtonStyleKey => new(typeof(WindowEx), nameof(HelpButtonStyleKey));
 
     /// <summary>
     /// Gets the key for the Minimize button style resource.
     /// </summary>
-    public static ComponentResourceKey MinimizeButtonStyleKey => new(typeof(FontGlyph), nameof(MinimizeButtonStyleKey));
+    public static ComponentResourceKey MinimizeButtonStyleKey => new(typeof(WindowEx), nameof(MinimizeButtonStyleKey));
 
     /// <summary>
     /// Gets the key for the Maximize button style resource.
     /// </summary>
-    public static ComponentResourceKey MaximizeButtonStyleKey => new(typeof(FontGlyph), nameof(MaximizeButtonStyleKey));
+    public static ComponentResourceKey MaximizeButtonStyleKey => new(typeof(WindowEx), nameof(MaximizeButtonStyleKey));
 
     /// <summary>
     /// Gets the key for the Close button style resource.
     /// </summary>
-    public static ComponentResourceKey CloseButtonStyleKey => new(typeof(FontGlyph), nameof(CloseButtonStyleKey));
+    public static ComponentResourceKey CloseButtonStyleKey => new(typeof(WindowEx), nameof(CloseButtonStyleKey));
 
     /// <summary>
     /// Gets or sets the template for the window header.
@@ -164,12 +173,12 @@ public class WindowEx : Window
     }
 
     /// <summary>
-    /// Gets or sets the template for the window icon.
+    /// Gets or sets the style for the window icon.
     /// </summary>
-    public DataTemplate IconTemplate
+    public Style ImageStyle
     {
-        get => (DataTemplate)GetValue(IconTemplateProperty);
-        set => SetValue(IconTemplateProperty, value);
+        get => (Style)GetValue(ImageStyleProperty);
+        set => SetValue(ImageStyleProperty, value);
     }
 
     /// <summary>
@@ -220,7 +229,7 @@ public class WindowEx : Window
     static WindowEx()
     {
         var handlerType = typeof(WindowEx);
-        DefaultStyleKeyProperty.OverrideMetadata(handlerType, new FrameworkPropertyMetadata(handlerType));
+        DefaultStyleKeyProperty.OverrideMetadata(handlerType, new FrameworkPropertyMetadata(ChromeStyleKey));
 
         // Register command bindings for window commands
         CommandManager.RegisterClassCommandBinding(handlerType, new CommandBinding(SystemCommands.MinimizeWindowCommand,
@@ -251,6 +260,8 @@ public class WindowEx : Window
 
         var windowExBehavior = new WindowExBehavior();
         WindowExBehavior.SetWindowExBehavior(this, windowExBehavior);
+
+        SetResourceReference(StyleProperty, ChromeStyleKey);
     }
 
     #region Methods

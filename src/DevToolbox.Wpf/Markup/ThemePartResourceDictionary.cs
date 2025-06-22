@@ -129,15 +129,6 @@ public class ThemePartResourceDictionary : ResourceDictionary
 
         var key = Key as ThemePartKeyExtension;
 
-        // Skip loading if this is DevToolbox and override is enabled
-        if (key != null &&
-            key.ThemeName == ThemeManager.ApplicationThemeNameCore &&
-            key.AssemblyName?.StartsWith("DevToolbox", StringComparison.OrdinalIgnoreCase) == true &&
-            ThemeManager.OverrideCoreTheming)
-        {
-            return;
-        }
-
         if (key?.ThemeName == ThemeManager.ApplicationThemeNameCore)
         {
             if (Application.Current.Dispatcher.CheckAccess())

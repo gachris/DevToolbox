@@ -1,0 +1,66 @@
+@font-face {
+  font-family: 'DevToolbox-Icons';
+  src:  url('fonts/DevToolbox-Icons.eot?10olku');
+  src:  url('fonts/DevToolbox-Icons.eot?10olku#iefix') format('embedded-opentype'),
+    url('fonts/DevToolbox-Icons.ttf?10olku') format('truetype'),
+    url('fonts/DevToolbox-Icons.woff?10olku') format('woff'),
+    url('fonts/DevToolbox-Icons.svg?10olku#DevToolbox-Icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'DevToolbox-Icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-Warning:before {
+  content: "\e7ba";
+}
+.icon-ChromeBack:before {
+  content: "\e830";
+}
+.icon-FolderOpened:before {
+  content: "\e838";
+}
+.icon-Clear:before {
+  content: "\e894";
+}
+.icon-Help:before {
+  content: "\e897";
+}
+.icon-ChromeClose:before {
+  content: "\e8bb";
+}
+.icon-ChromeMinimize:before {
+  content: "\e921";
+}
+.icon-ChromeMaximize:before {
+  content: "\e922";
+}
+.icon-ChromeRestore:before {
+  content: "\e923";
+}
+.icon-Completed:before {
+  content: "\e930";
+}
+.icon-Info:before {
+  content: "\e946";
+}
+.icon-Shield:before {
+  content: "\ea18";
+}
+.icon-ErrorBadge:before {
+  content: "\ea39";
+}

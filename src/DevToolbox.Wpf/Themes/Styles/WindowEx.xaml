@@ -4,20 +4,61 @@
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
     xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters"
     xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers"
+    xmlns:markup="clr-namespace:DevToolbox.Wpf.Markup"
     xmlns:windows="clr-namespace:DevToolbox.Wpf.Windows">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <Style x:Key="FocusVisual">
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=Background}" Color="{markup:ChromeButtonColorKey DarkColor=Transparent, LightColor=Transparent}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=Foreground}" Color="{markup:ChromeButtonColorKey DarkColor='#F1F1F1', LightColor='#1E1E1E'}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=BorderBrush}" Color="{markup:ChromeButtonColorKey DarkColor=Transparent, LightColor=Transparent}" />
+
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=MouseOverBackground}" Color="{markup:ChromeButtonColorKey DarkColor='#0FFFFFFF', LightColor='#0F000000', SystemColorType=Accent}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=MouseOverForeground}" Color="{markup:ChromeButtonTextColorKey DarkColorType=AccentDark3, DarkBackground='#0FFFFFFF', DarkForeground='#F1F1F1', LightColorType=AccentLight3, LightBackground='#0F000000', LightForeground='#1E1E1E', SystemColorType=Accent}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=MouseOverBorderBrush}" Color="{markup:ChromeButtonColorKey DarkColor=Transparent, LightColor=Transparent}" />
+
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=PressedBackground}" Color="{markup:ChromeButtonColorKey DarkColor='#0AFFFFFF', LightColor='#0A000000', SystemColorType=AccentLight1}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=PressedForeground}" Color="{markup:ChromeButtonTextColorKey DarkColorType=AccentDark3, DarkBackground='#0AFFFFFF', DarkForeground='#F1F1F1', LightColorType=AccentLight3, LightBackground='#0A000000', LightForeground='#1E1E1E', SystemColorType=Accent}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=PressedBorderBrush}" Color="{markup:ChromeButtonColorKey DarkColor=Transparent, LightColor=Transparent}" />
+
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=DisabledBackground}" Color="{markup:ChromeButtonColorKey DarkColor='#0BFFFFFF', LightColor='#0B000000'}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=DisabledForeground}" Color="{markup:ChromeButtonColorKey DarkColor='#818183', LightColor='#818183'}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=DisabledBorderBrush}" Color="{markup:ChromeButtonColorKey DarkColor=Transparent, LightColor=Transparent}" />
+
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=InactiveBackground}" Color="{markup:ChromeButtonColorKey DarkColor=Transparent, LightColor=Transparent}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=InactiveForeground}" Color="{markup:ChromeButtonColorKey DarkColor='#818183', LightColor='#818183', SystemColorType=AccentLight2}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=InactiveBorderBrush}" Color="{markup:ChromeButtonColorKey DarkColor=Transparent, LightColor=Transparent}" />
+
+    <!--  Close button base state  -->
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=Background, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor=Transparent, LightColor=Transparent}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=Foreground, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor='#F1F1F1', LightColor='#1E1E1E'}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=BorderBrush, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor=Transparent, LightColor=Transparent}" />
+
+    <!--  MouseOver  -->
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=MouseOverBackground, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor='#C42B1C', LightColor='#C42B1C'}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=MouseOverForeground, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor='#F1F1F1', LightColor='#F1F1F1'}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=MouseOverBorderBrush, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor='#C42B1C', LightColor='#C42B1C'}" />
+
+    <!--  Pressed  -->
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=PressedBackground, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor='#AF281C', LightColor='#AF281C'}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=PressedForeground, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor='#F1F1F1', LightColor='#F1F1F1'}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=PressedBorderBrush, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor='#AF281C', LightColor='#AF281C'}" />
+
+    <!--  Disabled  -->
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=DisabledBackground, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor='#0BFFFFFF', LightColor='#0B000000'}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=DisabledForeground, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor='#818183', LightColor='#818183'}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=DisabledBorderBrush, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor=Transparent, LightColor=Transparent}" />
+
+    <!--  Inactive  -->
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=InactiveBackground, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor=Transparent, LightColor=Transparent}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=InactiveForeground, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor='#818183', LightColor='#818183', SystemColorType=AccentLight2}" />
+    <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=InactiveBorderBrush, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor=Transparent, LightColor=Transparent}" />
+
+    <Style x:Key="FocusVisualStyle">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle
-                        Margin="2"
-                        SnapsToDevicePixels="true"
-                        Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
-                        StrokeDashArray="1 2"
-                        StrokeThickness="1" />
+                    <Rectangle SnapsToDevicePixels="true" Stroke="{markup:ThemeBrush DarkThemeBrush='#FFFFFF', LightThemeBrush='#000000', DefaultBrush='#000000', HighContrastBrush={x:Static SystemColors.ActiveBorderColorKey}}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -30,6 +71,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Width" Value="45" />
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisualStyle}" />
         <Setter Property="ContentTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -38,7 +80,8 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Code="{Binding}"
-                        FontSize="16"
+                        FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets, pack://application:,,,/DevToolbox.Wpf;component/DevToolbox-Icons-v1.0/fonts/#DevToolbox-Icons"
+                        FontSize="10"
                         Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=Foreground}"
                         SnapsToDevicePixels="True"
                         TextOptions.TextFormattingMode="Display" />
@@ -46,19 +89,27 @@
             </Setter.Value>
         </Setter>
         <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Path=Chrome.CaptionHeight}" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
-        <Setter Property="Background" Value="{DynamicResource Button.Chrome.Background}" />
-        <Setter Property="Foreground" Value="{DynamicResource Button.Chrome.Foreground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Button.Chrome.BorderBrush}" />
-        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="{DynamicResource Button.Chrome.MouseOverBackground}" />
-        <Setter Property="helpers:UIElementHelper.MouseOverForeground" Value="{DynamicResource Button.Chrome.MouseOverForeground}" />
-        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="{DynamicResource Button.Chrome.MouseOverBorderBrush}" />
-        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="{DynamicResource Button.Chrome.PressedBackground}" />
-        <Setter Property="helpers:UIElementHelper.PressedForeground" Value="{DynamicResource Button.Chrome.PressedForeground}" />
-        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="{DynamicResource Button.Chrome.PressedBorderBrush}" />
-        <Setter Property="helpers:UIElementHelper.DisabledBackground" Value="{DynamicResource Button.Chrome.DisabledBackground}" />
-        <Setter Property="helpers:UIElementHelper.DisabledForeground" Value="{DynamicResource Button.Chrome.DisabledForeground}" />
-        <Setter Property="helpers:UIElementHelper.DisabledBorderBrush" Value="{DynamicResource Button.Chrome.DisabledBorderBrush}" />
+
+        <!--  Base state  -->
+        <Setter Property="Background" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=Background}}" />
+        <Setter Property="Foreground" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=Foreground}}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=BorderBrush}}" />
+
+        <!--  MouseOver  -->
+        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=MouseOverBackground}}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverForeground" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=MouseOverForeground}}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=MouseOverBorderBrush}}" />
+
+        <!--  Pressed  -->
+        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=PressedBackground}}" />
+        <Setter Property="helpers:UIElementHelper.PressedForeground" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=PressedForeground}}" />
+        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=PressedBorderBrush}}" />
+
+        <!--  Disabled  -->
+        <Setter Property="helpers:UIElementHelper.DisabledBackground" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=DisabledBackground}}" />
+        <Setter Property="helpers:UIElementHelper.DisabledForeground" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=DisabledForeground}}" />
+        <Setter Property="helpers:UIElementHelper.DisabledBorderBrush" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=DisabledBorderBrush}}" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -98,9 +149,9 @@
                             <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.DisabledForeground)}" />
                         </Trigger>
                         <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Value="False">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Button.Chrome.InactiveBackground}" />
-                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource Button.Chrome.InactiveBorderBrush}" />
-                            <Setter Property="Foreground" Value="{DynamicResource Button.Chrome.InactiveForeground}" />
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=InactiveBackground}}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=InactiveBorderBrush}}" />
+                            <Setter Property="Foreground" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=InactiveForeground}}" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -108,19 +159,19 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="windows:WindowEx.HitTestResult" Value="Close">
-                <Setter Property="Content" Value="{x:Static controls:Symbol.ChromeClose}" />
+                <Setter Property="Content" Value="{x:Static controls:Icons.ChromeClose}" />
             </Trigger>
             <Trigger Property="windows:WindowEx.HitTestResult" Value="Restore">
-                <Setter Property="Content" Value="{x:Static controls:Symbol.ChromeRestore}" />
+                <Setter Property="Content" Value="{x:Static controls:Icons.ChromeRestore}" />
             </Trigger>
             <Trigger Property="windows:WindowEx.HitTestResult" Value="Max">
-                <Setter Property="Content" Value="{x:Static controls:Symbol.ChromeMaximize}" />
+                <Setter Property="Content" Value="{x:Static controls:Icons.ChromeMaximize}" />
             </Trigger>
             <Trigger Property="windows:WindowEx.HitTestResult" Value="Min">
-                <Setter Property="Content" Value="{x:Static controls:Symbol.ChromeMinimize}" />
+                <Setter Property="Content" Value="{x:Static controls:Icons.ChromeMinimize}" />
             </Trigger>
             <Trigger Property="windows:WindowEx.HitTestResult" Value="Help">
-                <Setter Property="Content" Value="{x:Static controls:Symbol.F1Help}" />
+                <Setter Property="Content" Value="{x:Static controls:Icons.Help}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -162,18 +213,27 @@
                                      ResourceId=CloseButtonStyleKey}"
         BasedOn="{StaticResource Button.BaseChromeStyle}"
         TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource Button.Chrome.Close.Background}" />
-        <Setter Property="Foreground" Value="{DynamicResource Button.Chrome.Close.Foreground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Button.Chrome.Close.BorderBrush}" />
-        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="{DynamicResource Button.Chrome.Close.MouseOverBackground}" />
-        <Setter Property="helpers:UIElementHelper.MouseOverForeground" Value="{DynamicResource Button.Chrome.Close.MouseOverForeground}" />
-        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="{DynamicResource Button.Chrome.Close.MouseOverBorderBrush}" />
-        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="{DynamicResource Button.Chrome.Close.PressedBackground}" />
-        <Setter Property="helpers:UIElementHelper.PressedForeground" Value="{DynamicResource Button.Chrome.Close.PressedForeground}" />
-        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="{DynamicResource Button.Chrome.Close.PressedBorderBrush}" />
-        <Setter Property="helpers:UIElementHelper.DisabledBackground" Value="{DynamicResource Button.Chrome.Close.DisabledBackground}" />
-        <Setter Property="helpers:UIElementHelper.DisabledForeground" Value="{DynamicResource Button.Chrome.Close.DisabledForeground}" />
-        <Setter Property="helpers:UIElementHelper.DisabledBorderBrush" Value="{DynamicResource Button.Chrome.Close.DisabledBorderBrush}" />
+
+        <!--  Base state  -->
+        <Setter Property="Background" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=Background, IsClose=True}}" />
+        <Setter Property="Foreground" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=Foreground, IsClose=True}}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=BorderBrush, IsClose=True}}" />
+
+        <!--  MouseOver  -->
+        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=MouseOverBackground, IsClose=True}}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverForeground" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=MouseOverForeground, IsClose=True}}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=MouseOverBorderBrush, IsClose=True}}" />
+
+        <!--  Pressed  -->
+        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=PressedBackground, IsClose=True}}" />
+        <Setter Property="helpers:UIElementHelper.PressedForeground" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=PressedForeground, IsClose=True}}" />
+        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=PressedBorderBrush, IsClose=True}}" />
+
+        <!--  Disabled  -->
+        <Setter Property="helpers:UIElementHelper.DisabledBackground" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=DisabledBackground, IsClose=True}}" />
+        <Setter Property="helpers:UIElementHelper.DisabledForeground" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=DisabledForeground, IsClose=True}}" />
+        <Setter Property="helpers:UIElementHelper.DisabledBorderBrush" Value="{DynamicResource {markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=DisabledBorderBrush, IsClose=True}}" />
+
         <Style.Triggers>
             <DataTrigger Binding="{Binding WindowStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Value="ToolWindow">
                 <Setter Property="Width" Value="21" />
@@ -183,8 +243,26 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="WindowExStyle" TargetType="{x:Type windows:WindowEx}">
-        <Setter Property="Background" Value="{DynamicResource Window.Background}" />
+    <Style
+        x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type windows:WindowEx},
+                                     ResourceId=BackButtonStyleKey}"
+        BasedOn="{StaticResource Button.BaseChromeStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="ToolTip" Value="Back" />
+        <Setter Property="helpers:UIElementHelper.CornerRadius" Value="4" />
+        <Setter Property="Content" Value="{x:Static controls:Icons.ChromeBack}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisualStyle}" />
+    </Style>
+
+    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type windows:WindowEx}, ResourceId=ChromeStyleKey}" TargetType="{x:Type windows:WindowEx}">
+        <Setter Property="Background" Value="{markup:ThemeBrush DarkThemeBrush='#1F1F1F', LightThemeBrush='#EEEEF2', DefaultBrush='#FFFFFF', HighContrastBrush={x:Static SystemColors.WindowBrush}}" />
+        <Setter Property="Foreground" Value="{markup:ThemeBrush DarkThemeBrush='#FFFFFF', LightThemeBrush='#000000', DefaultBrush='#000000', HighContrastBrush={x:Static SystemColors.ControlTextBrush}}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type windows:WindowEx}">
@@ -207,7 +285,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style BasedOn="{StaticResource WindowExStyle}" TargetType="{x:Type windows:WindowEx}" />
 
 </ResourceDictionary>

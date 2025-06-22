@@ -21,25 +21,37 @@ public partial class DialogWindowViewModel : ObservableObject, IDisposable
     private readonly List<PluginButtonViewModel> _leftButtons = [];
     private readonly List<PluginButtonViewModel> _rightButtons = [];
     private readonly DialogWindow _window;
-    private bool _disposedValue;
+    private bool _disposedValue; 
+    private bool _waitingAnimationBusy;
+    private string? _waitingAnimationTitle;
+    private string? _waitingAnimationMessage;
 
     /// <summary>
     /// Gets or sets the title text displayed during the waiting animation.
     /// </summary>
-    [ObservableProperty]
-    private string? _waitingAnimationTitle;
+    public string? WaitingAnimationTitle
+    {
+        get => _waitingAnimationTitle;
+        set => SetProperty(ref _waitingAnimationTitle, value);
+    }
 
     /// <summary>
     /// Gets or sets the message text displayed below the title during the waiting animation.
     /// </summary>
-    [ObservableProperty]
-    private string? _waitingAnimationMessage;
+    public string? WaitingAnimationMessage
+    {
+        get => _waitingAnimationMessage;
+        set => SetProperty(ref _waitingAnimationMessage, value);
+    }
 
     /// <summary>
     /// Gets or sets a value indicating whether the waiting animation is active.
     /// </summary>
-    [ObservableProperty]
-    private bool _waitingAnimationBusy;
+    public bool WaitingAnimationBusy
+    {
+        get => _waitingAnimationBusy;
+        set => SetProperty(ref _waitingAnimationBusy, value);
+    }
 
     #endregion
 

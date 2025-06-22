@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -394,33 +395,35 @@ public class SidePanelWindow : WindowEx
 
         var dpiScale = this.GetDpi();
 
+        var primaryScreen = System.Windows.Forms.Screen.AllScreens.ToList().FirstOrDefault(x => x.Primary) ?? System.Windows.Forms.Screen.AllScreens[0];
+
         if (Dock == Dock.Right)
         {
             width = (int)(ExpandSize * dpiScale.DpiScaleX / 100) + 20;
-            height = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Bottom - 20;
-            left = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Right - width - 10;
-            top = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Top + 10;
+            height = primaryScreen.WorkingArea.Bottom - 20;
+            left = primaryScreen.WorkingArea.Right - width - 10;
+            top = primaryScreen.WorkingArea.Top + 10;
         }
         else if (Dock == Dock.Left)
         {
             width = (int)(ExpandSize * dpiScale.DpiScaleX / 100);
-            height = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Bottom;
-            left = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Left;
-            top = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Top;
+            height = primaryScreen.WorkingArea.Bottom;
+            left = primaryScreen.WorkingArea.Left;
+            top = primaryScreen.WorkingArea.Top;
         }
         else if (Dock == Dock.Bottom)
         {
-            width = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Right;
+            width = primaryScreen.WorkingArea.Right;
             height = (int)(ExpandSize * dpiScale.DpiScaleY / 100);
-            left = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Left;
-            top = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Bottom - height;
+            left = primaryScreen.WorkingArea.Left;
+            top = primaryScreen.WorkingArea.Bottom - height;
         }
         else if (Dock == Dock.Top)
         {
-            width = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Right;
-            left = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Left;
+            width = primaryScreen.WorkingArea.Right;
+            left = primaryScreen.WorkingArea.Left;
             height = (int)(ExpandSize * dpiScale.DpiScaleY / 100);
-            top = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Top;
+            top = primaryScreen.WorkingArea.Top;
         }
 
         Left = left;

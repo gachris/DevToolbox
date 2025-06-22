@@ -117,14 +117,6 @@ public class DialogService : IDialogService
        string? noButtonText = null,
        DialogImage dialogImage = DialogImage.None)
     {
-        var imageSource = dialogImage switch
-        {
-            DialogImage.Info => "pack://application:,,,/DevToolbox.Wpf;component/Assets/info-100.png",
-            DialogImage.Warning => "pack://application:,,,/DevToolbox.Wpf;component/Assets/warning-100.png",
-            DialogImage.Error => "pack://application:,,,/DevToolbox.Wpf;component/Assets/error-100.png",
-            _ => null,
-        };
-
         var dialogOptions = new DialogOptions()
         {
             Width = 580,
@@ -183,7 +175,7 @@ public class DialogService : IDialogService
         var view = new MessageDialogView(
             title,
             message,
-            imageSource is not null ? new Uri(imageSource, UriKind.RelativeOrAbsolute) : null);
+            dialogImage);
 
         var modalResult = await ShowDialogAsync((Window?)owner, view, dialogOptions);
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevToolbox.Core.Windows;
+using DevToolbox.Wpf.Controls;
 
 namespace DevToolbox.Wpf.Windows.ViewModels;
 
@@ -20,9 +21,9 @@ public partial class MessageDialogViewModel : DialogViewModel
     public string Message { get; }
 
     /// <summary>
-    /// Gets the optional image URI to display alongside the message, or <c>null</c> if none is specified.
+    /// Gets the image code to display alongside the message, or <c>null</c> if none is specified.
     /// </summary>
-    public Uri? ImageSource { get; }
+    public string? ImageCode { get; }
 
     #endregion
 
@@ -31,11 +32,18 @@ public partial class MessageDialogViewModel : DialogViewModel
     /// </summary>
     /// <param name="title">The title text to display.</param>
     /// <param name="message">The message content to display.</param>
-    /// <param name="imageSource">The optional URI of an image to display, or <c>null</c>.</param>
-    public MessageDialogViewModel(string title, string message, Uri? imageSource)
+    /// <param name="dialogImage">The an image to display, or <c>null</c>.</param>
+    public MessageDialogViewModel(string title, string message, DialogImage dialogImage)
     {
         Title = title;
         Message = message;
-        ImageSource = imageSource;
+
+        ImageCode = dialogImage switch
+        {
+            DialogImage.Info => Icons.Info,
+            DialogImage.Warning => Icons.Warning,
+            DialogImage.Error => Icons.ErrorBadge,
+            _ => null,
+        };
     }
 }

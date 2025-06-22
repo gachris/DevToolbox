@@ -1,11 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net462;net6.0-windows</TargetFrameworks>
+		<TargetFrameworks>net462;net6.0-windows;net7.0-windows;net8.0-windows;net8.0-windows10.0.19041.0;net9.0-windows;net9.0-windows10.0.19041.0</TargetFrameworks>
 		<UseWPF>true</UseWPF>
 		<UseWindowsForms>true</UseWindowsForms>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows10.0.19041.0' Or '$(TargetFramework)' == 'net9.0-windows10.0.19041.0'">
+		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+	</PropertyGroup>
+	
 	<PropertyGroup Label="Package Configuration" Condition="'$(Configuration)' == 'Release'">
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>DevToolbox.Wpf</Title>
@@ -31,17 +35,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Remove="Assets\error-100.png" />
-		<None Remove="Assets\info-100.png" />
-		<None Remove="Assets\warning-100.png" />
 		<None Remove="SymbolThemeFont\fonts\SymbolThemeFont.ttf" />
+		<None Remove="SymbolThemeFont\fonts\DevToolbox-Icons.ttf" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Resource Include="Assets\error-100.png" />
-		<Resource Include="Assets\info-100.png" />
-		<Resource Include="Assets\warning-100.png" />
 		<Resource Include="SymbolThemeFont\fonts\SymbolThemeFont.ttf">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="DevToolbox-Icons-v1.0\fonts\DevToolbox-Icons.ttf">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Resource>
 	</ItemGroup>
@@ -50,6 +52,11 @@
 		<PackageReference Include="ColorSpace.Net" />
 		<PackageReference Include="CommunityToolkit.Mvvm" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows10.0.19041.0' Or '$(TargetFramework)' == 'net9.0-windows10.0.19041.0'">
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" />
 	</ItemGroup>
 
 	<ItemGroup>

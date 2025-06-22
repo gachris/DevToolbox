@@ -62,6 +62,7 @@
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/EyeDropper.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/FontGlyph.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/GridControl.xaml}" />
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/MessageBar.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/NumberBox.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/OverlayButton.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/OverlayWindow.xaml}" />

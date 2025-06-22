@@ -1,10 +1,8 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Runtime.InteropServices;
 
 namespace DevToolbox.Wpf.Interop;
 
-internal static class ntdll
+internal static class Ntdll
 {
     [DllImport("ntdll.dll", SetLastError = true)]
     public static extern int RtlGetVersion(ref OSVERSIONINFOEX lpVersionInformation);

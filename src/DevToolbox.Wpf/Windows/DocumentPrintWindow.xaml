@@ -18,16 +18,6 @@
             <Setter Property="FontWeight" Value="SemiBold" />
         </Style>
     </windows:WindowEx.TitleTextBlockStyle>
-    <windows:WindowEx.IconTemplate>
-        <DataTemplate>
-            <ContentControl
-                Width="26"
-                Height="26"
-                Content="{Binding}"
-                Focusable="False"
-                IsTabStop="False" />
-        </DataTemplate>
-    </windows:WindowEx.IconTemplate>
     <DocumentViewer ShowPageBorders="True">
         <FixedDocument Loaded="FixedDocument_Loaded" />
     </DocumentViewer>

@@ -1,5 +1,19 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!--  MessageBar Background Brushes (High Contrast using system brushes)  -->
+    <SolidColorBrush x:Key="MessageBarBackgroundError" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}" />
+    <SolidColorBrush x:Key="MessageBarBackgroundInfo" Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" />
+    <SolidColorBrush x:Key="MessageBarBackgroundSuccess" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}" />
+    <SolidColorBrush x:Key="MessageBarBackgroundWarning" Color="{DynamicResource {x:Static SystemColors.InfoColorKey}}" />
+    <SolidColorBrush x:Key="MessageBarBackgroundProgress" Color="{DynamicResource {x:Static SystemColors.GradientActiveCaptionColorKey}}" />
+
+    <!--  MessageBar Icon/Foreground Brushes (High Contrast using system brushes)  -->
+    <SolidColorBrush x:Key="MessageBarIconError" Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}" />
+    <SolidColorBrush x:Key="MessageBarIconInfo" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}" />
+    <SolidColorBrush x:Key="MessageBarIconSuccess" Color="{DynamicResource {x:Static SystemColors.HighlightColorKey}}" />
+    <SolidColorBrush x:Key="MessageBarIconWarning" Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}" />
+    <SolidColorBrush x:Key="MessageBarIconProgress" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}" />
+
     <!--#region ColorChip-->
 
     <SolidColorBrush x:Key="ColorChip.ChipBorderBrush" Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}" />
@@ -136,7 +150,6 @@
 
     <!--#region ChromeWindow-->
 
-    <SolidColorBrush x:Key="Window.Background" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}" />
     <SolidColorBrush x:Key="Window.Active.Foreground" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}" />
     <SolidColorBrush x:Key="Window.Inactive.Title.Foreground" Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}" />
 

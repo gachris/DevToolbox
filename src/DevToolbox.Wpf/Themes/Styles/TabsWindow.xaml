@@ -63,15 +63,6 @@
         <Setter Property="Content" Value="{x:Static controls:Symbol.ChromeClose}" />
     </Style>
 
-    <DataTemplate x:Key="IconTemplate">
-        <ContentPresenter
-            Width="24"
-            Height="24"
-            Margin="8,0,0,0"
-            VerticalAlignment="Center"
-            Content="{Binding}" />
-    </DataTemplate>
-
     <DataTemplate x:Key="HeaderTemplate">
         <TextBlock
             x:Name="TextBlockTitle"
@@ -125,20 +116,17 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <ContentControl
+                <Image
                     x:Name="PART_Icon"
                     Grid.Column="0"
-                    ContentTemplate="{Binding Path=IconTemplate, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
-                    Focusable="False">
-                    <Image Visibility="{Binding ShowIcon, RelativeSource={RelativeSource AncestorType={x:Type windows:WindowEx}}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <Image.Source>
-                            <Binding
-                                Converter="{converters:WindowIconConverter}"
-                                Path="Icon"
-                                RelativeSource="{RelativeSource AncestorType={x:Type Window}}" />
-                        </Image.Source>
-                    </Image>
-                </ContentControl>
+                    Visibility="{Binding ShowIcon, RelativeSource={RelativeSource AncestorType={x:Type windows:WindowEx}}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Image.Source>
+                        <Binding
+                            Converter="{converters:WindowIconConverter}"
+                            Path="Icon"
+                            RelativeSource="{RelativeSource AncestorType={x:Type Window}}" />
+                    </Image.Source>
+                </Image>
                 <ContentPresenter
                     x:Name="PART_Header"
                     Grid.Column="1"
@@ -564,7 +552,6 @@
         <Setter Property="TabLeftScrollButtonStyle" Value="{StaticResource TabLeftScrollButtonStyle}" />
         <Setter Property="TabTopScrollButtonStyle" Value="{StaticResource TabTopScrollButtonStyle}" />
         <Setter Property="TabBottomScrollButtonStyle" Value="{StaticResource TabBottomScrollButtonStyle}" />
-        <Setter Property="IconTemplate" Value="{StaticResource IconTemplate}" />
         <Setter Property="HeaderTemplate" Value="{StaticResource HeaderTemplate}" />
         <Setter Property="Header" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Title}" />
         <Setter Property="Template">

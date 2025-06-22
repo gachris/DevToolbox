@@ -1,4 +1,5 @@
 ﻿using System;
+using DevToolbox.Core.Windows;
 using DevToolbox.Wpf.Windows.ViewModels;
 
 namespace DevToolbox.Wpf.Windows.Views;
@@ -18,15 +19,15 @@ public partial class MessageDialogView : BaseDialogView, IDisposable
     /// <param name="message">
     /// The message content to display in the dialog body.
     /// </param>
-    /// <param name="imageSource">
-    /// An optional URI of an image to display alongside the message,
+    /// <param name="dialogImage">
+    /// An image to display alongside the message,
     /// or <c>null</c> if no image is provided.
     /// </param>
     public MessageDialogView(
         string title,
         string message,
-        Uri? imageSource)
-        : base(new MessageDialogViewModel(title, message, imageSource))
+        DialogImage dialogImage)
+        : base(new MessageDialogViewModel(title, message, dialogImage))
     {
         InitializeComponent();
     }

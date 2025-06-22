@@ -17,8 +17,9 @@ public static class ThemeManager
     #region Fields/Constants
 
     // Current theme-related fields
-    private static ElementTheme _requestedTheme = ElementTheme.Default;
-    private static ApplicationTheme _applicationTheme = ApplicationTheme.Default;
+    private static ElementTheme? _requestedTheme;
+    private static ApplicationTheme? _applicationTheme;
+    private static bool _overrideCoreTheming;
 
     /// <summary>
     /// Occurs when the requested theme is changed.
@@ -36,6 +37,12 @@ public static class ThemeManager
     /// Internal event raised when the application theme changes due to system-level changes (e.g., high contrast mode).
     /// </summary>
     internal static event EventHandler? ApplicationThemeCoreChanged;
+
+    /// <summary>
+    /// Occurs when the override core theming is changed.
+    /// Subscribers can listen for this event to respond to theme changes.
+    /// </summary>
+    internal static event EventHandler? OverrideCoreThemingChanged;
 
     #endregion
 
@@ -58,7 +65,31 @@ public static class ThemeManager
     /// to implement a custom theming system or fully control the visual appearance of the application
     /// without interference from predefined styles.
     /// </remarks>
-    public static bool OverrideCoreTheming { get; set; }
+    public static bool OverrideCoreTheming
+    {
+        get => _overrideCoreTheming;
+        set
+        {
+            if (_overrideCoreTheming != value)
+            {
+                _overrideCoreTheming = value;
+                OverrideCoreThemingChanged?.Invoke(Application.Current, EventArgs.Empty);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the value indicating whether a Fluent theme is enabled.
+    /// This returns <c>true</c> if the application's theme style is fluent.
+    /// </summary>
+    public static bool IsFluentThemeEnabled
+    {
+#if NET9_0_OR_GREATER
+        get => Application.Current.ThemeMode != ThemeMode.None;
+#else
+        get => false;
+#endif
+    }
 
     /// <summary>
     /// Gets or sets the current requested theme.
@@ -66,15 +97,15 @@ public static class ThemeManager
     /// </summary>
     public static ElementTheme RequestedTheme
     {
-        get => _requestedTheme;
+        get => _requestedTheme.GetValueOrDefault();
         set
         {
             if (_requestedTheme != value)
             {
-                var oldTheme = _requestedTheme;
+                var oldTheme = _requestedTheme.GetValueOrDefault();
                 _requestedTheme = value;
 
-                RefreshTheme(oldValue: oldTheme, newValue: _requestedTheme);
+                RefreshTheme(oldValue: oldTheme, newValue: _requestedTheme.GetValueOrDefault());
 
                 // Notify subscribers that the requested theme has changed
                 RequestedThemeChanged?.Invoke(Application.Current, EventArgs.Empty);
@@ -86,13 +117,13 @@ public static class ThemeManager
     /// Gets the current application theme that is actively applied to the application.
     /// This reflects the final theme state after considering user preferences and system defaults.
     /// </summary>
-    public static ApplicationTheme ApplicationTheme => _applicationTheme;
+    public static ApplicationTheme ApplicationTheme => _applicationTheme.GetValueOrDefault();
 
     /// <summary>
     /// Returns the current application theme's name as a string.
     /// Useful for UI bindings or diagnostics.
     /// </summary>
-    internal static string ApplicationThemeName => _applicationTheme.ToString();
+    internal static string ApplicationThemeName => _applicationTheme.GetValueOrDefault().ToString();
 
     /// <summary>
     /// Gets the application theme name, considering high contrast mode.
@@ -111,6 +142,21 @@ public static class ThemeManager
     /// <param name="newValue">The new theme to apply.</param>
     private static void RefreshTheme(ElementTheme oldValue, ElementTheme newValue)
     {
+#if NET9_0_OR_GREATER
+        if (Application.Current is not null)
+        {
+            // Set the system's WPF theme mode (experimental in .NET 9)
+            Application.Current.ThemeMode = newValue switch
+            {
+                ElementTheme.Default => ThemeMode.None,
+                ElementTheme.Light => ThemeMode.Light,
+                ElementTheme.Dark => ThemeMode.Dark,
+                ElementTheme.WindowsDefault => ThemeMode.System,
+                _ => ThemeMode.None
+            };
+        }
+#endif
+
         // Determine the new application theme based on the requested theme
         var newAppTheme = newValue switch
         {
