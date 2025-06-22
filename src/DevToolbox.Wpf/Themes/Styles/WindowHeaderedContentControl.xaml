@@ -33,53 +33,50 @@
                                 Grid.Row="0"
                                 Visibility="{Binding IsTitleBarVisible, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <Button
-                                    x:Name="BackButton"
-                                    Margin="12,0,0,0"
-                                    Command="{Binding BackButtonCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
-                                    CommandParameter="{Binding BackButtonCommandParameter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
-                                    Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type windows:WindowEx},
-                                                                                  ResourceId=BackButtonStyleKey}}"
-                                    Visibility="{Binding ShowBackButton, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                    WindowChrome.IsHitTestVisibleInChrome="True" />
-                                <Image
-                                    x:Name="Icon"
-                                    Grid.Column="1"
-                                    Margin="12,0,0,0"
-                                    Style="{Binding ImageStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
-                                    Visibility="{Binding ShowIcon, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <Image.Source>
-                                        <Binding
-                                            Converter="{converters:WindowIconConverter}"
-                                            Path="Icon"
-                                            RelativeSource="{RelativeSource AncestorType={x:Type Window}}" />
-                                    </Image.Source>
-                                </Image>
-                                <TextBlock
-                                    Grid.Column="2"
-                                    Margin="12,0,0,2"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Foreground="{DynamicResource Window.Title.Foreground}"
-                                    Style="{Binding TitleTextBlockStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, UpdateSourceTrigger=PropertyChanged}"
-                                    Text="{Binding Title, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
-                                    TextTrimming="CharacterEllipsis"
-                                    Visibility="{Binding ShowTitle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                <ContentPresenter
-                                    Grid.Column="3"
-                                    VerticalAlignment="Stretch"
-                                    ContentSource="Header"
-                                    Focusable="False" />
-                                <StackPanel
-                                    Grid.Column="4"
-                                    HorizontalAlignment="Right"
-                                    Orientation="Horizontal">
+                                <DockPanel Grid.Column="0" LastChildFill="True">
+                                    <Button
+                                        x:Name="BackButton"
+                                        Grid.Column="0"
+                                        Margin="12,0,0,0"
+                                        Command="{Binding BackButtonCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
+                                        CommandParameter="{Binding BackButtonCommandParameter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
+                                        Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type windows:WindowEx},
+                                                                                      ResourceId=BackButtonStyleKey}}"
+                                        Visibility="{Binding ShowBackButton, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                        WindowChrome.IsHitTestVisibleInChrome="True" />
+                                    <Image
+                                        x:Name="Icon"
+                                        Grid.Column="1"
+                                        Margin="12,0,0,0"
+                                        Style="{Binding ImageStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
+                                        Visibility="{Binding ShowIcon, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <Image.Source>
+                                            <Binding
+                                                Converter="{converters:WindowIconConverter}"
+                                                Path="Icon"
+                                                RelativeSource="{RelativeSource AncestorType={x:Type Window}}" />
+                                        </Image.Source>
+                                    </Image>
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        Margin="12,0,0,2"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Foreground="{DynamicResource Window.Title.Foreground}"
+                                        Style="{Binding TitleTextBlockStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, UpdateSourceTrigger=PropertyChanged}"
+                                        Text="{Binding Title, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
+                                        TextTrimming="CharacterEllipsis"
+                                        Visibility="{Binding ShowTitle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    <ContentPresenter
+                                        Grid.Column="3"
+                                        VerticalAlignment="Stretch"
+                                        ContentSource="Header"
+                                        Focusable="False" />
+                                </DockPanel>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
                                     <Button
                                         x:Name="PART_Help"
                                         windows:WindowEx.HitTestResult="Help"

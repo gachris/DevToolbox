@@ -91,7 +91,7 @@ public abstract class Effect
             throw new ArgumentNullException(nameof(_window));
         }
 
-        ThemeManager.ApplicationThemeChanged += (_, _) => RefreshDarkMode();
+        ThemeManager.ApplicationThemeCoreChanged += (_, _) => RefreshDarkMode();
 
         RefreshFrame();
         RefreshDarkMode();
@@ -109,7 +109,7 @@ public abstract class Effect
         if (_hwndSource is null)
             return;
 
-        _hwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
+        _hwndSource.CompositionTarget.BackgroundColor = SystemParameters.HighContrast ? Colors.White : Colors.Transparent;
 
         var margins = new MARGINS
         {

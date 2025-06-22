@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using DevToolbox.Wpf.Interop;
+using DevToolbox.Wpf.Media;
 using DevToolbox.Wpf.Utils;
 using HANDLE_MESSAGE = System.Collections.Generic.KeyValuePair<DevToolbox.Wpf.Interop.WM, DevToolbox.Wpf.Windows.MessageHandler>;
 
@@ -25,6 +26,7 @@ internal class WindowExBehavior : DependencyObject
     private UIElement? _trackedControl;
     private TRACKMOUSEEVENT _trackMouseEvent;
     private HwndSource? _hwndSource;
+    private static Version _osVersion;
 
     public static readonly DependencyProperty WindowExBehaviorProperty = DependencyProperty.RegisterAttached(
         "WindowExBehavior",
@@ -33,6 +35,11 @@ internal class WindowExBehavior : DependencyObject
         new PropertyMetadata(null, OnWindowExBehaviorChanged));
 
     #endregion
+
+    static WindowExBehavior()
+    {
+        _osVersion = NativeMethods.GetOSVersion();
+    }
 
     public WindowExBehavior()
     {
@@ -105,23 +112,30 @@ internal class WindowExBehavior : DependencyObject
 
     private IntPtr HandleNCCALCSIZE(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
     {
-        var parameters = Marshal.PtrToStructure<NCCALCSIZE_PARAMS>(lParam)!;
-        var placement = new WINDOWPLACEMENT
+        if (_osVersion.Build >= 19041)
         {
-            length = Marshal.SizeOf(typeof(WINDOWPLACEMENT))
-        };
-        User32.GetWindowPlacement(_hwnd, ref placement);
+            var parameters = Marshal.PtrToStructure<NCCALCSIZE_PARAMS>(lParam)!;
+            var placement = new WINDOWPLACEMENT
+            {
+                length = Marshal.SizeOf(typeof(WINDOWPLACEMENT))
+            };
+            User32.GetWindowPlacement(_hwnd, ref placement);
 
-        if (placement.showCmd == (int)SW.SHOWNORMAL)
-        {
-            parameters.rgrc0.Top += 1;
-            parameters.rgrc0.Left += 1;
-            parameters.rgrc0.Right -= 1;
+            if (placement.showCmd == (int)SW.SHOWNORMAL)
+            {
+                parameters.rgrc0.Top += 1;
+                parameters.rgrc0.Left += 1;
+                parameters.rgrc0.Right -= 1;
 
-            Marshal.StructureToPtr(parameters, lParam, true);
+                Marshal.StructureToPtr(parameters, lParam, true);
+            }
+
+            handled = true;
         }
-
-        handled = true;
+        else
+        {
+            handled = false;
+        }
 
         return IntPtr.Zero;
     }
@@ -148,7 +162,14 @@ internal class WindowExBehavior : DependencyObject
         }
         else if (wParam.ToInt32() == (int)WM_SIZE.RESTORED)
         {
-            child.Margin = new Thickness(0, 0, 0, 1);
+            if (_osVersion.Build >= 19041)
+            {
+                child.Margin = new Thickness(0, 0, 0, 1);
+            }
+            else
+            {
+                child.Margin = new Thickness(0);
+            }
         }
 
         return IntPtr.Zero;
@@ -240,6 +261,7 @@ internal class WindowExBehavior : DependencyObject
     private void SetWindow(WindowEx WindowEx)
     {
         _windowEx = WindowEx;
+        _windowEx.Closed += WindowEx_Closed;
 
         _hwnd = new WindowInteropHelper(WindowEx).Handle;
 
@@ -258,16 +280,15 @@ internal class WindowExBehavior : DependencyObject
             {
                 _hwnd = new WindowInteropHelper(WindowEx).Handle;
                 _hwndSource = HwndSource.FromHwnd(_hwnd);
-                _hwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
 
                 ApplyNewCustomChrome();
 
-                _windowEx.InvalidateMeasure();
                 _hwndSource.AddHook(WndProc);
             };
         }
     }
 
+    [SecurityCritical]
     private void ApplyNewCustomChrome()
     {
         if (_windowEx is null)
@@ -275,27 +296,60 @@ internal class WindowExBehavior : DependencyObject
             throw new ArgumentNullException(nameof(_windowEx));
         }
 
-        // Remove AeroCaptionButtons
-        var hwnd_style = (WS)NativeMethods.GetWindowLongPtr(_hwnd, GWL.STYLE);
-        var hwnd_new_style = hwnd_style & ~WS.SYSMENU;
-        NativeMethods.SetWindowLongPtr(_hwnd, GWL.STYLE, (IntPtr)hwnd_new_style);
+        RemoveSystemAeroCaption();
+        SetImmersiveDarkMode(ThemeManager.ApplicationTheme is ApplicationTheme.Dark);
+        RefreshCompositionTarget();
 
-        // Remove the caption color from the window
-        if (IsSupported())
+        ThemeManager.ApplicationThemeCoreChanged += ThemeManager_ApplicationThemeCoreChanged;
+
+        _windowEx.InvalidateMeasure();
+    }
+
+    [SecurityCritical]
+    private void ThemeManager_ApplicationThemeCoreChanged(object? sender, EventArgs e)
+    {
+        RefreshCompositionTarget();
+        SetImmersiveDarkMode(ThemeManager.ApplicationTheme is ApplicationTheme.Dark);
+    }
+
+    private void WindowEx_Closed(object? sender, EventArgs e)
+    {
+        Dispose();
+    }
+
+    private void RefreshCompositionTarget()
+    {
+        if (_hwndSource is not null)
         {
-            var color_none = 0xFFFFFFFE;
-            Dwmapi.DwmSetWindowAttribute(_hwnd, DWMWINDOWATTRIBUTE.DWMWA_CAPTION_COLOR, ref color_none, sizeof(uint));
+            _hwndSource.CompositionTarget.BackgroundColor = SystemParameters.HighContrast ? Colors.White : Colors.Transparent;
         }
     }
 
-    /// <summary>
-    /// Determines if the current OS version supports the window effect features.
-    /// </summary>
-    /// <returns>True if supported; otherwise, false.</returns>
-    private static bool IsSupported()
+    private void RemoveSystemAeroCaption()
     {
-        var v = NativeMethods.GetTrueOSVersion();
-        return v.Build >= 22621;
+        if (_hwnd != IntPtr.Zero)
+        {
+            // Remove AeroCaptionButtons
+            var hwnd_style = (WS)NativeMethods.GetWindowLongPtr(_hwnd, GWL.STYLE);
+            var hwnd_new_style = hwnd_style & ~WS.SYSMENU;
+            NativeMethods.SetWindowLongPtr(_hwnd, GWL.STYLE, (IntPtr)hwnd_new_style);
+
+            if (_hwnd != IntPtr.Zero && _osVersion.Build >= 22000)
+            {
+                var color_none = 0xFFFFFFFE;
+                Dwmapi.DwmSetWindowAttribute(_hwnd, DWMWINDOWATTRIBUTE.DWMWA_CAPTION_COLOR, ref color_none, sizeof(uint));
+            }
+        }
+    }
+
+    private void SetImmersiveDarkMode(bool enable)
+    {
+        if (_hwnd != IntPtr.Zero && _osVersion.Build >= 19041)
+        {
+            var isDark = enable ? (uint)1 : 0;
+            Dwmapi.DwmSetWindowAttribute(_hwnd, DWMWINDOWATTRIBUTE.DWMWA_USE_HOSTBACKDROPBRUSH, ref isDark, sizeof(uint));
+            Dwmapi.DwmSetWindowAttribute(_hwnd, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, ref isDark, sizeof(uint));
+        }
     }
 
     private bool RaiseMouseMessage(WM wM)
@@ -344,6 +398,24 @@ internal class WindowExBehavior : DependencyObject
             RaiseIsMouseOver(_trackedControl, true);
 
         return true;
+    }
+
+    private void Dispose()
+    {
+        if (_windowEx != null)
+        {
+            ThemeManager.ApplicationThemeChanged -= ThemeManager_ApplicationThemeCoreChanged;
+            _windowEx.Closed -= WindowEx_Closed;
+
+            if (_hwndSource != null)
+            {
+                _hwndSource.RemoveHook(WndProc);
+                _hwndSource = null;
+            }
+
+            _trackedControl = null;
+            _windowEx = null;
+        }
     }
 
     private static void RaiseIsMouseOver(UIElement element, bool isMouseOver)

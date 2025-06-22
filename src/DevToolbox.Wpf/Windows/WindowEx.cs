@@ -253,7 +253,7 @@ public class WindowEx : Window
         Chrome = new WindowChrome
         {
             UseAeroCaptionButtons = false,
-            GlassFrameThickness = new Thickness(1),
+            GlassFrameThickness = new Thickness(-1),
             CaptionHeight = 48,
             NonClientFrameEdges = NonClientFrameEdges.None,
         };

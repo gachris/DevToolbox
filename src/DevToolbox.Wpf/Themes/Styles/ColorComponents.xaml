@@ -3,19 +3,26 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
     xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters"
-    xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
+    xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
     <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     <converters:HexColorCharacterHidingConverter x:Key="HexColorCharacterHidingConverter" />
 
     <Style TargetType="{x:Type controls:ColorComponents}">
+        <Style.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Visibility" Value="Visible" />
+            </Style>
+        </Style.Resources>
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ColorComponents}">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -28,7 +35,7 @@
                             <Grid Margin="0,0,12,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="FisrtColumn" />
-                                    <ColumnDefinition Width="38" SharedSizeGroup="SecondColumn" />
+                                    <ColumnDefinition Width="60" SharedSizeGroup="SecondColumn" />
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="ThirdColumn" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
@@ -39,7 +46,9 @@
                                 <RadioButton
                                     Grid.Row="0"
                                     Grid.Column="0"
+                                    MinWidth="0"
                                     Margin="0,0,12,0"
+                                    Padding="8,0,0,0"
                                     VerticalAlignment="Center"
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
@@ -53,6 +62,7 @@
                                     Margin="0,4"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
+                                    helpers:TextBoxHelper.HideClearButton="True"
                                     DataContext="{Binding Hsv, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     Text="{Binding Hue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock
@@ -65,7 +75,9 @@
                                 <RadioButton
                                     Grid.Row="1"
                                     Grid.Column="0"
+                                    MinWidth="0"
                                     Margin="0,0,12,0"
+                                    Padding="8,0,0,0"
                                     VerticalAlignment="Center"
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
@@ -79,6 +91,7 @@
                                     Margin="0,4"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
+                                    helpers:TextBoxHelper.HideClearButton="True"
                                     DataContext="{Binding Hsv, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     Text="{Binding Saturation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock
@@ -91,7 +104,9 @@
                                 <RadioButton
                                     Grid.Row="2"
                                     Grid.Column="0"
+                                    MinWidth="0"
                                     Margin="0,0,12,0"
+                                    Padding="8,0,0,0"
                                     VerticalAlignment="Center"
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
@@ -105,6 +120,7 @@
                                     Margin="0,4"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
+                                    helpers:TextBoxHelper.HideClearButton="True"
                                     DataContext="{Binding Hsv, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock
@@ -118,7 +134,7 @@
                             <Grid Margin="0,6,12,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="FisrtColumn" />
-                                    <ColumnDefinition Width="38" SharedSizeGroup="SecondColumn" />
+                                    <ColumnDefinition Width="60" SharedSizeGroup="SecondColumn" />
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="ThirdColumn" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
@@ -129,7 +145,9 @@
                                 <RadioButton
                                     Grid.Row="0"
                                     Grid.Column="0"
+                                    MinWidth="0"
                                     Margin="0,0,12,0"
+                                    Padding="8,0,0,0"
                                     VerticalAlignment="Center"
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
@@ -143,12 +161,15 @@
                                     Margin="0,4"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
+                                    helpers:TextBoxHelper.HideClearButton="True"
                                     DataContext="{Binding Rgb, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     Text="{Binding Red, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <RadioButton
                                     Grid.Row="1"
                                     Grid.Column="0"
+                                    MinWidth="0"
                                     Margin="0,0,12,0"
+                                    Padding="8,0,0,0"
                                     VerticalAlignment="Center"
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
@@ -162,12 +183,15 @@
                                     Margin="0,4"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
+                                    helpers:TextBoxHelper.HideClearButton="True"
                                     DataContext="{Binding Rgb, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     Text="{Binding Green, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <RadioButton
                                     Grid.Row="2"
                                     Grid.Column="0"
+                                    MinWidth="0"
                                     Margin="0,0,12,0"
+                                    Padding="8,0,0,0"
                                     VerticalAlignment="Center"
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
@@ -181,6 +205,7 @@
                                     Margin="0,4"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
+                                    helpers:TextBoxHelper.HideClearButton="True"
                                     DataContext="{Binding Rgb, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     Text="{Binding Blue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </Grid>
@@ -193,7 +218,7 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="FisrtColumn" />
-                                    <ColumnDefinition Width="38" SharedSizeGroup="SecondColumn" />
+                                    <ColumnDefinition Width="60" SharedSizeGroup="SecondColumn" />
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="ThirdColumn" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
@@ -204,7 +229,9 @@
                                 <RadioButton
                                     Grid.Row="0"
                                     Grid.Column="0"
+                                    MinWidth="0"
                                     Margin="0,0,12,0"
+                                    Padding="8,0,0,0"
                                     VerticalAlignment="Center"
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
@@ -218,12 +245,15 @@
                                     Margin="0,4"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
+                                    helpers:TextBoxHelper.HideClearButton="True"
                                     DataContext="{Binding Lab, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     Text="{Binding Lightness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <RadioButton
                                     Grid.Row="1"
                                     Grid.Column="0"
+                                    MinWidth="0"
                                     Margin="0,0,12,0"
+                                    Padding="8,0,0,0"
                                     VerticalAlignment="Center"
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
@@ -237,12 +267,15 @@
                                     Margin="0,4"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
+                                    helpers:TextBoxHelper.HideClearButton="True"
                                     DataContext="{Binding Lab, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     Text="{Binding A, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <RadioButton
                                     Grid.Row="2"
                                     Grid.Column="0"
+                                    MinWidth="0"
                                     Margin="0,0,12,0"
+                                    Padding="8,0,0,0"
                                     VerticalAlignment="Center"
                                     HorizontalContentAlignment="Right"
                                     VerticalContentAlignment="Center"
@@ -256,13 +289,14 @@
                                     Margin="0,4"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
+                                    helpers:TextBoxHelper.HideClearButton="True"
                                     DataContext="{Binding Lab, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     Text="{Binding B, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </Grid>
                             <Grid Margin="0,6,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="FisrtColumn" />
-                                    <ColumnDefinition Width="38" SharedSizeGroup="SecondColumn" />
+                                    <ColumnDefinition Width="60" SharedSizeGroup="SecondColumn" />
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="ThirdColumn" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
@@ -285,6 +319,7 @@
                                     Margin="0,4"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
+                                    helpers:TextBoxHelper.HideClearButton="True"
                                     DataContext="{Binding Cmyk, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     Text="{Binding Cyan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock
@@ -308,6 +343,7 @@
                                     Margin="0,4"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
+                                    helpers:TextBoxHelper.HideClearButton="True"
                                     DataContext="{Binding Cmyk, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     Text="{Binding Magenta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock
@@ -331,6 +367,7 @@
                                     Margin="0,4"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
+                                    helpers:TextBoxHelper.HideClearButton="True"
                                     DataContext="{Binding Cmyk, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     Text="{Binding Yellow, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock
@@ -354,6 +391,7 @@
                                     Margin="0,4"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
+                                    helpers:TextBoxHelper.HideClearButton="True"
                                     DataContext="{Binding Cmyk, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     Text="{Binding Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock
@@ -380,6 +418,7 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 helpers:HexTexBoxHelper.Validate="True"
+                                helpers:TextBoxHelper.HideClearButton="True"
                                 DataContext="{Binding Hex, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                 Text="{Binding Value, NotifyOnValidationError=True, Converter={StaticResource HexColorCharacterHidingConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>

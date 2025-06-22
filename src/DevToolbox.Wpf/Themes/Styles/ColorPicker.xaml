@@ -6,7 +6,6 @@
     xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
 
     <converters:ContrastColorByBrightnessConverter x:Key="ContrastColorByBrightnessConverter" />
-    <converters:DoubleToBytesConverter x:Key="DoubleToBytesConverter" />
 
     <ControlTemplate x:Key="SliderRepeatButtonTemplate" TargetType="{x:Type RepeatButton}">
         <Border Background="Transparent" />
@@ -63,6 +62,7 @@
                             x:Name="TopTick"
                             Width="4"
                             Fill="{TemplateBinding Foreground}"
+                            Focusable="False"
                             Placement="Left"
                             SnapsToDevicePixels="True"
                             Visibility="Collapsed" />
@@ -73,15 +73,24 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="1" />
-                        <Track x:Name="PART_Track" Grid.Column="1">
+                        <Track
+                            x:Name="PART_Track"
+                            Grid.Column="1"
+                            Focusable="False">
                             <Track.DecreaseRepeatButton>
-                                <RepeatButton Command="Slider.DecreaseLarge" Template="{StaticResource SliderRepeatButtonTemplate}" />
+                                <RepeatButton
+                                    Command="Slider.DecreaseLarge"
+                                    Focusable="False"
+                                    Template="{StaticResource SliderRepeatButtonTemplate}" />
                             </Track.DecreaseRepeatButton>
                             <Track.Thumb>
-                                <Thumb Template="{StaticResource SliderThumbTemplate}" />
+                                <Thumb Focusable="False" Template="{StaticResource SliderThumbTemplate}" />
                             </Track.Thumb>
                             <Track.IncreaseRepeatButton>
-                                <RepeatButton Command="Slider.IncreaseLarge" Template="{StaticResource SliderRepeatButtonTemplate}" />
+                                <RepeatButton
+                                    Command="Slider.IncreaseLarge"
+                                    Focusable="False"
+                                    Template="{StaticResource SliderRepeatButtonTemplate}" />
                             </Track.IncreaseRepeatButton>
                         </Track>
                         <TickBar
@@ -89,6 +98,7 @@
                             Grid.Column="2"
                             Width="4"
                             Fill="{TemplateBinding Foreground}"
+                            Focusable="False"
                             Placement="Right"
                             SnapsToDevicePixels="True"
                             Visibility="Collapsed" />
@@ -144,6 +154,7 @@
         Viewport="0.0,0.0,0.25,0.25" />
 
     <Style TargetType="{x:Type controls:ColorPicker}">
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="Background" Value="{DynamicResource ColorPicker.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ColorPicker.BorderBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource ColorPicker.Foreground}" />
@@ -155,15 +166,8 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         SnapsToDevicePixels="True">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal">
                             <Border
-                                Grid.Column="0"
                                 Width="258"
                                 Height="258"
                                 BorderBrush="{DynamicResource ColorPicker.PaneBorderBrush}"
@@ -176,6 +180,7 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top"
                                     ClipToBounds="True"
+                                    Focusable="False"
                                     SnapsToDevicePixels="True">
                                     <ContentControl.Template>
                                         <ControlTemplate TargetType="ContentControl">
@@ -188,19 +193,21 @@
                                         x:Name="PART_ColorPlaneEllipse"
                                         Width="12"
                                         Height="12"
+                                        Focusable="True"
                                         Stroke="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ContrastColorByBrightnessConverter}}" />
                                 </ContentControl>
                             </Border>
                             <Slider
                                 x:Name="PART_NormalSlider"
-                                Grid.Column="1"
                                 Width="20"
                                 Height="258"
                                 Margin="18,0,0,0"
                                 helpers:SliderHelper.IsMoveToPointOnDragEnabled="True"
                                 BorderBrush="{DynamicResource ColorPicker.PaneBorderBrush}"
                                 BorderThickness="1"
+                                Focusable="True"
                                 IsMoveToPointEnabled="True"
+                                IsSnapToTickEnabled="True"
                                 Maximum="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=MaxNormal}"
                                 Minimum="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=MinNormal}"
                                 Orientation="Vertical"
@@ -210,7 +217,6 @@
                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Normal}" />
                             <Border
                                 x:Name="AlphaSliderBorder"
-                                Grid.Column="2"
                                 Width="20"
                                 Height="258"
                                 Margin="24,0,0,0"
@@ -223,18 +229,19 @@
                                     helpers:SliderHelper.IsMoveToPointOnDragEnabled="True"
                                     BorderBrush="{DynamicResource ColorPicker.PaneBorderBrush}"
                                     BorderThickness="1"
+                                    Focusable="True"
                                     IsMoveToPointEnabled="True"
                                     IsSnapToTickEnabled="True"
-                                    Maximum="100"
+                                    Maximum="255"
                                     Minimum="0"
                                     Orientation="Vertical"
+                                    SnapsToDevicePixels="True"
                                     Style="{StaticResource Slider}"
                                     TickFrequency="1"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Alpha, Converter={StaticResource DoubleToBytesConverter}}" />
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Alpha}" />
                             </Border>
                             <StackPanel
                                 x:Name="Panels"
-                                Grid.Column="3"
                                 Margin="18,0,0,0"
                                 VerticalAlignment="Center"
                                 Visibility="Collapsed">
@@ -284,7 +291,7 @@
                                 </Grid>
                                 <ContentPresenter x:Name="PART_ColorComponents" Margin="0,12,0,0" />
                             </StackPanel>
-                        </Grid>
+                        </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="ColorPickerStyle" Value="Full">

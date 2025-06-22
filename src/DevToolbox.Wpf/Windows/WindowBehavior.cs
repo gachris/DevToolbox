@@ -94,9 +94,10 @@ public class WindowBehavior
     /// <param name="e">The event data for the property change.</param>
     private static void OnWindowEffectChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        var window = (Window)d;
+        if (d is not Window window) return;
 
-        if (!IsSupported())
+        var version = NativeMethods.GetOSVersion();
+        if (version.Build < 22621)
         {
             // Revert to previous value or remove the effect
             window.ClearValue(EffectProperty);
@@ -122,6 +123,14 @@ public class WindowBehavior
     private static void OnBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is not Window window) return;
+        
+        var version = NativeMethods.GetOSVersion();
+        if (version.Build < 22000)
+        {
+            // Revert to previous value or remove the border brush
+            window.ClearValue(BorderBrushProperty);
+            return;
+        }
 
         var hwnd = new WindowInteropHelper(window).Handle;
         if (hwnd.Equals(IntPtr.Zero))
@@ -152,16 +161,6 @@ public class WindowBehavior
     {
         var pvattribute = color.HasValue ? (uint)NativeMethods.GetDWORD(color.Value) : 0xFFFFFFFF;
         _ = Dwmapi.DwmSetWindowAttribute(hwnd, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, ref pvattribute, sizeof(uint));
-    }
-
-    /// <summary>
-    /// Determines if the current OS version supports the window effect features.
-    /// </summary>
-    /// <returns>True if supported; otherwise, false.</returns>
-    private static bool IsSupported()
-    {
-        var v = NativeMethods.GetTrueOSVersion();
-        return v.Build >= 22621;
     }
 
     #endregion

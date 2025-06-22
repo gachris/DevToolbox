@@ -221,7 +221,18 @@ public class ColorPicker : Control
     {
         base.OnApplyTemplate();
 
+        if (_colorPlaneEllipse is not null)
+        {
+            _colorPlaneEllipse.PreviewKeyDown -= ColorPlaneEllipse_KeyDown;
+        }
+
         _colorPlaneEllipse = Template.FindName(PART_ColorPlaneEllipse, this) as Ellipse;
+
+        if (_colorPlaneEllipse is not null)
+        {
+            _colorPlaneEllipse.Focusable = true;
+            _colorPlaneEllipse.PreviewKeyDown += ColorPlaneEllipse_KeyDown;
+        }
 
         if (_colorCanvas is not null)
         {
@@ -555,6 +566,37 @@ public class ColorPicker : Control
             return;
 
         SelectedColor = _colorComponents.Color;
+    }
+
+    private void ColorPlaneEllipse_KeyDown(object sender, KeyEventArgs e)
+    {
+        const int step = 1; // adjust sensitivity
+
+        var newPoint = _selectionPoint;
+
+        switch (e.Key)
+        {
+            case Key.Left:
+                newPoint.X -= step;
+                break;
+            case Key.Right:
+                newPoint.X += step;
+                break;
+            case Key.Up:
+                newPoint.Y -= step;
+                break;
+            case Key.Down:
+                newPoint.Y += step;
+                break;
+            default:
+                return;
+        }
+
+        _colorChangeSource = ColorChangeSource.MouseDown;
+        UpdateFromPoint(CoercePoint(newPoint));
+        _colorChangeSource = null;
+
+        e.Handled = true;
     }
 
     #endregion

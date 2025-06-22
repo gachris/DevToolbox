@@ -7,7 +7,7 @@ namespace DevToolbox.Wpf.Interop;
 
 internal class NativeMethods
 {
-    public static Version GetTrueOSVersion()
+    public static Version GetOSVersion()
     {
         var osvi = new OSVERSIONINFOEX { dwOSVersionInfoSize = Marshal.SizeOf<OSVERSIONINFOEX>() };
         if (Ntdll.RtlGetVersion(ref osvi) == 0)

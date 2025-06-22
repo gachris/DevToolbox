@@ -277,9 +277,13 @@
                         </controls:WindowHeaderedContentControl>
                     </AdornerDecorator>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="windows:WindowBehavior.HasEffect" Value="True">
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="False" />
+                                <Condition Binding="{Binding Path=(windows:WindowBehavior.HasEffect), RelativeSource={RelativeSource Mode=Self}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
                             <Setter Property="Background" Value="Transparent" />
-                        </Trigger>
+                        </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

@@ -128,6 +128,7 @@
 
     <Style TargetType="{x:Type controls:MessageBar}">
         <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="Foreground" Value="{DynamicResource MessageBarForeground}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -156,6 +157,7 @@
                                 Height="16"
                                 Margin="0,1,0,0"
                                 VerticalAlignment="Center"
+                                Focusable="False"
                                 IsIndeterminate="True"
                                 Style="{StaticResource MessageBar.ProgressBarStyle}"
                                 Visibility="Collapsed" />
@@ -174,7 +176,10 @@
                                 Orientation="Horizontal">
 
                                 <!-- Your action buttons, if you bound Actions to an IEnumerable<Button> -->
-                                <ItemsControl ItemsSource="{Binding Actions, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ItemsControl
+                                    Focusable="False"
+                                    IsTabStop="False"
+                                    ItemsSource="{Binding Actions, RelativeSource={RelativeSource TemplatedParent}}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <StackPanel Orientation="Horizontal" />
