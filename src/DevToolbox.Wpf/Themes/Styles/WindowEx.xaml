@@ -58,7 +58,7 @@
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle SnapsToDevicePixels="true" Stroke="{markup:ThemeBrush DarkThemeBrush='#FFFFFF', LightThemeBrush='#000000', DefaultBrush='#000000', HighContrastBrush={x:Static SystemColors.ActiveBorderColorKey}}" />
+                    <Rectangle SnapsToDevicePixels="true" Stroke="{markup:ThemeBrush DarkThemeBrush='#FFFFFF', LightThemeBrush='#000000', DefaultBrush='#000000', HighContrastBrush={x:Static SystemColors.ActiveBorderBrush}}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -150,7 +150,7 @@ public class WindowBehavior
     /// <param name="color">The color to set as the border.</param>
     private static void SetWindowBorderColor(IntPtr hwnd, Color? color)
     {
-        var pvattribute = color.HasValue ? (uint)NativeMethods.GetDWORD(color.Value) : 0x00;
+        var pvattribute = color.HasValue ? (uint)NativeMethods.GetDWORD(color.Value) : 0xFFFFFFFF;
         _ = Dwmapi.DwmSetWindowAttribute(hwnd, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, ref pvattribute, sizeof(uint));
     }
 
