@@ -155,7 +155,7 @@
                                 Grid.Column="0"
                                 Width="16"
                                 Height="16"
-                                Margin="0,1,0,0"
+                                MinHeight="0"
                                 VerticalAlignment="Center"
                                 Focusable="False"
                                 IsIndeterminate="True"
