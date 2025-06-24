@@ -1,6 +1,7 @@
-﻿using System.Windows;
+using System.Windows;
 using CommonServiceLocator;
 using DevToolbox.Core.Contracts;
+using DevToolbox.Wpf.Media;
 
 namespace DevToolbox.Wpf.Demo;
 
@@ -36,6 +37,11 @@ public partial class App : Application, IApplication
     {
         base.OnStartup(e);
 
+        ThemeManager.OverrideCoreTheming = true;
+        UpdateThemeMode();
+
+        ThemeManager.ApplicationThemeChanged += (_, _) => UpdateThemeMode();
+
         _singletonApplicationManager.Register(this, async () =>
         {
             IocConfiguration.Setup();
@@ -44,6 +50,19 @@ public partial class App : Application, IApplication
             var appUISettings = ServiceLocator.Current.GetInstance<IAppUISettings>();
             await appUISettings.InitializeAsync();
         }, () => { });
+    }
+
+    private void UpdateThemeMode()
+    {
+        // Set the system's WPF theme mode (experimental in .NET 9)
+        ThemeMode = ThemeManager.RequestedTheme switch
+        {
+            ElementTheme.Default => ThemeMode.None,
+            ElementTheme.Light => ThemeMode.Light,
+            ElementTheme.Dark => ThemeMode.Dark,
+            ElementTheme.WindowsDefault => ThemeMode.System,
+            _ => ThemeMode.None
+        };
     }
 
     #endregion
