@@ -27,6 +27,8 @@
     <Style TargetType="{x:Type controls:EditBox}">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Background" Value="{DynamicResource EditBox.Background}" />
         <Setter Property="Foreground" Value="{DynamicResource EditBox.Foreground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource EditBox.BorderBrush}" />
@@ -52,7 +54,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="1">
+                        CornerRadius="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.CornerRadius)}">
                         <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                             <TextBlock
                                 x:Name="PART_TextBlock"
@@ -61,6 +63,10 @@
                                 TextTrimming="CharacterEllipsis" />
                             <TextBox
                                 x:Name="PART_TextBox"
+                                Margin="0"
+                                Padding="0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
                                 CaretBrush="{TemplateBinding CaretBrush}"
                                 Foreground="{TemplateBinding Foreground}"
                                 Style="{StaticResource EditBoxTextBoxStyle}"

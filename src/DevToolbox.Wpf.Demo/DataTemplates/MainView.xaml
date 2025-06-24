@@ -41,7 +41,7 @@
                 ItemsSource="{Binding ExampleCategories}"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <b:Interaction.Behaviors>
-                    <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
+                    <devtoolbox:TreeViewBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
                 </b:Interaction.Behaviors>
                 <TreeView.Resources>
                     <ResourceDictionary>

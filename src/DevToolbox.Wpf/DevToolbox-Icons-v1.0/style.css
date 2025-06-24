@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'DevToolbox-Icons';
-  src:  url('fonts/DevToolbox-Icons.eot?10olku');
-  src:  url('fonts/DevToolbox-Icons.eot?10olku#iefix') format('embedded-opentype'),
-    url('fonts/DevToolbox-Icons.ttf?10olku') format('truetype'),
-    url('fonts/DevToolbox-Icons.woff?10olku') format('woff'),
-    url('fonts/DevToolbox-Icons.svg?10olku#DevToolbox-Icons') format('svg');
+  src:  url('fonts/DevToolbox-Icons.eot?5mno34');
+  src:  url('fonts/DevToolbox-Icons.eot?5mno34#iefix') format('embedded-opentype'),
+    url('fonts/DevToolbox-Icons.ttf?5mno34') format('truetype'),
+    url('fonts/DevToolbox-Icons.woff?5mno34') format('woff'),
+    url('fonts/DevToolbox-Icons.svg?5mno34#DevToolbox-Icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-formula-fx:before {
+  content: "\a900";
+}
+.icon-fx:before {
+  content: "\a901";
+}
 .icon-Warning:before {
   content: "\e7ba";
 }
