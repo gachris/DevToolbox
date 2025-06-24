@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Threading;
@@ -79,19 +79,6 @@ public static class ThemeManager
     }
 
     /// <summary>
-    /// Gets or sets the value indicating whether a Fluent theme is enabled.
-    /// This returns <c>true</c> if the application's theme style is fluent.
-    /// </summary>
-    public static bool IsFluentThemeEnabled
-    {
-#if NET9_0_OR_GREATER
-        get => Application.Current.ThemeMode != ThemeMode.None;
-#else
-        get => false;
-#endif
-    }
-
-    /// <summary>
     /// Gets or sets the current requested theme.
     /// Changing this property triggers theme updates and raises the appropriate events.
     /// </summary>
@@ -142,21 +129,6 @@ public static class ThemeManager
     /// <param name="newValue">The new theme to apply.</param>
     private static void RefreshTheme(ElementTheme oldValue, ElementTheme newValue)
     {
-#if NET9_0_OR_GREATER
-        if (Application.Current is not null)
-        {
-            // Set the system's WPF theme mode (experimental in .NET 9)
-            Application.Current.ThemeMode = newValue switch
-            {
-                ElementTheme.Default => ThemeMode.None,
-                ElementTheme.Light => ThemeMode.Light,
-                ElementTheme.Dark => ThemeMode.Dark,
-                ElementTheme.WindowsDefault => ThemeMode.System,
-                _ => ThemeMode.None
-            };
-        }
-#endif
-
         // Determine the new application theme based on the requested theme
         var newAppTheme = newValue switch
         {
