@@ -69,7 +69,7 @@ public class ThemeResourceDictionary : ResourceDictionary, IDisposable
             _currentDictionary = null;
         }
 
-        if (!ThemeManager.OverrideCoreTheming && !ThemeManager.IsFluentThemeEnabled && _source != null)
+        if (!ThemeManager.OverrideCoreTheming && _source != null)
         {
             _currentDictionary = new ResourceDictionary { Source = _source };
             MergedDictionaries.Add(_currentDictionary);
