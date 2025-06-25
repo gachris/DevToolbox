@@ -26,11 +26,12 @@
             <ItemsPanelTemplate x:Key="ButtonsItemsPanelTemplate">
                 <StackPanel Orientation="Horizontal" />
             </ItemsPanelTemplate>
-
+     
             <DataTemplate x:Key="ButtonItemTemplate" DataType="{x:Type viewModels:PluginButtonViewModel}">
                 <Button
                     x:Name="button"
                     MinWidth="80"
+                    Margin="8,0,0,0"
                     Padding="6"
                     Command="{Binding Command}"
                     Content="{Binding Content}"
@@ -49,7 +50,7 @@
                 </Button>
                 <DataTemplate.Triggers>
                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
-                        <Setter TargetName="button" Property="Margin" Value="8,0,0,0" />
+                        <Setter TargetName="button" Property="Margin" Value="0" />
                     </DataTrigger>
                 </DataTemplate.Triggers>
             </DataTemplate>
