@@ -1,9 +1,10 @@
-﻿<ResourceDictionary
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
     xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters"
     xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers"
+    xmlns:markup="clr-namespace:DevToolbox.Wpf.Markup"
     xmlns:windows="clr-namespace:DevToolbox.Wpf.Windows">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -149,7 +150,7 @@
                             <Setter TargetName="PART_Maximize" Property="Command" Value="{x:Static SystemCommands.RestoreWindowCommand}" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding TitleTextBlockStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=devtoolbox:WindowEx}, UpdateSourceTrigger=PropertyChanged}">
-                            <Setter TargetName="TitleTextBlock" Property="Foreground" Value="{devtoolbox:ThemeBrush DefaultBrush=Black, DarkThemeBrush=White, LightThemeBrush=Black, HighContrastBrush={x:Static SystemColors.WindowTextBrush}}" />
+                            <Setter TargetName="TitleTextBlock" Property="Foreground" Value="{markup:ThemeBrush DefaultBrush=Black, DarkThemeBrush=White, LightThemeBrush=Black, HighContrastBrush={x:Static SystemColors.WindowTextBrush}}" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ImageStyle, RelativeSource={RelativeSource AncestorType=windows:WindowEx, Mode=FindAncestor}}" Value="{x:Null}">
                             <Setter TargetName="Icon" Property="Style">
