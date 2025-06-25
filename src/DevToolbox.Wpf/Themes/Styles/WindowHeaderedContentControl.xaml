@@ -61,11 +61,11 @@
                                         </Image.Source>
                                     </Image>
                                     <TextBlock
+                                        x:Name="TitleTextBlock"
                                         Grid.Column="2"
                                         Margin="12,0,0,2"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        Foreground="{DynamicResource Window.Title.Foreground}"
                                         Style="{Binding TitleTextBlockStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, UpdateSourceTrigger=PropertyChanged}"
                                         Text="{Binding Title, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
                                         TextTrimming="CharacterEllipsis"
@@ -147,6 +147,9 @@
                             <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="PART_Maximize" Property="windows:WindowEx.HitTestResult" Value="Restore" />
                             <Setter TargetName="PART_Maximize" Property="Command" Value="{x:Static SystemCommands.RestoreWindowCommand}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding TitleTextBlockStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=devtoolbox:WindowEx}, UpdateSourceTrigger=PropertyChanged}">
+                            <Setter TargetName="TitleTextBlock" Property="Foreground" Value="{devtoolbox:ThemeBrush DefaultBrush=Black, DarkThemeBrush=White, LightThemeBrush=Black, HighContrastBrush={x:Static SystemColors.WindowTextBrush}}" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ImageStyle, RelativeSource={RelativeSource AncestorType=windows:WindowEx, Mode=FindAncestor}}" Value="{x:Null}">
                             <Setter TargetName="Icon" Property="Style">
