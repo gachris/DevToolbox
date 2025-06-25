@@ -149,7 +149,7 @@
                             <Setter TargetName="PART_Maximize" Property="windows:WindowEx.HitTestResult" Value="Restore" />
                             <Setter TargetName="PART_Maximize" Property="Command" Value="{x:Static SystemCommands.RestoreWindowCommand}" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding TitleTextBlockStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=devtoolbox:WindowEx}, UpdateSourceTrigger=PropertyChanged}">
+                        <DataTrigger Binding="{Binding TitleTextBlockStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, UpdateSourceTrigger=PropertyChanged}">
                             <Setter TargetName="TitleTextBlock" Property="Foreground" Value="{markup:ThemeBrush DefaultBrush=Black, DarkThemeBrush=White, LightThemeBrush=Black, HighContrastBrush={x:Static SystemColors.WindowTextBrush}}" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ImageStyle, RelativeSource={RelativeSource AncestorType=windows:WindowEx, Mode=FindAncestor}}" Value="{x:Null}">
