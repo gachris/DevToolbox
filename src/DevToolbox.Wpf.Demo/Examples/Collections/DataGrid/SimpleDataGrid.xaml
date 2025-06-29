@@ -1,19 +1,17 @@
-﻿<devtoolbox:WindowEx
-    x:Class="DevToolbox.Wpf.Demo.Windows.DataGridWindow"
+﻿<UserControl
+    x:Class="DevToolbox.Wpf.Demo.Examples.Collections.DataGrid.SimpleDataGrid"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    xmlns:local="clr-namespace:DevToolbox.Wpf.Demo.Examples.Collections.DataGrid"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels"
-    Title="DataGrid demo"
-    Width="1200"
-    Height="800"
     d:DataContext="{d:DesignInstance viewModels:ExampleDataGridViewModel}"
-    ResizeMode="CanResizeWithGrip"
-    WindowStartupLocation="CenterScreen"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
     mc:Ignorable="d">
-    <devtoolbox:WindowEx.Resources>
+    <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/DevToolbox.Wpf;component/Themes/Styles/DataGridColumnHeader/Generic.xaml" />
@@ -61,7 +59,7 @@
             </Style>
 
         </ResourceDictionary>
-    </devtoolbox:WindowEx.Resources>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -69,6 +67,7 @@
         </Grid.RowDefinitions>
         <devtoolbox:GridControl
             Name="gridControl"
+            Height="600"
             Margin="5"
             devtoolbox:DataGridHelper.AllowColumnChooser="True"
             devtoolbox:DataGridHelper.AllowUserToCopy="False"
@@ -222,4 +221,4 @@
             IsChecked="True"
             Unchecked="Button_Unchecked" />
     </Grid>
-</devtoolbox:WindowEx>
+</UserControl>

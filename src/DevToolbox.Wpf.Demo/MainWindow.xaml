@@ -12,6 +12,7 @@
     Width="1200"
     Height="800"
     d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
+    Background="Transparent"
     FontFamily="Segoe UI"
     FontSize="{DynamicResource FontSize14}"
     ResizeMode="CanResizeWithGrip"

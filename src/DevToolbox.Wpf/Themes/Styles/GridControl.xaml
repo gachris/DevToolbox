@@ -5,7 +5,11 @@
     xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers"
     xmlns:system="clr-namespace:System;assembly=System.Runtime">
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/DataGridCell/Generic.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/DataGridColumnHeader/Generic.xaml" />
         <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/DataGridColumnHeader/GroupByColumnHeaderEdit.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/DataGridRow/Generic.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/DataGridRowHeader/Generic.xaml" />
         <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/ScrollViewer/Generic.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
@@ -103,7 +107,11 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type controls:GridControl}">
+    <Style BasedOn="{StaticResource ResourceKey={x:Type DataGrid}}" TargetType="{x:Type controls:GridControl}">
+        <Setter Property="RowStyle" Value="{StaticResource DataGridRowStyle}" />
+        <Setter Property="CellStyle" Value="{StaticResource DataGridCellStyle}" />
+        <Setter Property="ColumnHeaderStyle" Value="{StaticResource DataGridColumnHeaderStyle}" />
+        <Setter Property="RowHeaderStyle" Value="{StaticResource DataGridRowHeaderStyle}" />
         <Setter Property="Background" Value="{DynamicResource DataGrid.Background}" />
         <Setter Property="Foreground" Value="{DynamicResource DataGrid.Foreground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource DataGrid.BorderBrush}" />

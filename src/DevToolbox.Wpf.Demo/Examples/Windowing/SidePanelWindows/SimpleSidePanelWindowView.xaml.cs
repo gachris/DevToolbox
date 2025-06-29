@@ -8,12 +8,11 @@ namespace DevToolbox.Wpf.Demo.Examples.Windowing.SidePanelWindows;
 /// </summary>
 public partial class SimpleSidePanelWindowView : UserControl
 {
-    private CalendarWindow _notificationWindow;
+    private CalendarWindow? _notificationWindow;
 
     public SimpleSidePanelWindowView()
     {
         InitializeComponent();
-        _notificationWindow = new CalendarWindow();
 
         Loaded += SimpleSidePanelWindowView_Loaded;
     }
@@ -22,15 +21,16 @@ public partial class SimpleSidePanelWindowView : UserControl
     {
         var w = Window.GetWindow(this);
         w.Closed += W_Closed;
+        _notificationWindow = new CalendarWindow();
     }
 
     private void W_Closed(object? sender, EventArgs e)
     {
-        _notificationWindow.Close();
+        _notificationWindow!.Close();
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        _notificationWindow.IsExpanded = !_notificationWindow.IsExpanded;
+        _notificationWindow!.IsExpanded = !_notificationWindow.IsExpanded;
     }
 }

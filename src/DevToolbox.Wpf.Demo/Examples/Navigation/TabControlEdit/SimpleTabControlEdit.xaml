@@ -4,24 +4,135 @@
     HorizontalAlignment="Stretch"
     HorizontalContentAlignment="Stretch"
     VerticalContentAlignment="Stretch">
-    <devtoolbox:TabControlEdit
-        CloseButtonShowMode="NoWhere"
-        ShowAddTabButton="False"
-        SwapTabsButtonShowMode="Hidden">
-        <devtoolbox:TabItemEdit Header="Home">
-            <TextBlock Text="Welcome to the Home tab!" />
+    <devtoolbox:TabControlEdit TabPanelViewMode="Stretch">
+        <!--  Tab 1  -->
+        <devtoolbox:TabItemEdit>
+            <devtoolbox:TabItemEdit.Header>
+                <TextBlock Text="Tab Item 1" TextTrimming="CharacterEllipsis" />
+            </devtoolbox:TabItemEdit.Header>
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 1"
+                TextTrimming="CharacterEllipsis" />
         </devtoolbox:TabItemEdit>
 
-        <devtoolbox:TabItemEdit Header="Settings">
-            <StackPanel>
-                <TextBlock Text="Settings Overview:" />
-                <CheckBox Content="Enable Notifications" />
-                <CheckBox Content="Enable Dark Mode" />
-            </StackPanel>
+        <!--  Tab 2  -->
+        <devtoolbox:TabItemEdit>
+            <devtoolbox:TabItemEdit.Header>
+                <TextBlock Text="Tab Item 2" TextTrimming="CharacterEllipsis" />
+            </devtoolbox:TabItemEdit.Header>
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 2"
+                TextTrimming="CharacterEllipsis" />
         </devtoolbox:TabItemEdit>
 
-        <devtoolbox:TabItemEdit Header="About">
-            <TextBlock Text="This is the About tab with information." />
+        <!--  Tab 3  -->
+        <devtoolbox:TabItemEdit>
+            <devtoolbox:TabItemEdit.Header>
+                <TextBlock Text="Tab Item 3" TextTrimming="CharacterEllipsis" />
+            </devtoolbox:TabItemEdit.Header>
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 3"
+                TextTrimming="CharacterEllipsis" />
+        </devtoolbox:TabItemEdit>
+
+        <!--  Tab 4  -->
+        <devtoolbox:TabItemEdit>
+            <devtoolbox:TabItemEdit.Header>
+                <TextBlock Text="Tab Item 4" TextTrimming="CharacterEllipsis" />
+            </devtoolbox:TabItemEdit.Header>
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 4"
+                TextTrimming="CharacterEllipsis" />
+        </devtoolbox:TabItemEdit>
+
+        <!--  Tab 5  -->
+        <devtoolbox:TabItemEdit>
+            <devtoolbox:TabItemEdit.Header>
+                <TextBlock Text="Tab Item 5" TextTrimming="CharacterEllipsis" />
+            </devtoolbox:TabItemEdit.Header>
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 5"
+                TextTrimming="CharacterEllipsis" />
+        </devtoolbox:TabItemEdit>
+
+        <!--  Tab 6  -->
+        <devtoolbox:TabItemEdit>
+            <devtoolbox:TabItemEdit.Header>
+                <TextBlock Text="Tab Item 6" TextTrimming="CharacterEllipsis" />
+            </devtoolbox:TabItemEdit.Header>
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 6"
+                TextTrimming="CharacterEllipsis" />
+        </devtoolbox:TabItemEdit>
+
+        <!--  Tab 7  -->
+        <devtoolbox:TabItemEdit>
+            <devtoolbox:TabItemEdit.Header>
+                <TextBlock Text="Tab Item 7" TextTrimming="CharacterEllipsis" />
+            </devtoolbox:TabItemEdit.Header>
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 7"
+                TextTrimming="CharacterEllipsis" />
+        </devtoolbox:TabItemEdit>
+
+        <!--  Tab 8  -->
+        <devtoolbox:TabItemEdit>
+            <devtoolbox:TabItemEdit.Header>
+                <TextBlock Text="Tab Item 8" TextTrimming="CharacterEllipsis" />
+            </devtoolbox:TabItemEdit.Header>
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 8"
+                TextTrimming="CharacterEllipsis" />
+        </devtoolbox:TabItemEdit>
+
+        <!--  Tab 9  -->
+        <devtoolbox:TabItemEdit>
+            <devtoolbox:TabItemEdit.Header>
+                <TextBlock Text="Tab Item 9" TextTrimming="CharacterEllipsis" />
+            </devtoolbox:TabItemEdit.Header>
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 9"
+                TextTrimming="CharacterEllipsis" />
+        </devtoolbox:TabItemEdit>
+
+        <!--  Tab 10  -->
+        <devtoolbox:TabItemEdit>
+            <devtoolbox:TabItemEdit.Header>
+                <TextBlock Text="Tab Item 10" TextTrimming="CharacterEllipsis" />
+            </devtoolbox:TabItemEdit.Header>
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="This is the content of Tab 10"
+                TextTrimming="CharacterEllipsis" />
         </devtoolbox:TabItemEdit>
     </devtoolbox:TabControlEdit>
 </UserControl>

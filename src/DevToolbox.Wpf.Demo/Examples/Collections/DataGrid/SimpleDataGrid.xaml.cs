@@ -1,13 +1,15 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using DevToolbox.Wpf.Demo.ViewModels;
-using DevToolbox.Wpf.Windows;
 
-namespace DevToolbox.Wpf.Demo.Windows;
+namespace DevToolbox.Wpf.Demo.Examples.Collections.DataGrid;
 
-public partial class DataGridWindow : WindowEx
+/// <summary>
+/// Interaction logic for SimpleDataGrid.xaml
+/// </summary>
+public partial class SimpleDataGrid : UserControl
 {
-    public DataGridWindow()
+    public SimpleDataGrid()
     {
         InitializeComponent();
 

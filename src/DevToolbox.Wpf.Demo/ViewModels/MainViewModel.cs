@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DevToolbox.Wpf.Demo.Examples.Collections.DataGrid;
 using DevToolbox.Wpf.Demo.Examples.Styles.Colors;
 using DevToolbox.Wpf.Demo.Examples.Windowing.SidePanelWindows;
 
@@ -93,6 +94,23 @@ public partial class MainViewModel : ObservableObject
                                 View = new SimpleSidePanelWindowView(),
                             }
                         }
+                    }
+                }
+            });
+
+            var collections = ExampleCategories.First(x => x.Header == "Collections");
+            collections.SubCategories.Add(new ExampleSubCategory()
+            {
+                Header = "GridControl",
+                Description = "",
+                Icon = "ed7c",
+                Namespace = "DevToolbox.Wpf.Controls",
+                Examples = new ObservableCollection<Example>()
+                {
+                    new Example()
+                    {
+                        Header = "GridControl Example",
+                        View = new SimpleDataGrid(),
                     }
                 }
             });
