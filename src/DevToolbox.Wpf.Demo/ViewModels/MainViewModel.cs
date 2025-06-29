@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DevToolbox.Wpf.Demo.Examples.Styles.Colors;
 
 namespace DevToolbox.Wpf.Demo.ViewModels;
 
@@ -19,7 +20,7 @@ public partial class MainViewModel : ObservableObject
 
     #region Properties
 
-    public ObservableCollection<ExampleGategory>? ExampleCategories { get; private set; }
+    public ObservableCollection<ExampleCategory>? ExampleCategories { get; private set; }
 
     public bool IsSettingsSelected => SelectedItem is SettingsViewModel;
 
@@ -46,8 +47,31 @@ public partial class MainViewModel : ObservableObject
             using var reader = new StreamReader(stream, Encoding.UTF8);
             var jsonString = await reader.ReadToEndAsync();
 
-            ExampleCategories = JsonSerializer.Deserialize<ObservableCollection<ExampleGategory>>(jsonString);
+            ExampleCategories = JsonSerializer.Deserialize<ObservableCollection<ExampleCategory>>(jsonString);
             OnPropertyChanged(nameof(ExampleCategories));
+
+            ExampleCategories.Add(new ExampleCategory()
+            {
+                Header = "Styles",
+                SubCategories = new ObservableCollection<ExampleSubCategory>()
+                {
+                    new ExampleSubCategory()
+                    {
+                        Header = "Colors",
+                        Description = "Provides immersive UI colors and brushes, and exposes them as WPF resource keys like SystemColors.",
+                        Icon = "ec10",
+                        Namespace = "DevToolbox.Wpf.Media",
+                        Examples = new ObservableCollection<Example>()
+                        {
+                            new Example()
+                            {
+                                Header = "Accent Colors",
+                                View = new AccentColors(),
+                            }
+                        }
+                    }
+                }
+            });
         }
         catch (Exception ex)
         {

@@ -3,11 +3,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    Width="500"
     Margin="50"
     AutoHide="False"
     BorderThickness="1"
     Dock="Right"
-    ExpandSize="500"
     FontSize="14"
     IsExpanded="True"
     Topmost="True">

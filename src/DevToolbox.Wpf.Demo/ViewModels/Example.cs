@@ -47,7 +47,7 @@ public partial class Example : ObservableObject
     public object? View
     {
         get => _view;
-        private set => SetProperty(ref _view, value);
+        internal set => SetProperty(ref _view, value);
     }
 
     public ObservableCollection<Property>? Properties { get; set; }

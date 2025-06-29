@@ -3,10 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels">
 
-    <DataTemplate DataType="{x:Type viewModels:ExampleSubGategory}">
+    <DataTemplate DataType="{x:Type viewModels:ExampleSubCategory}">
         <Border
-            Background="{DynamicResource ExampleSubGategory.Background}"
-            BorderBrush="{DynamicResource ExampleSubGategory.BorderBrush}"
+            Background="{DynamicResource ExampleSubCategory.Background}"
+            BorderBrush="{DynamicResource ExampleSubCategory.BorderBrush}"
             BorderThickness="1"
             CornerRadius="8,0,0,0">
             <Grid UseLayoutRounding="True">
@@ -20,14 +20,14 @@
                     Margin="28,28,28,4"
                     FontSize="26"
                     FontWeight="SemiBold"
-                    Foreground="{DynamicResource ExampleSubGategory.Foreground}"
+                    Foreground="{DynamicResource ExampleSubCategory.Foreground}"
                     Text="{Binding Header}" />
                 <TextBlock
                     Grid.Row="1"
                     Margin="28,0,28,0"
                     FontSize="12"
                     FontWeight="Light"
-                    Foreground="{DynamicResource ExampleSubGategory.Foreground}"
+                    Foreground="{DynamicResource ExampleSubCategory.Foreground}"
                     Text="{Binding Namespace}" />
                 <ScrollViewer
                     Grid.Row="2"
@@ -36,7 +36,7 @@
                     <StackPanel Margin="28">
                         <TextBlock
                             Margin="0,0,0,28"
-                            Foreground="{DynamicResource ExampleSubGategory.Foreground}"
+                            Foreground="{DynamicResource ExampleSubCategory.Foreground}"
                             Text="{Binding Description}"
                             TextWrapping="WrapWithOverflow" />
                         <ItemsControl ItemsSource="{Binding Examples}" />

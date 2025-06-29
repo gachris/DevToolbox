@@ -386,23 +386,6 @@
     ]
   },
   {
-    "Header": "Styles",
-    "SubCategories": [
-      {
-        "Header": "FontGlyph",
-        "Description": "A control that represents a single glyph or character from a font, allowing for the display of custom symbols or icons.",
-        "Icon": "ImageIcon",
-        "Namespace": "DevToolbox.Wpf.Controls"
-      },
-      {
-        "Header": "System Backdrops (Mica/Acrylic/Tabbed)",
-        "Description": "System Backdrops, like Mica, Acrylic, and Tabbed, for the window.",
-        "Icon": "TransparentBackground",
-        "Namespace": "DevToolbox.Wpf.Windows"
-      }
-    ]
-  },
-  {
     "Header": "Text",
     "SubCategories": [
       {

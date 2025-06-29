@@ -2,11 +2,11 @@
 
     <SolidColorBrush x:Key="TextBlock.Primary.Foreground" Color="#1E1E1E" />
 
-    <!--#region ExampleGategory-->
+    <!--#region ExampleCategory-->
 
-    <SolidColorBrush x:Key="ExampleGategory.Background" Color="#F0F0F0" />
-    <SolidColorBrush x:Key="ExampleGategory.BorderBrush" Color="#CACACA" />
-    <SolidColorBrush x:Key="ExampleGategory.Foreground" Color="#000000" />
+    <SolidColorBrush x:Key="ExampleCategory.Background" Color="#F0F0F0" />
+    <SolidColorBrush x:Key="ExampleCategory.BorderBrush" Color="#CACACA" />
+    <SolidColorBrush x:Key="ExampleCategory.Foreground" Color="#000000" />
 
     <!--#endregion-->
 

@@ -6,7 +6,7 @@ using DevToolbox.Wpf.Demo.Json;
 
 namespace DevToolbox.Wpf.Demo.ViewModels;
 
-public partial class ExampleSubGategory : ObservableObject
+public partial class ExampleSubCategory : ObservableObject
 {
     private string? _icon;
 

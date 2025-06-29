@@ -4,10 +4,10 @@
     xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
     xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels">
 
-    <DataTemplate DataType="{x:Type viewModels:ExampleGategory}">
+    <DataTemplate DataType="{x:Type viewModels:ExampleCategory}">
         <Border
-            Background="{DynamicResource ExampleGategory.Background}"
-            BorderBrush="{DynamicResource ExampleGategory.BorderBrush}"
+            Background="{DynamicResource ExampleCategory.Background}"
+            BorderBrush="{DynamicResource ExampleCategory.BorderBrush}"
             BorderThickness="1"
             CornerRadius="8,0,0,0">
             <Grid>
@@ -19,7 +19,7 @@
                     Margin="34,28,28,28"
                     FontSize="26"
                     FontWeight="SemiBold"
-                    Foreground="{DynamicResource ExampleGategory.Foreground}"
+                    Foreground="{DynamicResource ExampleCategory.Foreground}"
                     Text="{Binding Header}" />
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <ItemsControl Margin="28,12,28,12" ItemsSource="{Binding SubCategories}">
@@ -29,7 +29,7 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type viewModels:ExampleSubGategory}">
+                            <DataTemplate DataType="{x:Type viewModels:ExampleSubCategory}">
                                 <Button
                                     Width="358"
                                     MinHeight="88"

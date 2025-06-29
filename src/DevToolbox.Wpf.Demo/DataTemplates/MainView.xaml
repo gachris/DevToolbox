@@ -6,8 +6,8 @@
     xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
     xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/ExampleGategoryView.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/ExampleSubGategoryView.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/ExampleCategoryView.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/ExampleSubCategoryView.xaml" />
         <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/ExampleView.xaml" />
         <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/PropertyView.xaml" />
         <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/SettingsView.xaml" />
@@ -45,12 +45,12 @@
                 </b:Interaction.Behaviors>
                 <TreeView.Resources>
                     <ResourceDictionary>
-                        <HierarchicalDataTemplate DataType="{x:Type viewModels:ExampleGategory}" ItemsSource="{Binding SubCategories}">
+                        <HierarchicalDataTemplate DataType="{x:Type viewModels:ExampleCategory}" ItemsSource="{Binding SubCategories}">
                             <StackPanel Orientation="Horizontal">
                                 <ContentPresenter Margin="2,0" Content="{Binding Header}" />
                             </StackPanel>
                         </HierarchicalDataTemplate>
-                        <HierarchicalDataTemplate DataType="{x:Type viewModels:ExampleSubGategory}">
+                        <HierarchicalDataTemplate DataType="{x:Type viewModels:ExampleSubCategory}">
                             <StackPanel Orientation="Horizontal">
                                 <ContentPresenter Margin="2,0" Content="{Binding Header}" />
                             </StackPanel>

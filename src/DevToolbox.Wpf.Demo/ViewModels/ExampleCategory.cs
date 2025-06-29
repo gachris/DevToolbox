@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace DevToolbox.Wpf.Demo.ViewModels;
 
-public partial class ExampleGategory : ObservableObject
+public partial class ExampleCategory : ObservableObject
 {
     [ObservableProperty]
     private string? _header;
@@ -14,5 +14,5 @@ public partial class ExampleGategory : ObservableObject
     [ObservableProperty]
     private bool _isExpanded;
 
-    public ObservableCollection<ExampleSubGategory>? SubCategories { get; set; }
+    public ObservableCollection<ExampleSubCategory>? SubCategories { get; set; }
 }
