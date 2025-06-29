@@ -55,6 +55,7 @@
 		<Page Remove="Examples\MenusAndToolbars\ToolBar\SimpleToolBar.xaml" />
 		<Page Remove="Examples\Navigation\TabControlEdit\SimpleTabControlEdit.xaml" />
 		<Page Remove="Examples\Scrolling\ScrollViewer\SimpleScrollViewer.xaml" />
+		<Page Remove="Examples\StatusAndInfo\MessageBar\SimpleMessageBar.xaml" />
 		<Page Remove="Examples\StatusAndInfo\ProgressRing\SimpleProgressRing.xaml" />
 		<Page Remove="Examples\StatusAndInfo\WaitingIndicator\SimpleWaitingIndicator.xaml" />
 		<Page Remove="Examples\Text\EditBox\SimpleEditBox.xaml" />
@@ -185,6 +186,11 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<SubType>Designer</SubType>
 			<Generator>MSBuild:Compile</Generator>
+		</Content>
+		<Content Include="Examples\StatusAndInfo\MessageBar\SimpleMessageBar.xaml">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		  <SubType>Designer</SubType>
+		  <Generator>MSBuild:Compile</Generator>
 		</Content>
 		<Content Include="Examples\StatusAndInfo\ProgressRing\SimpleProgressRing.xaml">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

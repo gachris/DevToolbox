@@ -360,6 +360,18 @@
     "Header": "StatusAndInfo",
     "SubCategories": [
       {
+        "Header": "MessageBar",
+        "Description": "",
+        "Icon": "Loading",
+        "Namespace": "DevToolbox.Wpf.Controls",
+        "Examples": [
+          {
+            "Header": "MessageBar Examples.",
+            "SourceCode": "\\Examples\\StatusAndInfo\\MessageBar\\SimpleMessageBar.xaml"
+          }
+        ]
+      },
+      {
         "Header": "ProgressRing",
         "Description": "A control that indicates an ongoing operation with an animation.",
         "Icon": "Loading",

@@ -1,0 +1,46 @@
+﻿<Grid
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    xmlns:helpers="clr-namespace:DevToolbox.Wpf.Demo.Helpers">
+    <StackPanel>
+        <devtoolbox:MessageBar
+            Margin="0,0,0,5"
+            IsClosable="True"
+            Severity="Info">
+            <TextBlock Text="This is an informational message." />
+        </devtoolbox:MessageBar>
+        <devtoolbox:MessageBar
+            Margin="0,0,0,5"
+            IsClosable="True"
+            Severity="Warning">
+            <TextBlock Text="Caution! There might be an issue to address." />
+        </devtoolbox:MessageBar>
+        <devtoolbox:MessageBar
+            Margin="0,0,0,5"
+            IsClosable="True"
+            Severity="Error">
+            <TextBlock>
+                <Run Text="An error has occurred. " />
+                <Run FontWeight="Bold" Text="Please try again or contact support." />
+            </TextBlock>
+        </devtoolbox:MessageBar>
+        <devtoolbox:MessageBar
+            Margin="0,0,0,5"
+            IsClosable="True"
+            Severity="Success">
+            <TextBlock Text="Your changes were saved successfully." />
+        </devtoolbox:MessageBar>
+        <devtoolbox:MessageBar
+            Margin="0,0,0,5"
+            IsClosable="True"
+            Severity="Progress">
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                <TextBlock
+                    Margin="0,0,10,0"
+                    VerticalAlignment="Center"
+                    Text="Saving your changes..." />
+            </StackPanel>
+        </devtoolbox:MessageBar>
+    </StackPanel>
+</Grid>
