@@ -57,6 +57,7 @@
             Background="{TemplateBinding Background}"
             BorderBrush="{TemplateBinding BorderBrush}"
             BorderThickness="0,2,0,0"
+            CornerRadius="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.CornerRadius)}"
             SnapsToDevicePixels="true">
             <Grid
                 Margin="{TemplateBinding Padding}"

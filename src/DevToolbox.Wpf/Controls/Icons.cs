@@ -44,4 +44,10 @@ public static class Icons
 
     /// <summary>Security shield icon.</summary>
     public const string Shield = "ea18";
+
+    /// <summary>Add icon.</summary>
+    public const string Add = "e710";
+
+    /// <summary>ChevronDown icon.</summary>
+    public const string ChevronDown = "e70d";
 }

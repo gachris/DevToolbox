@@ -40,7 +40,6 @@
                                 <DockPanel Grid.Column="0" LastChildFill="True">
                                     <Button
                                         x:Name="BackButton"
-                                        Grid.Column="0"
                                         Margin="12,0,0,0"
                                         Command="{Binding BackButtonCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
                                         CommandParameter="{Binding BackButtonCommandParameter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
@@ -50,7 +49,6 @@
                                         WindowChrome.IsHitTestVisibleInChrome="True" />
                                     <Image
                                         x:Name="Icon"
-                                        Grid.Column="1"
                                         Margin="12,0,0,0"
                                         Style="{Binding ImageStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
                                         Visibility="{Binding ShowIcon, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -63,7 +61,6 @@
                                     </Image>
                                     <TextBlock
                                         x:Name="TitleTextBlock"
-                                        Grid.Column="2"
                                         Margin="12,0,0,2"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
@@ -72,7 +69,6 @@
                                         TextTrimming="CharacterEllipsis"
                                         Visibility="{Binding ShowTitle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                     <ContentPresenter
-                                        Grid.Column="3"
                                         VerticalAlignment="Stretch"
                                         ContentSource="Header"
                                         Focusable="False" />

@@ -34,7 +34,7 @@ public class DockManager : ItemsControl, IDropSurface
     private const string PART_DockingPanel = nameof(PART_DockingPanel);
 
     private readonly DockingDragServices _dragServices = new();
-    private readonly OverlayWindow _overlayWindow;
+    private OverlayWindow _overlayWindow = default!;
 
     private Window? _owner;
     private DockableOverlayControl? _overlayControl;
@@ -128,9 +128,6 @@ public class DockManager : ItemsControl, IDropSurface
     {
         DragServices.Register(this);
 
-        _overlayWindow = new OverlayWindow(this);
-        _overlayWindow.Hide();
-
         AddHandler(PreviewMouseUpEvent, new MouseButtonEventHandler(OnMouseUp));
         AddHandler(PreviewMouseMoveEvent, new MouseEventHandler(OnMouseMove));
 
@@ -146,6 +143,18 @@ public class DockManager : ItemsControl, IDropSurface
     {
         base.OnApplyTemplate();
 
+        _overlayWindow?.Close();
+        _overlayWindow = new OverlayWindow(this);
+        _overlayWindow.Hide();
+
+        if (_owner != null)
+            _owner.Closed -= WindowClosed;
+
+        _owner = Window.GetWindow(this);
+
+        if (_owner != null)
+            _owner.Closed += WindowClosed;
+
         _leftDockingButtonGroupControl = Template.FindName(PART_LeftPanel, this) as DockingButtonGroupControl;
         _rightDockingButtonGroupControl = Template.FindName(PART_RightPanel, this) as DockingButtonGroupControl;
         _topDockingButtonGroupControl = Template.FindName(PART_TopPanel, this) as DockingButtonGroupControl;
@@ -160,13 +169,6 @@ public class DockManager : ItemsControl, IDropSurface
 
         _overlayControl = Template.FindName(PART_DockableOverlayControl, this) as DockableOverlayControl;
 
-        if (_owner != null)
-            _owner.Closed -= WindowClosed;
-
-        _owner = Window.GetWindow(this);
-
-        if (_owner != null)
-            _owner.Closed += WindowClosed;
     }
 
     protected override void PrepareContainerForItemOverride(DependencyObject element, object item)

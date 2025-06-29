@@ -357,7 +357,6 @@ public class TabsWindow : WindowEx
     public TabsWindow()
     {
         Chrome.CaptionHeight = 44;
-
         WindowBehavior.SetWindowEffect(this, new Tabbed());
     }
 

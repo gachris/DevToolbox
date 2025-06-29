@@ -13,10 +13,12 @@
     d:DataContext="{d:DesignInstance viewModels:TabsWindowExampleViewModel}"
     CloseButtonShowMode="InAllTabs"
     ItemsSource="{Binding Items}"
+    ResizeMode="CanResizeWithGrip"
     ShowAddTabButton="True"
+    ShowBackButton="False"
     ShowIcon="False"
     ShowTitle="False"
-    SwapTabsButtonShowMode="Hidden"
+    SwapTabsButtonShowMode="Visible"
     TabPanelHorizontalAlignment="Left"
     TabPanelViewMode="Stretch"
     UseLayoutRounding="True"
@@ -24,18 +26,29 @@
     mc:Ignorable="d">
     <devtoolbox:TabsWindow.ItemContainerStyle>
         <Style BasedOn="{StaticResource {x:Type devtoolbox:TabItemEdit}}" TargetType="{x:Type devtoolbox:TabItemEdit}">
-            <Setter Property="MinHeight" Value="44" />
+            <Setter Property="Height" Value="36" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
             <Setter Property="HeaderTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Header}" TextTrimming="CharacterEllipsis" />
+                        <TextBlock
+                            Margin="6,0,6,0"
+                            Text="{Binding Header}"
+                            TextTrimming="CharacterEllipsis" />
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <TextBox BorderThickness="0" Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        <Border Background="#191919">
+                            <TextBox
+                                Width="200"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                BorderThickness="0"
+                                Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        </Border>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
