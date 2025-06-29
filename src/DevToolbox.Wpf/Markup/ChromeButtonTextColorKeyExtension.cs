@@ -7,9 +7,6 @@ using DevToolbox.Wpf.Helpers;
 using DevToolbox.Wpf.Interop;
 using DevToolbox.Wpf.Media;
 using Microsoft.Win32;
-#if NET8_0_OR_GREATER && WINDOWS10_0_17763_0_OR_GREATER
-using Windows.UI.ViewManagement;
-#endif
 
 namespace DevToolbox.Wpf.Markup;
 

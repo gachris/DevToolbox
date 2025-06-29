@@ -1,6 +1,5 @@
 ﻿namespace DevToolbox.Wpf.Media;
 
-#if !(NET8_0_OR_GREATER && WINDOWS10_0_17763_0_OR_GREATER)
 /// <summary>
 /// Represents different types of UI colors used throughout the application.
 /// </summary>
@@ -56,4 +55,3 @@ public enum UIColorType
     /// </summary>
     Complement = 9
 }
-#endif

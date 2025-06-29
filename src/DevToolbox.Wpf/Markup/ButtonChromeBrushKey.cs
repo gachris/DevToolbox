@@ -1,7 +1,4 @@
-﻿#if NET8_0_OR_GREATER && WINDOWS10_0_17763_0_OR_GREATER
-#endif
-
-namespace DevToolbox.Wpf.Markup;
+﻿namespace DevToolbox.Wpf.Markup;
 
 /// <summary>
 /// Specifies logical names for button chrome visual state brushes used in styling buttons.
