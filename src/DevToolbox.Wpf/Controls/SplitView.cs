@@ -98,37 +98,37 @@ public class SplitView : ContentControl
     /// Routed event triggered when a collapse animation completes.
     /// </summary>
     public static readonly RoutedEvent CollapseCompletedEvent =
-        EventManager.RegisterRoutedEvent("CollapseCompletedEventHandler", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SplitView));
+        EventManager.RegisterRoutedEvent(nameof(CollapseCompleted), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SplitView));
 
     /// <summary>
     /// Routed event triggered when an expand animation completes.
     /// </summary>
     public static readonly RoutedEvent ExpandCompletedEvent =
-        EventManager.RegisterRoutedEvent("ExpandCompletedEventHandler", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SplitView));
+        EventManager.RegisterRoutedEvent(nameof(ExpandCompleted), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SplitView));
 
     /// <summary>
     /// Routed event triggered when a collapse animation starts.
     /// </summary>
     public static readonly RoutedEvent CollapseStartedEvent =
-        EventManager.RegisterRoutedEvent("CollapseStartedEventHandler", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SplitView));
+        EventManager.RegisterRoutedEvent(nameof(CollapseStarted), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SplitView));
 
     /// <summary>
     /// Routed event triggered when an expand animation starts.
     /// </summary>
     public static readonly RoutedEvent ExpandStartedEvent =
-        EventManager.RegisterRoutedEvent("ExpandStartedEventHandler", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SplitView));
+        EventManager.RegisterRoutedEvent(nameof(ExpandStarted), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SplitView));
 
     /// <summary>
     /// Routed event triggered when the expand state is invalidated.
     /// </summary>
     public static readonly RoutedEvent ExpandStateInvalidatedEvent =
-        EventManager.RegisterRoutedEvent("ExpandStateInvalidatedEvent", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SplitView));
+        EventManager.RegisterRoutedEvent(nameof(ExpandStateInvalidated), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SplitView));
 
     /// <summary>
     /// Routed event triggered when the collapse state is invalidated.
     /// </summary>
     public static readonly RoutedEvent CollapseStateInvalidatedEvent =
-        EventManager.RegisterRoutedEvent("CollapseStateInvalidatedEvent", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SplitView));
+        EventManager.RegisterRoutedEvent(nameof(CollapseStateInvalidated), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SplitView));
 
     #endregion
 
