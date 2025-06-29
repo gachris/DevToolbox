@@ -6,9 +6,10 @@
     xmlns:windows="clr-namespace:DevToolbox.Wpf.Windows">
 
     <Style TargetType="{x:Type windows:SidePanelWindow}">
-        <Setter Property="Focusable" Value="True" />
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="CornerRadius" Value="8" />
-        <Setter Property="Background" Value="{DynamicResource SidePanelWindow.BackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="{DynamicResource SidePanelWindow.Background}" />
         <Setter Property="Foreground" Value="{DynamicResource SidePanelWindow.Foreground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource SidePanelWindow.BorderBrush}" />
         <Setter Property="Template">

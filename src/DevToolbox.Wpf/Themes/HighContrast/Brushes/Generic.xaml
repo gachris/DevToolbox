@@ -465,7 +465,7 @@
 
     <!--#region SidePanelWindow-->
 
-    <SolidColorBrush x:Key="SidePanelWindow.BackgroundBrush" Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" />
+    <SolidColorBrush x:Key="SidePanelWindow.Background" Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" />
     <SolidColorBrush x:Key="SidePanelWindow.Foreground" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}" />
     <SolidColorBrush x:Key="SidePanelWindow.BorderBrush" Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
 

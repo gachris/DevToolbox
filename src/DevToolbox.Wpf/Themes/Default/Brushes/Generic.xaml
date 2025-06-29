@@ -1,4 +1,47 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:media="clr-namespace:DevToolbox.Wpf.Media">
+
+    <!--  Background  -->
+    <DynamicResourceExtension x:Key="Background" ResourceKey="{x:Static media:AccentColors.BackgroundColorKey}" />
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource Background}" />
+
+    <!--  Foreground  -->
+    <DynamicResourceExtension x:Key="Foreground" ResourceKey="{x:Static media:AccentColors.ForegroundColorKey}" />
+    <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource Foreground}" />
+
+    <!--  Darkest accent  -->
+    <DynamicResourceExtension x:Key="AccentDark3" ResourceKey="{x:Static media:AccentColors.AccentDark3ColorKey}" />
+    <SolidColorBrush x:Key="AccentDark3Brush" Color="{StaticResource AccentDark3}" />
+
+    <!--  Darker accent  -->
+    <DynamicResourceExtension x:Key="AccentDark2" ResourceKey="{x:Static media:AccentColors.AccentDark2ColorKey}" />
+    <SolidColorBrush x:Key="AccentDark2Brush" Color="{StaticResource AccentDark2}" />
+
+    <!--  Slightly dark accent  -->
+    <DynamicResourceExtension x:Key="AccentDark1" ResourceKey="{x:Static media:AccentColors.AccentDark1ColorKey}" />
+    <SolidColorBrush x:Key="AccentDark1Brush" Color="{StaticResource AccentDark1}" />
+
+    <!--  Base accent  -->
+    <DynamicResourceExtension x:Key="Accent" ResourceKey="{x:Static media:AccentColors.AccentColorKey}" />
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource Accent}" />
+
+    <!--  Slightly light accent  -->
+    <DynamicResourceExtension x:Key="AccentLight1" ResourceKey="{x:Static media:AccentColors.AccentLight1ColorKey}" />
+    <SolidColorBrush x:Key="AccentLight1Brush" Color="{StaticResource AccentLight1}" />
+
+    <!--  Light accent  -->
+    <DynamicResourceExtension x:Key="AccentLight2" ResourceKey="{x:Static media:AccentColors.AccentLight2ColorKey}" />
+    <SolidColorBrush x:Key="AccentLight2Brush" Color="{StaticResource AccentLight2}" />
+
+    <!--  Lightest accent  -->
+    <DynamicResourceExtension x:Key="AccentLight3" ResourceKey="{x:Static media:AccentColors.AccentLight3ColorKey}" />
+    <SolidColorBrush x:Key="AccentLight3Brush" Color="{StaticResource AccentLight3}" />
+
+    <!--  Complement  -->
+    <DynamicResourceExtension x:Key="Complement" ResourceKey="{x:Static media:AccentColors.ComplementColorKey}" />
+    <SolidColorBrush x:Key="ComplementBrush" Color="{StaticResource Complement}" />
 
     <!--  MessageBar Background Brushes  -->
     <SolidColorBrush x:Key="MessageBarBackgroundError" Color="#FDE7E9" />
@@ -625,9 +668,9 @@
 
     <!--#region SidePanelWindow-->
 
-    <SolidColorBrush x:Key="SidePanelWindow.BackgroundBrush" Color="#F7F9FE" />
-    <SolidColorBrush x:Key="SidePanelWindow.Foreground" Color="#1E1E1E" />
-    <SolidColorBrush x:Key="SidePanelWindow.BorderBrush" Color="#D8DCEB" />
+    <SolidColorBrush x:Key="SidePanelWindow.Background" Color="{StaticResource AccentLight3}" />
+    <SolidColorBrush x:Key="SidePanelWindow.Foreground" Color="#000000" />
+    <SolidColorBrush x:Key="SidePanelWindow.BorderBrush" Color="#4B4B4E" />
 
     <!--#endregion-->
 

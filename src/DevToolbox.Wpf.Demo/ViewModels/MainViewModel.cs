@@ -6,6 +6,7 @@ using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DevToolbox.Wpf.Demo.Examples.Styles.Colors;
+using DevToolbox.Wpf.Demo.Examples.Windowing.SidePanelWindows;
 
 namespace DevToolbox.Wpf.Demo.ViewModels;
 
@@ -67,6 +68,29 @@ public partial class MainViewModel : ObservableObject
                             {
                                 Header = "Accent Colors",
                                 View = new AccentColors(),
+                            }
+                        }
+                    }
+                }
+            });
+
+            ExampleCategories.Add(new ExampleCategory()
+            {
+                Header = "Windowing",
+                SubCategories = new ObservableCollection<ExampleSubCategory>()
+                {
+                    new ExampleSubCategory()
+                    {
+                        Header = "SidePanelWindow",
+                        Description = "",
+                        Icon = "eba5",
+                        Namespace = "DevToolbox.Wpf.Windows",
+                        Examples = new ObservableCollection<Example>()
+                        {
+                            new Example()
+                            {
+                                Header = "SidePanelWindow with calendar",
+                                View = new SimpleSidePanelWindowView(),
                             }
                         }
                     }

@@ -1,0 +1,34 @@
+﻿<devtoolbox:SidePanelWindow
+    x:Class="DevToolbox.Wpf.Demo.Examples.Windowing.SidePanelWindows.CalendarWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    MinWidth="360"
+    VerticalAlignment="Bottom"
+    AutoHide="True"
+    Dock="Right"
+    FontFamily="Segoe UI"
+    ShowInTaskbar="False"
+    SizeToContent="WidthAndHeight">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Margin="34,16"
+            Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat='dddd, MMMM, dd'}" />
+        <Border Grid.Row="1" Background="{x:Static devtoolbox:AccentColors.AccentDark3Brush}" />
+        <Calendar
+            x:Name="calendar"
+            Grid.Row="2"
+            Margin="0,2,0,16"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Background="Transparent"
+            BorderThickness="0" />
+    </Grid>
+</devtoolbox:SidePanelWindow>
