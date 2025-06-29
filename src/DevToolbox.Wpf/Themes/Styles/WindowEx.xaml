@@ -260,7 +260,7 @@
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisualStyle}" />
     </Style>
 
-    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type windows:WindowEx}, ResourceId=ChromeStyleKey}" TargetType="{x:Type windows:WindowEx}">
+    <Style TargetType="{x:Type windows:WindowEx}">
         <Setter Property="Background" Value="{markup:ThemeBrush DarkThemeBrush='#1F1F1F', LightThemeBrush='#EEEEF2', DefaultBrush='#FFFFFF', HighContrastBrush={x:Static SystemColors.WindowBrush}}" />
         <Setter Property="Foreground" Value="{markup:ThemeBrush DarkThemeBrush='#FFFFFF', LightThemeBrush='#000000', DefaultBrush='#000000', HighContrastBrush={x:Static SystemColors.ControlTextBrush}}" />
         <Setter Property="Template">

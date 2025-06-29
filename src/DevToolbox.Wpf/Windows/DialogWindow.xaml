@@ -26,7 +26,7 @@
             <ItemsPanelTemplate x:Key="ButtonsItemsPanelTemplate">
                 <StackPanel Orientation="Horizontal" />
             </ItemsPanelTemplate>
-     
+
             <DataTemplate x:Key="ButtonItemTemplate" DataType="{x:Type viewModels:PluginButtonViewModel}">
                 <Button
                     x:Name="button"

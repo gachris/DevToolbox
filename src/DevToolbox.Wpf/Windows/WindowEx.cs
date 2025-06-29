@@ -89,11 +89,6 @@ public class WindowEx : Window
     #region Properties
 
     /// <summary>
-    /// Gets the key for the Chrome Window style resource.
-    /// </summary>
-    public static ComponentResourceKey ChromeStyleKey => new(typeof(WindowEx), nameof(ChromeStyleKey));
-
-    /// <summary>
     /// Gets the key for the Back button style resource.
     /// </summary>
     public static ComponentResourceKey BackButtonStyleKey => new(typeof(WindowEx), nameof(BackButtonStyleKey));
@@ -229,7 +224,7 @@ public class WindowEx : Window
     static WindowEx()
     {
         var handlerType = typeof(WindowEx);
-        DefaultStyleKeyProperty.OverrideMetadata(handlerType, new FrameworkPropertyMetadata(ChromeStyleKey));
+        DefaultStyleKeyProperty.OverrideMetadata(handlerType, new FrameworkPropertyMetadata(handlerType));
 
         // Register command bindings for window commands
         CommandManager.RegisterClassCommandBinding(handlerType, new CommandBinding(SystemCommands.MinimizeWindowCommand,
@@ -261,7 +256,7 @@ public class WindowEx : Window
         var windowExBehavior = new WindowExBehavior();
         WindowExBehavior.SetWindowExBehavior(this, windowExBehavior);
 
-        SetResourceReference(StyleProperty, ChromeStyleKey);
+        SetResourceReference(StyleProperty, DefaultStyleKey);
     }
 
     #region Methods
