@@ -1,20 +1,18 @@
-﻿<devtoolbox:WindowEx
-    x:Class="DevToolbox.Wpf.Demo.Windows.DockManagerWindow"
+﻿<UserControl
+    x:Class="DevToolbox.Wpf.Demo.Examples.Layout.DockManager.SimpleDockManager"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    xmlns:local="clr-namespace:DevToolbox.Wpf.Demo.Examples.Layout.DockManager"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:DevToolbox.Wpf.Demo.ViewModels"
-    Title="DockManager Demo"
-    Width="1200"
-    Height="800"
+    Height="600"
     d:DataContext="{d:DesignInstance viewModels:DockManagerViewModel}"
-    FontFamily="Segoe UI"
-    ResizeMode="CanResizeWithGrip"
-    WindowStartupLocation="CenterScreen"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
     mc:Ignorable="d">
-    <devtoolbox:WindowEx.Resources>
+    <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/ColorPaletteView.xaml" />
@@ -23,7 +21,7 @@
                 <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/FlowChartStencilsView.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </devtoolbox:WindowEx.Resources>
+    </UserControl.Resources>
     <devtoolbox:DockManager
         x:Name="DockManagerItemsSource"
         BorderThickness="0"
@@ -77,26 +75,25 @@
     </devtoolbox:DockManager>
 
     <!--
-    <devtoolbox:DockManager Margin="5" BorderThickness="0">
-        <devtoolbox:DockManager.DocumentList>
-            <devtoolbox:DocumentList>
-                <devtoolbox:DocumentControl>
-                    <devtoolbox:DocumentItem Content="DocumentItem Content 1" Header="DocumentItem Header 1" />
-                    <devtoolbox:DocumentItem Content="DocumentItem Content 2" Header="DocumentItem Header 2" />
-                    <devtoolbox:DocumentItem Content="DocumentItem Content 3" Header="DocumentItem Header 3" />
-                </devtoolbox:DocumentControl>
-            </devtoolbox:DocumentList>
-        </devtoolbox:DockManager.DocumentList>
-        <devtoolbox:DockableControl Dock="Left">
-            <devtoolbox:DockableItem Content="DC1 DockableItem Content 1" Header="DC1 DockableItem Header 1" />
-            <devtoolbox:DockableItem Content="DC2 DockableItem Content 2" Header="DC2 DocumentItem Header 2" />
-            <devtoolbox:DockableItem Content="DC3 DockableItem Content 3" Header="DC3 DocumentItem Header 3" />
-        </devtoolbox:DockableControl>
-        <devtoolbox:DockableControl Dock="Right">
-            <devtoolbox:DockableItem Content="DC1 DockableItem Content 4" Header="DC1 DockableItem Header 4" />
-            <devtoolbox:DockableItem Content="DC2 DockableItem Content 5" Header="DC2 DockableItem Header 5" />
-            <devtoolbox:DockableItem Content="DC3 DockableItem Content 6" Header="DC3 DockableItem Header 6" />
-        </devtoolbox:DockableControl>
-    </devtoolbox:DockManager>
-    -->
-</devtoolbox:WindowEx>
+<devtoolbox:DockManager Margin="5" BorderThickness="0">
+    <devtoolbox:DockManager.DocumentList>
+        <devtoolbox:DocumentList>
+            <devtoolbox:DocumentControl>
+                <devtoolbox:DocumentItem Content="DocumentItem Content 1" Header="DocumentItem Header 1" />
+                <devtoolbox:DocumentItem Content="DocumentItem Content 2" Header="DocumentItem Header 2" />
+                <devtoolbox:DocumentItem Content="DocumentItem Content 3" Header="DocumentItem Header 3" />
+            </devtoolbox:DocumentControl>
+        </devtoolbox:DocumentList>
+    </devtoolbox:DockManager.DocumentList>
+    <devtoolbox:DockableControl Dock="Left">
+        <devtoolbox:DockableItem Content="DC1 DockableItem Content 1" Header="DC1 DockableItem Header 1" />
+        <devtoolbox:DockableItem Content="DC2 DockableItem Content 2" Header="DC2 DocumentItem Header 2" />
+        <devtoolbox:DockableItem Content="DC3 DockableItem Content 3" Header="DC3 DocumentItem Header 3" />
+    </devtoolbox:DockableControl>
+    <devtoolbox:DockableControl Dock="Right">
+        <devtoolbox:DockableItem Content="DC1 DockableItem Content 4" Header="DC1 DockableItem Header 4" />
+        <devtoolbox:DockableItem Content="DC2 DockableItem Content 5" Header="DC2 DockableItem Header 5" />
+        <devtoolbox:DockableItem Content="DC3 DockableItem Content 6" Header="DC3 DockableItem Header 6" />
+    </devtoolbox:DockableControl>
+</devtoolbox:DockManager>-->
+</UserControl>

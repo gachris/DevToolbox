@@ -6,8 +6,10 @@ using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DevToolbox.Wpf.Demo.Examples.Collections.DataGrid;
+using DevToolbox.Wpf.Demo.Examples.Layout.DockManager;
 using DevToolbox.Wpf.Demo.Examples.Styles.Colors;
 using DevToolbox.Wpf.Demo.Examples.Windowing.SidePanelWindows;
+using DevToolbox.Wpf.Demo.Examples.Windowing.TabsWindows;
 
 namespace DevToolbox.Wpf.Demo.ViewModels;
 
@@ -94,6 +96,21 @@ public partial class MainViewModel : ObservableObject
                                 View = new SimpleSidePanelWindowView(),
                             }
                         }
+                    }, 
+                    new ExampleSubCategory()
+                    {
+                        Header = "TabsWindow",
+                        Description = "",
+                        Icon = "eba5",
+                        Namespace = "DevToolbox.Wpf.Windows",
+                        Examples = new ObservableCollection<Example>()
+                        {
+                            new Example()
+                            {
+                                Header = "TabsWindow example",
+                                View = new SimpleTabsWindow(),
+                            }
+                        }
                     }
                 }
             });
@@ -111,6 +128,23 @@ public partial class MainViewModel : ObservableObject
                     {
                         Header = "GridControl Example",
                         View = new SimpleDataGrid(),
+                    }
+                }
+            });
+
+            var layout = ExampleCategories.First(x => x.Header == "Layout");
+            layout.SubCategories.Add(new ExampleSubCategory()
+            {
+                Header = "DockManager",
+                Description = "",
+                Icon = "efb0",
+                Namespace = "DevToolbox.Wpf.Controls",
+                Examples = new ObservableCollection<Example>()
+                {
+                    new Example()
+                    {
+                        Header = "DockManager Example",
+                        View = new SimpleDockManager(),
                     }
                 }
             });

@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using DevToolbox.Wpf.Controls;
+using DevToolbox.Wpf.Windows.Effects;
 
 namespace DevToolbox.Wpf.Windows;
 
@@ -356,6 +357,8 @@ public class TabsWindow : WindowEx
     public TabsWindow()
     {
         Chrome.CaptionHeight = 44;
+
+        WindowBehavior.SetWindowEffect(this, new Tabbed());
     }
 
     #endregion
