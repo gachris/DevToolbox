@@ -1038,6 +1038,11 @@ internal enum WM
     /// </summary>
     THEMECHANGED = 0x031A,
 
+    /// <summary>
+    /// Sent when the DPI for a window has changed.
+    /// </summary>
+    DPICHANGED = 0x02E0,
+
     NIN_BALLOONSHOW = 0x402,
     NIN_BALLOONHIDE = 0x403,
     NIN_BALLOONTIMEOUT = 0x404,

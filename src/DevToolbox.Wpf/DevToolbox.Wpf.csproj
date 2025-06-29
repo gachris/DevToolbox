@@ -31,11 +31,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<None Remove="Assets\Images\noise.png" />
 		<None Remove="SymbolThemeFont\fonts\SymbolThemeFont.ttf" />
 		<None Remove="SymbolThemeFont\fonts\DevToolbox-Icons.ttf" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<Resource Include="Assets\Images\noise.png" />
 		<Resource Include="SymbolThemeFont\fonts\SymbolThemeFont.ttf">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Resource>

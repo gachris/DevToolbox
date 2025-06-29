@@ -3,13 +3,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Shell;
-using DevToolbox.Wpf.Interop;
-using DevToolbox.Wpf.Utils;
 
 namespace DevToolbox.Wpf.Windows;
 
@@ -20,14 +15,9 @@ public class SidePanelWindow : WindowEx
 {
     #region Fields/Consts
 
-    private IntPtr _hwnd = IntPtr.Zero; // Handle to the window
-    private HwndSource? _hwndSource; // Source for window interop
-
-    private bool _isHooked;
-    private DoubleAnimation? _expandAnimation;
-    private DoubleAnimation? _collapseAnimation;
-    private ContentControl? _contentWrapper;
-    private readonly double _animateSpeedRatio = 3d;
+    private const double DefaultAnimationSpeedRatio = 5d;
+    private TranslateTransform _contentTransform;
+    private FrameworkElement? _container;
 
     /// <summary>
     /// Event triggered when the Dock property changes.
@@ -48,8 +38,7 @@ public class SidePanelWindow : WindowEx
     /// Dependency property key for IsAnimationInProcess, which is read-only.
     /// </summary>
     internal static readonly DependencyPropertyKey IsAnimationInProcessPropertyKey =
-        DependencyProperty.RegisterReadOnly("IsAnimationInProcess", typeof(bool), typeof(SidePanelWindow),
-        new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        DependencyProperty.RegisterReadOnly(nameof(IsAnimationInProcess), typeof(bool), typeof(SidePanelWindow), new FrameworkPropertyMetadata(default(bool)));
 
     /// <summary>
     /// Dependency property for indicating if an animation is currently in process.
@@ -60,72 +49,77 @@ public class SidePanelWindow : WindowEx
     /// Dependency property for the AutoHide feature of the slider control.
     /// </summary>
     public static readonly DependencyProperty AutoHideProperty =
-        DependencyProperty.Register("AutoHide", typeof(bool), typeof(SidePanelWindow),
+        DependencyProperty.Register(nameof(AutoHide), typeof(bool), typeof(SidePanelWindow),
         new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.Inherits, OnAutoHideChanged));
 
     /// <summary>
     /// Dependency property for the docking position of the slider control.
     /// </summary>
     public static readonly DependencyProperty DockProperty =
-        DependencyProperty.Register("Dock", typeof(Dock), typeof(SidePanelWindow),
-        new FrameworkPropertyMetadata(default(Dock), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnDockChanged, DockCoerceValue));
+        DependencyProperty.Register(nameof(Dock), typeof(Dock), typeof(SidePanelWindow),
+        new FrameworkPropertyMetadata(Dock.Right, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnDockChanged, DockCoerceValue));
 
     /// <summary>
     /// Dependency property for indicating if the slider control is expanded.
     /// </summary>
     public static readonly DependencyProperty IsExpandedProperty =
-        DependencyProperty.Register("IsExpanded", typeof(bool), typeof(SidePanelWindow),
+        DependencyProperty.Register(nameof(IsExpanded), typeof(bool), typeof(SidePanelWindow),
         new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsExpandedChanged, IsExpandedCoerceValue));
-
-    /// <summary>
-    /// Dependency property for the size to which the slider control expands.
-    /// </summary>
-    public static readonly DependencyProperty ExpandSizeProperty =
-        DependencyProperty.Register("ExpandSize", typeof(double), typeof(SidePanelWindow),
-        new FrameworkPropertyMetadata(320D, OnExpandSizeChanged));
 
     /// <summary>
     /// Dependency property for the easing function used in animations.
     /// </summary>
     public static readonly DependencyProperty EasingFunctionProperty =
-        DependencyProperty.Register("EasingFunction", typeof(IEasingFunction), typeof(SidePanelWindow),
-        new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnEasingFunctionChanged));
+        DependencyProperty.Register(nameof(EasingFunction), typeof(IEasingFunction), typeof(SidePanelWindow),
+        new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+    /// <summary>
+    /// Dependency property for the corner radius used in window.
+    /// </summary>
+    public static readonly DependencyProperty AnimationSpeedRatioProperty =
+        DependencyProperty.Register(nameof(AnimationSpeedRatio), typeof(double), typeof(SidePanelWindow), new PropertyMetadata(DefaultAnimationSpeedRatio));
+
+    /// <summary>
+    /// Dependency property for the corner radius used in window.
+    /// </summary>
+    public static readonly DependencyProperty CornerRadiusProperty =
+        DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(SidePanelWindow), new PropertyMetadata(default(CornerRadius)));
 
     /// <summary>
     /// Routed event triggered when a collapse animation completes.
     /// </summary>
     public static readonly RoutedEvent CollapseCompletedEvent =
-        EventManager.RegisterRoutedEvent("CollapseCompletedEventHandler", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SidePanelWindow));
+        EventManager.RegisterRoutedEvent(nameof(CollapseCompleted), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SidePanelWindow));
 
     /// <summary>
     /// Routed event triggered when an expand animation completes.
     /// </summary>
     public static readonly RoutedEvent ExpandCompletedEvent =
-        EventManager.RegisterRoutedEvent("ExpandCompletedEventHandler", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SidePanelWindow));
+        EventManager.RegisterRoutedEvent(nameof(ExpandCompleted), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SidePanelWindow));
 
     /// <summary>
     /// Routed event triggered when a collapse animation starts.
     /// </summary>
     public static readonly RoutedEvent CollapseStartedEvent =
-        EventManager.RegisterRoutedEvent("CollapseStartedEventHandler", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SidePanelWindow));
+        EventManager.RegisterRoutedEvent(nameof(CollapseStarted), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SidePanelWindow));
 
     /// <summary>
     /// Routed event triggered when an expand animation starts.
     /// </summary>
     public static readonly RoutedEvent ExpandStartedEvent =
-        EventManager.RegisterRoutedEvent("ExpandStartedEventHandler", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SidePanelWindow));
+        EventManager.RegisterRoutedEvent(nameof(ExpandStarted), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SidePanelWindow));
 
     /// <summary>
     /// Routed event triggered when the expand state is invalidated.
     /// </summary>
     public static readonly RoutedEvent ExpandStateInvalidatedEvent =
-        EventManager.RegisterRoutedEvent("ExpandStateInvalidatedEvent", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SidePanelWindow));
+        EventManager.RegisterRoutedEvent(nameof(ExpandStateInvalidated), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SidePanelWindow));
 
     /// <summary>
     /// Routed event triggered when the collapse state is invalidated.
     /// </summary>
     public static readonly RoutedEvent CollapseStateInvalidatedEvent =
-        EventManager.RegisterRoutedEvent("CollapseStateInvalidatedEvent", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SidePanelWindow));
+        EventManager.RegisterRoutedEvent(nameof(CollapseStateInvalidated), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SidePanelWindow));
 
     #endregion
 
@@ -159,21 +153,30 @@ public class SidePanelWindow : WindowEx
     }
 
     /// <summary>
-    /// Gets or sets the size to which the window expands.
-    /// </summary>
-    public double ExpandSize
-    {
-        get => (double)GetValue(ExpandSizeProperty);
-        set => SetValue(ExpandSizeProperty, value);
-    }
-
-    /// <summary>
     /// Gets or sets the easing function used for animations.
     /// </summary>
     public IEasingFunction EasingFunction
     {
         get => (IEasingFunction)GetValue(EasingFunctionProperty);
         set => SetValue(EasingFunctionProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the corner radius the window.
+    /// </summary>
+    public double AnimationSpeedRatio
+    {
+        get => (double)GetValue(AnimationSpeedRatioProperty);
+        set => SetValue(AnimationSpeedRatioProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the corner radius the window.
+    /// </summary>
+    public CornerRadius CornerRadius
+    {
+        get => (CornerRadius)GetValue(CornerRadiusProperty);
+        set => SetValue(CornerRadiusProperty, value);
     }
 
     /// <summary>
@@ -244,6 +247,64 @@ public class SidePanelWindow : WindowEx
     static SidePanelWindow()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(SidePanelWindow), new FrameworkPropertyMetadata(typeof(SidePanelWindow)));
+
+        MinWidthProperty.OverrideMetadata(
+            typeof(SidePanelWindow),
+            new FrameworkPropertyMetadata(0.0));
+
+        MinHeightProperty.OverrideMetadata(
+            typeof(SidePanelWindow),
+            new FrameworkPropertyMetadata(0.0));
+
+        WidthProperty.OverrideMetadata(
+            typeof(SidePanelWindow),
+            new FrameworkPropertyMetadata(320D, OnLayoutPropertyChanged));
+
+        HeightProperty.OverrideMetadata(
+            typeof(SidePanelWindow),
+            new FrameworkPropertyMetadata(400.0, OnLayoutPropertyChanged));
+
+        VerticalAlignmentProperty.OverrideMetadata(
+            typeof(SidePanelWindow),
+            new FrameworkPropertyMetadata(VerticalAlignment.Top, OnLayoutPropertyChanged));
+
+        HorizontalAlignmentProperty.OverrideMetadata(
+            typeof(SidePanelWindow),
+            new FrameworkPropertyMetadata(HorizontalAlignment.Left, OnLayoutPropertyChanged));
+
+        SizeToContentProperty.OverrideMetadata(
+            typeof(SidePanelWindow),
+            new FrameworkPropertyMetadata(SizeToContent.Manual, OnLayoutPropertyChanged));
+
+        WindowStateProperty.OverrideMetadata(
+            typeof(SidePanelWindow),
+            new FrameworkPropertyMetadata(
+            WindowState.Normal,
+            null,
+            CoerceWindowState
+        ));
+
+        WindowStyleProperty.OverrideMetadata(
+            typeof(SidePanelWindow),
+            new FrameworkPropertyMetadata(
+            WindowStyle.None,
+            null,
+            CoerceWindowStyle
+        ));
+
+        TopmostProperty.OverrideMetadata(
+            typeof(SidePanelWindow),
+            new FrameworkPropertyMetadata(
+            true
+        ));
+
+        ResizeModeProperty.OverrideMetadata(
+            typeof(SidePanelWindow),
+            new FrameworkPropertyMetadata(
+            ResizeMode.NoResize,
+            null,
+            CoerceResizeMode
+        ));
     }
 
     /// <summary>
@@ -252,30 +313,15 @@ public class SidePanelWindow : WindowEx
     public SidePanelWindow() : base()
     {
         Chrome.CaptionHeight = 0;
-        Chrome.GlassFrameThickness = new(0);
-        Chrome.ResizeBorderThickness = new(0);
-        Chrome.NonClientFrameEdges = NonClientFrameEdges.None;
+        Chrome.ResizeBorderThickness = new Thickness(0);
 
-        AllowsTransparency = true;
-        WindowStyle = WindowStyle.None;
+        var sidePanelWindowBehavior = new SidePanelWindowBehavior();
+        SidePanelWindowBehavior.SetSidePanelWindowBehavior(this, sidePanelWindowBehavior);
 
-        _expandAnimation = new DoubleAnimation();
-        _collapseAnimation = new DoubleAnimation();
-        _expandAnimation.Completed += OnExpandCompleted;
-        _collapseAnimation.Completed += OnCollapseCompleted;
-        _expandAnimation.CurrentStateInvalidated += ExpandCurrentStateInvalidated;
-        _collapseAnimation.CurrentStateInvalidated += OnCollapseCurrentStateInvalidated;
+        _contentTransform = new TranslateTransform();
     }
 
     #region Methods Override
-
-    /// <inheritdoc/>
-    protected override void OnClosed(EventArgs e)
-    {
-        base.OnClosed(e);
-
-        UnhookWindow();
-    }
 
     /// <summary>
     /// Called when the control's template is applied. Initializes the slider control.
@@ -284,88 +330,29 @@ public class SidePanelWindow : WindowEx
     {
         base.OnApplyTemplate();
 
-        _contentWrapper = Template.FindName("PART_ContentWrapper", this) as ContentControl;
+        if (_container is not null)
+            _container.RenderTransform = null;
 
-        if (!IsExpanded)
+        _container = GetTemplateChild("PART_ContentWrapper") as FrameworkElement;
+
+        if (_container is not null)
         {
-            _contentWrapper?.SetValue(WidthProperty, 0D);
-            _contentWrapper?.SetValue(HeightProperty, 0D);
-        }
-        else if (Dock is Dock.Left or Dock.Right)
-        {
-            _contentWrapper?.SetValue(WidthProperty, ExpandSize);
-            _contentWrapper?.SetValue(HeightProperty, double.NaN);
-        }
-        else if (Dock is Dock.Top or Dock.Bottom)
-        {
-            _contentWrapper?.SetValue(HeightProperty, ExpandSize);
-            _contentWrapper?.SetValue(WidthProperty, double.NaN);
+            _contentTransform = new TranslateTransform();
+            _container.RenderTransform = _contentTransform;
+            _container.RenderTransformOrigin = new Point(0, 0);
         }
     }
 
-    /// <summary>
-    /// Called when the window source is initialized. Sets window properties and hooks.
-    /// </summary>
-    /// <param name="e">Event arguments.</param>
-    protected override void OnSourceInitialized(EventArgs e)
+    /// <inheritdoc/>
+    protected override void OnStateChanged(EventArgs e)
     {
-        base.OnSourceInitialized(e);
-
-        _hwnd = new WindowInteropHelper(this).Handle;
-
-        if (IntPtr.Zero != _hwnd)
-        {
-            _hwndSource = HwndSource.FromHwnd(_hwnd);
-
-            var exStyle = NativeMethods.GetWindowStyleEx(_hwnd);
-            exStyle = (exStyle & ~WS_EX.APPWINDOW) | WS_EX.TOOLWINDOW;
-
-            NativeMethods.SetWindowStyleEx(_hwnd, exStyle);
-
-            var style = NativeMethods.GetWindowStyle(_hwnd);
-            style = style & ~(WS.MAXIMIZEBOX | WS.CAPTION | WS.SYSMENU);
-
-            NativeMethods.SetWindowStyle(_hwnd, style);
-
-            if (IsExpanded)
-            {
-                UpdateWindowPos();
-            }
-
-            _hwndSource.AddHook(new HwndSourceHook(WndProc));
-            _isHooked = true;
-
-            UpdateFrameState();
-        }
+        base.OnStateChanged(e);
+        WindowState = WindowState.Normal;
     }
 
     #endregion
 
     #region Methods
-
-    /// <summary>
-    /// Processes window messages for the side panel window.
-    /// </summary>
-    /// <param name="hwnd">Handle to the window.</param>
-    /// <param name="msg">Message ID.</param>
-    /// <param name="wParam">Message parameters.</param>
-    /// <param name="lParam">Message parameters.</param>
-    /// <param name="handled">Indicates whether the message was handled.</param>
-    /// <returns>Return value of the processed message.</returns>
-    private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-    {
-        var message = (WM)msg;
-
-        return message switch
-        {
-            WM.SYSCOMMAND => HandleSYSCOMMAND(hwnd, msg, wParam, lParam, ref handled),
-            // LBUTTONDOWN
-            WM.LBUTTONDOWN => HandleLBUTTONDOWN(hwnd, msg, wParam, lParam, ref handled),
-            // KILLFOCUS
-            WM.KILLFOCUS => HandleKILLFOCUS(hwnd, msg, wParam, lParam, ref handled),
-            _ => IntPtr.Zero,
-        };
-    }
 
     /// <summary>
     /// Shows the side panel window and expands it.
@@ -383,63 +370,54 @@ public class SidePanelWindow : WindowEx
         IsExpanded = false;
     }
 
-    /// <summary>
-    /// Sets the window position based on docking and expand size.
-    /// </summary>
-    private void UpdateWindowPos()
+    internal void UpdateWindowPos()
     {
-        var left = 0;
-        var top = 0;
-        var width = 0;
-        var height = 0;
+        var screen = System.Windows.Forms.Screen.AllScreens
+                       .FirstOrDefault(s => s.Primary)
+                     ?? System.Windows.Forms.Screen.AllScreens[0];
+        var wa = screen.WorkingArea;
 
-        var dpiScale = this.GetDpi();
+        var panelW = Width;
+        if (SizeToContent is SizeToContent.Manual && HorizontalAlignment == HorizontalAlignment.Stretch)
+            panelW = wa.Width;
 
-        var primaryScreen = System.Windows.Forms.Screen.AllScreens.ToList().FirstOrDefault(x => x.Primary) ?? System.Windows.Forms.Screen.AllScreens[0];
+        var panelH = Height;
+        if (SizeToContent is SizeToContent.Manual && VerticalAlignment == VerticalAlignment.Stretch)
+            panelH = wa.Height;
 
-        if (Dock == Dock.Right)
+        double x = 0, y = 0;
+
+        if (Dock is Dock.Left or Dock.Right)
         {
-            width = (int)(ExpandSize * dpiScale.DpiScaleX / 100) + 20;
-            height = primaryScreen.WorkingArea.Bottom - 20;
-            left = primaryScreen.WorkingArea.Right - width - 10;
-            top = primaryScreen.WorkingArea.Top + 10;
+            y = VerticalAlignment switch
+            {
+                VerticalAlignment.Center => wa.Top + (wa.Height - panelH) / 2.0,
+                VerticalAlignment.Bottom => wa.Bottom - panelH,
+                _ => wa.Top
+            };
+
+            x = (Dock == Dock.Left)
+                ? wa.Left
+                : (wa.Right - panelW);
         }
-        else if (Dock == Dock.Left)
+        else
         {
-            width = (int)(ExpandSize * dpiScale.DpiScaleX / 100);
-            height = primaryScreen.WorkingArea.Bottom;
-            left = primaryScreen.WorkingArea.Left;
-            top = primaryScreen.WorkingArea.Top;
-        }
-        else if (Dock == Dock.Bottom)
-        {
-            width = primaryScreen.WorkingArea.Right;
-            height = (int)(ExpandSize * dpiScale.DpiScaleY / 100);
-            left = primaryScreen.WorkingArea.Left;
-            top = primaryScreen.WorkingArea.Bottom - height;
-        }
-        else if (Dock == Dock.Top)
-        {
-            width = primaryScreen.WorkingArea.Right;
-            left = primaryScreen.WorkingArea.Left;
-            height = (int)(ExpandSize * dpiScale.DpiScaleY / 100);
-            top = primaryScreen.WorkingArea.Top;
+            x = HorizontalAlignment switch
+            {
+                HorizontalAlignment.Center => wa.Left + (wa.Width - panelW) / 2.0,
+                HorizontalAlignment.Right => wa.Right - panelW,
+                _ => wa.Left
+            };
+
+            y = (Dock == Dock.Top)
+                ? wa.Top
+                : (wa.Bottom - panelH);
         }
 
-        Left = left;
-        Top = top;
-        Width = width;
-        Height = height;
-    }
-
-    private static HorizontalAlignment GetHorizontalAlignment(Dock dock)
-    {
-        return dock is Dock.Right ? HorizontalAlignment.Right : (dock is Dock.Left ? HorizontalAlignment.Left : HorizontalAlignment.Stretch);
-    }
-
-    private static VerticalAlignment GetVerticalAlignment(Dock dock)
-    {
-        return dock is Dock.Top ? VerticalAlignment.Top : (dock is Dock.Bottom ? VerticalAlignment.Bottom : VerticalAlignment.Stretch);
+        Left = x;
+        Top = y;
+        Width = panelW;
+        Height = panelH;
     }
 
     private object IsExpandedCoerceValue(bool baseValue)
@@ -449,12 +427,12 @@ public class SidePanelWindow : WindowEx
 
     private object DockCoerceValue(Dock baseValue)
     {
-        return !IsAnimationInProcess ? baseValue : (object)Dock;
+        return !IsAnimationInProcess ? baseValue : Dock;
     }
 
     private void OnIsExpandedChanged(DependencyPropertyChangedEventArgs e)
     {
-        UpdateFrameState();
+        UpdateWindowPos();
 
         if (IsExpanded)
         {
@@ -469,14 +447,9 @@ public class SidePanelWindow : WindowEx
         IsExpandedChanged?.Invoke(this, e);
     }
 
-    private void OnExpandSizeChanged(DependencyPropertyChangedEventArgs e)
+    private void OnLayoutPropertyChanged(DependencyPropertyChangedEventArgs e)
     {
-        UpdateFrameState();
-    }
-
-    private void OnEasingFunctionChanged(DependencyPropertyChangedEventArgs e)
-    {
-        UpdateFrameState();
+        UpdateWindowPos();
     }
 
     private void OnAutoHideChanged(DependencyPropertyChangedEventArgs e)
@@ -487,12 +460,36 @@ public class SidePanelWindow : WindowEx
 
     private void OnDockChanged(DependencyPropertyChangedEventArgs e)
     {
-        UpdateFrameState();
+        var newValue = (Dock)e.NewValue;
+
+        _contentTransform.BeginAnimation(TranslateTransform.XProperty, null);
+        _contentTransform.BeginAnimation(TranslateTransform.YProperty, null);
+
+        var offset = CalculateOffset(newValue);
+
+        if (!IsExpanded)
+        {
+            if (newValue is Dock.Left or Dock.Right)
+            {
+                _contentTransform.X = offset;
+                _contentTransform.Y = 0;
+            }
+            else
+            {
+                _contentTransform.Y = offset;
+                _contentTransform.X = 0;
+            }
+        }
+        else
+        {
+            _contentTransform.X = 0;
+            _contentTransform.Y = 0;
+        }
+
+        UpdateWindowPos();
 
         OnDockChanged((Dock)e.OldValue, (Dock)e.NewValue);
         DockChanged?.Invoke(this, e);
-
-        UpdateWindowPos();
     }
 
     private static object IsExpandedCoerceValue(DependencyObject d, object baseValue)
@@ -513,16 +510,10 @@ public class SidePanelWindow : WindowEx
         sidePanelWindow.OnIsExpandedChanged(e);
     }
 
-    private static void OnExpandSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    private static void OnLayoutPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var sidePanelWindow = (SidePanelWindow)d;
-        sidePanelWindow.OnExpandSizeChanged(e);
-    }
-
-    private static void OnEasingFunctionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-        var sidePanelWindow = (SidePanelWindow)d;
-        sidePanelWindow.OnEasingFunctionChanged(e);
+        sidePanelWindow.OnLayoutPropertyChanged(e);
     }
 
     private static void OnAutoHideChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -535,6 +526,30 @@ public class SidePanelWindow : WindowEx
     {
         var sidePanelWindow = (SidePanelWindow)d;
         sidePanelWindow.OnDockChanged(e);
+    }
+
+    /// <summary>
+    /// Coerce callback that forces the window state to always be Normal.
+    /// </summary>
+    private static object CoerceWindowState(DependencyObject d, object baseValue)
+    {
+        return WindowState.Normal;
+    }
+
+    /// <summary>
+    /// Coerce callback that forces the window style to always be None.
+    /// </summary>
+    private static object CoerceWindowStyle(DependencyObject d, object baseValue)
+    {
+        return WindowStyle.None;
+    }
+
+    /// <summary>
+    /// Coerce callback that forces the resize mode to always be NoResize.
+    /// </summary>
+    private static object CoerceResizeMode(DependencyObject d, object baseValue)
+    {
+        return ResizeMode.NoResize;
     }
 
     /// <summary>
@@ -564,64 +579,28 @@ public class SidePanelWindow : WindowEx
     {
     }
 
-    private void UpdateFrameState()
-    {
-        var verticalAlignment = GetVerticalAlignment(Dock);
-        _contentWrapper?.SetValue(VerticalAlignmentProperty, verticalAlignment);
-
-        var horizontalAlignment = GetHorizontalAlignment(Dock);
-        _contentWrapper?.SetValue(HorizontalAlignmentProperty, horizontalAlignment);
-
-        if (IsExpanded)
-        {
-            if (Dock is Dock.Right or Dock.Left)
-            {
-                _contentWrapper?.SetValue(WidthProperty, ExpandSize);
-                _contentWrapper?.SetValue(HeightProperty, double.NaN);
-            }
-            else if (Dock is Dock.Bottom or Dock.Top)
-            {
-                _contentWrapper?.SetValue(HeightProperty, ExpandSize);
-                _contentWrapper?.SetValue(WidthProperty, double.NaN);
-            }
-        }
-
-        SetEasingFunction(EasingFunction);
-    }
-
     /// <summary>
     /// Expands the slider control to its defined size, triggering an animation.
     /// </summary>
     public void Expand()
     {
-        if (_expandAnimation is null)
-        {
-            return;
-        }
-
-        _expandAnimation.From = 0;
-        _expandAnimation.To = ExpandSize;
-        _expandAnimation.SpeedRatio = _animateSpeedRatio;
-
-        UpdateWindowPos();
-
         base.Show();
 
-        if (Dock is Dock.Right or Dock.Left)
+        var offset = CalculateOffset(Dock);
+        var animation = new DoubleAnimation()
         {
-            _contentWrapper?.SetValue(WidthProperty, ExpandSize);
-            _contentWrapper?.SetValue(HeightProperty, double.NaN);
-            _contentWrapper?.BeginAnimation(WidthProperty, _expandAnimation);
-        }
-        else if (Dock is Dock.Bottom or Dock.Top)
-        {
-            _contentWrapper?.SetValue(HeightProperty, ExpandSize);
-            _contentWrapper?.SetValue(WidthProperty, double.NaN);
-            _contentWrapper?.BeginAnimation(HeightProperty, _expandAnimation);
-        }
+            From = offset,
+            To = 0,
+            EasingFunction = EasingFunction,
+            SpeedRatio = AnimationSpeedRatio
+        };
+        animation.Completed += OnExpandCompleted;
+        animation.CurrentStateInvalidated += ExpandCurrentStateInvalidated;
 
-        var routedEventArgs = new RoutedEventArgs(ExpandStartedEvent, _expandAnimation);
-        RaiseEvent(routedEventArgs);
+        var animationProp = GetTranslateProperty(Dock);
+        _contentTransform.BeginAnimation(animationProp, animation);
+
+        RaiseEvent(new RoutedEventArgs(ExpandStartedEvent, animation));
     }
 
     /// <summary>
@@ -629,120 +608,48 @@ public class SidePanelWindow : WindowEx
     /// </summary>
     public void Collapse()
     {
-        if (_collapseAnimation is null)
+        var offset = CalculateOffset(Dock);
+        var animation = new DoubleAnimation
         {
-            return;
-        }
+            From = 0,
+            To = offset,
+            EasingFunction = EasingFunction,
+            SpeedRatio = AnimationSpeedRatio
+        };
+        animation.Completed += OnCollapseCompleted;
+        animation.CurrentStateInvalidated += OnCollapseCurrentStateInvalidated;
 
-        _collapseAnimation.From = ExpandSize;
-        _collapseAnimation.To = 0;
-        _collapseAnimation.SpeedRatio = _animateSpeedRatio;
+        var animationProp = GetTranslateProperty(Dock);
+        _contentTransform.BeginAnimation(animationProp, animation);
 
-        if (Dock is Dock.Right or Dock.Left)
-        {
-            _contentWrapper?.BeginAnimation(WidthProperty, _collapseAnimation);
-        }
-        else if (Dock is Dock.Bottom or Dock.Top)
-        {
-            _contentWrapper?.BeginAnimation(HeightProperty, _collapseAnimation);
-        }
-
-        var routedEventArgs = new RoutedEventArgs(CollapseStartedEvent, _collapseAnimation);
-        RaiseEvent(routedEventArgs);
+        RaiseEvent(new RoutedEventArgs(CollapseStartedEvent, animation));
     }
 
-    /// <summary>
-    /// Sets the easing function for the expand and collapse animations.
-    /// </summary>
-    /// <param name="easingFunction">The easing function to be applied to the animations.</param>
-    public void SetEasingFunction(IEasingFunction easingFunction)
+    private void OnAnimationCompleted()
     {
-        if (_expandAnimation is not null)
-        {
-            _expandAnimation.EasingFunction = easingFunction;
-        }
-
-        if (_collapseAnimation is not null)
-        {
-            _collapseAnimation.EasingFunction = easingFunction;
-        }
+        BeginAnimation(TranslateTransform.XProperty, null);
+        BeginAnimation(TranslateTransform.YProperty, null);
     }
 
-    private void ClearAnimation()
+    private double CalculateOffset(Dock dock)
     {
-        _contentWrapper?.BeginAnimation(WidthProperty, null);
-        _contentWrapper?.BeginAnimation(HeightProperty, null);
+        var size = GetExpandSize();
+        return dock switch
+        {
+            Dock.Left => -size,
+            Dock.Top => -size,
+            Dock.Right => size,
+            Dock.Bottom => size,
+            _ => 0
+        };
     }
 
-    private void UnhookWindow()
-    {
-        if (!_isHooked || _hwndSource is null)
-        {
-            return;
-        }
+    private static DependencyProperty GetTranslateProperty(Dock dock) =>
+        (dock is Dock.Left or Dock.Right)
+            ? TranslateTransform.XProperty
+            : TranslateTransform.YProperty;
 
-        if (_expandAnimation is not null)
-        {
-            _expandAnimation.Completed -= OnExpandCompleted;
-            _expandAnimation.CurrentStateInvalidated -= ExpandCurrentStateInvalidated;
-            _expandAnimation = null;
-        }
-
-        if (_collapseAnimation is not null)
-        {
-            _collapseAnimation.Completed -= OnCollapseCompleted;
-            _collapseAnimation.CurrentStateInvalidated -= OnCollapseCurrentStateInvalidated;
-            _collapseAnimation = null;
-        }
-
-        _hwndSource.RemoveHook(new HwndSourceHook(WndProc));
-        _isHooked = false;
-    }
-
-    private IntPtr HandleSYSCOMMAND(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-    {
-        handled = false;
-
-        var command = (WM)(wParam.ToInt32() & 0xFFF0);
-        switch (command)
-        {
-            case WM.SC_MINIMIZE:
-            case WM.SC_RESTORE:
-                IsExpanded = !IsExpanded;
-                handled = true; // Mark as handled
-                break;
-        }
-
-        return IntPtr.Zero;
-    }
-
-    private IntPtr HandleLBUTTONDOWN(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-    {
-        handled = false;
-
-        if (AutoHide && IsExpanded)
-        {
-            var mousePosition = Mouse.GetPosition(this);
-            if (VisualTreeHelper.HitTest(this, mousePosition) == null)
-            {
-                IsExpanded = false;
-            }
-        }
-
-        return IntPtr.Zero;
-    }
-
-    private IntPtr HandleKILLFOCUS(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-    {
-        handled = false;
-
-        if (AutoHide && IsExpanded)
-        {
-            IsExpanded = false;
-        }
-
-        return IntPtr.Zero;
-    }
+    internal double GetExpandSize() => (Dock is Dock.Left or Dock.Right) ? Width : Height;
 
     #endregion
 
@@ -750,23 +657,15 @@ public class SidePanelWindow : WindowEx
 
     private void OnExpandCompleted(object? sender, EventArgs e)
     {
-        ClearAnimation();
+        OnAnimationCompleted();
+        RaiseEvent(new RoutedEventArgs(ExpandCompletedEvent, sender));
+    }
 
-        if (Dock is Dock.Right or Dock.Left)
-        {
-            _contentWrapper?.SetValue(WidthProperty, ExpandSize);
-            _contentWrapper?.SetValue(HeightProperty, double.NaN);
-        }
-        else if (Dock is Dock.Bottom or Dock.Top)
-        {
-            _contentWrapper?.SetValue(HeightProperty, ExpandSize);
-            _contentWrapper?.SetValue(WidthProperty, double.NaN);
-        }
-
-        Activate(); // Activate the window
-
-        var routedEventArgs = new RoutedEventArgs(ExpandCompletedEvent, sender);
-        RaiseEvent(routedEventArgs);
+    private void OnCollapseCompleted(object? sender, EventArgs e)
+    {
+        base.Hide();
+        OnAnimationCompleted();
+        RaiseEvent(new RoutedEventArgs(CollapseCompletedEvent, sender));
     }
 
     private void ExpandCurrentStateInvalidated(object? sender, EventArgs e)
@@ -776,38 +675,15 @@ public class SidePanelWindow : WindowEx
             return;
         }
 
-        var isAnimationInProcess = false;
-
-        if (animationClock.CurrentState == ClockState.Filling)
-            isAnimationInProcess = false;
-        else if (animationClock.CurrentState == ClockState.Active)
-            isAnimationInProcess = true;
+        var isAnimationInProcess = animationClock.CurrentState switch
+        {
+            ClockState.Filling => false,
+            ClockState.Active => true,
+            _ => false
+        };
 
         SetValue(IsAnimationInProcessPropertyKey, isAnimationInProcess);
-
-        var routedEventArgs = new RoutedEventArgs(ExpandStateInvalidatedEvent, sender);
-        RaiseEvent(routedEventArgs);
-    }
-
-    private void OnCollapseCompleted(object? sender, EventArgs e)
-    {
-        base.Hide();
-
-        ClearAnimation();
-
-        if (Dock is Dock.Right or Dock.Left)
-        {
-            _contentWrapper?.SetValue(WidthProperty, 0.0D);
-            _contentWrapper?.SetValue(HeightProperty, double.NaN);
-        }
-        else if (Dock is Dock.Bottom or Dock.Top)
-        {
-            _contentWrapper?.SetValue(HeightProperty, 0.0D);
-            _contentWrapper?.SetValue(WidthProperty, double.NaN);
-        }
-
-        var routedEventArgs = new RoutedEventArgs(CollapseCompletedEvent, sender);
-        RaiseEvent(routedEventArgs);
+        RaiseEvent(new RoutedEventArgs(ExpandStateInvalidatedEvent, sender));
     }
 
     private void OnCollapseCurrentStateInvalidated(object? sender, EventArgs e)
@@ -817,21 +693,15 @@ public class SidePanelWindow : WindowEx
             return;
         }
 
-        var isAnimationInProcess = false;
-
-        if (animationClock.CurrentState == ClockState.Filling)
+        var isAnimationInProcess = animationClock.CurrentState switch
         {
-            isAnimationInProcess = false;
-        }
-        else if (animationClock.CurrentState == ClockState.Active)
-        {
-            isAnimationInProcess = true;
-        }
+            ClockState.Filling => false,
+            ClockState.Active => true,
+            _ => false
+        };
 
         SetValue(IsAnimationInProcessPropertyKey, isAnimationInProcess);
-
-        var routedEventArgs = new RoutedEventArgs(CollapseStateInvalidatedEvent, sender);
-        RaiseEvent(routedEventArgs);
+        RaiseEvent(new RoutedEventArgs(CollapseStateInvalidatedEvent, sender));
     }
 
     #endregion

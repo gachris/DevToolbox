@@ -37,6 +37,7 @@
                     ThemeName="HighContrast" />
             </markup:ThemePartResourceDictionary.Key>
         </markup:ThemePartResourceDictionary>
+        <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/AcrylicPanel.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ColorChip.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ColorComponents.xaml}" />
         <ResourceDictionary Source="{markup:AssemblyResource Themes/Styles/ColorPicker.xaml}" />
