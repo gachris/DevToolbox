@@ -1021,7 +1021,7 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
     /// </summary>
     public void DelayedSaveZoom1500Miliseconds()
     {
-        if (!_timer1500Miliseconds?.Running != true) _viewportZoomCache = CreateUndoRedoStackItem();
+        if (_timer1500Miliseconds?.Running != true) _viewportZoomCache = CreateUndoRedoStackItem();
         (_timer1500Miliseconds ??= new KeepAliveTimer(TimeSpan.FromMilliseconds(1500), () =>
         {
             if (_viewportZoomCache is null || (_undoStack.Any() && _viewportZoomCache.Equals(_undoStack.Peek()))) return;
