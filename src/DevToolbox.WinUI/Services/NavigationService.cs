@@ -183,7 +183,7 @@ public class NavigationService : INavigationService
         if (_frame is null)
             return;
 
-        var clearNavigation = (bool)_frame.Tag;
+        var clearNavigation = _frame.Tag is bool flag && flag;
         if (clearNavigation)
         {
             _frame.BackStack.Clear();
