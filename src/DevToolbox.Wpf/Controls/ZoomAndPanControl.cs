@@ -69,12 +69,12 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
     /// <summary>
     /// Timer for handling zoom/pan keep-alive behavior (750ms interval).
     /// </summary>
-    private KeepAliveTimer? _timer750Miliseconds;
+    private KeepAliveTimer? _timer750Milliseconds;
 
     /// <summary>
     /// Timer for handling zoom/pan keep-alive behavior (1500ms interval).
     /// </summary>
-    private KeepAliveTimer? _timer1500Miliseconds;
+    private KeepAliveTimer? _timer1500Milliseconds;
 
     /// <summary>
     /// Cached state for undoing/redoing viewport zoom changes.
@@ -964,7 +964,7 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
     {
         base.OnMouseWheel(e);
 
-        DelayedSaveZoom750Miliseconds();
+        DelayedSaveZoom750Milliseconds();
         e.Handled = true;
 
         if (e.Delta > 0)
@@ -1005,10 +1005,10 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
     /// <summary> 
     ///  Record the last saved zoom level, so that we can return to it if no activity for 750 milliseconds
     /// </summary>
-    public void DelayedSaveZoom750Miliseconds()
+    public void DelayedSaveZoom750Milliseconds()
     {
-        if (_timer750Miliseconds?.Running != true) _viewportZoomCache = CreateUndoRedoStackItem();
-        (_timer750Miliseconds ??= new KeepAliveTimer(TimeSpan.FromMilliseconds(740), () =>
+        if (_timer750Milliseconds?.Running != true) _viewportZoomCache = CreateUndoRedoStackItem();
+        (_timer750Milliseconds ??= new KeepAliveTimer(TimeSpan.FromMilliseconds(750), () =>
         {
             if (_viewportZoomCache is null || (_undoStack.Any() && _viewportZoomCache.Equals(_undoStack.Peek()))) return;
             _undoStack.Push(_viewportZoomCache);
@@ -1019,10 +1019,10 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
     /// <summary> 
     ///  Record the last saved zoom level, so that we can return to it if no activity for 1550 milliseconds
     /// </summary>
-    public void DelayedSaveZoom1500Miliseconds()
+    public void DelayedSaveZoom1500Milliseconds()
     {
-        if (_timer1500Miliseconds?.Running != true) _viewportZoomCache = CreateUndoRedoStackItem();
-        (_timer1500Miliseconds ??= new KeepAliveTimer(TimeSpan.FromMilliseconds(1500), () =>
+        if (_timer1500Milliseconds?.Running != true) _viewportZoomCache = CreateUndoRedoStackItem();
+        (_timer1500Milliseconds ??= new KeepAliveTimer(TimeSpan.FromMilliseconds(1500), () =>
         {
             if (_viewportZoomCache is null || (_undoStack.Any() && _viewportZoomCache.Equals(_undoStack.Peek()))) return;
             _undoStack.Push(_viewportZoomCache);
@@ -1055,7 +1055,7 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
         {
             _disableScrollOffsetSync = true;
             ContentOffsetX = offset / InternalViewportZoom;
-            DelayedSaveZoom750Miliseconds();
+            DelayedSaveZoom750Milliseconds();
         }
         finally
         {
@@ -1074,7 +1074,7 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
         {
             _disableScrollOffsetSync = true;
             ContentOffsetY = offset / InternalViewportZoom;
-            DelayedSaveZoom750Miliseconds();
+            DelayedSaveZoom750Milliseconds();
         }
         finally
         {
@@ -1087,7 +1087,7 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
     /// </summary>
     public void LineUp()
     {
-        DelayedSaveZoom750Miliseconds();
+        DelayedSaveZoom750Milliseconds();
         ContentOffsetY -= (ContentViewportHeight / 10);
     }
 
@@ -1096,7 +1096,7 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
     /// </summary>
     public void LineDown()
     {
-        DelayedSaveZoom750Miliseconds();
+        DelayedSaveZoom750Milliseconds();
         ContentOffsetY += (ContentViewportHeight / 10);
     }
 
@@ -1105,7 +1105,7 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
     /// </summary>
     public void LineLeft()
     {
-        DelayedSaveZoom750Miliseconds();
+        DelayedSaveZoom750Milliseconds();
         ContentOffsetX -= (ContentViewportWidth / 10);
     }
 
@@ -1114,7 +1114,7 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
     /// </summary>
     public void LineRight()
     {
-        DelayedSaveZoom750Miliseconds();
+        DelayedSaveZoom750Milliseconds();
         ContentOffsetX += (ContentViewportWidth / 10);
     }
 
@@ -1123,7 +1123,7 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
     /// </summary>
     public void PageUp()
     {
-        DelayedSaveZoom1500Miliseconds();
+        DelayedSaveZoom1500Milliseconds();
         ContentOffsetY -= ContentViewportHeight;
     }
 
@@ -1132,7 +1132,7 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
     /// </summary>
     public void PageDown()
     {
-        DelayedSaveZoom1500Miliseconds();
+        DelayedSaveZoom1500Milliseconds();
         ContentOffsetY += ContentViewportHeight;
     }
 
@@ -1141,7 +1141,7 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
     /// </summary>
     public void PageLeft()
     {
-        DelayedSaveZoom1500Miliseconds();
+        DelayedSaveZoom1500Milliseconds();
         ContentOffsetX -= ContentViewportWidth;
     }
 
@@ -1150,7 +1150,7 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
     /// </summary>
     public void PageRight()
     {
-        DelayedSaveZoom1500Miliseconds();
+        DelayedSaveZoom1500Milliseconds();
         ContentOffsetX += ContentViewportWidth;
     }
 
@@ -2195,7 +2195,7 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
     private static void OnZoomOutExecuted(object sender, ExecutedRoutedEventArgs e)
     {
         var zoomAndPanControl = (ZoomAndPanControl)sender;
-        zoomAndPanControl.DelayedSaveZoom1500Miliseconds();
+        zoomAndPanControl.DelayedSaveZoom1500Milliseconds();
         zoomAndPanControl.ZoomOut(new Point(zoomAndPanControl.ContentZoomFocusX, zoomAndPanControl.ContentZoomFocusY));
     }
 
@@ -2217,7 +2217,7 @@ public class ZoomAndPanControl : ContentControl, IScrollInfo
     private static void OnZoomInExecuted(object sender, ExecutedRoutedEventArgs e)
     {
         var zoomAndPanControl = (ZoomAndPanControl)sender;
-        zoomAndPanControl.DelayedSaveZoom1500Miliseconds();
+        zoomAndPanControl.DelayedSaveZoom1500Milliseconds();
         zoomAndPanControl.ZoomIn(new Point(zoomAndPanControl.ContentZoomFocusX, zoomAndPanControl.ContentZoomFocusY));
     }
 
