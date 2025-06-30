@@ -38,7 +38,7 @@ internal class UndoRedoStackItem : IEquatable<UndoRedoStackItem>
 
     #region Overrides
 
-    public override string ToString() => string.Concat(_stringTemplate, Rect.X, Rect.X, Zoom);
+    public override string ToString() => string.Format(_stringTemplate, Rect.X, Rect.Y, Zoom);
 
     #endregion
 
