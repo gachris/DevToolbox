@@ -1,8 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Markup;
+using System.Windows.Media;
+using CommunityToolkit.Mvvm.ComponentModel;
 using DevToolbox.Wpf.Controls;
 using DevToolbox.Wpf.Windows.Effects;
 
@@ -14,13 +21,26 @@ namespace DevToolbox.Wpf.Windows;
 [ContentProperty(nameof(Items))]
 public class TabsWindow : WindowEx
 {
+    #region Fields/Consts
+
     private TabControlEdit? _tabControl;
+    private Point _dragStart;
+
+    /// <summary>
+    /// Fires when a tab is dropped outside any header, to allow customization.
+    /// </summary>
+    public event EventHandler<TabTearOffEventArgs>? TabTearOffRequested;
+
     /// <summary>
     /// Identifies the <see cref="ItemsSource"/> dependency property.
     /// This property binds a collection of items to the TabControl.
     /// </summary>
     public static readonly DependencyProperty ItemsSourceProperty =
-        TabControlEdit.ItemsSourceProperty.AddOwner(typeof(TabsWindow));
+        TabControlEdit.ItemsSourceProperty.AddOwner(
+            typeof(TabsWindow),
+            new FrameworkPropertyMetadata(
+                null,
+                OnItemsSourceChanged));
 
     /// <summary>
     /// Identifies the <see cref="ItemContainerStyle"/> dependency property.
@@ -141,6 +161,8 @@ public class TabsWindow : WindowEx
     public static readonly DependencyProperty TabRightScrollButtonStyleProperty =
         TabControlEdit.TabRightScrollButtonStyleProperty.AddOwner(typeof(TabsWindow));
 
+    #endregion
+
     #region Properties
 
     /// <summary>
@@ -171,9 +193,9 @@ public class TabsWindow : WindowEx
     /// <summary>
     /// Gets or sets the style selector for item containers.
     /// </summary>
-    public Style ItemContainerStyleSelector
+    public StyleSelector ItemContainerStyleSelector
     {
-        get => (Style)GetValue(ItemContainerStyleSelectorProperty);
+        get => (StyleSelector)GetValue(ItemContainerStyleSelectorProperty);
         set => SetValue(ItemContainerStyleSelectorProperty, value);
     }
 
@@ -189,9 +211,9 @@ public class TabsWindow : WindowEx
     /// <summary>
     /// Gets or sets the data template selector for items in the tab control.
     /// </summary>
-    public DataTemplate ItemTemplateSelector
+    public DataTemplateSelector ItemTemplateSelector
     {
-        get => (DataTemplate)GetValue(ItemTemplateSelectorProperty);
+        get => (DataTemplateSelector)GetValue(ItemTemplateSelectorProperty);
         set => SetValue(ItemTemplateSelectorProperty, value);
     }
 
@@ -339,9 +361,12 @@ public class TabsWindow : WindowEx
     [Bindable(true)]
     public ItemCollection Items => TabControl?.Items!;
 
-    #endregion
+    /// <summary>
+    /// Gets the content of the currently selected tab.
+    /// </summary>
+    public new object Content => TabControl?.SelectedItem!;
 
-    #region Constructor
+    #endregion
 
     /// <summary>
     /// Static constructor that overrides the default style key for the <see cref="TabsWindow"/>.
@@ -360,24 +385,245 @@ public class TabsWindow : WindowEx
         WindowBehavior.SetWindowEffect(this, new Tabbed());
     }
 
-    #endregion
+    #region Methods Overrides
 
-    #region Methods
-
-    /// <summary>
-    /// Called when the control's template is applied. Initializes the tab control.
-    /// </summary>
+    /// <inheritdoc/>
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
 
         _tabControl = Template.FindName("PART_TabControl", this) as TabControlEdit;
+        if (_tabControl == null) return;
+
+        _tabControl.AllowDrop = true;
+        _tabControl.PreviewDragOver += TabControl_PreviewDragOver;
+        _tabControl.Drop += TabControl_Drop;
+
+        _tabControl.ItemContainerGenerator.StatusChanged += (s, e) =>
+        {
+            if (_tabControl.ItemContainerGenerator.Status != GeneratorStatus.ContainersGenerated)
+                return;
+
+            foreach (var item in _tabControl.Items)
+            {
+                if (_tabControl.ItemContainerGenerator.ContainerFromItem(item) is TabItemEdit tab)
+                {
+                    // Avoid adding handlers twice
+                    tab.PreviewMouseLeftButtonDown -= Tab_PreviewMouseLeftButtonDown;
+                    tab.MouseMove -= Tab_MouseMove;
+
+                    tab.PreviewMouseLeftButtonDown += Tab_PreviewMouseLeftButtonDown;
+                    tab.MouseMove += Tab_MouseMove;
+                }
+            }
+        };
+    }
+
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    /// Creates the default tear-off window when a tab is dragged out of this window.
+    /// </summary>
+    /// <param name="item">The item being torn off into the new window.</param>
+    /// <returns>
+    /// A new instance of <see cref="TabsWindow"/> that hosts the specified item.
+    /// </returns>
+    protected virtual TabsWindow CreateDefaultTearOffWindow(object item)
+    {
+        return new TabsWindow
+        {
+            ItemsSource = new ObservableCollection<object> { item }
+        };
     }
 
     /// <summary>
-    /// Gets the content of the currently selected tab.
+    /// Raises the <see cref="TabTearOffRequested"/> event to allow custom window creation.
     /// </summary>
-    public new object Content => TabControl?.SelectedItem!;
+    /// <param name="e">Event arguments containing the torn-off item and optional new window.</param>
+    private void OnTabTearOffRequested(TabTearOffEventArgs e)
+    {
+        TabTearOffRequested?.Invoke(this, e);
+    }
+
+    /// <summary>
+    /// Called when the <see cref="ItemsSource"/> property changes.
+    /// Unhooks old collection change events and hooks new ones. Closes the window if the new list is empty.
+    /// </summary>
+    /// <param name="d">The <see cref="DependencyObject"/> on which the property changed.</param>
+    /// <param name="e">Event data for the property change.</param>
+    private static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is not TabsWindow win)
+            return;
+
+        if (e.OldValue is INotifyCollectionChanged old)
+            old.CollectionChanged -= win.ItemsSource_CollectionChanged;
+
+        if (e.NewValue is IList list)
+        {
+            if (list.Count == 0)
+                win.Close();
+
+            if (list is INotifyCollectionChanged notifyCollection)
+                notifyCollection.CollectionChanged += win.ItemsSource_CollectionChanged;
+        }
+    }
+
+    /// <summary>
+    /// Walks the visual tree under the TabControl's header panel to figure out
+    /// which index the drop position corresponds to.
+    /// </summary>
+    private int GetInsertionIndex(Point dropPosition)
+    {
+        if (_tabControl is null)
+        {
+            return -1;
+        }
+
+        var count = _tabControl.Items.Count;
+        for (var i = 0; i < count; i++)
+        {
+            var item = _tabControl.Items[i];
+            if (_tabControl.ItemContainerGenerator.ContainerFromItem(item) is TabItemEdit tab)
+            {
+                var tabOrigin = tab.TransformToVisual(_tabControl)
+                                   .Transform(new Point(0, 0));
+
+                var mid = tabOrigin.X + (tab.ActualWidth / 2);
+                if (dropPosition.X < mid)
+                    return i;
+            }
+        }
+
+        // if we're past every tab, put it at the end
+        return count;
+    }
+
+    /// <summary>
+    /// If the underlying ItemsSource implements IList, closes the window when it becomes empty.
+    /// </summary>
+    private void TryCloseIfEmpty()
+    {
+        if (ItemsSource is IList list && list.Count == 0)
+            Close();
+    }
+
+    private static T? VisualUpwardSearch<T>(DependencyObject? node) where T : DependencyObject
+    {
+        while (node != null)
+        {
+            if (node is T found) return found;
+            node = VisualTreeHelper.GetParent(node);
+        }
+        return null;
+    }
+
+    #endregion
+
+    #region Events Subscriptions
+
+    private void Tab_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        _dragStart = e.GetPosition(this);
+    }
+
+    private void Tab_MouseMove(object sender, MouseEventArgs e)
+    {
+        if (e.LeftButton != MouseButtonState.Pressed) return;
+        var diff = e.GetPosition(this) - _dragStart;
+        if (Math.Abs(diff.X) < SystemParameters.MinimumHorizontalDragDistance &&
+            Math.Abs(diff.Y) < SystemParameters.MinimumVerticalDragDistance)
+            return;
+
+        var tab = (TabItemEdit)sender;
+        var item = tab.DataContext;
+        if (ItemsSource is not IList sourceList)
+            return;
+
+        var data = new DataObject();
+        data.SetData("DraggedItem", item!);
+        data.SetData("SourceList", sourceList);
+        data.SetData("SourceIndex", sourceList.IndexOf(item));
+
+        var result = DragDrop.DoDragDrop(tab, data, DragDropEffects.Move);
+
+        if (result == DragDropEffects.None)
+        {
+            sourceList.Remove(item);
+            TryCloseIfEmpty();
+
+            var args = new TabTearOffEventArgs(item);
+            OnTabTearOffRequested(args);
+
+            var newWin = args.NewWindow ?? CreateDefaultTearOffWindow(item);
+            var cursorPos = System.Windows.Forms.Cursor.Position;
+            newWin.WindowStartupLocation = WindowStartupLocation.Manual;
+            newWin.Left = cursorPos.X;
+            newWin.Top = cursorPos.Y;
+
+            newWin.Show();
+        }
+    }
+
+    private void TabControl_PreviewDragOver(object sender, DragEventArgs e)
+    {
+        if (!e.Data.GetDataPresent("DraggedItem"))
+            return;
+
+        var hit = e.OriginalSource as DependencyObject;
+        if (VisualUpwardSearch<TabItemEdit>(hit) is not null)
+        {
+            e.Effects = DragDropEffects.Move;
+            e.Handled = true;
+        }
+    }
+
+    private void TabControl_Drop(object sender, DragEventArgs e)
+    {
+        if (!e.Data.GetDataPresent("DraggedItem"))
+            return;
+        var item = e.Data.GetData("DraggedItem");
+        var sourceIdx = (int)e.Data.GetData("SourceIndex");
+
+        if (e.Data.GetData("SourceList") is not IList oldList || ItemsSource is not IList newList)
+            return;
+
+        if (oldList == newList)
+        {
+            int targetIndex = GetInsertionIndex(e.GetPosition(_tabControl!));
+            if (targetIndex > sourceIdx)
+                targetIndex--;
+
+            if (sourceIdx != targetIndex &&
+                sourceIdx >= 0 && sourceIdx < newList.Count &&
+                targetIndex >= 0 && targetIndex <= newList.Count)
+            {
+                newList.RemoveAt(sourceIdx);
+                newList.Insert(targetIndex, item);
+                _tabControl!.SelectedItem = item;
+            }
+        }
+        else
+        {
+            if (oldList.Contains(item))
+            {
+                oldList.Remove(item);
+                TryCloseIfEmpty();
+            }
+
+            newList.Add(item);
+            _tabControl!.SelectedItem = item;
+        }
+
+        e.Handled = true;
+    }
+
+    private void ItemsSource_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        TryCloseIfEmpty();
+    }
 
     #endregion
 }
