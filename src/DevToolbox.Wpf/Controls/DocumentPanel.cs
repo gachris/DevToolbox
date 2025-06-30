@@ -116,7 +116,7 @@ public class DocumentPanel : Grid, ILayoutSerializable
     {
         if (VisualTreeHelper.GetParent(child) is not DocumentPanel grid) return;
         var row = GetRow((UIElement)child);
-        if (row >= grid.ColumnDefinitions.Count) return;
+        if (row >= grid.RowDefinitions.Count) return;
         grid.Dispatcher.BeginInvoke(new Action(() => updateAction(grid.RowDefinitions[row])));
     }
 
