@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using DevToolbox.Wpf.Data;
@@ -15,10 +16,11 @@ namespace DevToolbox.Wpf.Controls;
 /// </summary>
 public class NumberBox : Control
 {
-    private bool _valueUpdating;
+    #region Fields/Consts
 
-    private RepeatButton? _buttonIncrease;
-    private RepeatButton? _buttonReduce;
+    private static readonly Regex _exprAllowedChars = new(@"^[0-9\.\,\+\-\*/\(\)\s]+$");
+
+    private bool _valueUpdating;
     private TextBox? _textBox;
 
     /// <summary>
@@ -53,7 +55,7 @@ public class NumberBox : Control
     /// allowing customization of the corner radius of the control.
     /// </summary>
     public static readonly DependencyProperty CornerRadiusProperty =
-        DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(NumberBox), new FrameworkPropertyMetadata(default(CornerRadius)));
+        DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(NumberBox), new FrameworkPropertyMetadata(default(CornerRadius)));
 
     /// <summary>
     /// Gets or sets the radius for rounding the corners of the control.
@@ -118,7 +120,7 @@ public class NumberBox : Control
     /// Identifies the <see cref="AreButtonsVisible"/> dependency property, controlling the visibility of the increment/decrement buttons.
     /// </summary>
     public static readonly DependencyProperty AreButtonsVisibleProperty =
-        DependencyProperty.Register("AreButtonsVisible", typeof(bool), typeof(NumberBox), new FrameworkPropertyMetadata(true, OnAreButtonsVisibleChanged));
+        DependencyProperty.Register(nameof(AreButtonsVisible), typeof(bool), typeof(NumberBox), new FrameworkPropertyMetadata(true));
 
     /// <summary>
     /// Identifies the <see cref="ValidationMode"/> dependency property.
@@ -149,6 +151,20 @@ public class NumberBox : Control
         typeof(RoutedEventHandler),
         typeof(NumberBox)
     );
+
+    #endregion
+
+    #region Properties
+
+    /// <summary>
+    /// Routed command that increments the current <see cref="NumberBox.Value"/> by the <see cref="SmallChange"/> amount.
+    /// </summary>
+    public static RoutedCommand Increase { get; } = new(nameof(Increase), typeof(NumberBox));
+
+    /// <summary>
+    /// Routed command that decrements the current <see cref="NumberBox.Value"/> by the <see cref="SmallChange"/> amount.
+    /// </summary>
+    public static RoutedCommand Reduce { get; } = new(nameof(Reduce), typeof(NumberBox));
 
     /// <summary>
     /// Gets or sets the numeric value of a <see cref="NumberBox"/>.
@@ -249,6 +265,8 @@ public class NumberBox : Control
         remove => RemoveHandler(ValueChangedEvent, value);
     }
 
+    #endregion
+
     static NumberBox()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(NumberBox), new FrameworkPropertyMetadata(typeof(NumberBox)));
@@ -260,8 +278,72 @@ public class NumberBox : Control
     public NumberBox()
         : base()
     {
-        NumberFormatter ??= NumberBox.GetRegionalSettingsAwareDecimalFormatter();
-        DataObject.AddPastingHandler(this, OnClipboardPaste);
+        NumberFormatter ??= GetRegionalSettingsAwareDecimalFormatter();
+
+        // CommandBindings for Increase/Reduce
+        CommandBindings.Add(new CommandBinding(
+            Increase,
+            (s, e) =>
+            {
+                StepValue(SmallChange);
+                _ = Focus();
+            },
+            (s, e) => e.CanExecute = true));
+
+        CommandBindings.Add(new CommandBinding(
+            Reduce,
+            (s, e) =>
+            {
+                StepValue(-SmallChange);
+                _ = Focus();
+            },
+            (s, e) => e.CanExecute = true));
+    }
+
+    #region Methods Overrides
+
+    /// <inheritdoc />
+    public override void OnApplyTemplate()
+    {
+        if (_textBox != null)
+        {
+            _textBox.PreviewTextInput -= OnPreviewTextInput;
+            DataObject.RemovePastingHandler(_textBox, OnTextBoxPasting);
+            _textBox.PreviewKeyDown -= OnPreviewKeyDown;
+        }
+
+        _textBox = Template.FindName("PART_TextBox", this) as TextBox;
+
+        if (_textBox != null)
+        {
+            _textBox.PreviewTextInput += OnPreviewTextInput;
+            DataObject.AddPastingHandler(_textBox, OnTextBoxPasting);
+            _textBox.PreviewKeyDown += OnPreviewKeyDown;
+            InputMethod.SetIsInputMethodEnabled(_textBox, false);
+        }
+    }
+
+    /// <inheritdoc />
+    protected override void OnLostFocus(RoutedEventArgs e)
+    {
+        base.OnLostFocus(e);
+
+        ValidateInput();
+    }
+
+    /// <inheritdoc />
+    protected override void OnTemplateChanged(ControlTemplate oldTemplate, ControlTemplate newTemplate)
+    {
+        base.OnTemplateChanged(oldTemplate, newTemplate);
+
+        if (string.IsNullOrEmpty(_textBox?.Text) && Value != null)
+        {
+            UpdateValueToText();
+        }
+        else
+        {
+            UpdateTextToValue();
+        }
     }
 
     /// <inheritdoc />
@@ -269,7 +351,6 @@ public class NumberBox : Control
     {
         base.OnKeyUp(e);
 
-        // Handle key inputs for stepping through values or validating input.
         switch (e.Key)
         {
             case Key.PageUp:
@@ -290,68 +371,10 @@ public class NumberBox : Control
                 break;
         }
     }
-    /// <inheritdoc />
-    public override void OnApplyTemplate()
-    {
-        if (_buttonIncrease != null)
-            _buttonIncrease.Click -= OnButtonIncrease_Click;
 
-        _buttonIncrease = Template.FindName("PART_ButtonIncrease", this) as RepeatButton;
+    #endregion
 
-        if (_buttonIncrease != null)
-            _buttonIncrease.Click += OnButtonIncrease_Click;
-
-        if (_buttonReduce != null)
-            _buttonReduce.Click -= OnButtonReduce_Click;
-
-        _buttonReduce = Template.FindName("PART_ButtonReduce", this) as RepeatButton;
-
-        if (_buttonReduce != null)
-            _buttonReduce.Click += OnButtonReduce_Click;
-
-        _textBox = Template.FindName("PART_TextBox", this) as TextBox;
-
-        UpdateButtonsVisibility();
-    }
-
-    private void OnButtonIncrease_Click(object sender, RoutedEventArgs e)
-    {
-        StepValue(SmallChange);
-        _ = Focus();
-    }
-
-    private void OnButtonReduce_Click(object sender, RoutedEventArgs e)
-    {
-        StepValue(-SmallChange);
-        _ = Focus();
-    }
-
-    /// <inheritdoc />
-    protected override void OnLostFocus(RoutedEventArgs e)
-    {
-        base.OnLostFocus(e);
-
-        ValidateInput();
-    }
-
-    /// <inheritdoc />
-    protected override void OnTemplateChanged(
-        System.Windows.Controls.ControlTemplate oldTemplate,
-        System.Windows.Controls.ControlTemplate newTemplate
-    )
-    {
-        base.OnTemplateChanged(oldTemplate, newTemplate);
-
-        // If Text has been set, but Value hasn't, update Value based on Text.
-        if (string.IsNullOrEmpty(_textBox?.Text) && Value != null)
-        {
-            UpdateValueToText();
-        }
-        else
-        {
-            UpdateTextToValue();
-        }
-    }
+    #region Methods
 
     /// <summary>
     /// Is called when <see cref="Value"/> in this <see cref="NumberBox"/> changes.
@@ -387,23 +410,8 @@ public class NumberBox : Control
         _valueUpdating = false;
     }
 
-    /// <summary>
-    /// Is called when something is pasted in this <see cref="NumberBox"/>.
-    /// </summary>
-    protected virtual void OnClipboardPaste(object sender, DataObjectPastingEventArgs e)
-    {
-        // TODO: Fix clipboard
-        if (sender is not NumberBox)
-        {
-            return;
-        }
-
-        ValidateInput();
-    }
-
     private void StepValue(double? change)
     {
-        // Before adjusting the value, validate the contents of the textbox so we don't override it.
         ValidateInput();
 
         var newValue = Value ?? 0;
@@ -414,7 +422,6 @@ public class NumberBox : Control
         }
 
         SetCurrentValue(ValueProperty, newValue);
-
         MoveCaretToTextEnd();
     }
 
@@ -437,22 +444,22 @@ public class NumberBox : Control
 
     private void ValidateInput()
     {
-        var text = _textBox?.Text.Trim();
+        if (ValidationMode == NumberBoxValidationMode.Disabled)
+            return;
 
+        var text = _textBox?.Text.Trim();
         if (string.IsNullOrEmpty(text))
         {
             SetCurrentValue(ValueProperty, null);
-
             return;
         }
 
         var numberParser = NumberFormatter as INumberParser;
-        var value = numberParser!.ParseDouble(text);
+        var value = numberParser?.ParseDouble(text);
 
         if (value is null || Equals(Value, value))
         {
             UpdateTextToValue();
-
             return;
         }
 
@@ -467,7 +474,6 @@ public class NumberBox : Control
         }
 
         SetCurrentValue(ValueProperty, value);
-
         UpdateTextToValue();
     }
 
@@ -481,7 +487,7 @@ public class NumberBox : Control
         _textBox.CaretIndex = _textBox.Text.Length;
     }
 
-    private static INumberFormatter GetRegionalSettingsAwareDecimalFormatter()
+    private static ValidateNumberFormatter GetRegionalSettingsAwareDecimalFormatter()
     {
         return new ValidateNumberFormatter();
     }
@@ -506,18 +512,85 @@ public class NumberBox : Control
         }
     }
 
-    private static void OnAreButtonsVisibleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    #endregion
+
+    #region Events Subscriptions
+
+    private void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
     {
-        var numberBox = (NumberBox)d;
-        numberBox.UpdateButtonsVisibility();
+        if (ValidationMode == NumberBoxValidationMode.Disabled || _textBox == null)
+            return;
+
+        if (AcceptsExpression)
+        {
+            var text = _textBox.Text;
+            var start = _textBox.SelectionStart;
+            var length = _textBox.SelectionLength;
+            var preview = text.Remove(start, length).Insert(start, e.Text);
+
+            if (!_exprAllowedChars.IsMatch(preview))
+                e.Handled = true;
+
+            return;
+        }
+
+        var sep = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+        var newText = _textBox.Text
+            .Remove(_textBox.SelectionStart, _textBox.SelectionLength)
+            .Insert(_textBox.SelectionStart, e.Text);
+
+        var parser = NumberFormatter as INumberParser;
+        if (parser?.ParseDouble(newText) == null)
+        {
+            if (newText != sep && !(newText.EndsWith(sep) && Regex.IsMatch(newText.Substring(0, newText.Length - sep.Length), @"^\d+$")))
+            {
+                e.Handled = true;
+            }
+        }
     }
 
-    private void UpdateButtonsVisibility()
+    private void OnTextBoxPasting(object sender, DataObjectPastingEventArgs e)
     {
-        if (_buttonIncrease != null)
-            _buttonIncrease.Visibility = AreButtonsVisible ? Visibility.Visible : Visibility.Collapsed;
+        if (ValidationMode == NumberBoxValidationMode.Disabled || sender is not TextBox tb)
+            return;
 
-        if (_buttonReduce != null)
-            _buttonReduce.Visibility = AreButtonsVisible ? Visibility.Visible : Visibility.Collapsed;
+        if (AcceptsExpression && e.DataObject.GetDataPresent(DataFormats.Text))
+        {
+            var paste = (string?)e.DataObject.GetData(DataFormats.Text) ?? "";
+            var text = tb.Text;
+            var start = tb.SelectionStart;
+            var length = tb.SelectionLength;
+            var preview = text.Remove(start, length).Insert(start, paste);
+
+            if (!_exprAllowedChars.IsMatch(preview))
+                e.CancelCommand();
+
+            return;
+        }
+
+        if (e.DataObject.GetDataPresent(DataFormats.Text))
+        {
+            var paste = (string?)e.DataObject.GetData(DataFormats.Text) ?? "";
+            var text = tb.Text;
+            var start = tb.SelectionStart;
+            var len = tb.SelectionLength;
+            var preview = text.Remove(start, len).Insert(start, paste);
+
+            var parser = NumberFormatter as INumberParser;
+            if (parser?.ParseDouble(preview) == null)
+                e.CancelCommand();
+        }
+        else
+        {
+            e.CancelCommand();
+        }
     }
+
+    private void OnPreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Space)
+            e.Handled = true;
+    }
+
+    #endregion
 }

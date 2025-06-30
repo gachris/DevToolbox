@@ -3,6 +3,90 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls">
 
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+    <Style x:Key="NumberTextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <ScrollViewer
+                            x:Name="PART_ContentHost"
+                            Grid.Column="0"
+                            Margin="0"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Background="Transparent"
+                            FocusVisualStyle="{x:Null}" />
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <RepeatButton
+                                x:Name="PART_ButtonIncrease"
+                                Grid.Row="0"
+                                VerticalAlignment="Stretch"
+                                BorderThickness="0"
+                                Command="controls:NumberBox.Increase"
+                                CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=controls:NumberBox}}"
+                                Delay="0"
+                                Interval="1"
+                                Visibility="{Binding RelativeSource={RelativeSource AncestorType=controls:NumberBox}, Path=AreButtonsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <RepeatButton.ContentTemplate>
+                                    <DataTemplate>
+                                        <controls:FontGlyph
+                                            Margin="4,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Code="{x:Static controls:Symbol.GlyphUp}"
+                                            FontSize="8" />
+                                    </DataTemplate>
+                                </RepeatButton.ContentTemplate>
+                            </RepeatButton>
+                            <RepeatButton
+                                x:Name="PART_ButtonReduce"
+                                Grid.Row="1"
+                                VerticalAlignment="Stretch"
+                                BorderThickness="0"
+                                Command="controls:NumberBox.Reduce"
+                                CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=controls:NumberBox}}"
+                                Delay="0"
+                                Interval="1"
+                                Visibility="{Binding RelativeSource={RelativeSource AncestorType=controls:NumberBox}, Path=AreButtonsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <RepeatButton.ContentTemplate>
+                                    <DataTemplate>
+                                        <controls:FontGlyph
+                                            Margin="4,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Code="{x:Static controls:Symbol.GlyphDown}"
+                                            FontSize="8" />
+                                    </DataTemplate>
+                                </RepeatButton.ContentTemplate>
+                            </RepeatButton>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger SourceName="PART_ButtonIncrease" Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource NumberBox.FocusedBorderBrush}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_ButtonReduce" Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource NumberBox.FocusedBorderBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="{x:Type controls:NumberBox}">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -20,64 +104,14 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBox
-                                x:Name="PART_TextBox"
-                                Grid.Column="0"
-                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Background="{TemplateBinding Background}"
-                                BorderThickness="0"
-                                Foreground="{TemplateBinding Foreground}"
-                                Text="{Binding Value, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Validation.ErrorTemplate="{x:Null}" />
-                            <Grid Grid.Column="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <RepeatButton
-                                    x:Name="PART_ButtonIncrease"
-                                    Grid.Row="0"
-                                    VerticalAlignment="Stretch"
-                                    BorderThickness="0"
-                                    Delay="0"
-                                    Interval="1">
-                                    <RepeatButton.ContentTemplate>
-                                        <DataTemplate>
-                                            <controls:FontGlyph
-                                                Margin="4,0"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Code="{x:Static controls:Symbol.GlyphUp}"
-                                                FontSize="8" />
-                                        </DataTemplate>
-                                    </RepeatButton.ContentTemplate>
-                                </RepeatButton>
-                                <RepeatButton
-                                    x:Name="PART_ButtonReduce"
-                                    Grid.Row="1"
-                                    VerticalAlignment="Stretch"
-                                    BorderThickness="0"
-                                    Delay="0"
-                                    Interval="1">
-                                    <RepeatButton.ContentTemplate>
-                                        <DataTemplate>
-                                            <controls:FontGlyph
-                                                Margin="4,0"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Code="{x:Static controls:Symbol.GlyphDown}"
-                                                FontSize="8" />
-                                        </DataTemplate>
-                                    </RepeatButton.ContentTemplate>
-                                </RepeatButton>
-                            </Grid>
-                        </Grid>
+                        <TextBox
+                            x:Name="PART_TextBox"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            BorderThickness="0"
+                            Foreground="{TemplateBinding Foreground}"
+                            Style="{StaticResource NumberTextBoxStyle}"
+                            Text="{Binding Value, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -87,12 +121,6 @@
                             <Setter Property="BorderBrush" Value="{DynamicResource NumberBox.FocusedBorderBrush}" />
                         </Trigger>
                         <Trigger SourceName="PART_TextBox" Property="IsFocused" Value="True">
-                            <Setter Property="BorderBrush" Value="{DynamicResource NumberBox.FocusedBorderBrush}" />
-                        </Trigger>
-                        <Trigger SourceName="PART_ButtonIncrease" Property="IsFocused" Value="True">
-                            <Setter Property="BorderBrush" Value="{DynamicResource NumberBox.FocusedBorderBrush}" />
-                        </Trigger>
-                        <Trigger SourceName="PART_ButtonReduce" Property="IsFocused" Value="True">
                             <Setter Property="BorderBrush" Value="{DynamicResource NumberBox.FocusedBorderBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
