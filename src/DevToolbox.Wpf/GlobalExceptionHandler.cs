@@ -46,11 +46,16 @@ public static class GlobalExceptionHandler
     /// </exception>
     private static async void ShowErrorDialog(Exception exception)
     {
-        var dialogService = ServiceLocator.Current.GetService(typeof(IDialogService)) as IDialogService;
-        if (dialogService is not null)
+        try
+        {
+            if (ServiceLocator.Current.GetService(typeof(IDialogService)) is not IDialogService dialogService)
+                throw new ArgumentNullException(nameof(dialogService), "Could not resolve IDialogService from ServiceLocator.");
             await dialogService.ShowErrorAsync(exception);
-        else
+        }
+        catch
+        {
             MessageBox.Show(exception.Message);
+        }
     }
 
     #endregion

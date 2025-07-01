@@ -21,12 +21,15 @@ public partial class SimpleSidePanelWindowView : UserControl
     {
         var w = Window.GetWindow(this);
         w.Closed += W_Closed;
+
+        _notificationWindow?.Close();
         _notificationWindow = new CalendarWindow();
     }
 
     private void W_Closed(object? sender, EventArgs e)
     {
-        _notificationWindow!.Close();
+        _notificationWindow?.Close();
+        _notificationWindow = null;
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)

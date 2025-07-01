@@ -12,7 +12,7 @@
     d:DesignWidth="458"
     mc:Ignorable="d">
     <Grid
-        Margin="26,18,26,0"
+        Margin="26,18,26,18"
         SnapsToDevicePixels="True"
         UseLayoutRounding="True">
         <Grid.RowDefinitions>

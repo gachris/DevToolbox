@@ -24,6 +24,14 @@ Explore the capabilities of the controls in the included demo projects:
 
 ![Demo Project Image](assets/demo.png)
 
+* **TabsWindow**
+
+![Demo Project Image](assets/tabbedWindow.png)
+
+* **SidePanelWindow**
+
+![Demo Project Image](assets/flyoutWindow.png)
+
 ## Future Plans
 
 * **Performance Enhancements:** Updates to controls for improved performance across both WPF and WinUI.
