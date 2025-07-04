@@ -4,41 +4,73 @@ using DevToolbox.Wpf.Controls;
 
 namespace DevToolbox.Wpf.Windows;
 
+/// <summary>
+/// A transparent overlay window that displays docking drop targets and options when dragging items within a <see cref="DockManager"/>.
+/// </summary>
 [TemplatePart(Name = PART_Options, Type = typeof(ContentControl))]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class OverlayWindow : Window
 {
     #region Fields/Consts
 
+    /// <summary>
+    /// Template part name for the options content control.
+    /// </summary>
     protected const string PART_Options = nameof(PART_Options);
 
     private readonly DockManager _dockManager;
     private IDropSurface? _currentControl;
     private ContentControl? _options;
 
-    private static readonly DependencyPropertyKey IsAbsolutleOptionsVisiblePropertyKey = 
-        DependencyProperty.RegisterReadOnly(nameof(IsAbsolutleOptionsVisible), typeof(bool), typeof(OverlayWindow), new UIPropertyMetadata(false));
+    private static readonly DependencyPropertyKey IsAbsoluteOptionsVisiblePropertyKey =
+        DependencyProperty.RegisterReadOnly(
+            nameof(IsAbsoluteOptionsVisible),
+            typeof(bool),
+            typeof(OverlayWindow),
+            new UIPropertyMetadata(false));
 
     private static readonly DependencyPropertyKey IsInnerOptionsVisiblePropertyKey =
-        DependencyProperty.RegisterReadOnly(nameof(IsInnerOptionsVisible), typeof(bool), typeof(OverlayWindow), new UIPropertyMetadata(default));
+        DependencyProperty.RegisterReadOnly(
+            nameof(IsInnerOptionsVisible),
+            typeof(bool),
+            typeof(OverlayWindow),
+            new UIPropertyMetadata(default));
 
-    public static readonly DependencyProperty IsAbsolutleOptionsVisibleProperty = IsAbsolutleOptionsVisiblePropertyKey.DependencyProperty;
+    /// <summary>
+    /// Identifies the <see cref="IsAbsoluteOptionsVisible"/> dependency property.
+    /// </summary>
+    public static readonly DependencyProperty IsAbsoluteOptionsVisibleProperty = IsAbsoluteOptionsVisiblePropertyKey.DependencyProperty;
+
+    /// <summary>
+    /// Identifies the <see cref="IsInnerOptionsVisible"/> dependency property.
+    /// </summary>
     public static readonly DependencyProperty IsInnerOptionsVisibleProperty = IsInnerOptionsVisiblePropertyKey.DependencyProperty;
 
     #endregion
 
     #region Properties
 
+    /// <summary>
+    /// Gets the drop surface currently under the drag cursor, or null if none.
+    /// </summary>
     public IDropSurface? HoverControl => _currentControl;
 
+    /// <summary>
+    /// Gets the associated <see cref="DockManager"/> instance that this overlay serves.
+    /// </summary>
     public DockManager DockManager => _dockManager;
 
-    public bool IsAbsolutleOptionsVisible
+    /// <summary>
+    /// Gets whether the absolute (global) drop options are visible.
+    /// </summary>
+    public bool IsAbsoluteOptionsVisible
     {
-        get => (bool)GetValue(IsAbsolutleOptionsVisibleProperty);
-        private set => SetValue(IsAbsolutleOptionsVisiblePropertyKey, value);
+        get => (bool)GetValue(IsAbsoluteOptionsVisibleProperty);
+        private set => SetValue(IsAbsoluteOptionsVisiblePropertyKey, value);
     }
 
+    /// <summary>
+    /// Gets whether the inner (surface-specific) drop options are visible.
+    /// </summary>
     public bool IsInnerOptionsVisible
     {
         get => (bool)GetValue(IsInnerOptionsVisibleProperty);
@@ -47,11 +79,18 @@ public class OverlayWindow : Window
 
     #endregion
 
+    /// <summary>
+    /// Static constructor to override the default style key for this control.
+    /// </summary>
     static OverlayWindow()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(OverlayWindow), new FrameworkPropertyMetadata(typeof(OverlayWindow)));
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="OverlayWindow"/> class for the specified <see cref="DockManager"/>.
+    /// </summary>
+    /// <param name="dockManager">The DockManager that this overlay window will serve.</param>
     public OverlayWindow(DockManager dockManager)
     {
         ShowActivated = false;
@@ -63,6 +102,7 @@ public class OverlayWindow : Window
 
     #region Overrides
 
+    /// <inheritdoc/>
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
@@ -74,6 +114,10 @@ public class OverlayWindow : Window
 
     #region Methods
 
+    /// <summary>
+    /// Invokes a drop action on the current drop service with the specified docking position.
+    /// </summary>
+    /// <param name="dockingPosition">Position where the item should be docked.</param>
     internal void OnDrop(DockingPosition dockingPosition)
     {
         if (_currentControl is null)
@@ -84,6 +128,11 @@ public class OverlayWindow : Window
         _dockManager.DragServices.Window?.OnDrop(_currentControl, dockingPosition);
     }
 
+    /// <summary>
+    /// Called when a dragged item enters a drop surface; positions and displays overlay options.
+    /// </summary>
+    /// <param name="control">The drop surface under the pointer.</param>
+    /// <param name="point">Pointer location relative to the overlay window.</param>
     internal void OnDragEnter(IDropSurface control, Point point)
     {
         var controlType = control.GetType();
@@ -91,12 +140,12 @@ public class OverlayWindow : Window
 
         if (windowType?.Equals(typeof(DocumentWindow)) == true && controlType.Equals(typeof(DockableControl)))
         {
-            IsAbsolutleOptionsVisible = false;
+            IsAbsoluteOptionsVisible = false;
             return;
         }
         else
         {
-            IsAbsolutleOptionsVisible = windowType?.Equals(typeof(DocumentWindow)) == false;
+            IsAbsoluteOptionsVisible = windowType?.Equals(typeof(DocumentWindow)) == false;
         }
 
         _currentControl = control;
@@ -112,16 +161,25 @@ public class OverlayWindow : Window
         IsInnerOptionsVisible = true;
     }
 
+    /// <summary>
+    /// Called when a dragged item moves over a drop surface (no-op).
+    /// </summary>
+    /// <param name="control">The drop surface under the pointer.</param>
+    /// <param name="point">Pointer location relative to the overlay window.</param>
     internal void OnDragOver(IDropSurface control, Point point)
     {
     }
 
+    /// <summary>
+    /// Called when a dragged item leaves a drop surface; hides overlay options.
+    /// </summary>
+    /// <param name="control">The drop surface that was under the pointer.</param>
+    /// <param name="point">Pointer location relative to the overlay window.</param>
     internal void OnDragLeave(IDropSurface control, Point point)
     {
         IsInnerOptionsVisible = false;
-        IsAbsolutleOptionsVisible = false;
+        IsAbsoluteOptionsVisible = false;
     }
 
     #endregion
 }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

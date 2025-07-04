@@ -577,7 +577,7 @@
         </Grid>
     </DataTemplate>
 
-    <DataTemplate x:Key="AbsolutleOptions">
+    <DataTemplate x:Key="AbsoluteOptions">
         <Grid Opacity="0.6">
             <controls:OverlayButton
                 Width="42"
@@ -623,16 +623,16 @@
                     <AdornerDecorator>
                         <Grid UseLayoutRounding="True">
                             <ContentControl
-                                x:Name="PART_AbsolutleOptions"
-                                ContentTemplate="{StaticResource AbsolutleOptions}"
-                                Visibility="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsAbsolutleOptionsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                x:Name="PART_AbsoluteOptions"
+                                ContentTemplate="{StaticResource AbsoluteOptions}"
+                                Visibility="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsAbsoluteOptionsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             <Canvas Visibility="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsInnerOptionsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <ContentControl x:Name="PART_Options" ContentTemplate="{StaticResource RelativeOptions}" />
                             </Canvas>
                         </Grid>
                     </AdornerDecorator>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsAbsolutleOptionsVisible" Value="True">
+                        <Trigger Property="IsAbsoluteOptionsVisible" Value="True">
                             <Setter TargetName="PART_Options" Property="ContentTemplate" Value="{StaticResource MultipleOptions}" />
                         </Trigger>
                     </ControlTemplate.Triggers>

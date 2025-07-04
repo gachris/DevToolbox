@@ -139,4 +139,20 @@ internal static class DependencyObjectExtensions
             }
         }
     }
+
+    /// <summary>
+    /// Searches up the visual tree from the specified node to find an ancestor of type T.
+    /// </summary>
+    /// <typeparam name="T">The type of ancestor to find.</typeparam>
+    /// <param name="node">The starting node.</param>
+    /// <returns>The first ancestor of type T, or null if none found.</returns>
+    public static T? VisualUpwardSearch<T>(this DependencyObject? node) where T : DependencyObject
+    {
+        while (node != null)
+        {
+            if (node is T found) return found;
+            node = VisualTreeHelper.GetParent(node);
+        }
+        return null;
+    }
 }
