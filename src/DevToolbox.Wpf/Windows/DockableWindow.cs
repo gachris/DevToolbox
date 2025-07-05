@@ -31,9 +31,8 @@ public class DockableWindow : DockManagerWindow
             typeof(DockableWindow),
             new FrameworkPropertyMetadata(typeof(DockableWindow)));
 
-        var sizeMeta = new FrameworkPropertyMetadata(300.0);
-        WidthProperty.OverrideMetadata(typeof(DockableWindow), sizeMeta);
-        HeightProperty.OverrideMetadata(typeof(DockableWindow), sizeMeta);
+        WidthProperty.OverrideMetadata(typeof(DockableWindow), new FrameworkPropertyMetadata(300.0));
+        HeightProperty.OverrideMetadata(typeof(DockableWindow), new FrameworkPropertyMetadata(300.0));
 
         ShowInTaskbarProperty.OverrideMetadata(
             typeof(DockableWindow),
