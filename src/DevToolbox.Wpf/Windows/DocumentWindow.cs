@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using DevToolbox.Wpf.Controls;
+using DevToolbox.Wpf.Extensions;
 using DevToolbox.Wpf.Interop;
 
 namespace DevToolbox.Wpf.Windows;
@@ -49,6 +51,7 @@ public class DocumentWindow : DockManagerWindow
             throw new InvalidOperationException($"{nameof(Content)} of {typeof(DocumentWindow)} must be {typeof(DocumentControl)} type");
 
         content.StateChanged += OnStateChanged;
+        content.Closed += DocumentControl_Closed;
 
         base.OnContentChanged(oldContent, newContent);
     }
@@ -91,7 +94,7 @@ public class DocumentWindow : DockManagerWindow
             return;
         }
 
-        var dockManager = HostControl.DockManager!;  
+        var dockManager = HostControl.DockManager!;
 
         if (btnDock == DockingPosition.PaneInto && control is DocumentControl documentControl)
         {
@@ -141,6 +144,27 @@ public class DocumentWindow : DockManagerWindow
     {
         if (e.NewValue != State.Window)
         {
+            Close();
+        }
+    }
+
+    private void DocumentControl_Closed(object? sender, EventArgs e)
+    {
+        if (HostControl != null && HostControl.Items.Count == 0)
+        {
+            var dockManager = HostControl.DockManager!;
+            var isReadOnly = ((IList)dockManager.DocumentList.Items).IsReadOnly;
+
+            if (isReadOnly)
+            {
+                var item = dockManager.DocumentList.ItemFromContainer(HostControl);
+                dockManager.DocumentList.Remove(item);
+            }
+            else
+            {
+                dockManager.DocumentList.Remove(HostControl);
+            }
+            
             Close();
         }
     }

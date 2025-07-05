@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using DevToolbox.Wpf.Controls;
+using DevToolbox.Wpf.Extensions;
 using DevToolbox.Wpf.Interop;
 
 namespace DevToolbox.Wpf.Windows;
@@ -61,6 +63,7 @@ public class DockableWindow : DockManagerWindow
 
         // Listen for when the state exits Window so we can close
         content.StateChanged += OnStateChanged;
+        content.Closed += DockableControl_Closed;
 
         base.OnContentChanged(oldContent, newContent);
 
@@ -175,6 +178,27 @@ public class DockableWindow : DockManagerWindow
     {
         if (e.NewValue != State.Window)
             Close();
+    }
+
+    private void DockableControl_Closed(object? sender, EventArgs e)
+    {
+        if (HostControl != null && HostControl.Items.Count == 0)
+        {
+            var dockManager = HostControl.DockManager!;
+            var isReadOnly = ((IList)dockManager.Items).IsReadOnly;
+
+            if (isReadOnly)
+            {
+                var item = dockManager.ItemFromContainer(HostControl);
+                dockManager.Remove(item);
+            }
+            else
+            {
+                dockManager.Remove(HostControl);
+            }
+
+            Close();
+        }
     }
 
     #endregion
