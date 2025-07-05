@@ -587,6 +587,7 @@ public sealed class DockableControl : TabControlEdit, IDropSurface, ILayoutSeria
         newElement.State = State.Window;
 
         window.Content = newElement;
+        RestoreWindowSizeAndPosition(window);
 
         DockManager.Drag(window, startDragPoint, offset);
     }

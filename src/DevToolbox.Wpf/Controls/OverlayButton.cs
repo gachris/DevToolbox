@@ -7,6 +7,7 @@ using DevToolbox.Wpf.Windows;
 
 namespace DevToolbox.Wpf.Controls;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 internal class OverlayButton : ContentControl, IDropSurface
 {
     #region Fields/Consts
@@ -220,3 +221,4 @@ internal class OverlayButton : ContentControl, IDropSurface
 
     #endregion
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

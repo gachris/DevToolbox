@@ -1,30 +1,31 @@
 using System;
 using System.Collections;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Xml;
 using DevToolbox.Wpf.Extensions;
 using DevToolbox.Wpf.Serialization;
 
 namespace DevToolbox.Wpf.Controls;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
 {
     #region Fields/Consts
 
     private DocumentItem? _draggedTab;
     private int? _originalIndex;
-    private Point _ptFloatingWindow;
-    private Size _sizeFloatingWindow;
+    private Point _ptFloatingWindow = new(0, 0);
+    private Size _sizeFloatingWindow = new(300, 300);
 
     protected internal static readonly DependencyPropertyKey StatePropertyKey =
         DependencyProperty.RegisterReadOnly(nameof(State), typeof(State), typeof(DocumentControl), new FrameworkPropertyMetadata(State.Document, OnStateChanged));
 
-    public static readonly DependencyProperty PaneWidthProperty = 
+    public static readonly DependencyProperty PaneWidthProperty =
         DependencyProperty.Register(nameof(PaneWidth), typeof(double), typeof(DocumentControl), new PropertyMetadata(250D));
 
-    public static readonly DependencyProperty PaneHeightProperty = 
+    public static readonly DependencyProperty PaneHeightProperty =
         DependencyProperty.Register(nameof(PaneHeight), typeof(double), typeof(DocumentControl), new PropertyMetadata(250D));
 
     public static readonly DependencyProperty DockProperty =
@@ -206,6 +207,14 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
         }
     }
 
+    internal void RestoreWindowSizeAndPosition(Window window)
+    {
+        window.Left = _ptFloatingWindow.X;
+        window.Top = _ptFloatingWindow.Y;
+        window.Width = _sizeFloatingWindow.Width;
+        window.Height = _sizeFloatingWindow.Height;
+    }
+
     /// <inheritdoc/>
     public void SaveSize()
     {
@@ -218,9 +227,9 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
         var paneHeightDefaultValue = (double)PaneHeightProperty.DefaultMetadata.DefaultValue;
 
         if (Dock is Dock.Left or Dock.Right)
-    {
+        {
             PaneWidth = ActualWidth > paneWidthDefaultValue ? ActualWidth : paneWidthDefaultValue;
-    }
+        }
         else
         {
             PaneHeight = ActualHeight > paneHeightDefaultValue ? ActualHeight : paneHeightDefaultValue;
@@ -245,7 +254,6 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
     private void CreateDockableHost(object item, Point startDragPoint, Point offset)
     {
         if (DockManager is null || State == State.Window) return;
-
         var window = DockManager.GetContainerForDockingOverride();
 
         Remove(item);
@@ -277,8 +285,10 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
         newElement.Add(item);
         newElement.DockManager = DockManager;
         newElement.State = State.Window;
-
+        
         window.Content = newElement;
+        RestoreWindowSizeAndPosition(window);
+
         DockManager.Drag(window, startDragPoint, offset);
     }
 
@@ -314,18 +324,28 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
         newElement.DockManager = DockManager;
 
         window.Content = newElement;
+        RestoreWindowSizeAndPosition(window);
 
         DockManager.Drag(window, startDragPoint, offset);
     }
 
     /// <inheritdoc/>
-    public virtual void OnDragEnter(Point point) => DockManager?.OverlayWindow.OnDragEnter(this, point);
+    public virtual void OnDragEnter(Point point)
+    {
+        DockManager?.OverlayWindow.OnDragEnter(this, point);
+    }
 
     /// <inheritdoc/>
-    public virtual void OnDragOver(Point point) => DockManager?.OverlayWindow.OnDragOver(this, point);
+    public virtual void OnDragOver(Point point)
+    {
+        DockManager?.OverlayWindow.OnDragOver(this, point);
+    }
 
     /// <inheritdoc/>
-    public virtual void OnDragLeave(Point point) => DockManager?.OverlayWindow.OnDragLeave(this, point);
+    public virtual void OnDragLeave(Point point)
+    {
+        DockManager?.OverlayWindow.OnDragLeave(this, point);
+    }
 
     /// <inheritdoc/>
     public virtual bool OnDrop(Point point) => false;
@@ -333,33 +353,49 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
     /// <inheritdoc/>
     public virtual void Serialize(XmlDocument doc, XmlNode parentNode)
     {
-        //parentNode.Attributes.Append(doc.CreateAttribute("Width"));
-        //parentNode.Attributes["Width"].Value = PaneWidth.ToString();
-        //parentNode.Attributes.Append(doc.CreateAttribute("Height"));
-        //parentNode.Attributes["Height"].Value = PaneHeight.ToString();
+        if (doc == null) throw new ArgumentNullException(nameof(doc));
+        if (parentNode == null) throw new ArgumentNullException(nameof(parentNode));
+        if (parentNode.Attributes == null) throw new ArgumentNullException(nameof(parentNode.Attributes));
 
-        //foreach (object content in Items)
-        //{
-        //    if (content is DocumentItem dockableContent)
-        //    {
-        //        XmlNode nodeDockableContent = doc.CreateElement(dockableContent.GetType().ToString());
-        //        parentNode.AppendChild(nodeDockableContent);
-        //    }
-        //}
+        // Optional: store current size
+        var widthAttr = doc.CreateAttribute("Width");
+        widthAttr.Value = ActualWidth.ToString(CultureInfo.InvariantCulture);
+        parentNode.Attributes.Append(widthAttr);
+
+        var heightAttr = doc.CreateAttribute("Height");
+        heightAttr.Value = ActualHeight.ToString(CultureInfo.InvariantCulture);
+        parentNode.Attributes.Append(heightAttr);
+
+        // Serialize each item by its type name
+        foreach (var content in Items)
+        {
+            var typeString = content.GetType().FullName ?? content.GetType().Name;
+            var itemNode = doc.CreateElement(typeString);
+            parentNode.AppendChild(itemNode);
+        }
     }
 
     /// <inheritdoc/>
     public virtual void Deserialize(DockManager managerToAttach, XmlNode node, GetContentFromTypeString getObjectHandler)
     {
-        //DockManager = managerToAttach;
+        if (node == null) throw new ArgumentNullException(nameof(node));
+        if (getObjectHandler == null) throw new ArgumentNullException(nameof(getObjectHandler));
 
-        //PaneWidth = double.Parse(node.Attributes["Width"].Value);
-        //PaneHeight = double.Parse(node.Attributes["Height"].Value);
+        // Re-attach the dock manager so PrepareContainerForItemOverride runs
+        DockManager = managerToAttach ?? throw new ArgumentNullException(nameof(managerToAttach));
 
-        //foreach (XmlNode childNode in node.ChildNodes)
-        //    Add(getObjectHandler(childNode.Name));
+        // (Optional) restore size
+        if (double.TryParse(node.Attributes?["Width"]?.Value, NumberStyles.Float, CultureInfo.InvariantCulture, out var w))
+            Width = w;
+        if (double.TryParse(node.Attributes?["Height"]?.Value, NumberStyles.Float, CultureInfo.InvariantCulture, out var h))
+            Height = h;
 
-        //DockManager.DragServices.Register(this);
+        // Recreate each item by name and add it
+        foreach (XmlNode childNode in node.ChildNodes)
+        {
+            var item = getObjectHandler(childNode.Name);
+            Add(item);
+        }
     }
 
     #endregion
@@ -397,7 +433,7 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
             _draggedTab = tab;
             _originalIndex = Items.IndexOf(tab.DataContext ?? tab);
         }
-}
+    }
 
     private void Tab_PreviewMouseMove(object sender, MouseEventArgs e)
     {

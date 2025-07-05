@@ -48,7 +48,7 @@ public class DockableWindow : DockManagerWindow
         Chrome.CaptionHeight = 22;
     }
 
-    #region Overrides
+    #region Methods Overrides
 
     /// <inheritdoc/>
     protected override void OnContentChanged(object oldContent, object newContent)

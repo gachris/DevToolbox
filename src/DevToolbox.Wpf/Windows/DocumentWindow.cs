@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using DevToolbox.Wpf.Controls;
@@ -29,7 +30,7 @@ public class DocumentWindow : DockManagerWindow
         DefaultStyleKeyProperty.OverrideMetadata(typeof(DocumentWindow), new FrameworkPropertyMetadata(typeof(DocumentWindow)));
     }
 
-    #region Overrides
+    #region Methods Overrides
 
     /// <summary>
     /// Ensures the window content is only set once and is of type <see cref="DocumentControl"/>.
@@ -114,6 +115,20 @@ public class DocumentWindow : DockManagerWindow
         HostControl.MoveTo((DocumentControl)control, dock);
         HostControl.State = State.Document;
     }
+
+    /// <inheritdoc/>
+    protected override void OnClosing(CancelEventArgs e)
+    {
+        base.OnClosing(e);
+
+        // If the window is being canceled, save its last size/pos
+        if (!e.Cancel)
+            HostControl?.SaveWindowSizeAndPosition(this);
+    }
+
+    #endregion
+
+    #region Methods
 
     /// <summary>
     /// Closes the window when its associated document control exits the Window state.

@@ -10,8 +10,11 @@ using DevToolbox.Wpf.Serialization;
 
 namespace DevToolbox.Wpf.Controls;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class DocumentList : Selector, ILayoutSerializable
+/// <summary>
+/// Represents a list of documents within a <see cref="DockManager"/>.
+/// Supports adding, removing, and serializing layout of document items.
+/// </summary>
+public class DocumentList : ItemsControl, ILayoutSerializable
 {
     #region Fields/Consts
 
@@ -19,14 +22,12 @@ public class DocumentList : Selector, ILayoutSerializable
     private DocumentPanel? _documentPanel;
 
     /// <summary>
-    ///     An event that is raised when a new item is created so that
-    ///     developers can initialize the item with custom default values.
+    /// Occurs before a new item is created, allowing handlers to provide or modify the new item instance.
     /// </summary>
     public event InitializingNewItemEventHandler? InitializingNewItem;
 
     /// <summary>
-    ///     An event that is raised before a new item is created so that
-    ///     developers can participate in the construction of the new item.
+    /// Occurs when a new item is being added, enabling custom construction logic.
     /// </summary>
     public event EventHandler<AddingNewItemEventArgs>? AddingNewItem;
 
@@ -34,8 +35,12 @@ public class DocumentList : Selector, ILayoutSerializable
 
     #region Properties
 
+    /// <summary>
+    /// Gets the editable view of the items collection.
+    /// </summary>
     private IEditableCollectionView EditableItems => Items;
 
+    /// <inheritdoc/>
     public Rect SurfaceRectangle => new(PointToScreen(new Point(0, 0)), new Size(ActualWidth, ActualHeight));
 
     #endregion
@@ -47,6 +52,7 @@ public class DocumentList : Selector, ILayoutSerializable
 
     #region Methods Override
 
+    /// <inheritdoc />
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
@@ -54,6 +60,7 @@ public class DocumentList : Selector, ILayoutSerializable
         _documentPanel = Template.FindName("PART_DocumentPanel", this) as DocumentPanel;
     }
 
+    /// <inheritdoc />
     protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
     {
         base.PrepareContainerForItemOverride(element, item);
@@ -70,6 +77,7 @@ public class DocumentList : Selector, ILayoutSerializable
         }
     }
 
+    /// <inheritdoc />
     protected override void ClearContainerForItemOverride(DependencyObject element, object item)
     {
         if (element is DocumentControl documentControl)
@@ -85,6 +93,7 @@ public class DocumentList : Selector, ILayoutSerializable
         base.ClearContainerForItemOverride(element, item);
     }
 
+    /// <inheritdoc />
     protected override DependencyObject GetContainerForItemOverride()
     {
         return new DocumentControl();
@@ -94,16 +103,26 @@ public class DocumentList : Selector, ILayoutSerializable
 
     #region Methods
 
+    /// <summary>
+    /// Associates this list with the specified <see cref="DockManager"/>, enabling drag services.
+    /// </summary>
+    /// <param name="dockManager">The dock manager to attach.</param>
     internal void AttachDockManager(DockManager dockManager)
     {
         _dockManager = dockManager;
     }
 
+    /// <summary>
+    /// Handles a change in docking, triggering layout rearrangement.
+    /// </summary>
     private void OnDockChanged(object? sender, DockChangedEventArgs e)
     {
         _documentPanel?.ArrangeLayout();
     }
 
+    /// <summary>
+    /// Handles state changes on a document control, registering or unregistering drag services.
+    /// </summary>
     private void StateChanged(object? sender, StateChangedEventArgs e)
     {
         if (sender is not IDropSurface dropSurface)
@@ -119,6 +138,12 @@ public class DocumentList : Selector, ILayoutSerializable
         _documentPanel?.ArrangeLayout();
     }
 
+    /// <summary>
+    /// Moves a document control relative to another within the panel.
+    /// </summary>
+    /// <param name="control">The control to move.</param>
+    /// <param name="relativeControl">The control to move relative to.</param>
+    /// <param name="relativeDock">The dock position to use.</param>
     internal void MoveTo(DocumentControl control, DocumentControl relativeControl, Dock relativeDock)
     {
         control.State = State.Document;
@@ -127,16 +152,28 @@ public class DocumentList : Selector, ILayoutSerializable
         _documentPanel?.Add(control, relativeControl, relativeDock);
     }
 
+    /// <summary>
+    /// Adds a new document item to the list, raising appropriate events.
+    /// </summary>
+    /// <returns>The newly added item.</returns>
     public object Add()
     {
         return AddNewItem();
     }
 
+    /// <summary>
+    /// Adds the specified item to the list, raising appropriate events.
+    /// </summary>
+    /// <param name="item">The item to add.</param>
+    /// <returns>The added item.</returns>
     public object Add(object item)
     {
         return AddNewItem(item);
     }
 
+    /// <summary>
+    /// Core logic for adding a new item, handling editable collection view and event invocation.
+    /// </summary>
     private object AddNewItem(object? item = null)
     {
         var addNewItem = (IEditableCollectionViewAddNewItem)Items;
@@ -174,6 +211,10 @@ public class DocumentList : Selector, ILayoutSerializable
         return item;
     }
 
+    /// <summary>
+    /// Removes the specified item from the list.
+    /// </summary>
+    /// <param name="item">The item to remove.</param>
     public void Remove(object item)
     {
         var isReadOnly = ((IList)Items).IsReadOnly;
@@ -184,39 +225,32 @@ public class DocumentList : Selector, ILayoutSerializable
     }
 
     /// <summary>
-    ///     A method that is called before a new item is created so that
-    ///     overrides can participate in the construction of the new item.
+    /// Raises the <see cref="AddingNewItem"/> event.
     /// </summary>
-    /// <remarks>
-    ///     The default implementation raises the AddingNewItem event.
-    /// </remarks>
-    /// <param name="e">Event arguments that provide access to the new item.</param>
+    /// <param name="e">Event data for adding a new item.</param>
     protected virtual void OnAddingNewItem(AddingNewItemEventArgs e)
     {
         AddingNewItem?.Invoke(this, e);
     }
 
     /// <summary>
-    ///     A method that is called when a new item is created so that
-    ///     overrides can initialize the item with custom default values.
+    /// Raises the <see cref="InitializingNewItem"/> event.
     /// </summary>
-    /// <remarks>
-    ///     The default implementation raises the InitializingNewItem event.
-    /// </remarks>
-    /// <param name="e">Event arguments that provide access to the new item.</param>
+    /// <param name="e">Event data for initializing a new item.</param>
     protected virtual void OnInitializingNewItem(InitializingNewItemEventArgs e)
     {
         InitializingNewItem?.Invoke(this, e);
     }
 
+    /// <inheritdoc/> 
     public void Serialize(XmlDocument doc, XmlNode parentNode)
     {
     }
 
+    /// <inheritdoc/> 
     public void Deserialize(DockManager managerToAttach, XmlNode node, GetContentFromTypeString getObjectHandler)
     {
     }
 
     #endregion
 }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
