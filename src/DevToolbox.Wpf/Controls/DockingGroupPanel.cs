@@ -9,7 +9,10 @@ using DevToolbox.Wpf.Serialization;
 
 namespace DevToolbox.Wpf.Controls;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+/// <summary>
+/// A panel that manages a group of docking elements within a DockManager, allowing nested splitting and resizing.
+/// Implements <see cref="ILayoutSerializable"/> for XML-based layout persistence.
+/// </summary>
 public class DockingGroupPanel : Grid, ILayoutSerializable
 {
     #region Fields/Consts
@@ -21,6 +24,7 @@ public class DockingGroupPanel : Grid, ILayoutSerializable
 
     #region Methods Override
 
+    /// <inheritdoc/>
     protected override void OnInitialized(EventArgs e)
     {
         base.OnInitialized(e);
@@ -32,6 +36,10 @@ public class DockingGroupPanel : Grid, ILayoutSerializable
 
     #region Methods
 
+    /// <summary>
+    /// Initializes the docking group with a document list control.
+    /// </summary>
+    /// <param name="listControl">The control that hosts the document list.</param>
     internal void AttachDocumentList(UIElement listControl)
     {
         _dockableGroup = new DockingGroup(listControl);
@@ -46,6 +54,9 @@ public class DockingGroupPanel : Grid, ILayoutSerializable
         }
     }
 
+    /// <summary>
+    /// Clears children and definitions then arranges the layout based on the current docking group.
+    /// </summary>
     private void ArrangeLayout()
     {
         if (_dockableGroup == null) throw new Exception();
@@ -61,6 +72,11 @@ public class DockingGroupPanel : Grid, ILayoutSerializable
         InvalidateArrange();
     }
 
+    /// <summary>
+    /// Recursively arranges the content of the grid based on the specified docking group structure.
+    /// </summary>
+    /// <param name="grid">Target grid for arrangement.</param>
+    /// <param name="dockableGroup">The docking group describing layout.</param>
     private static void Arrange(Grid grid, DockingGroup dockableGroup)
     {
         if (dockableGroup.AttachedElement is not null)
@@ -142,13 +158,23 @@ public class DockingGroupPanel : Grid, ILayoutSerializable
         }
     }
 
+    /// <summary>
+    /// Adds a new element to the root docking group at the specified dock position.
+    /// </summary>
+    /// <param name="element">The UI element to dock.</param>
+    /// <param name="dock">The dock position relative to existing elements.</param>
     internal void Add(UIElement element, Dock dock)
     {
         _dockableGroup = _dockableGroup?.Add(element, dock);
-
         ArrangeLayout();
     }
 
+    /// <summary>
+    /// Adds a new element relative to an existing element at the specified dock position.
+    /// </summary>
+    /// <param name="element">The UI element to dock.</param>
+    /// <param name="relativeElement">Existing element to dock relative to.</param>
+    /// <param name="relativeDock">The dock position relative to the existing element.</param>
     internal void Add(UIElement element, UIElement relativeElement, Dock relativeDock)
     {
         if (_dockableGroup?.GetDockableGroup(relativeElement) is not DockingGroup dockableGroup) return;
@@ -186,6 +212,10 @@ public class DockingGroupPanel : Grid, ILayoutSerializable
         ArrangeLayout();
     }
 
+    /// <summary>
+    /// Removes a docked control from the layout.
+    /// </summary>
+    /// <param name="control">The UI element to remove.</param>
     internal void Remove(UIElement control)
     {
         var groupToAttach = _dockableGroup?.Remove(control);
@@ -199,6 +229,9 @@ public class DockingGroupPanel : Grid, ILayoutSerializable
         ArrangeLayout();
     }
 
+    /// <summary>
+    /// Attaches the panel to the parent DockManager and listens for item changes.
+    /// </summary>
     private void AttachToOwner()
     {
         if (_owner != null) _owner.ItemContainerGenerator.ItemsChanged -= ItemContainerGenerator_ItemsChanged;
@@ -212,6 +245,9 @@ public class DockingGroupPanel : Grid, ILayoutSerializable
         }
     }
 
+    /// <summary>
+    /// Handles changes in the DockManager's item collection to regenerate containers.
+    /// </summary>
     private void ItemContainerGenerator_ItemsChanged(object sender, ItemsChangedEventArgs e)
     {
         if (_owner?.ItemContainerGenerator is not IItemContainerGenerator generator) return;
@@ -244,6 +280,11 @@ public class DockingGroupPanel : Grid, ILayoutSerializable
         ArrangeLayout();
     }
 
+    /// <summary>
+    /// Searches recursively for the first <see cref="DocumentControl"/> in the docking group.
+    /// </summary>
+    /// <param name="group">The docking group to search.</param>
+    /// <returns>The found <see cref="DocumentControl"/> or null.</returns>
     private static DocumentControl? FindDocumentsPane(DockingGroup? group)
     {
         if (group == null)
@@ -269,25 +310,21 @@ public class DockingGroupPanel : Grid, ILayoutSerializable
 
     #region ILayoutSerializable
 
+    /// <inheritdoc/>
     public void Serialize(XmlDocument doc, XmlNode parentNode)
     {
-        var node_rootGroup = doc.CreateElement("_dockablePaneGroup");
-
+        var rootGroupNode = doc.CreateElement("_dockablePaneGroup");
         _dockableGroup?.Serialize(doc, parentNode);
-
-        parentNode.AppendChild(node_rootGroup);
+        parentNode.AppendChild(rootGroupNode);
     }
 
+    /// <inheritdoc/>
     public void Deserialize(DockManager managerToAttach, XmlNode node, GetContentFromTypeString getObjectHandler)
     {
         _dockableGroup = new DockingGroup();
         _dockableGroup.Deserialize(managerToAttach, node, getObjectHandler);
-
-        //_docsPane = FindDocumentsPane(_rootGroup);
-
         InvalidateArrange();
     }
 
     #endregion
 }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

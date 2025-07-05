@@ -239,7 +239,8 @@ public class DocumentPanel : Grid, ILayoutSerializable
     {
         foreach (UIElement child in grid.Children)
         {
-            if (child is Grid chidGrid) Clear(chidGrid);
+            if (child is Grid childGrid) 
+                Clear(childGrid);
         }
 
         grid.Children.Clear();

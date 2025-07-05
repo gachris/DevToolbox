@@ -76,13 +76,26 @@ public class WindowEx : Window
     /// Identifies the IsTitleBarVisible attached dependency property.
     /// </summary>
     public static readonly DependencyProperty IsTitleBarVisibleProperty =
-        DependencyProperty.RegisterAttached(nameof(IsTitleBarVisible), typeof(bool), typeof(WindowEx), new PropertyMetadata(true));
+        DependencyProperty.Register(nameof(IsTitleBarVisible), typeof(bool), typeof(WindowEx), new PropertyMetadata(true));
 
     /// <summary>
     /// Identifies the HitTestResult attached dependency property.
     /// </summary>
     public static readonly DependencyProperty HitTestResultProperty =
-        DependencyProperty.RegisterAttached(nameof(HitTestResult), typeof(HitTestResult), typeof(WindowEx), new PropertyMetadata(default(HitTestResult)));
+        DependencyProperty.RegisterAttached("HitTestResult", typeof(HitTestResult), typeof(WindowEx), new PropertyMetadata(default(HitTestResult)));
+
+    /// <summary>
+    /// Identifies the TitleBarContextMenu attached dependency property.
+    /// </summary>
+    public static readonly DependencyProperty TitleBarContextMenuProperty =
+      DependencyProperty.RegisterAttached(
+          nameof(TitleBarContextMenu),
+          typeof(ContextMenu),
+          typeof(WindowEx),
+          new FrameworkPropertyMetadata(
+              null,
+              FrameworkPropertyMetadataOptions.AffectsMeasure |
+              FrameworkPropertyMetadataOptions.AffectsRender));
 
     #endregion
 
@@ -217,6 +230,15 @@ public class WindowEx : Window
     {
         get => WindowChrome.GetWindowChrome(this);
         set => WindowChrome.SetWindowChrome(this, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the ContextMenu associated with the TitleBar.
+    /// </summary>
+    public ContextMenu? TitleBarContextMenu
+    {
+        get => (ContextMenu?)GetValue(TitleBarContextMenuProperty);
+        set => SetValue(TitleBarContextMenuProperty, value);
     }
 
     #endregion

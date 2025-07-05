@@ -64,7 +64,7 @@ public class DocumentList : Selector, ILayoutSerializable
                 _dockManager?.DragServices.Register(documentControl);
 
             documentControl.StateChanged += StateChanged;
-            documentControl.DockChanged += OnDockChaged;
+            documentControl.DockChanged += OnDockChanged;
 
             _documentPanel?.Add(documentControl);
         }
@@ -76,7 +76,7 @@ public class DocumentList : Selector, ILayoutSerializable
         {
             _dockManager?.DragServices.Unregister(documentControl);
 
-            documentControl.DockChanged -= OnDockChaged;
+            documentControl.DockChanged -= OnDockChanged;
             documentControl.StateChanged -= StateChanged;
 
             _documentPanel?.Remove(documentControl);
@@ -94,12 +94,12 @@ public class DocumentList : Selector, ILayoutSerializable
 
     #region Methods
 
-    internal void AttacheDockManager(DockManager dockManager)
+    internal void AttachDockManager(DockManager dockManager)
     {
         _dockManager = dockManager;
     }
 
-    private void OnDockChaged(object? sender, DockChangedEventArgs e)
+    private void OnDockChanged(object? sender, DockChangedEventArgs e)
     {
         _documentPanel?.ArrangeLayout();
     }
@@ -125,13 +125,6 @@ public class DocumentList : Selector, ILayoutSerializable
 
         _documentPanel?.Remove(control);
         _documentPanel?.Add(control, relativeControl, relativeDock);
-    }
-
-    internal void MoveTo(DockableControl control, DocumentControl relativeControl, Dock relativeDock)
-    {
-        control.State = State.Document;
-        //_documentPanel?.Remove(control);
-        //_documentPanel?.Add(control, relativeControl, relativeDock);
     }
 
     public object Add()

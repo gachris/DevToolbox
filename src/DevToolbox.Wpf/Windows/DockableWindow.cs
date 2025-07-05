@@ -8,40 +8,76 @@ using DevToolbox.Wpf.Interop;
 
 namespace DevToolbox.Wpf.Windows;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+/// <summary>
+/// A floating window that hosts a single <see cref="DockableControl"/>.
+/// Handles native window messages for resizing, moving, and dragging,
+/// and delegates drop operations back to the host control.
+/// </summary>
 public class DockableWindow : DockManagerWindow
 {
-    #region Fields/Consts
-
-    #endregion
-
     #region Properties
 
+    /// <summary>
+    /// Gets the contained <see cref="DockableControl"/> instance, or null if none.
+    /// </summary>
     [Bindable(true)]
     protected internal DockableControl? HostControl => Content as DockableControl;
 
     #endregion
 
-    static DockableWindow() => DefaultStyleKeyProperty.OverrideMetadata(typeof(DockableWindow), new FrameworkPropertyMetadata(typeof(DockableWindow)));
+    static DockableWindow()
+    {
+        DefaultStyleKeyProperty.OverrideMetadata(
+            typeof(DockableWindow),
+            new FrameworkPropertyMetadata(typeof(DockableWindow)));
+
+        var sizeMeta = new FrameworkPropertyMetadata(300.0);
+        WidthProperty.OverrideMetadata(typeof(DockableWindow), sizeMeta);
+        HeightProperty.OverrideMetadata(typeof(DockableWindow), sizeMeta);
+
+        ShowInTaskbarProperty.OverrideMetadata(
+            typeof(DockableWindow),
+            new FrameworkPropertyMetadata(false));
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DockableWindow"/> class,
+    /// setting up default window chrome and behaviors for dockable windows.
+    /// </summary>
+    public DockableWindow()
+    {
+        Chrome.CaptionHeight = 22;
+    }
 
     #region Overrides
 
+    /// <inheritdoc/>
     protected override void OnContentChanged(object oldContent, object newContent)
     {
-        if (oldContent is not null)
-            throw new InvalidOperationException($"Cannot change {nameof(Content)} of {typeof(DockableWindow)}");
-        if (newContent is not DockableControl content)
-            throw new InvalidOperationException($"{nameof(Content)} of {typeof(DockableWindow)} must be {typeof(DockableControl)} type");
+        if (oldContent != null)
+            throw new InvalidOperationException($"Cannot change Content of {nameof(DockableWindow)}");
 
+        if (newContent is not DockableControl content)
+            throw new InvalidOperationException($"Content of {nameof(DockableWindow)} must be {nameof(DockableControl)}");
+
+        // Listen for when the state exits Window so we can close
         content.StateChanged += OnStateChanged;
 
         base.OnContentChanged(oldContent, newContent);
 
+        // Ensure command bindings update for new content
         CommandManager.InvalidateRequerySuggested();
     }
 
-    protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+    /// <inheritdoc/>
+    protected override IntPtr WndProc(
+        IntPtr hwnd,
+        int msg,
+        IntPtr wParam,
+        IntPtr lParam,
+        ref bool handled)
     {
+        // Let base handle SCROLL/MOVE hooks
         base.WndProc(hwnd, msg, wParam, lParam, ref handled);
 
         switch (msg)
@@ -55,15 +91,10 @@ public class DockableWindow : DockManagerWindow
                 {
                     int x = NativeMethods.GET_X_LPARAM(lParam);
                     int y = NativeMethods.GET_Y_LPARAM(lParam);
-
-                    handled = HostControl?.DockManager?.Drag(this, new Point(x, y), new Point(x - Left, y - Top)) ?? false;
-                }
-                break;
-            case (int)WM.NCRBUTTONUP:
-                if (wParam.ToInt32() == (int)HT.CAPTION)
-                {
-                    NativeMethods.RaiseMouseMessage(hwnd, WM.RBUTTONUP);
-                    handled = true;
+                    handled = HostControl?.DockManager?.Drag(
+                        this,
+                        new Point(x, y),
+                        new Point(x - Left, y - Top)) ?? false;
                 }
                 break;
         }
@@ -71,17 +102,21 @@ public class DockableWindow : DockManagerWindow
         return IntPtr.Zero;
     }
 
+    /// <inheritdoc/>
     protected override void OnClosing(CancelEventArgs e)
     {
         base.OnClosing(e);
 
-        if (e.Cancel) HostControl?.SaveWindowSizeAndPosition(this);
+        // If the window is being canceled, save its last size/pos
+        if (!e.Cancel)
+            HostControl?.SaveWindowSizeAndPosition(this);
     }
 
     #endregion
 
     #region Methods
 
+    /// <inheritdoc/>
     protected internal override void OnDrop(IDropSurface control, DockingPosition btnDock)
     {
         if (HostControl is null) return;
@@ -133,14 +168,15 @@ public class DockableWindow : DockManagerWindow
         HostControl.State = State.Docking;
     }
 
+    /// <summary>
+    /// Handles when the hosted control transitions out of Window state,
+    /// closing this floating window.
+    /// </summary>
     private void OnStateChanged(object? sender, StateChangedEventArgs e)
     {
         if (e.NewValue != State.Window)
-        {
             Close();
-        }
     }
 
     #endregion
 }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

@@ -13,6 +13,11 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
 {
     #region Fields/Consts
 
+    private DocumentItem? _draggedTab;
+    private int? _originalIndex;
+    private Point _ptFloatingWindow;
+    private Size _sizeFloatingWindow;
+
     protected internal static readonly DependencyPropertyKey StatePropertyKey =
         DependencyProperty.RegisterReadOnly(nameof(State), typeof(State), typeof(DocumentControl), new FrameworkPropertyMetadata(State.Document, OnStateChanged));
 
@@ -80,6 +85,11 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
         DefaultStyleKeyProperty.OverrideMetadata(typeof(DocumentControl), new FrameworkPropertyMetadata(typeof(DocumentControl)));
     }
 
+    public DocumentControl()
+    {
+        ItemContainerGenerator.StatusChanged += OnItemGeneratorStatusChanged;
+    }
+
     #region Methods Override
 
     /// <inheritdoc />
@@ -87,10 +97,11 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
     {
         base.OnApplyTemplate();
 
-        if (DockManager == null)
-            DockManager = this.FindVisualAncestor<DockManager>();
+        DockManager ??= this.FindVisualAncestor<DockManager>();
+
         if (DockManager == null && TemplatedParent != null)
             DockManager = TemplatedParent.FindVisualAncestor<DockManager>();
+
         if (DockManager == null && VisualParent != null)
             DockManager = VisualParent.FindVisualAncestor<DockManager>();
 
@@ -100,21 +111,6 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
 
     /// <inheritdoc />
     protected override DependencyObject GetContainerForItemOverride() => new DocumentItem();
-
-    ///// <inheritdoc />
-    //public override void DragOverEx(IDropInfo dropInfo)
-    //{
-    //    base.DragOverEx(dropInfo);
-
-    //    if (!CanAcceptData(dropInfo))
-    //    {
-    //        var oldContainer = dropInfo.DragInfo.VisualSourceItem;
-    //        var startDragPoint = dropInfo.DragEventArgs.GetPosition(DockManager);
-    //        var offset = dropInfo.DragEventArgs.GetPosition(oldContainer);
-
-    //        DragContent(dropInfo.DragInfo.VisualSourceItem, dropInfo.DragInfo.SourceItem, startDragPoint, offset);
-    //    }
-    //}
 
     #endregion
 
@@ -148,13 +144,19 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
     /// </summary>
     /// <param name="control"></param>
     /// <param name="relativeDock"></param>
-    public virtual void MoveTo(DocumentControl control, Dock relativeDock) => DockManager?.MoveTo(this, control, relativeDock);
+    public virtual void MoveTo(DocumentControl control, Dock relativeDock)
+    {
+        DockManager?.MoveTo(this, control, relativeDock);
+    }
 
     /// <summary>
     /// Move contained contents into a destination control and close this one
     /// </summary>
     /// <param name="control"></param>
-    public void MoveInto(DocumentControl control) => DockManager?.MoveInto(this, control);
+    public void MoveInto(DocumentControl control)
+    {
+        DockManager?.MoveInto(this, control);
+    }
 
     /// <summary>
     /// Move contained contents into a destination control and close this one
@@ -191,19 +193,38 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
         newElement.DockManager = DockManager;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    //public override void Remove(object value)
-    //{
-    //    base.Remove(value);
-
-    //    //if (Items.Count == 0)
-    //    //    DockManager.DragServices.Unregister(this);
-    //}
-
-    public virtual void SaveSize()
+    internal void SaveWindowSizeAndPosition(Window fw)
     {
+        if (!double.IsNaN(fw.Left) && !double.IsNaN(fw.Top))
+        {
+            _ptFloatingWindow = new Point(fw.Left, fw.Top);
+        }
+
+        if (!double.IsNaN(fw.Width) && !double.IsNaN(fw.Height))
+        {
+            _sizeFloatingWindow = new Size(fw.Width, fw.Height);
+        }
+    }
+
+    /// <inheritdoc/>
+    public void SaveSize()
+    {
+        if (IsHidden)
+        {
+            return;
+        }
+
+        var paneWidthDefaultValue = (double)PaneWidthProperty.DefaultMetadata.DefaultValue;
+        var paneHeightDefaultValue = (double)PaneHeightProperty.DefaultMetadata.DefaultValue;
+
+        if (Dock is Dock.Left or Dock.Right)
+    {
+            PaneWidth = ActualWidth > paneWidthDefaultValue ? ActualWidth : paneWidthDefaultValue;
+    }
+        else
+        {
+            PaneHeight = ActualHeight > paneHeightDefaultValue ? ActualHeight : paneHeightDefaultValue;
+        }
     }
 
     /// <summary>
@@ -215,13 +236,13 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
     /// <param name="offset"></param>
     private void DragContent(DependencyObject element, object item, Point startDragPoint, Point offset)
     {
-        if (element is DockableItem || element is DocumentItem documentItem && documentItem.IsDockable)
-            CreateDockableHost(element, item, startDragPoint, offset);
+        if (element is DocumentItem documentItem && documentItem.IsDockable)
+            CreateDockableHost(item, startDragPoint, offset);
         else
-            CreateDocumentHost(element, item, startDragPoint, offset);
+            CreateDocumentHost(item, startDragPoint, offset);
     }
 
-    private void CreateDockableHost(DependencyObject _, object item, Point startDragPoint, Point offset)
+    private void CreateDockableHost(object item, Point startDragPoint, Point offset)
     {
         if (DockManager is null || State == State.Window) return;
 
@@ -261,7 +282,7 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
         DockManager.Drag(window, startDragPoint, offset);
     }
 
-    private void CreateDocumentHost(DependencyObject _, object item, Point startDragPoint, Point offset)
+    private void CreateDocumentHost(object item, Point startDragPoint, Point offset)
     {
         if (DockManager is null || State == State.Window) return;
         var window = DockManager.GetContainerForDocumentItemOverride();
@@ -319,7 +340,7 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
 
         //foreach (object content in Items)
         //{
-        //    if (content is DockableItem dockableContent)
+        //    if (content is DocumentItem dockableContent)
         //    {
         //        XmlNode nodeDockableContent = doc.CreateElement(dockableContent.GetType().ToString());
         //        parentNode.AppendChild(nodeDockableContent);
@@ -342,5 +363,88 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
     }
 
     #endregion
+
+    #region Events Subscriptions
+
+    /// <summary>
+    /// Called when the ItemContainerGenerator changes status. Attaches drag handlers
+    /// to each tab item's header.
+    /// </summary>
+    private void OnItemGeneratorStatusChanged(object? sender, EventArgs e)
+    {
+        if (ItemContainerGenerator.Status != System.Windows.Controls.Primitives.GeneratorStatus.ContainersGenerated)
+            return;
+
+        foreach (var item in Items)
+        {
+            if (ItemContainerGenerator.ContainerFromItem(item) is DocumentItem tab)
+            {
+                tab.PreviewMouseLeftButtonDown -= Tab_PreviewMouseLeftButtonDown;
+                tab.PreviewMouseMove -= Tab_PreviewMouseMove;
+                tab.PreviewMouseLeftButtonUp -= Tab_PreviewMouseLeftButtonUp;
+
+                tab.PreviewMouseLeftButtonDown += Tab_PreviewMouseLeftButtonDown;
+                tab.PreviewMouseMove += Tab_PreviewMouseMove;
+                tab.PreviewMouseLeftButtonUp += Tab_PreviewMouseLeftButtonUp;
+            }
+        }
+    }
+
+    private void Tab_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is DocumentItem tab)
+        {
+            _draggedTab = tab;
+            _originalIndex = Items.IndexOf(tab.DataContext ?? tab);
+        }
 }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    private void Tab_PreviewMouseMove(object sender, MouseEventArgs e)
+    {
+        if (_draggedTab == null || e.LeftButton != MouseButtonState.Pressed || !_originalIndex.HasValue)
+            return;
+
+        var point = e.GetPosition(this);
+        var tabPanel = _draggedTab.VisualUpwardSearch<Panel>();
+        if (tabPanel != null)
+        {
+            var relPos = e.GetPosition(tabPanel);
+            if (relPos.X <= 0 || relPos.X >= tabPanel.ActualWidth || relPos.Y <= 0 || relPos.Y >= tabPanel.ActualHeight)
+            {
+                var screenPos = PointToScreen(point);
+                var offset = e.GetPosition(_draggedTab);
+                var item = _draggedTab.DataContext ?? _draggedTab;
+                DragContent(_draggedTab, item, screenPos, offset);
+                _draggedTab = null;
+                _originalIndex = null;
+                return;
+            }
+        }
+
+        var element = InputHitTest(point) as DependencyObject;
+        var hoveredTab = element.VisualUpwardSearch<DocumentItem>();
+        if (hoveredTab != null && hoveredTab != _draggedTab)
+        {
+            var sourceIndex = _originalIndex.Value;
+            var targetIndex = Items.IndexOf(hoveredTab.DataContext ?? hoveredTab);
+            if (sourceIndex != targetIndex && sourceIndex >= 0 && targetIndex >= 0)
+            {
+                var items = ((IList)Items).IsReadOnly && ItemsSource is IList src ? src : Items;
+                var item = items[sourceIndex];
+                items.RemoveAt(sourceIndex);
+                items.Insert(targetIndex, item);
+                SelectedIndex = targetIndex;
+                _originalIndex = targetIndex;
+                _draggedTab = ItemContainerGenerator.ContainerFromIndex(targetIndex) as DocumentItem;
+            }
+        }
+    }
+
+    private void Tab_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        _draggedTab = null;
+        _originalIndex = null;
+    }
+
+    #endregion
+}

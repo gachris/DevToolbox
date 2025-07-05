@@ -50,4 +50,7 @@ public static class Icons
 
     /// <summary>ChevronDown icon.</summary>
     public const string ChevronDown = "e70d";
+
+    /// <summary>ChevronDown icon.</summary>
+    public const string CaretSolidDown = "f08e";
 }

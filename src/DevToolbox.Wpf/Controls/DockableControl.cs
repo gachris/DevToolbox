@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,83 +11,141 @@ using DevToolbox.Wpf.Serialization;
 
 namespace DevToolbox.Wpf.Controls;
 
+/// <summary>
+/// A <see cref="TabControlEdit"/> that can be docked, floated, auto-hidden or hidden in a <see cref="DockManager"/>.
+/// </summary>
 [TemplatePart(Name = PART_Header, Type = typeof(ContentControl))]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
+public sealed class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
 {
     #region Fields/Consts
 
     private const string PART_Header = nameof(PART_Header);
 
-    private static readonly RoutedUICommand _dockableWindowCommand = new(nameof(DockableWindowCommand), nameof(DockableWindowCommand), typeof(DockableControl));
-    private static readonly RoutedUICommand _dockCommand = new(nameof(Dock), nameof(Dock), typeof(DockableControl));
-    private static readonly RoutedUICommand _tabbedDocumentCommand = new(nameof(TabbedDocumentCommand), nameof(TabbedDocumentCommand), typeof(DockableControl));
-    private static readonly RoutedUICommand _autoHideCommand = new(nameof(AutoHideCommand), nameof(AutoHideCommand), typeof(DockableControl));
-    private static readonly RoutedUICommand _hideCommand = new(nameof(HideCommand), nameof(HideCommand), typeof(DockableControl));
-
-    private Point _ptStartDrag;
+    private DockableItem? _draggedTab;
+    private int? _originalIndex;
+    private Point _headerDragStart;
     private ContentControl? _header;
     private Point _ptFloatingWindow = new(0, 0);
     private Size _sizeFloatingWindow = new(300, 300);
 
-    public static readonly DependencyProperty ShowSeparatorProperty =
-        DependencyProperty.Register(nameof(ShowSeparator), typeof(bool), typeof(DockableControl), new FrameworkPropertyMetadata(true));
-
-    public static readonly DependencyProperty SeparatorBrushProperty =
-        DependencyProperty.Register(nameof(SeparatorBrush), typeof(Brush), typeof(DockableControl), new FrameworkPropertyMetadata(BackgroundProperty.DefaultMetadata.DefaultValue));
-
-    public static readonly DependencyProperty HeaderTemplateProperty =
-        DependencyProperty.Register(nameof(HeaderTemplate), typeof(DataTemplate), typeof(DockableControl), new FrameworkPropertyMetadata(default));
-
-    public static readonly DependencyProperty HeaderProperty =
-        DependencyProperty.Register(nameof(Header), typeof(object), typeof(DockableControl), new FrameworkPropertyMetadata(default));
-
-    public static readonly DependencyProperty IconProperty =
-        DependencyProperty.Register(nameof(Icon), typeof(ImageSource), typeof(DockableControl), new FrameworkPropertyMetadata(default));
-
-    public static readonly DependencyProperty PaneWidthProperty =
-        DependencyProperty.Register(nameof(PaneWidth), typeof(double), typeof(DockableControl), new PropertyMetadata(250D));
-
-    public static readonly DependencyProperty PaneHeightProperty =
-        DependencyProperty.Register(nameof(PaneHeight), typeof(double), typeof(DockableControl), new PropertyMetadata(250D));
-
-    public static readonly DependencyProperty DockProperty =
-        DependencyProperty.Register(nameof(Dock), typeof(Dock), typeof(DockableControl), new FrameworkPropertyMetadata(Dock.Right, OnDockChanged));
-
-    private static readonly DependencyPropertyKey StatePropertyKey =
-        DependencyProperty.RegisterReadOnly(nameof(State), typeof(State), typeof(DockableControl), new FrameworkPropertyMetadata(State.Docking, OnStateChanged));
-
-    private static readonly DependencyPropertyKey ShowHeaderPropertyKey =
-        DependencyProperty.RegisterReadOnly(nameof(ShowHeader), typeof(bool), typeof(DockableControl), new FrameworkPropertyMetadata(true));
-
-    public static readonly DependencyProperty StateProperty = StatePropertyKey.DependencyProperty;
-    public static readonly DependencyProperty ShowHeaderProperty = ShowHeaderPropertyKey.DependencyProperty;
-
     /// <summary>
-    /// Event raised when Dock property is changed
+    /// Occurs when the <see cref="Dock"/> property has changed.
     /// </summary>
     public event EventHandler<DockChangedEventArgs>? DockChanged;
 
     /// <summary>
-    /// Event raised when State property is changed
+    /// Occurs when the <see cref="State"/> property has changed.
     /// </summary>
     public event EventHandler<StateChangedEventArgs>? StateChanged;
+
+    /// <summary>
+    /// Identifies the <see cref="ShowSeparator"/> dependency property.
+    /// </summary>
+    public static readonly DependencyProperty ShowSeparatorProperty =
+        DependencyProperty.Register(nameof(ShowSeparator), typeof(bool), typeof(DockableControl), new FrameworkPropertyMetadata(true));
+
+    /// <summary>
+    /// Identifies the <see cref="SeparatorBrush"/> dependency property.
+    /// </summary>
+    public static readonly DependencyProperty SeparatorBrushProperty =
+        DependencyProperty.Register(nameof(SeparatorBrush), typeof(Brush), typeof(DockableControl), new FrameworkPropertyMetadata(BackgroundProperty.DefaultMetadata.DefaultValue));
+
+    /// <summary>
+    /// Identifies the <see cref="HeaderTemplate"/> dependency property.
+    /// </summary>
+    public static readonly DependencyProperty HeaderTemplateProperty =
+        DependencyProperty.Register(nameof(HeaderTemplate), typeof(DataTemplate), typeof(DockableControl), new FrameworkPropertyMetadata(default));
+
+    /// <summary>
+    /// Identifies the <see cref="Header"/> dependency property.
+    /// </summary>
+    public static readonly DependencyProperty HeaderProperty =
+        DependencyProperty.Register(nameof(Header), typeof(object), typeof(DockableControl), new FrameworkPropertyMetadata(default));
+
+    /// <summary>
+    /// Identifies the <see cref="Icon"/> dependency property.
+    /// </summary>
+    public static readonly DependencyProperty IconProperty =
+        DependencyProperty.Register(nameof(Icon), typeof(ImageSource), typeof(DockableControl), new FrameworkPropertyMetadata(default));
+
+    /// <summary>
+    /// Identifies the <see cref="PaneWidth"/> dependency property.
+    /// </summary>
+    public static readonly DependencyProperty PaneWidthProperty =
+        DependencyProperty.Register(nameof(PaneWidth), typeof(double), typeof(DockableControl), new PropertyMetadata(250D));
+
+    /// <summary>
+    /// Identifies the <see cref="PaneHeight"/> dependency property.
+    /// </summary>
+    public static readonly DependencyProperty PaneHeightProperty =
+        DependencyProperty.Register(nameof(PaneHeight), typeof(double), typeof(DockableControl), new PropertyMetadata(250D));
+
+    /// <summary>
+    /// Identifies the <see cref="Dock"/> dependency property.
+    /// </summary>
+    public static readonly DependencyProperty DockProperty =
+        DependencyProperty.Register(nameof(Dock), typeof(Dock), typeof(DockableControl), new FrameworkPropertyMetadata(Dock.Right, OnDockChanged));
+
+    /// <summary>
+    /// Identifies the <see cref="State"/> dependency property key.
+    /// </summary>
+    private static readonly DependencyPropertyKey StatePropertyKey =
+        DependencyProperty.RegisterReadOnly(nameof(State), typeof(State), typeof(DockableControl), new FrameworkPropertyMetadata(State.Docking, OnStateChanged));
+
+    /// <summary>
+    /// Identifies the <see cref="ShowHeader"/> dependency property key.
+    /// </summary>
+    private static readonly DependencyPropertyKey ShowHeaderPropertyKey =
+        DependencyProperty.RegisterReadOnly(nameof(ShowHeader), typeof(bool), typeof(DockableControl), new FrameworkPropertyMetadata(true));
+
+    /// <summary>
+    /// Identifies the <see cref="State"/> dependency property.
+    /// </summary>
+    public static readonly DependencyProperty StateProperty = StatePropertyKey.DependencyProperty;
+
+    /// <summary>
+    /// Identifies the <see cref="ShowHeader"/> dependency property.
+    /// </summary>
+    public static readonly DependencyProperty ShowHeaderProperty = ShowHeaderPropertyKey.DependencyProperty;
 
     #endregion
 
     #region Properties
 
-    public static RoutedCommand DockableWindowCommand => _dockableWindowCommand;
+    /// <summary>
+    /// Command to float the selected tab into its own window.
+    /// </summary>
+    public static RoutedUICommand DockableWindowCommand { get; } =
+        new(nameof(DockableWindowCommand), nameof(DockableWindowCommand), typeof(DockableControl));
 
-    public static RoutedUICommand DockCommand => _dockCommand;
+    /// <summary>
+    /// Command to dock the currently floating window back into the layout.
+    /// </summary>
+    public static RoutedUICommand DockCommand { get; } =
+        new(nameof(Dock), nameof(Dock), typeof(DockableControl));
 
-    public static RoutedUICommand TabbedDocumentCommand => _tabbedDocumentCommand;
+    /// <summary>
+    /// Command to convert the selected pane into a tabbed document in the main document area.
+    /// </summary>
+    public static RoutedUICommand TabbedDocumentCommand { get; } =
+        new(nameof(TabbedDocumentCommand), nameof(TabbedDocumentCommand), typeof(DockableControl));
 
-    public static RoutedUICommand AutoHideCommand => _autoHideCommand;
+    /// <summary>
+    /// Command to toggle the auto-hide state of the pane (slide it in and out on hover).
+    /// </summary>
+    public static RoutedUICommand AutoHideCommand { get; } =
+        new(nameof(AutoHideCommand), nameof(AutoHideCommand), typeof(DockableControl));
 
-    public static RoutedUICommand HideCommand => _hideCommand;
+    /// <summary>
+    /// Command to hide the pane completely until reactivated.
+    /// </summary>
+    public static RoutedUICommand HideCommand { get; } =
+        new(nameof(HideCommand), nameof(HideCommand), typeof(DockableControl));
 
-    public DockManager? DockManager { get; protected internal set; }
+    /// <summary>
+    /// Gets the <see cref="DockManager"/> that contains this control.
+    /// </summary>
+    internal DockManager? DockManager { get; set; }
 
     /// <inheritdoc/>
     public Rect SurfaceRectangle => IsHidden ? new Rect() : new Rect(PointToScreen(new Point(0, 0)), new Size(ActualWidth, ActualHeight));
@@ -96,64 +155,94 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
     /// </summary>
     public bool IsHidden => State != State.Docking;
 
+    /// <summary>
+    /// Gets or sets the icon displayed in the header of the dockable pane.
+    /// </summary>
     public ImageSource Icon
     {
         get => (ImageSource)GetValue(IconProperty);
         set => SetValue(IconProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the header content object.
+    /// </summary>
     public object Header
     {
         get => GetValue(HeaderProperty);
         set => SetValue(HeaderProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the template used to display the header content.
+    /// </summary>
     public DataTemplate HeaderTemplate
     {
         get => (DataTemplate)GetValue(HeaderTemplateProperty);
         set => SetValue(HeaderTemplateProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets whether a separator line is shown between header and content.
+    /// </summary>
     public bool ShowSeparator
     {
         get => (bool)GetValue(ShowSeparatorProperty);
         set => SetValue(ShowSeparatorProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the brush used to draw the separator line.
+    /// </summary>
     public Brush SeparatorBrush
     {
         get => (Brush)GetValue(SeparatorBrushProperty);
         set => SetValue(SeparatorBrushProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the default width of the pane when docked left or right.
+    /// </summary>
     public double PaneWidth
     {
         get => (double)GetValue(PaneWidthProperty);
         set => SetValue(PaneWidthProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the default height of the pane when docked top or bottom.
+    /// </summary>
     public double PaneHeight
     {
         get => (double)GetValue(PaneHeightProperty);
         set => SetValue(PaneHeightProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets which side of the <see cref="DockManager"/> this pane is docked to.
+    /// </summary>
     public Dock Dock
     {
         get => (Dock)GetValue(DockProperty);
         set => SetValue(DockProperty, value);
     }
 
+    /// <summary>
+    /// Gets the current state of this pane (docking, windowed, document, auto-hide, etc.).
+    /// </summary>
     public State State
     {
         get => (State)GetValue(StateProperty);
-        set => SetValue(StatePropertyKey, value);
+        internal set => SetValue(StatePropertyKey, value);
     }
 
+    /// <summary>
+    /// Gets a value indicating whether the header is visible.
+    /// </summary>
     public bool ShowHeader
     {
         get => (bool)GetValue(ShowHeaderProperty);
-        protected set => SetValue(ShowHeaderPropertyKey, value);
+        private set => SetValue(ShowHeaderPropertyKey, value);
     }
 
     #endregion
@@ -180,6 +269,20 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
             new(HideCommand, (sender, e) => (sender as DockableControl)?.HideCommandExecute(e), (sender, e) => (sender as DockableControl)?.HideCommandCanExecute(e)));
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DockableControl"/> class,
+    /// and hooks into item generator to wire up tab header drag events.
+    /// </summary>
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DockableControl"/> class,
+    /// and registers for the <see cref="ItemContainerGenerator.StatusChanged"/> event
+    /// to hook up drag handlers on each tab header when containers are generated.
+    /// </summary>
+    public DockableControl()
+    {
+        ItemContainerGenerator.StatusChanged += OnItemGeneratorStatusChanged;
+    }
+
     #region Methods Override
 
     /// <inheritdoc/>
@@ -190,19 +293,13 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
         DockManager ??= this.FindVisualAncestor<DockManager>();
 
         if (DockManager == null && TemplatedParent != null)
-        {
             DockManager = TemplatedParent.FindVisualAncestor<DockManager>();
-        }
 
         if (DockManager == null && VisualParent != null)
-        {
             DockManager = VisualParent.FindVisualAncestor<DockManager>();
-        }
 
         if (DockManager == null)
-        {
             throw new InvalidOperationException($"{nameof(TemplatedParent)} or {nameof(VisualParent)} of {typeof(DockableControl)} must be {typeof(DockManager)} type");
-        }
 
         if (_header != null)
         {
@@ -338,67 +435,10 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
         return false;
     }
 
-    ///// <inheritdoc/>
-    //public override void DragOverEx(IDropInfo dropInfo)
-    //{
-    //    base.DragOverEx(dropInfo);
-
-    //    if (!CanAcceptData(dropInfo))
-    //    {
-    //        CaptureMouse();
-    //        var oldContainer = dropInfo.DragInfo.VisualSourceItem;
-    //        var startDragPoint = dropInfo.DragEventArgs.GetPosition(DockManager);
-    //        var offset = dropInfo.DragEventArgs.GetPosition(oldContainer);
-    //        ReleaseMouseCapture();
-    //        DragContent(dropInfo.DragInfo.VisualSourceItem, dropInfo.DragInfo.SourceItem, startDragPoint, offset);
-    //    }
-
-    //    //if (Parent is not DockableControl parent)
-    //    //    parent = (VisualParent as Panel)?.TemplatedParent as DockableControl;
-
-    //    //if (parent == null)
-    //    //    base.OnHeaderMouseMove(sender, e);
-    //    //else
-    //    //{
-    //    //    if (_header.IsMouseCaptured && Math.Abs(_ptStartDrag.X - e.GetPosition(this).X) > 4)
-    //    //    {
-    //    //        _header.ReleaseMouseCapture();
-    //    //        parent.DragContent(this, e);
-    //    //    }
-    //    //}
-    //}
-
     /// <summary>
     /// Create and show a floating window hosting this control
     /// </summary> 
-    public void DockingWindow(object item)
-    {
-        if (DockManager is null || State == State.Window)
-        {
-            return;
-        }
-
-        DockableItem? element;
-
-        if (IsItemItsOwnContainer(item))
-        {
-            element = item as DockableItem;
-            item = this.ItemFromContainer(item) ?? item;
-        }
-        else
-        {
-            element = this.ContainerFromItem(item) as DockableItem;
-        }
-
-        if (element is null)
-        {
-            return;
-        }
-
-        DockingWindow(element, item);
-    }
-
-    private void DockingWindow(DockableItem element, object item)
+    private void FloatingWindow(object item)
     {
         if (DockManager is null || State == State.Window)
         {
@@ -447,49 +487,19 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
 
         window.Content = newElement;
         window.Owner = DockManager.Owner;
-        SetWindowSizeAndPosition(window);
+        RestoreWindowSizeAndPosition(window);
         window.Show();
     }
 
     /// <summary>
     /// Create and show a dockable window hosting this control
     /// </summary>
-    public void Docking()
+    private void Docking()
     {
         State = State.Docking;
     }
 
-    /// <summary>
-    /// Show contained contents as documents and close this control
-    /// </summary>
-    public void TabbedDocument(object item)
-    {
-        if (DockManager is null || State == State.Document)
-        {
-            return;
-        }
-
-        DockableItem? element;
-
-        if (IsItemItsOwnContainer(item))
-        {
-            element = item as DockableItem;
-            item = this.ItemFromContainer(item) ?? item;
-        }
-        else
-        {
-            element = this.ContainerFromItem(item) as DockableItem;
-        }
-
-        if (element is null)
-        {
-            return;
-        }
-
-        TabbedDocument(element, item);
-    }
-
-    private void TabbedDocument(DockableItem element, object item)
+    private void TabbedDocument(object item)
     {
         if (DockManager is null)
         {
@@ -499,13 +509,11 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
         Remove(item);
 
         var documentControlElement = (DocumentControl)DockManager.DocumentList.ContainerFromItem(DockManager.DocumentList.Items[0]);
-
         documentControlElement.Add(item);
 
         if (Items.Count == 0)
         {
             var isReadOnlyDockManager = ((IList)DockManager.Items).IsReadOnly;
-
             if (isReadOnlyDockManager)
             {
                 var currentItem = DockManager.ItemFromContainer(this);
@@ -518,17 +526,9 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
     /// <summary>
     /// Auto-hide this control 
     /// </summary>
-    public void AutoHide()
+    private void AutoHide()
     {
         State = State == State.AutoHide ? State.Docking : State.AutoHide;
-    }
-
-    /// <summary>
-    /// Hide this control 
-    /// </summary>
-    public void Hide(object value)
-    {
-        State = State.Hidden;
     }
 
     /// <summary>
@@ -547,13 +547,13 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
 
         State = State.Window;
         window.Content = this;
-        SetWindowSizeAndPosition(window);
+        RestoreWindowSizeAndPosition(window);
 
         window.Show();
         DockManager.Drag(window, startDragPoint, offset);
     }
 
-    private void DragContent(DependencyObject _, object item, Point startDragPoint, Point offset)
+    private void DragContent(object item, Point startDragPoint, Point offset)
     {
         if (Items.Count == 1 || DockManager is null)
         {
@@ -604,7 +604,7 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
         }
     }
 
-    internal void SetWindowSizeAndPosition(Window window)
+    internal void RestoreWindowSizeAndPosition(Window window)
     {
         window.Left = _ptFloatingWindow.X;
         window.Top = _ptFloatingWindow.Y;
@@ -615,67 +615,116 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
     /// <inheritdoc/>
     public void Serialize(XmlDocument doc, XmlNode parentNode)
     {
-        //SaveSize();
+        // Ensure we capture the latest size before serializing
+        SaveSize();
 
-        //parentNode.Attributes.Append(doc.CreateAttribute("Dock"));
-        //parentNode.Attributes["Dock"].Value = Dock.ToString();
-        //parentNode.Attributes.Append(doc.CreateAttribute("State"));
-        //parentNode.Attributes["State"].Value = State.ToString();
-        //parentNode.Attributes.Append(doc.CreateAttribute("LastState"));
-        ////parentNode.Attributes["LastState"].Value = _lastState.ToString();
+        // 1) Attributes for this control
+        if (parentNode.Attributes is not null)
+        {
+            var a = doc.CreateAttribute("Dock");
+            a.Value = Dock.ToString();
+            parentNode.Attributes.Append(a);
 
-        //parentNode.Attributes.Append(doc.CreateAttribute("ptFloatingWindow"));
-        //parentNode.Attributes["ptFloatingWindow"].Value = TypeDescriptor.GetConverter(typeof(Point)).ConvertToInvariantString(_ptFloatingWindow);
-        //parentNode.Attributes.Append(doc.CreateAttribute("sizeFloatingWindow"));
-        //parentNode.Attributes["sizeFloatingWindow"].Value = TypeDescriptor.GetConverter(typeof(Size)).ConvertToInvariantString(_sizeFloatingWindow);
+            a = doc.CreateAttribute("State");
+            a.Value = State.ToString();
+            parentNode.Attributes.Append(a);
 
-        //parentNode.Attributes.Append(doc.CreateAttribute("Width"));
-        //parentNode.Attributes["Width"].Value = PaneWidth.ToString();
-        //parentNode.Attributes.Append(doc.CreateAttribute("Height"));
-        //parentNode.Attributes["Height"].Value = PaneHeight.ToString();
+            a = doc.CreateAttribute("Width");
+            a.Value = PaneWidth.ToString();
+            parentNode.Attributes.Append(a);
 
-        //foreach (var content in Items)
-        //{
-        //    if (content is DockableItem)
-        //    {
-        //        XmlNode nodeDockableContent = doc.CreateElement(content.GetType().ToString());
-        //        parentNode.AppendChild(nodeDockableContent);
-        //    }
-        //}
+            a = doc.CreateAttribute("Height");
+            a.Value = PaneHeight.ToString();
+            parentNode.Attributes.Append(a);
+
+            a = doc.CreateAttribute("ptFloatingWindow");
+            a.Value = TypeDescriptor.GetConverter(typeof(Point))
+                                   .ConvertToInvariantString(_ptFloatingWindow);
+            parentNode.Attributes.Append(a);
+
+            a = doc.CreateAttribute("sizeFloatingWindow");
+            a.Value = TypeDescriptor.GetConverter(typeof(Size))
+                                   .ConvertToInvariantString(_sizeFloatingWindow);
+            parentNode.Attributes.Append(a);
+        }
+
+        // 2) One child node per tab: use handler to re-create content later
+        foreach (var item in Items)
+        {
+            if (ItemContainerGenerator.ContainerFromItem(item) is DockableItem)
+            {
+                // We use the item's type name as the XML element name
+                var node = doc.CreateElement(item.GetType().Name);
+                parentNode.AppendChild(node);
+
+                // Delegate serialization of the actual content object (view model, etc.)
+                if (item is ILayoutSerializable ser)
+                {
+                    ser.Serialize(doc, node);
+                }
+            }
+        }
     }
 
     /// <inheritdoc/>
     public void Deserialize(DockManager managerToAttach, XmlNode node, GetContentFromTypeString getObjectHandler)
     {
-        ////DockManager = managerToAttach;
+        // 1) Read our attributes back
 
-        //PaneWidth = double.Parse(node.Attributes["Width"].Value);
-        //PaneHeight = double.Parse(node.Attributes["Height"].Value);
+        if (node.Attributes is not null)
+        {
+            // Safely grab each attribute’s Value (or throw if it’s missing)
+            var dockText = node.Attributes["Dock"]?.Value
+                ?? throw new InvalidOperationException("Missing ‘Dock’ attribute");
+            var stateText = node.Attributes["State"]?.Value
+                ?? throw new InvalidOperationException("Missing ‘State’ attribute");
+            var widthText = node.Attributes["Width"]?.Value
+                ?? throw new InvalidOperationException("Missing ‘Width’ attribute");
+            var heightText = node.Attributes["Height"]?.Value
+                ?? throw new InvalidOperationException("Missing ‘Height’ attribute");
+            var ptWinText = node.Attributes["ptFloatingWindow"]?.Value
+                ?? throw new InvalidOperationException("Missing ‘ptFloatingWindow’ attribute");
+            var sizeWinText = node.Attributes["sizeFloatingWindow"]?.Value
+                ?? throw new InvalidOperationException("Missing ‘sizeFloatingWindow’ attribute");
 
-        //foreach (XmlNode childNode in node.ChildNodes)
-        //    Add(getObjectHandler(childNode.Name));
+            Dock = (Dock)Enum.Parse(typeof(Dock), dockText);
+            State = (State)Enum.Parse(typeof(State), stateText);
 
-        //Dock = (Dock)Enum.Parse(typeof(Dock), node.Attributes["Dock"].Value);
-        //State = State.Docking;
-        ////base.SetValue(StatePropertyKey, (DockableState)Enum.Parse(typeof(DockableState), node.Attributes["State"].Value));
-        ////_lastState = (DockableState)Enum.Parse(typeof(DockableState), node.Attributes["LastState"].Value);
+            PaneWidth = double.Parse(widthText);
+            PaneHeight = double.Parse(heightText);
 
-        //_ptFloatingWindow = (Point)TypeDescriptor.GetConverter(typeof(Point)).ConvertFromInvariantString(node.Attributes["ptFloatingWindow"].Value);
-        //_sizeFloatingWindow = (Size)TypeDescriptor.GetConverter(typeof(Size)).ConvertFromInvariantString(node.Attributes["sizeFloatingWindow"].Value);
+            var pointConverter = TypeDescriptor.GetConverter(typeof(Point));
+            _ptFloatingWindow = (Point)pointConverter.ConvertFromInvariantString(ptWinText)!;
 
-        ////if (State == State.Window)
-        ////    DockingWindow();
+            var sizeConverter = TypeDescriptor.GetConverter(typeof(Size));
+            _sizeFloatingWindow = (Size)sizeConverter.ConvertFromInvariantString(sizeWinText)!;
+        }
 
-        //DockManager?.Add(this);
+        // 2) Rehydrate each tab in order
+        foreach (XmlNode child in node.ChildNodes)
+        {
+            // Ask the user-provided callback for the actual content instance
+            var content = getObjectHandler(child.Name);
+            Add(content);
+
+            // If that content also implements ILayoutSerializable, let it restore itself
+            if (content is ILayoutSerializable ser)
+            {
+                ser.Deserialize(managerToAttach, child, getObjectHandler);
+            }
+        }
+
+        // 3) Finally attach ourselves back into the manager if needed
+        managerToAttach?.Add(this);
     }
 
     #endregion
 
     #region Commands
 
-    private void DockingWindowCommandExecute(ExecutedRoutedEventArgs e)
+    private void DockingWindowCommandExecute(ExecutedRoutedEventArgs _)
     {
-        DockingWindow(SelectedItem);
+        FloatingWindow(SelectedItem);
     }
 
     private void DockingWindowCommandCanExecute(CanExecuteRoutedEventArgs e)
@@ -683,7 +732,7 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
         e.CanExecute = State != State.Window;
     }
 
-    private void DockCommandExecute(ExecutedRoutedEventArgs e)
+    private void DockCommandExecute(ExecutedRoutedEventArgs _)
     {
         Docking();
     }
@@ -693,7 +742,7 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
         e.CanExecute = State != State.Docking;
     }
 
-    private void TabbedDocumentCommandExecute(ExecutedRoutedEventArgs e)
+    private void TabbedDocumentCommandExecute(ExecutedRoutedEventArgs _)
     {
         TabbedDocument(SelectedItem);
     }
@@ -703,7 +752,7 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
         e.CanExecute = State != State.Document;
     }
 
-    private void AutoHideCommandExecute(ExecutedRoutedEventArgs e)
+    private void AutoHideCommandExecute(ExecutedRoutedEventArgs _)
     {
         AutoHide();
     }
@@ -713,9 +762,9 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
         e.CanExecute = true;
     }
 
-    private void HideCommandExecute(ExecutedRoutedEventArgs e)
+    private void HideCommandExecute(ExecutedRoutedEventArgs _)
     {
-        Hide(SelectedItem);
+        Close(SelectedItem);
     }
 
     private void HideCommandCanExecute(CanExecuteRoutedEventArgs e)
@@ -728,7 +777,7 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
     #region Events Subscriptions
 
     /// <summary>
-    /// Handles mouse douwn event on control header
+    /// Handles mouse down event on control header
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -737,7 +786,7 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
     {
         if (_header is not null && !_header.IsMouseCaptured)
         {
-            _ptStartDrag = e.GetPosition(this);
+            _headerDragStart = e.GetPosition(this);
             _header.CaptureMouse();
         }
     }
@@ -754,19 +803,98 @@ public class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
     }
 
     /// <summary>
-    /// Handles mouse move event and eventually starts draging this control
+    /// Handles mouse move event and eventually starts dragging this control
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void Header_MouseMove(object sender, MouseEventArgs e)
     {
-        if (_header is not null && DockManager is not null && _header.IsMouseCaptured && Math.Abs(_ptStartDrag.X - e.GetPosition(this).X) > 4)
+        if (_header is not null && DockManager is not null && _header.IsMouseCaptured && Math.Abs(_headerDragStart.X - e.GetPosition(this).X) > 4)
         {
             _header.ReleaseMouseCapture();
             DragDockableControl(DockManager.PointToScreen(e.GetPosition(DockManager)), e.GetPosition(this));
         }
     }
 
+    /// <summary>
+    /// Called when the ItemContainerGenerator changes status. Attaches drag handlers
+    /// to each tab item's header.
+    /// </summary>
+    private void OnItemGeneratorStatusChanged(object? sender, EventArgs e)
+    {
+        if (ItemContainerGenerator.Status != System.Windows.Controls.Primitives.GeneratorStatus.ContainersGenerated)
+            return;
+
+        foreach (var item in Items)
+        {
+            if (ItemContainerGenerator.ContainerFromItem(item) is DockableItem tab)
+            {
+                tab.PreviewMouseLeftButtonDown -= Tab_PreviewMouseLeftButtonDown;
+                tab.PreviewMouseMove -= Tab_PreviewMouseMove;
+                tab.PreviewMouseLeftButtonUp -= Tab_PreviewMouseLeftButtonUp;
+
+                tab.PreviewMouseLeftButtonDown += Tab_PreviewMouseLeftButtonDown;
+                tab.PreviewMouseMove += Tab_PreviewMouseMove;
+                tab.PreviewMouseLeftButtonUp += Tab_PreviewMouseLeftButtonUp;
+            }
+        }
+    }
+
+    private void Tab_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is DockableItem tab)
+        {
+            _draggedTab = tab;
+            _originalIndex = Items.IndexOf(tab.DataContext ?? tab);
+        }
+    }
+
+    private void Tab_PreviewMouseMove(object sender, MouseEventArgs e)
+    {
+        if (_draggedTab == null || e.LeftButton != MouseButtonState.Pressed || !_originalIndex.HasValue)
+            return;
+
+        var point = e.GetPosition(this);
+        var tabPanel = _draggedTab.VisualUpwardSearch<Panel>();
+        if (tabPanel != null)
+        {
+            var relPos = e.GetPosition(tabPanel);
+            if (relPos.X < 0 || relPos.X > tabPanel.ActualWidth || relPos.Y < 0 || relPos.Y > tabPanel.ActualHeight)
+            {
+                var screenPos = PointToScreen(point);
+                var offset = e.GetPosition(_draggedTab);
+                var item = _draggedTab.DataContext ?? _draggedTab;
+                DragContent(item, screenPos, offset);
+                _draggedTab = null;
+                _originalIndex = null;
+                return;
+            }
+        }
+
+        var element = InputHitTest(point) as DependencyObject;
+        var hoveredTab = element.VisualUpwardSearch<DockableItem>();
+        if (hoveredTab != null && hoveredTab != _draggedTab)
+        {
+            var sourceIndex = _originalIndex.Value;
+            var targetIndex = Items.IndexOf(hoveredTab.DataContext ?? hoveredTab);
+            if (sourceIndex != targetIndex && sourceIndex >= 0 && targetIndex >= 0)
+            {
+                var items = ((IList)Items).IsReadOnly && ItemsSource is IList src ? src : Items;
+                var item = items[sourceIndex];
+                items.RemoveAt(sourceIndex);
+                items.Insert(targetIndex, item);
+                SelectedIndex = targetIndex;
+                _originalIndex = targetIndex;
+                _draggedTab = ItemContainerGenerator.ContainerFromIndex(targetIndex) as DockableItem;
+            }
+        }
+    }
+
+    private void Tab_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        _draggedTab = null;
+        _originalIndex = null;
+    }
+
     #endregion
 }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

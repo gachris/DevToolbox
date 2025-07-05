@@ -32,6 +32,8 @@
                             <Grid
                                 x:Name="PART_Header"
                                 Grid.Row="0"
+                                Background="Transparent"
+                                ContextMenu="{Binding TitleBarContextMenu, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}}"
                                 Visibility="{Binding IsTitleBarVisible, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:WindowEx}, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />

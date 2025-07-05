@@ -222,7 +222,7 @@ public class DockManager : ItemsControl, IDropSurface
     {
         if (e.NewValue is not DocumentList documentList) return;
 
-        documentList.AttacheDockManager(this);
+        documentList.AttachDockManager(this);
         _dockingPanel?.AttachDocumentList(documentList);
     }
 
@@ -248,7 +248,54 @@ public class DockManager : ItemsControl, IDropSurface
         _dockingPanel?.Add(control, relativeControl, relativeDock);
     }
 
-    internal void MoveTo(DockableControl control, DocumentControl relativeControl, Dock relativeDock) => DocumentList.MoveTo(control, relativeControl, relativeDock);
+    internal void MoveTo(DockableControl source, DocumentControl destination, Dock relativeDock)
+    {
+        var isReadOnly = ((IList)Items).IsReadOnly;
+
+        DocumentControl? newElement;
+        if (isReadOnly)
+        {
+            var newItem = DocumentList.Add();
+            newElement = DocumentList.ContainerFromItem(newItem) as DocumentControl;
+        }
+        else
+        {
+            newElement = DocumentList.Add() as DocumentControl;
+        }
+
+        if (newElement is null)
+        {
+            return;
+        }
+
+        DocumentList.MoveTo(newElement, destination, relativeDock);
+
+        while (source.Items.Count > 0)
+        {
+            var item = source.Items[0];
+
+            source.Remove(item);
+            newElement.Add(item);
+
+            var element = newElement.ContainerFromItem(item) ?? item;
+            if (element is DocumentItem documentItem)
+            {
+                documentItem.IsDockable = true;
+            }
+        }
+
+        if (isReadOnly)
+        {
+            var item = this.ItemFromContainer(source);
+            Remove(item);
+        }
+        else
+        {
+            Remove(source);
+        }
+
+        DragServices.Unregister(source);
+    }
 
     internal void MoveTo(DocumentControl control, DocumentControl relativeControl, Dock relativeDock) => DocumentList.MoveTo(control, relativeControl, relativeDock);
 
@@ -291,7 +338,7 @@ public class DockManager : ItemsControl, IDropSurface
             source.Remove(item);
             destination.Add(item);
 
-            var element = destination.ContainerFromItem(item);
+            var element = destination.ContainerFromItem(item) ?? item;
             if (element is DocumentItem documentItem)
             {
                 documentItem.IsDockable = true;
@@ -361,7 +408,7 @@ public class DockManager : ItemsControl, IDropSurface
             {
                 Icon = containerItem.Icon,
                 Content = containerItem.Header,
-                AssociatedItemIdex = itemIdex,
+                AssociatedItemIndex = itemIdex,
                 AssociatedContainer = dockableControl,
                 ParentGroupItem = dockingButtonGroupItem
             };

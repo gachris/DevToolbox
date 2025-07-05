@@ -101,12 +101,18 @@ internal class WindowExBehavior : DependencyObject
 
         // Emulate the system behavior of clicking the right mouse button over the caption area
         // to bring up the system menu.
-        if ((HT)wParam.ToInt32() is HT.MAXBUTTON or HT.MINBUTTON or HT.CLOSE or HT.HELP)
+        if (_windowEx.TitleBarContextMenu is null && (HT)wParam.ToInt32() is HT.MAXBUTTON or HT.MINBUTTON or HT.CLOSE or HT.HELP)
         {
             ShowSystemMenuPhysicalCoordinates(_windowEx, new Point(NativeMethods.GET_X_LPARAM(lParam), NativeMethods.GET_Y_LPARAM(lParam)));
         }
 
         handled = false;
+        if (_windowEx.TitleBarContextMenu is not null)
+        {
+            handled = true;
+            NativeMethods.RaiseMouseMessage(_hwnd, WM.RBUTTONUP);
+        }
+
         return IntPtr.Zero;
     }
 

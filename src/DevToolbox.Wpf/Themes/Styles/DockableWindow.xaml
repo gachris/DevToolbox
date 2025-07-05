@@ -4,6 +4,7 @@
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
     xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters"
     xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers"
+    xmlns:markup="clr-namespace:DevToolbox.Wpf.Markup"
     xmlns:windows="clr-namespace:DevToolbox.Wpf.Windows">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/WindowEx.xaml" />
@@ -13,255 +14,213 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <Style
-        x:Key="DockableWindowButtonStyle"
-        BasedOn="{StaticResource ButtonStyle}"
+        x:Key="DockableButton.BaseChromeStyle"
+        BasedOn="{StaticResource Button.BaseChromeStyle}"
         TargetType="Button">
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="#D6D6D6" />
-        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="#FAFAFA" />
-        <Setter Property="helpers:UIElementHelper.MouseOverForeground" Value="#1A1A1A" />
-        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="#FAFAFA" />
-        <Setter Property="helpers:UIElementHelper.PressedForeground" Value="#1A1A1A" />
+        <Setter Property="Width" Value="14" />
+        <Setter Property="Height" Value="14" />
+        <Setter Property="FontSize" Value="8" />
+    </Style>
+
+    <Style
+        x:Key="WindowPositionButton"
+        BasedOn="{StaticResource DockableButton.BaseChromeStyle}"
+        TargetType="Button">
+        <Setter Property="Content" Value="{x:Static controls:Icons.CaretSolidDown}" />
+        <Setter Property="helpers:ButtonHelper.ShowContextMenuOnLeftClick" Value="True" />
+        <Setter Property="ContextMenuService.Placement" Value="Bottom" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ContextMenu.IsOpen}" Value="True">
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.PressedBackground)}" />
+                <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.PressedBorderBrush)}" />
+                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.PressedForeground)}" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style BasedOn="{StaticResource ResourceKey={x:Type windows:WindowEx}}" TargetType="{x:Type windows:DockableWindow}">
-        <Setter Property="Width" Value="300" />
-        <Setter Property="Height" Value="300" />
-        <Setter Property="Focusable" Value="True" />
-        <Setter Property="ShowInTaskbar" Value="False" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="WindowChrome.CaptionHeight" Value="33" />
-        <Setter Property="windows:WindowBehavior.BorderBrush" Value="#7160E8" />
+        <Style.Resources>
+
+            <Style
+                x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type windows:WindowEx},
+                                             ResourceId=HelpButtonStyleKey}"
+                BasedOn="{StaticResource DockableButton.BaseChromeStyle}"
+                TargetType="{x:Type Button}" />
+
+            <Style
+                x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type windows:WindowEx},
+                                             ResourceId=MinimizeButtonStyleKey}"
+                BasedOn="{StaticResource DockableButton.BaseChromeStyle}"
+                TargetType="{x:Type Button}">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
+
+            <Style
+                x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type windows:WindowEx},
+                                             ResourceId=MaximizeButtonStyleKey}"
+                BasedOn="{StaticResource DockableButton.BaseChromeStyle}"
+                TargetType="{x:Type Button}">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
+
+            <Style
+                x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type windows:WindowEx},
+                                             ResourceId=RestoreButtonStyleKey}"
+                BasedOn="{StaticResource DockableButton.BaseChromeStyle}"
+                TargetType="{x:Type Button}">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
+
+            <Style
+                x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type windows:WindowEx},
+                                             ResourceId=CloseButtonStyleKey}"
+                BasedOn="{StaticResource DockableButton.BaseChromeStyle}"
+                TargetType="{x:Type Button}">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
+
+            <Style
+                x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type windows:WindowEx},
+                                             ResourceId=BackButtonStyleKey}"
+                BasedOn="{StaticResource DockableButton.BaseChromeStyle}"
+                TargetType="{x:Type Button}">
+                <Setter Property="Content" Value="{x:Static controls:Icons.ChromeBack}" />
+            </Style>
+
+        </Style.Resources>
+        <Setter Property="Title" Value="{Binding Content.SelectedItem.Header, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=Self}}" />
         <Setter Property="Icon" Value="{Binding Content.SelectedItem.Icon, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=Self}}" />
-        <Setter Property="Template">
+        <Setter Property="ImageStyle">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type windows:DockableWindow}">
-                    <controls:WindowHeaderedContentControl
-                        Background="{TemplateBinding Background}"
-                        Focusable="{TemplateBinding Focusable}"
-                        Header="{Binding Content.SelectedItem.Header, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                        HeaderTemplate="{TemplateBinding HeaderTemplate}"
-                        Style="{TemplateBinding HeaderedContentControlStyle}">
-                        <controls:WindowHeaderedContentControl.Template>
-                            <ControlTemplate TargetType="{x:Type controls:WindowHeaderedContentControl}">
-                                <Border
-                                    x:Name="PART_Border"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    Focusable="{TemplateBinding Focusable}"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
-                                        <Grid
-                                            x:Name="PART_Header"
-                                            Grid.Row="0"
-                                            Background="{TemplateBinding Background}"
-                                            DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:DockableWindow}, Path=Content}">
-                                            <Grid.ContextMenu>
-                                                <ContextMenu>
-                                                    <MenuItem
-                                                        Padding="8,0,0,0"
-                                                        Command="{x:Static controls:DockableControl.DockableWindowCommand}"
-                                                        CommandTarget="{Binding}"
-                                                        Header="Float" />
-                                                    <MenuItem
-                                                        Padding="8,0,0,0"
-                                                        Command="{x:Static controls:DockableControl.DockCommand}"
-                                                        CommandTarget="{Binding}"
-                                                        Header="Dock" />
-                                                    <MenuItem
-                                                        Padding="8,0,0,0"
-                                                        Command="{x:Static controls:DockableControl.TabbedDocumentCommand}"
-                                                        CommandTarget="{Binding}"
-                                                        Header="Dock as Tabbed Document" />
-                                                    <MenuItem
-                                                        x:Name="headercontextmenuautoHide"
-                                                        Padding="8,0,0,0"
-                                                        Command="{x:Static controls:DockableControl.AutoHideCommand}"
-                                                        CommandTarget="{Binding}"
-                                                        Header="Auto Hide" />
-                                                    <MenuItem
-                                                        Padding="8,0,0,0"
-                                                        Command="{x:Static controls:DockableControl.HideCommand}"
-                                                        CommandTarget="{Binding}"
-                                                        Header="Close"
-                                                        InputGestureText="Shift+Esc">
-                                                        <MenuItem.Icon>
-                                                            <controls:FontGlyph
-                                                                HorizontalAlignment="Left"
-                                                                VerticalAlignment="Center"
-                                                                Code="{x:Static controls:Symbol.ChromeClose}"
-                                                                FontSize="16" />
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                </ContextMenu>
-                                            </Grid.ContextMenu>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="auto" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="auto" />
-                                            </Grid.ColumnDefinitions>
-                                            <Image
-                                                x:Name="PART_Icon"
-                                                Grid.Column="0"
-                                                Width="16"
-                                                Height="16"
+                <Style TargetType="Image">
+                    <Setter Property="Stretch" Value="Fill" />
+                    <Setter Property="Width" Value="16" />
+                    <Setter Property="Height" Value="16" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="TitleBarContextMenu">
+            <Setter.Value>
+                <ContextMenu>
+                    <MenuItem
+                        Padding="8,0,0,0"
+                        Command="{x:Static controls:DockableControl.DockableWindowCommand}"
+                        Header="Float" />
+                    <MenuItem
+                        Padding="8,0,0,0"
+                        Command="{x:Static controls:DockableControl.DockCommand}"
+                        Header="Dock" />
+                    <MenuItem
+                        Padding="8,0,0,0"
+                        Command="{x:Static controls:DockableControl.TabbedDocumentCommand}"
+                        Header="Dock as Tabbed Document" />
+                    <MenuItem
+                        x:Name="headercontextmenuautoHide"
+                        Padding="8,0,0,0"
+                        Command="{x:Static controls:DockableControl.AutoHideCommand}"
+                        Header="Auto Hide" />
+                    <MenuItem
+                        Padding="8,0,0,0"
+                        Command="{x:Static controls:DockableControl.HideCommand}"
+                        Header="Close"
+                        InputGestureText="Shift+Esc">
+                        <MenuItem.Icon>
+                            <controls:FontGlyph
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Code="{x:Static controls:Symbol.ChromeClose}"
+                                FontSize="16" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <StackPanel
+                        Margin="0,0,3,0"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <Button
+                            x:Name="PART_OptionsButton"
+                            Content="{x:Static controls:Icons.CaretSolidDown}"
+                            Style="{StaticResource WindowPositionButton}"
+                            WindowChrome.IsHitTestVisibleInChrome="True">
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem
+                                        Padding="8,0,0,0"
+                                        Command="{x:Static controls:DockableControl.DockableWindowCommand}"
+                                        CommandTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:DockableWindow}, Path=Content}"
+                                        Header="Float" />
+                                    <MenuItem
+                                        Padding="8,0,0,0"
+                                        Command="{x:Static controls:DockableControl.DockCommand}"
+                                        CommandTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:DockableWindow}, Path=Content}"
+                                        Header="Dock" />
+                                    <MenuItem
+                                        Padding="8,0,0,0"
+                                        Command="{x:Static controls:DockableControl.TabbedDocumentCommand}"
+                                        CommandTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:DockableWindow}, Path=Content}"
+                                        Header="Dock as Tabbed Document" />
+                                    <MenuItem
+                                        x:Name="buttoncontextmenuautoHide"
+                                        Padding="8,0,0,0"
+                                        Command="{x:Static controls:DockableControl.AutoHideCommand}"
+                                        CommandTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:DockableWindow}, Path=Content}"
+                                        Header="Auto Hide" />
+                                    <MenuItem
+                                        Padding="8,0,0,0"
+                                        Command="{x:Static controls:DockableControl.HideCommand}"
+                                        CommandTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:DockableWindow}, Path=Content}"
+                                        Header="Close"
+                                        InputGestureText="Shift+Esc">
+                                        <MenuItem.Icon>
+                                            <controls:FontGlyph
+                                                HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
-                                                Visibility="{Binding ShowIcon, RelativeSource={RelativeSource AncestorType={x:Type windows:WindowEx}}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                                <Image.Source>
-                                                    <Binding
-                                                        Converter="{converters:WindowIconConverter}"
-                                                        Path="Icon"
-                                                        RelativeSource="{RelativeSource AncestorType={x:Type Window}}" />
-                                                </Image.Source>
-                                            </Image>
-                                            <ContentPresenter
-                                                Grid.Column="1"
-                                                VerticalAlignment="Center"
-                                                ContentSource="Header" />
-                                            <StackPanel
-                                                Grid.Column="2"
-                                                Margin="3"
-                                                HorizontalAlignment="Right"
-                                                Orientation="Horizontal">
-                                                <Button
-                                                    x:Name="PART_OptionsButton"
-                                                    Width="14"
-                                                    Height="14"
-                                                    Padding="0"
-                                                    helpers:ButtonHelper.ShowContextMenuOnLeftClick="True"
-                                                    ContextMenuService.Placement="Bottom"
-                                                    Style="{StaticResource DockableWindowButtonStyle}"
-                                                    WindowChrome.IsHitTestVisibleInChrome="True">
-                                                    <Button.ContextMenu>
-                                                        <ContextMenu>
-                                                            <MenuItem
-                                                                Padding="8,0,0,0"
-                                                                Command="{x:Static controls:DockableControl.DockableWindowCommand}"
-                                                                CommandTarget="{Binding}"
-                                                                Header="Float" />
-                                                            <MenuItem
-                                                                Padding="8,0,0,0"
-                                                                Command="{x:Static controls:DockableControl.DockCommand}"
-                                                                CommandTarget="{Binding}"
-                                                                Header="Dock" />
-                                                            <MenuItem
-                                                                Padding="8,0,0,0"
-                                                                Command="{x:Static controls:DockableControl.TabbedDocumentCommand}"
-                                                                CommandTarget="{Binding}"
-                                                                Header="Dock as Tabbed Document" />
-                                                            <MenuItem
-                                                                x:Name="buttoncontextmenuautoHide"
-                                                                Padding="8,0,0,0"
-                                                                Command="{x:Static controls:DockableControl.AutoHideCommand}"
-                                                                CommandTarget="{Binding}"
-                                                                Header="Auto Hide" />
-                                                            <MenuItem
-                                                                Padding="8,0,0,0"
-                                                                Command="{x:Static controls:DockableControl.HideCommand}"
-                                                                CommandTarget="{Binding}"
-                                                                Header="Close"
-                                                                InputGestureText="Shift+Esc">
-                                                                <MenuItem.Icon>
-                                                                    <controls:FontGlyph
-                                                                        HorizontalAlignment="Left"
-                                                                        VerticalAlignment="Center"
-                                                                        Code="{x:Static controls:Symbol.ChromeClose}"
-                                                                        FontSize="16" />
-                                                                </MenuItem.Icon>
-                                                            </MenuItem>
-                                                        </ContextMenu>
-                                                    </Button.ContextMenu>
-                                                    <controls:FontGlyph
-                                                        Code="{x:Static controls:Symbol.GlyphDown}"
-                                                        FontSize="14"
-                                                        Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
-                                                </Button>
-                                                <Button
-                                                    x:Name="PART_Maximize"
-                                                    Width="14"
-                                                    Height="14"
-                                                    Margin="2,0"
-                                                    Padding="0"
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    windows:WindowEx.HitTestResult="Max"
-                                                    Command="{x:Static SystemCommands.MaximizeWindowCommand}"
-                                                    Style="{StaticResource DockableWindowButtonStyle}"
-                                                    WindowChrome.IsHitTestVisibleInChrome="True">
-                                                    <controls:FontGlyph
-                                                        x:Name="maxicon"
-                                                        Code="{x:Static controls:Symbol.ChromeMaximize}"
-                                                        FontSize="14"
-                                                        Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
-                                                </Button>
-                                                <Button
-                                                    x:Name="PART_CloseButton"
-                                                    Width="14"
-                                                    Height="14"
-                                                    Padding="0"
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    windows:WindowEx.HitTestResult="Close"
-                                                    Command="{x:Static controls:DockableControl.HideCommand}"
-                                                    CommandTarget="{Binding}"
-                                                    Style="{StaticResource DockableWindowButtonStyle}"
-                                                    WindowChrome.IsHitTestVisibleInChrome="True">
-                                                    <controls:FontGlyph
-                                                        Code="{x:Static controls:Symbol.ChromeClose}"
-                                                        FontSize="14"
-                                                        Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
-                                                </Button>
-                                            </StackPanel>
-                                        </Grid>
-                                        <ContentPresenter Grid.Row="1" ContentSource="Content" />
-                                        <ResizeGrip
-                                            x:Name="PART_ResizeGrip"
-                                            Grid.Row="1"
-                                            Margin="2"
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Bottom"
-                                            Panel.ZIndex="2"
-                                            Visibility="Collapsed"
-                                            WindowChrome.ResizeGripDirection="BottomRight" />
-                                    </Grid>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=PART_OptionsButton, Path=ContextMenu.IsOpen}" Value="True">
-                                        <Setter TargetName="PART_OptionsButton" Property="Background" Value="{Binding ElementName=PART_OptionsButton, Path=(helpers:UIElementHelper.PressedBackground)}" />
-                                        <Setter TargetName="PART_OptionsButton" Property="BorderBrush" Value="{Binding ElementName=PART_OptionsButton, Path=(helpers:UIElementHelper.PressedBorderBrush)}" />
-                                        <Setter TargetName="PART_OptionsButton" Property="Foreground" Value="{Binding ElementName=PART_OptionsButton, Path=(helpers:UIElementHelper.PressedForeground)}" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="CanResizeWithGrip">
-                                        <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Visible" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="CanMinimize">
-                                        <Setter TargetName="PART_Maximize" Property="IsEnabled" Value="False" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding WindowStyle, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="ToolWindow">
-                                        <Setter TargetName="PART_Maximize" Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding WindowStyle, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="None">
-                                        <Setter TargetName="PART_Header" Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="Maximized">
-                                        <Setter TargetName="PART_Maximize" Property="windows:WindowEx.HitTestResult" Value="Restore" />
-                                        <Setter TargetName="PART_Maximize" Property="Command" Value="{x:Static SystemCommands.RestoreWindowCommand}" />
-                                        <Setter TargetName="maxicon" Property="Code" Value="{x:Static controls:Symbol.ChromeRestore}" />
-                                    </DataTrigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </controls:WindowHeaderedContentControl.Template>
-                        <AdornerDecorator>
-                            <ContentPresenter />
-                        </AdornerDecorator>
-                    </controls:WindowHeaderedContentControl>
-                </ControlTemplate>
+                                                Code="{x:Static controls:Symbol.ChromeClose}"
+                                                FontSize="16" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button
+                            x:Name="PART_Maximize"
+                            Width="14"
+                            Height="14"
+                            Margin="2,0"
+                            Padding="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            windows:WindowEx.HitTestResult="Max"
+                            Command="{x:Static SystemCommands.MaximizeWindowCommand}"
+                            Content="{x:Static controls:Icons.ChromeMaximize}"
+                            Style="{StaticResource DockableButton.BaseChromeStyle}"
+                            WindowChrome.IsHitTestVisibleInChrome="True" />
+                        <Button
+                            x:Name="PART_CloseButton"
+                            Width="14"
+                            Height="14"
+                            Padding="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            windows:WindowEx.HitTestResult="Close"
+                            Command="{x:Static controls:DockableControl.HideCommand}"
+                            CommandTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=windows:DockableWindow}, Path=Content}"
+                            Content="{x:Static controls:Icons.ChromeClose}"
+                            Style="{StaticResource DockableButton.BaseChromeStyle}"
+                            WindowChrome.IsHitTestVisibleInChrome="True" />
+                    </StackPanel>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="Maximized">
+                            <Setter TargetName="PART_Maximize" Property="windows:WindowEx.HitTestResult" Value="Restore" />
+                            <Setter TargetName="PART_Maximize" Property="Command" Value="{x:Static SystemCommands.RestoreWindowCommand}" />
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
             </Setter.Value>
         </Setter>
     </Style>
