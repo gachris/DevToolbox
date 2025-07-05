@@ -12,16 +12,6 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/ColorPaletteView.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/ColorPickerView.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/DiagramCanvasView.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/FlowChartStencilsView.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <devtoolbox:DockManager
         x:Name="DockManagerItemsSource"
         BorderThickness="0"

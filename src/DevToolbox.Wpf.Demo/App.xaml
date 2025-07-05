@@ -8,6 +8,12 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/Themes/Generic.xaml" />
+
+                <!--  DockManager templates  -->
+                <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/ColorPaletteView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/ColorPickerView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/DiagramCanvasView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf.Demo;component/DataTemplates/FlowChartStencilsView.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

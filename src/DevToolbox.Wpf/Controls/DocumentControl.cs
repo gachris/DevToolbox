@@ -10,6 +10,10 @@ using DevToolbox.Wpf.Serialization;
 
 namespace DevToolbox.Wpf.Controls;
 
+/// <summary>
+/// A tabbed control representing a dockable document pane.
+/// Supports dragging tabs to float windows or dock within a <see cref="DockManager"/>, and layout serialization.
+/// </summary>
 public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
 {
     #region Fields/Consts
@@ -19,73 +23,108 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
     private Point _ptFloatingWindow = new(0, 0);
     private Size _sizeFloatingWindow = new(300, 300);
 
-    protected internal static readonly DependencyPropertyKey StatePropertyKey =
-        DependencyProperty.RegisterReadOnly(nameof(State), typeof(State), typeof(DocumentControl), new FrameworkPropertyMetadata(State.Document, OnStateChanged));
-
-    public static readonly DependencyProperty PaneWidthProperty =
-        DependencyProperty.Register(nameof(PaneWidth), typeof(double), typeof(DocumentControl), new PropertyMetadata(250D));
-
-    public static readonly DependencyProperty PaneHeightProperty =
-        DependencyProperty.Register(nameof(PaneHeight), typeof(double), typeof(DocumentControl), new PropertyMetadata(250D));
-
-    public static readonly DependencyProperty DockProperty =
-        DependencyProperty.Register(nameof(Dock), typeof(Dock), typeof(DocumentControl), new FrameworkPropertyMetadata(Dock.Right, OnDockChanged));
-
-    public static readonly DependencyProperty StateProperty = StatePropertyKey.DependencyProperty;
-
     /// <summary>
-    /// Event raised when Dock property is changed
+    /// Occurs when the <see cref="Dock"/> property has changed.
     /// </summary>
     public event EventHandler<DockChangedEventArgs>? DockChanged;
 
     /// <summary>
-    /// Event raised when State property is changed
+    /// Occurs when the <see cref="State"/> property has changed.
     /// </summary>
     public event EventHandler<StateChangedEventArgs>? StateChanged;
+
+    /// <summary>
+    /// Identifies the <see cref="PaneWidth"/> dependency property.
+    /// </summary>
+    public static readonly DependencyProperty PaneWidthProperty =
+        DependencyProperty.Register(nameof(PaneWidth), typeof(double), typeof(DocumentControl), new PropertyMetadata(250D));
+
+    /// <summary>
+    /// Identifies the <see cref="PaneHeight"/> dependency property.
+    /// </summary>
+    public static readonly DependencyProperty PaneHeightProperty =
+        DependencyProperty.Register(nameof(PaneHeight), typeof(double), typeof(DocumentControl), new PropertyMetadata(250D));
+
+    /// <summary>
+    /// Identifies the <see cref="Dock"/> dependency property.
+    /// </summary>
+    public static readonly DependencyProperty DockProperty =
+        DependencyProperty.Register(nameof(Dock), typeof(Dock), typeof(DocumentControl), new FrameworkPropertyMetadata(Dock.Right, OnDockChanged));
+
+    /// <summary>
+    /// Identifies the <see cref="State"/> dependency property key.
+    /// </summary>
+    private static readonly DependencyPropertyKey StatePropertyKey =
+        DependencyProperty.RegisterReadOnly(nameof(State), typeof(State), typeof(DocumentControl), new FrameworkPropertyMetadata(State.Document, OnStateChanged));
+
+    /// <summary>
+    /// Identifies the <see cref="State"/> dependency property.
+    /// </summary>
+    public static readonly DependencyProperty StateProperty = StatePropertyKey.DependencyProperty;
 
     #endregion
 
     #region Properties
 
-    public DockManager? DockManager { get; protected internal set; }
+    /// <summary>
+    /// Gets the <see cref="DockManager"/> that contains this control.
+    /// </summary>
+    internal DockManager? DockManager { get; set; }
 
     /// <inheritdoc/>
     public Rect SurfaceRectangle => IsHidden ? new Rect() : new Rect(PointToScreen(new Point(0, 0)), new Size(ActualWidth, ActualHeight));
 
+    /// <summary>
+    /// Return true if control is hidden, ie State is different from PaneState.Document
+    /// </summary>
     public bool IsHidden => State != State.Document;
 
+    /// <summary>
+    /// Gets or sets the default width of the pane when docked left or right.
+    /// </summary>
     public double PaneWidth
     {
         get => (double)GetValue(PaneWidthProperty);
         set => SetValue(PaneWidthProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the default height of the pane when docked top or bottom.
+    /// </summary>
     public double PaneHeight
     {
         get => (double)GetValue(PaneHeightProperty);
         set => SetValue(PaneHeightProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets which side of the <see cref="DockManager"/> this pane is docked to.
+    /// </summary>
     public Dock Dock
     {
         get => (Dock)GetValue(DockProperty);
         set => SetValue(DockProperty, value);
     }
 
+    /// <summary>
+    /// Gets the current state of this pane (docking, windowed, document, auto-hide, etc.).
+    /// </summary>
     public State State
     {
         get => (State)GetValue(StateProperty);
-        set => SetValue(StatePropertyKey, value);
+        internal set => SetValue(StatePropertyKey, value);
     }
 
     #endregion
 
-    /// <inheritdoc/>
     static DocumentControl()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(DocumentControl), new FrameworkPropertyMetadata(typeof(DocumentControl)));
     }
 
+    /// <summary>
+    /// Initializes a new instance of <see cref="DocumentControl"/>.
+    /// </summary>
     public DocumentControl()
     {
         ItemContainerGenerator.StatusChanged += OnItemGeneratorStatusChanged;
@@ -113,6 +152,13 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
     /// <inheritdoc />
     protected override DependencyObject GetContainerForItemOverride() => new DocumentItem();
 
+    /// <inheritdoc/>
+    protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+    {
+        SaveSize();
+        base.OnRenderSizeChanged(sizeInfo);
+    }
+
     #endregion
 
     #region Methods
@@ -131,6 +177,7 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
 
     private void OnDockChanged(Dock oldValue, Dock newValue)
     {
+        SaveSize();
         DockChanged?.Invoke(this, new DockChangedEventArgs(oldValue, newValue));
     }
 
@@ -140,58 +187,25 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
         StateChanged?.Invoke(this, new StateChangedEventArgs(oldValue, newValue));
     }
 
-    /// <summary>
-    /// Dock this control to a destination control border
-    /// </summary>
-    /// <param name="control"></param>
-    /// <param name="relativeDock"></param>
-    public virtual void MoveTo(DocumentControl control, Dock relativeDock)
+    /// <inheritdoc/>
+    internal void SaveSize()
     {
-        DockManager?.MoveTo(this, control, relativeDock);
-    }
+        if (IsHidden)
+        {
+            return;
+        }
 
-    /// <summary>
-    /// Move contained contents into a destination control and close this one
-    /// </summary>
-    /// <param name="control"></param>
-    public void MoveInto(DocumentControl control)
-    {
-        DockManager?.MoveInto(this, control);
-    }
+        var paneWidthDefaultValue = (double)PaneWidthProperty.DefaultMetadata.DefaultValue;
+        var paneHeightDefaultValue = (double)PaneHeightProperty.DefaultMetadata.DefaultValue;
 
-    /// <summary>
-    /// Move contained contents into a destination control and close this one
-    /// </summary>
-    public void MoveInto()
-    {
-        if (DockManager is null || State == State.Document) return;
-
-        var item = DockManager.DocumentList.ItemFromContainer(this);
-
-        var isReadOnlyDockManager = ((IList)DockManager.DocumentList.Items).IsReadOnly;
-        if (!isReadOnlyDockManager)
-            DockManager.DocumentList.Remove(this);
+        if (Dock is Dock.Left or Dock.Right)
+        {
+            PaneWidth = ActualWidth > paneWidthDefaultValue ? ActualWidth : paneWidthDefaultValue;
+        }
         else
         {
-            var currentItem = DockManager.DocumentList.ItemFromContainer(this);
-            DockManager.DocumentList.Remove(currentItem);
+            PaneHeight = ActualHeight > paneHeightDefaultValue ? ActualHeight : paneHeightDefaultValue;
         }
-
-        var isReadOnly = ((IList)Items).IsReadOnly;
-
-        DocumentControl? newElement;
-        if (isReadOnly)
-        {
-            var newItem = DockManager.DocumentList.Add();
-            newElement = DockManager.DocumentList.ContainerFromItem(newItem) as DocumentControl;
-        }
-        else newElement = DockManager.DocumentList.Add() as DocumentControl;
-
-        if (newElement is null) return;
-
-        newElement.Add(item);
-        newElement.State = State.Document;
-        newElement.DockManager = DockManager;
     }
 
     internal void SaveWindowSizeAndPosition(Window fw)
@@ -216,33 +230,26 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
     }
 
     /// <inheritdoc/>
-    public void SaveSize()
+    public virtual void OnDragEnter(Point point)
     {
-        if (IsHidden)
-        {
-            return;
-        }
-
-        var paneWidthDefaultValue = (double)PaneWidthProperty.DefaultMetadata.DefaultValue;
-        var paneHeightDefaultValue = (double)PaneHeightProperty.DefaultMetadata.DefaultValue;
-
-        if (Dock is Dock.Left or Dock.Right)
-        {
-            PaneWidth = ActualWidth > paneWidthDefaultValue ? ActualWidth : paneWidthDefaultValue;
-        }
-        else
-        {
-            PaneHeight = ActualHeight > paneHeightDefaultValue ? ActualHeight : paneHeightDefaultValue;
-        }
+        DockManager?.OverlayWindow.OnDragEnter(this, point);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="element"></param>
-    /// <param name="item"></param>
-    /// <param name="startDragPoint"></param>
-    /// <param name="offset"></param>
+    /// <inheritdoc/>
+    public virtual void OnDragOver(Point point)
+    {
+        DockManager?.OverlayWindow.OnDragOver(this, point);
+    }
+
+    /// <inheritdoc/>
+    public virtual void OnDragLeave(Point point)
+    {
+        DockManager?.OverlayWindow.OnDragLeave(this, point);
+    }
+
+    /// <inheritdoc/>
+    public virtual bool OnDrop(Point point) => false;
+
     private void DragContent(DependencyObject element, object item, Point startDragPoint, Point offset)
     {
         if (element is DocumentItem documentItem && documentItem.IsDockable)
@@ -270,25 +277,31 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
             }
         }
 
-        var isReadOnly = ((IList)Items).IsReadOnly;
-
         DockableControl? newElement;
+        var isReadOnly = ((IList)DockManager.Items).IsReadOnly;
+
         if (isReadOnly)
         {
             var newItem = DockManager.Add();
             newElement = DockManager.ContainerFromItem(newItem) as DockableControl;
         }
-        else newElement = DockManager.Add() as DockableControl;
+        else
+        {
+            newElement = DockManager.Add() as DockableControl;
+        }
 
-        if (newElement is null) return;
+        if (newElement is null)
+        {
+            throw new InvalidOperationException("Failed to create a new DockableControl instance.");
+        }
 
         newElement.Add(item);
         newElement.DockManager = DockManager;
         newElement.State = State.Window;
-        
-        window.Content = newElement;
-        RestoreWindowSizeAndPosition(window);
 
+        window.Content = newElement;
+        window.Owner = DockManager.Owner;
+        RestoreWindowSizeAndPosition(window);
         DockManager.Drag(window, startDragPoint, offset);
     }
 
@@ -297,15 +310,24 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
         if (DockManager is null || State == State.Window) return;
         var window = DockManager.GetContainerForDocumentItemOverride();
 
-        DocumentControl? newElement = null;
+        Remove(item);
 
-        if (Items.Count == 1)
-            newElement = this;
-        else
-            Remove(item);
+        if (Items.Count == 0)
+        {
+            var isReadOnlyDockManager = ((IList)DockManager.DocumentList.Items).IsReadOnly;
+            if (!isReadOnlyDockManager)
+                DockManager.DocumentList.Remove(this);
+            else
+            {
+                var currentItem = DockManager.DocumentList.ItemFromContainer(this);
+                DockManager.DocumentList.Remove(currentItem);
+            }
+        }
+
 
         var isReadOnly = ((IList)Items).IsReadOnly;
 
+        DocumentControl? newElement = null;
         if (newElement is null)
         {
             if (isReadOnly)
@@ -320,35 +342,14 @@ public class DocumentControl : TabControlEdit, IDropSurface, ILayoutSerializable
             newElement.Add(item);
         }
 
-        newElement.State = State.Window;
         newElement.DockManager = DockManager;
+        newElement.State = State.Window;
 
         window.Content = newElement;
         RestoreWindowSizeAndPosition(window);
 
         DockManager.Drag(window, startDragPoint, offset);
     }
-
-    /// <inheritdoc/>
-    public virtual void OnDragEnter(Point point)
-    {
-        DockManager?.OverlayWindow.OnDragEnter(this, point);
-    }
-
-    /// <inheritdoc/>
-    public virtual void OnDragOver(Point point)
-    {
-        DockManager?.OverlayWindow.OnDragOver(this, point);
-    }
-
-    /// <inheritdoc/>
-    public virtual void OnDragLeave(Point point)
-    {
-        DockManager?.OverlayWindow.OnDragLeave(this, point);
-    }
-
-    /// <inheritdoc/>
-    public virtual bool OnDrop(Point point) => false;
 
     /// <inheritdoc/>
     public virtual void Serialize(XmlDocument doc, XmlNode parentNode)

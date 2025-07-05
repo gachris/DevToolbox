@@ -91,14 +91,16 @@ public class DocumentWindow : DockManagerWindow
             return;
         }
 
+        var dockManager = HostControl.DockManager!;  
+
         if (btnDock == DockingPosition.PaneInto && control is DocumentControl documentControl)
         {
-            HostControl.MoveInto(documentControl);
+            dockManager.MoveInto(HostControl, documentControl);
             return;
         }
         else if (control is DockManager)
         {
-            HostControl.MoveInto();
+            dockManager.MoveInto(HostControl);
             return;
         }
 
@@ -112,7 +114,7 @@ public class DocumentWindow : DockManagerWindow
             ? Dock.Top
             : throw new InvalidOperationException($"{btnDock} DockingPosition not supported for {typeof(DocumentControl)}");
 
-        HostControl.MoveTo((DocumentControl)control, dock);
+        dockManager.MoveTo(HostControl, (DocumentControl)control, dock);
         HostControl.State = State.Document;
     }
 

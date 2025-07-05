@@ -124,11 +124,11 @@ public class DockableWindow : DockManagerWindow
         {
             if (control is DockableControl dockableControl)
             {
-                HostControl.MoveInto(dockableControl);
+                HostControl.DockManager?.MoveInto(HostControl, dockableControl);
             }
             else if (control is DocumentControl documentControl)
             {
-                HostControl.MoveInto(documentControl);
+                HostControl.DockManager?.MoveInto(HostControl, documentControl);
             }
             return;
         }
@@ -156,11 +156,11 @@ public class DockableWindow : DockManagerWindow
 
             if (control is DockableControl dockableControl)
             {
-                HostControl.MoveTo(dockableControl, dock);
+                HostControl.DockManager?.MoveTo(HostControl, dockableControl, dock);
             }
             else if (control is DocumentControl documentControl)
             {
-                HostControl.MoveTo(documentControl, dock);
+                HostControl.DockManager?.MoveTo(HostControl, documentControl, dock);
             }
         }
 

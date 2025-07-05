@@ -8,11 +8,12 @@ using System.Windows.Media;
 using System.Xml;
 using DevToolbox.Wpf.Extensions;
 using DevToolbox.Wpf.Serialization;
+using DevToolbox.Wpf.Windows;
 
 namespace DevToolbox.Wpf.Controls;
 
 /// <summary>
-/// A <see cref="TabControlEdit"/> that can be docked, floated, auto-hidden or hidden in a <see cref="DockManager"/>.
+/// A <see cref="DockableControl"/> that can be docked, floated, auto-hidden or hidden in a <see cref="DockManager"/>.
 /// </summary>
 [TemplatePart(Name = PART_Header, Type = typeof(ContentControl))]
 public sealed class DockableControl : TabControlEdit, IDropSurface, ILayoutSerializable
@@ -354,44 +355,19 @@ public sealed class DockableControl : TabControlEdit, IDropSurface, ILayoutSeria
 
     private void OnDockChanged(Dock oldValue, Dock newValue)
     {
+        SaveSize();
         DockChanged?.Invoke(this, new DockChangedEventArgs(oldValue, newValue));
     }
 
     private void OnStateChanged(State oldValue, State newValue)
     {
         SaveSize();
-
         ShowHeader = newValue != State.Window;
-
         StateChanged?.Invoke(this, new StateChangedEventArgs(oldValue, newValue));
     }
 
     /// <inheritdoc/>
-    public void MoveTo(DockableControl control, Dock relativeDock)
-    {
-        DockManager?.MoveTo(this, control, relativeDock);
-    }
-
-    /// <inheritdoc/>
-    public void MoveTo(DocumentControl control, Dock relativeDock)
-    {
-        DockManager?.MoveTo(this, control, relativeDock);
-    }
-
-    /// <inheritdoc/>
-    public void MoveInto(DockableControl control)
-    {
-        DockManager?.MoveInto(this, control);
-    }
-
-    /// <inheritdoc/>
-    public void MoveInto(DocumentControl control)
-    {
-        DockManager?.MoveInto(this, control);
-    }
-
-    /// <inheritdoc/>
-    public void SaveSize()
+    internal void SaveSize()
     {
         if (IsHidden)
         {
@@ -409,6 +385,27 @@ public sealed class DockableControl : TabControlEdit, IDropSurface, ILayoutSeria
         {
             PaneHeight = ActualHeight > paneHeightDefaultValue ? ActualHeight : paneHeightDefaultValue;
         }
+    }
+
+    internal void SaveWindowSizeAndPosition(Window fw)
+    {
+        if (!double.IsNaN(fw.Left) && !double.IsNaN(fw.Top))
+        {
+            _ptFloatingWindow = new Point(fw.Left, fw.Top);
+        }
+
+        if (!double.IsNaN(fw.Width) && !double.IsNaN(fw.Height))
+        {
+            _sizeFloatingWindow = new Size(fw.Width, fw.Height);
+        }
+    }
+
+    internal void RestoreWindowSizeAndPosition(Window window)
+    {
+        window.Left = _ptFloatingWindow.X;
+        window.Top = _ptFloatingWindow.Y;
+        window.Width = _sizeFloatingWindow.Width;
+        window.Height = _sizeFloatingWindow.Height;
     }
 
     /// <inheritdoc/>
@@ -436,24 +433,52 @@ public sealed class DockableControl : TabControlEdit, IDropSurface, ILayoutSeria
     }
 
     /// <summary>
-    /// Create and show a floating window hosting this control
-    /// </summary> 
-    private void FloatingWindow(object item)
+    /// Initiate a dragging operation of this control, relative DockManager is also involved
+    /// </summary>
+    /// <param name="startDragPoint"></param>
+    /// <param name="offset"></param>
+    private void DragContent(Point startDragPoint, Point offset)
     {
         if (DockManager is null || State == State.Window)
         {
-            return;
+            throw new InvalidOperationException("DockManager is null or the control is already in a floating window state.");
         }
 
-        DockableControl? newElement;
         var window = DockManager.GetContainerForDockingOverride();
+        
+        State = State.Window;
+        window.Content = this;
+        window.Owner = DockManager.Owner;
+        RestoreWindowSizeAndPosition(window);
+
+        window.Show();
+        DockManager.Drag(window, startDragPoint, offset);
+    }
+
+    private void CreateDockableHost(object item, Point startDragPoint, Point offset)
+    {
+        var window = CreateDockableHost(item);
+        DockManager!.Drag(window, startDragPoint, offset);
+    }
+
+    /// <summary>
+    /// Create and show a floating window hosting this control
+    /// </summary> 
+    private DockManagerWindow CreateDockableHost(object item)
+    {
+        if (DockManager is null)
+        {
+            throw new InvalidOperationException("DockManager is null or the control is already in a floating window state.");
+        }
+
+        var window = DockManager.GetContainerForDockingOverride();
+        var isReadOnly = ((IList)DockManager.Items).IsReadOnly;
 
         Remove(item);
 
         if (Items.Count == 0)
         {
-            var isReadOnlyDockManager = ((IList)DockManager.Items).IsReadOnly;
-            if (!isReadOnlyDockManager)
+            if (!isReadOnly)
             {
                 DockManager.Remove(this);
             }
@@ -464,7 +489,7 @@ public sealed class DockableControl : TabControlEdit, IDropSurface, ILayoutSeria
             }
         }
 
-        var isReadOnly = ((IList)Items).IsReadOnly;
+        DockableControl? newElement;
 
         if (isReadOnly)
         {
@@ -478,7 +503,7 @@ public sealed class DockableControl : TabControlEdit, IDropSurface, ILayoutSeria
 
         if (newElement is null)
         {
-            return;
+            throw new InvalidOperationException("Failed to create a new DockableControl instance.");
         }
 
         newElement.Add(item);
@@ -488,15 +513,8 @@ public sealed class DockableControl : TabControlEdit, IDropSurface, ILayoutSeria
         window.Content = newElement;
         window.Owner = DockManager.Owner;
         RestoreWindowSizeAndPosition(window);
-        window.Show();
-    }
 
-    /// <summary>
-    /// Create and show a dockable window hosting this control
-    /// </summary>
-    private void Docking()
-    {
-        State = State.Docking;
+        return window;
     }
 
     private void TabbedDocument(object item)
@@ -508,109 +526,24 @@ public sealed class DockableControl : TabControlEdit, IDropSurface, ILayoutSeria
 
         Remove(item);
 
-        var documentControlElement = (DocumentControl)DockManager.DocumentList.ContainerFromItem(DockManager.DocumentList.Items[0]);
-        documentControlElement.Add(item);
-
         if (Items.Count == 0)
         {
-            var isReadOnlyDockManager = ((IList)DockManager.Items).IsReadOnly;
-            if (isReadOnlyDockManager)
+            var isReadOnly = ((IList)DockManager.Items).IsReadOnly;
+            if (!isReadOnly)
+            {
+                DockManager.Remove(this);
+            }
+            else
             {
                 var currentItem = DockManager.ItemFromContainer(this);
                 DockManager.Remove(currentItem);
             }
-            else DockManager.Remove(this);
-        }
-    }
 
-    /// <summary>
-    /// Auto-hide this control 
-    /// </summary>
-    private void AutoHide()
-    {
-        State = State == State.AutoHide ? State.Docking : State.AutoHide;
-    }
-
-    /// <summary>
-    /// Initiate a dragging operation of this control, relative DockManager is also involved
-    /// </summary>
-    /// <param name="startDragPoint"></param>
-    /// <param name="offset"></param>
-    private void DragDockableControl(Point startDragPoint, Point offset)
-    {
-        if (DockManager is null)
-        {
-            return;
+            State = State.Hidden;
         }
 
-        var window = DockManager.GetContainerForDockingOverride();
-
-        State = State.Window;
-        window.Content = this;
-        RestoreWindowSizeAndPosition(window);
-
-        window.Show();
-        DockManager.Drag(window, startDragPoint, offset);
-    }
-
-    private void DragContent(object item, Point startDragPoint, Point offset)
-    {
-        if (Items.Count == 1 || DockManager is null)
-        {
-            return;
-        }
-
-        DockableControl? newElement;
-        var window = DockManager.GetContainerForDockingOverride();
-
-        Remove(item);
-
-        var isReadOnly = ((IList)Items).IsReadOnly;
-
-        if (isReadOnly)
-        {
-            var newItem = DockManager.Add();
-            newElement = DockManager.ContainerFromItem(newItem) as DockableControl;
-        }
-        else
-        {
-            newElement = DockManager.Add() as DockableControl;
-        }
-
-        if (newElement is null)
-        {
-            return;
-        }
-
-        newElement.Add(item);
-        newElement.DockManager = DockManager;
-        newElement.State = State.Window;
-
-        window.Content = newElement;
-        RestoreWindowSizeAndPosition(window);
-
-        DockManager.Drag(window, startDragPoint, offset);
-    }
-
-    internal void SaveWindowSizeAndPosition(Window fw)
-    {
-        if (!double.IsNaN(fw.Left) && !double.IsNaN(fw.Top))
-        {
-            _ptFloatingWindow = new Point(fw.Left, fw.Top);
-        }
-
-        if (!double.IsNaN(fw.Width) && !double.IsNaN(fw.Height))
-        {
-            _sizeFloatingWindow = new Size(fw.Width, fw.Height);
-        }
-    }
-
-    internal void RestoreWindowSizeAndPosition(Window window)
-    {
-        window.Left = _ptFloatingWindow.X;
-        window.Top = _ptFloatingWindow.Y;
-        window.Width = _sizeFloatingWindow.Width;
-        window.Height = _sizeFloatingWindow.Height;
+        var documentControlElement = (DocumentControl)DockManager.DocumentList.ContainerFromItem(DockManager.DocumentList.Items[0]);
+        documentControlElement.Add(item);
     }
 
     /// <inheritdoc/>
@@ -725,7 +658,8 @@ public sealed class DockableControl : TabControlEdit, IDropSurface, ILayoutSeria
 
     private void DockingWindowCommandExecute(ExecutedRoutedEventArgs _)
     {
-        FloatingWindow(SelectedItem);
+        var window = CreateDockableHost(SelectedItem);
+        window.Show();
     }
 
     private void DockingWindowCommandCanExecute(CanExecuteRoutedEventArgs e)
@@ -735,7 +669,7 @@ public sealed class DockableControl : TabControlEdit, IDropSurface, ILayoutSeria
 
     private void DockCommandExecute(ExecutedRoutedEventArgs _)
     {
-        Docking();
+        State = State.Docking;
     }
 
     private void DockCommandCanExecute(CanExecuteRoutedEventArgs e)
@@ -755,7 +689,7 @@ public sealed class DockableControl : TabControlEdit, IDropSurface, ILayoutSeria
 
     private void AutoHideCommandExecute(ExecutedRoutedEventArgs _)
     {
-        AutoHide();
+        State = State == State.AutoHide ? State.Docking : State.AutoHide;
     }
 
     private void AutoHideCommandCanExecute(CanExecuteRoutedEventArgs e)
@@ -813,7 +747,7 @@ public sealed class DockableControl : TabControlEdit, IDropSurface, ILayoutSeria
         if (_header is not null && DockManager is not null && _header.IsMouseCaptured && Math.Abs(_headerDragStart.X - e.GetPosition(this).X) > 4)
         {
             _header.ReleaseMouseCapture();
-            DragDockableControl(DockManager.PointToScreen(e.GetPosition(DockManager)), e.GetPosition(this));
+            DragContent(DockManager.PointToScreen(e.GetPosition(DockManager)), e.GetPosition(this));
         }
     }
 
@@ -865,7 +799,7 @@ public sealed class DockableControl : TabControlEdit, IDropSurface, ILayoutSeria
                 var screenPos = PointToScreen(point);
                 var offset = e.GetPosition(_draggedTab);
                 var item = _draggedTab.DataContext ?? _draggedTab;
-                DragContent(item, screenPos, offset);
+                CreateDockableHost(item, screenPos, offset);
                 _draggedTab = null;
                 _originalIndex = null;
                 return;

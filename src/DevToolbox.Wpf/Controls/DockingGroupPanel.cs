@@ -63,13 +63,22 @@ public class DockingGroupPanel : Grid, ILayoutSerializable
 
         _dockableGroup.SaveChildSize();
 
-        Children.Clear();
-        ColumnDefinitions.Clear();
-        RowDefinitions.Clear();
-
-        DockingGroupPanel.Arrange(this, _dockableGroup);
-
+        Clear(this);
+        Arrange(this, _dockableGroup);
         InvalidateArrange();
+    }
+
+    private static void Clear(Grid grid)
+    {
+        foreach (UIElement child in grid.Children)
+        {
+            if (child is Grid childGrid)
+                Clear(childGrid);
+        }
+
+        grid.Children.Clear();
+        grid.ColumnDefinitions.Clear();
+        grid.RowDefinitions.Clear();
     }
 
     /// <summary>
@@ -81,7 +90,14 @@ public class DockingGroupPanel : Grid, ILayoutSerializable
     {
         if (dockableGroup.AttachedElement is not null)
         {
-            grid.Children.Add(new ContentControl { Content = dockableGroup.AttachedElement });
+            if (dockableGroup.AttachedElement is DocumentList)
+            {
+                grid.Children.Add(dockableGroup.AttachedElement);
+            }
+            else
+            {
+                grid.Children.Add(new ContentControl { Content = dockableGroup.AttachedElement });
+            }
         }
         else if (dockableGroup.FirstChild is not null && dockableGroup.FirstChild.IsHidden && dockableGroup.SecondChild is not null && !dockableGroup.SecondChild.IsHidden)
         {

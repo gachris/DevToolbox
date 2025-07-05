@@ -96,8 +96,11 @@ public class OverlayWindow : Window
         ShowActivated = false;
         AllowsTransparency = true;
         WindowStyle = WindowStyle.None;
+        ShowInTaskbar = false;
 
         _dockManager = dockManager;
+
+        SetResourceReference(StyleProperty, DefaultStyleKey);
     }
 
     #region Overrides

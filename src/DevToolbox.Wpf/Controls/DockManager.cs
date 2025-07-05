@@ -167,7 +167,6 @@ public class DockManager : ItemsControl, IDropSurface
         _dockingPanel?.AttachDocumentList(DocumentList);
 
         _overlayControl = Template.FindName(PART_DockableOverlayControl, this) as DockableOverlayControl;
-
     }
 
     protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
@@ -385,7 +384,42 @@ public class DockManager : ItemsControl, IDropSurface
     }
 
     /// <summary>
-    /// Add a group of docking buttons for a control docked to a dockingmanager border
+    /// Move contained contents into a destination control and close this one
+    /// </summary>
+    public void MoveInto(DocumentControl source)
+    {
+        if (source. State == State.Document) return;
+
+        var item = DocumentList.ItemFromContainer(source);
+
+        var isReadOnlyDockManager = ((IList)DocumentList.Items).IsReadOnly;
+        if (!isReadOnlyDockManager)
+            DocumentList.Remove(source);
+        else
+        {
+            var currentItem = DocumentList.ItemFromContainer(source);
+            DocumentList.Remove(currentItem);
+        }
+
+        var isReadOnly = ((IList)DocumentList.Items).IsReadOnly;
+
+        DocumentControl? newElement;
+        if (isReadOnly)
+        {
+            var newItem = DocumentList.Add();
+            newElement = DocumentList.ContainerFromItem(newItem) as DocumentControl;
+        }
+        else newElement = DocumentList.Add() as DocumentControl;
+
+        if (newElement is null) return;
+
+        newElement.Add(item);
+        newElement.State = State.Document;
+        newElement.DockManager = this;
+    }
+
+    /// <summary>
+    /// Add a group of docking buttons for a control docked to a docking manager border
     /// </summary>
     /// <param name="dockableControl"></param>
     private void AddDockingButtons(DockableControl dockableControl)
@@ -541,7 +575,6 @@ public class DockManager : ItemsControl, IDropSurface
         else
         {
             item = item is not null ? addNewItem.AddNewItem(item) : EditableItems.AddNew();
-
             EditableItems.CommitNew();
         }
 
@@ -637,7 +670,7 @@ public class DockManager : ItemsControl, IDropSurface
     /// <param name="point">Current mouse position</param>
     public void OnDragEnter(Point point)
     {
-        OverlayWindow.Owner = DragServices.Window;
+        OverlayWindow.Owner = _owner;
         OverlayWindow.Left = PointToScreen(new Point(0, 0)).X;
         OverlayWindow.Top = PointToScreen(new Point(0, 0)).Y;
         OverlayWindow.Width = ActualWidth;

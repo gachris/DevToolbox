@@ -67,55 +67,117 @@ public class DocumentPanel : Grid, ILayoutSerializable
 
     #region Methods
 
-    public static void SetColumnWidth(DependencyObject element, GridLength value) => element.SetValue(ColumnWidthProperty, value);
+    public static void SetColumnWidth(DependencyObject element, GridLength value)
+    {
+        element.SetValue(ColumnWidthProperty, value);
+    }
 
-    public static GridLength GetColumnWidth(DependencyObject element) => (GridLength)element.GetValue(ColumnWidthProperty);
+    public static GridLength GetColumnWidth(DependencyObject element)
+    {
+        return (GridLength)element.GetValue(ColumnWidthProperty);
+    }
 
-    private static void OnColumnWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => UpdateColumnDefinition(d, column => column.Width = (GridLength)e.NewValue);
+    public static void SetMinColumnWidth(DependencyObject element, double value)
+    {
+        element.SetValue(MinColumnWidthProperty, value);
+    }
 
-    public static void SetMinColumnWidth(DependencyObject element, double value) => element.SetValue(MinColumnWidthProperty, value);
+    public static double GetMinColumnWidth(DependencyObject element)
+    {
+        return (double)element.GetValue(MinColumnWidthProperty);
+    }
 
-    public static double GetMinColumnWidth(DependencyObject element) => (double)element.GetValue(MinColumnWidthProperty);
+    public static void SetMaxColumnWidth(DependencyObject element, double value)
+    {
+        element.SetValue(MaxColumnWidthProperty, value);
+    }
 
-    private static void OnMinColumnWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => UpdateColumnDefinition(d, column => column.MinWidth = (double)e.NewValue);
+    public static double GetMaxColumnWidth(DependencyObject element)
+    {
+        return (double)element.GetValue(MaxColumnWidthProperty);
+    }
 
-    public static void SetMaxColumnWidth(DependencyObject element, double value) => element.SetValue(MaxColumnWidthProperty, value);
+    public static void SetRowHeight(DependencyObject element, GridLength value)
+    {
+        element.SetValue(RowHeightProperty, value);
+    }
 
-    public static double GetMaxColumnWidth(DependencyObject element) => (double)element.GetValue(MaxColumnWidthProperty);
+    public static GridLength GetRowHeight(DependencyObject element)
+    {
+        return (GridLength)element.GetValue(RowHeightProperty);
+    }
 
-    private static void OnMaxColumnWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => UpdateColumnDefinition(d, column => column.MaxWidth = (double)e.NewValue);
+    public static void SetMinRowHeight(DependencyObject element, double value)
+    {
+        element.SetValue(MinRowHeightProperty, value);
+    }
+
+    public static double GetMinRowHeight(DependencyObject element)
+    {
+        return (double)element.GetValue(MinRowHeightProperty);
+    }
+
+    public static void SetMaxRowHeight(DependencyObject element, double value)
+    {
+        element.SetValue(MaxRowHeightProperty, value);
+    }
+
+    public static double GetMaxRowHeight(DependencyObject element)
+    {
+        return (double)element.GetValue(MaxRowHeightProperty);
+    }
+
+    private static void OnColumnWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        UpdateColumnDefinition(d, column => column.Width = (GridLength)e.NewValue);
+    }
+
+    private static void OnMinColumnWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        UpdateColumnDefinition(d, column => column.MinWidth = (double)e.NewValue);
+    }
+
+    private static void OnMaxColumnWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        UpdateColumnDefinition(d, column => column.MaxWidth = (double)e.NewValue);
+    }
+
+    private static void OnRowHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        UpdateRowDefinition(d, row => row.Height = (GridLength)e.NewValue);
+    }
+
+    private static void OnMinRowHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        UpdateRowDefinition(d, row => row.MinHeight = (double)e.NewValue);
+    }
+
+    private static void OnMaxRowHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        UpdateRowDefinition(d, row => row.MaxHeight = (double)e.NewValue);
+    }
 
     private static void UpdateColumnDefinition(DependencyObject child, Action<ColumnDefinition> updateAction)
     {
-        if (VisualTreeHelper.GetParent(child) is not DocumentPanel grid) return;
+        if (VisualTreeHelper.GetParent(child) is not DocumentPanel grid)
+            return;
+
         var column = GetColumn((UIElement)child);
-        if (column >= grid.ColumnDefinitions.Count) return;
+        if (column >= grid.ColumnDefinitions.Count)
+            return;
+
         grid.Dispatcher.BeginInvoke(new Action(() => updateAction(grid.ColumnDefinitions[column])));
     }
 
-    public static void SetRowHeight(DependencyObject element, GridLength value) => element.SetValue(RowHeightProperty, value);
-
-    public static GridLength GetRowHeight(DependencyObject element) => (GridLength)element.GetValue(RowHeightProperty);
-
-    private static void OnRowHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => UpdateRowDefinition(d, row => row.Height = (GridLength)e.NewValue);
-
-    public static void SetMinRowHeight(DependencyObject element, double value) => element.SetValue(MinRowHeightProperty, value);
-
-    public static double GetMinRowHeight(DependencyObject element) => (double)element.GetValue(MinRowHeightProperty);
-
-    private static void OnMinRowHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => UpdateRowDefinition(d, row => row.MinHeight = (double)e.NewValue);
-
-    public static void SetMaxRowHeight(DependencyObject element, double value) => element.SetValue(MaxRowHeightProperty, value);
-
-    public static double GetMaxRowHeight(DependencyObject element) => (double)element.GetValue(MaxRowHeightProperty);
-
-    private static void OnMaxRowHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => UpdateRowDefinition(d, row => row.MaxHeight = (double)e.NewValue);
-
     private static void UpdateRowDefinition(DependencyObject child, Action<RowDefinition> updateAction)
     {
-        if (VisualTreeHelper.GetParent(child) is not DocumentPanel grid) return;
+        if (VisualTreeHelper.GetParent(child) is not DocumentPanel grid)
+            return;
+
         var row = GetRow((UIElement)child);
-        if (row >= grid.RowDefinitions.Count) return;
+        if (row >= grid.RowDefinitions.Count)
+            return;
+
         grid.Dispatcher.BeginInvoke(new Action(() => updateAction(grid.RowDefinitions[row])));
     }
 
@@ -238,7 +300,7 @@ public class DocumentPanel : Grid, ILayoutSerializable
     {
         foreach (UIElement child in grid.Children)
         {
-            if (child is Grid childGrid) 
+            if (child is Grid childGrid)
                 Clear(childGrid);
         }
 
@@ -294,10 +356,12 @@ public class DocumentPanel : Grid, ILayoutSerializable
         ArrangeLayout();
     }
 
+    /// <inheritdoc/>
     public void Serialize(XmlDocument doc, XmlNode parentNode)
     {
     }
 
+    /// <inheritdoc/>
     public void Deserialize(DockManager managerToAttach, XmlNode node, GetContentFromTypeString getObjectHandler)
     {
     }
