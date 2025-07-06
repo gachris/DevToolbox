@@ -387,7 +387,6 @@ public class LayoutDockGroupPanel : Grid, ILayoutSerializable
     protected override void OnInitialized(EventArgs e)
     {
         base.OnInitialized(e);
-
         AttachToOwner();
     }
 
@@ -609,10 +608,9 @@ public class LayoutDockGroupPanel : Grid, ILayoutSerializable
     /// </summary>
     private void AttachToOwner()
     {
-        if (_owner != null) _owner.ItemContainerGenerator.ItemsChanged -= ItemContainerGenerator_ItemsChanged;
-
+        if (_owner != null)
+            _owner.ItemContainerGenerator.ItemsChanged -= ItemContainerGenerator_ItemsChanged;
         _owner = TemplatedParent as LayoutManager;
-
         if (_owner != null)
         {
             _owner.ItemContainerGenerator.ItemsChanged += ItemContainerGenerator_ItemsChanged;
@@ -662,7 +660,7 @@ public class LayoutDockGroupPanel : Grid, ILayoutSerializable
     /// <inheritdoc/>
     public void Serialize(XmlDocument doc, XmlNode parentNode)
     {
-        var rootGroupNode = doc.CreateElement("_dockablePaneGroup");
+        var rootGroupNode = doc.CreateElement("DockablePaneGroup");
         _dockableGroup?.Serialize(doc, parentNode);
         parentNode.AppendChild(rootGroupNode);
     }

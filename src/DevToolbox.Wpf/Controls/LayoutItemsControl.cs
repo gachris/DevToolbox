@@ -233,19 +233,19 @@ public class LayoutItemsControl : TabControlEdit, IDropSurface, ILayoutSerializa
     /// <inheritdoc/>
     public virtual void OnDragEnter(Point point)
     {
-        DockManager?.LayoutDockTargetControl.OnDragEnter(this, point);
+        DockManager?.LayoutDockTargetControl?.OnDragEnter(this, point);
     }
 
     /// <inheritdoc/>
     public virtual void OnDragOver(Point point)
     {
-        DockManager?.LayoutDockTargetControl.OnDragOver(this, point);
+        DockManager?.LayoutDockTargetControl?.OnDragOver(this, point);
     }
 
     /// <inheritdoc/>
     public virtual void OnDragLeave(Point point)
     {
-        DockManager?.LayoutDockTargetControl.OnDragLeave(this, point);
+        DockManager?.LayoutDockTargetControl?.OnDragLeave(this, point);
     }
 
     /// <inheritdoc/>
@@ -268,8 +268,8 @@ public class LayoutItemsControl : TabControlEdit, IDropSurface, ILayoutSerializa
 
         if (Items.Count == 0)
         {
-            var isReadOnlyDockManager = ((IList)DockManager.LayoutGroupItems.Items).IsReadOnly;
-            if (!isReadOnlyDockManager)
+            var isReadOnly = ((IList)DockManager.LayoutGroupItems.Items).IsReadOnly;
+            if (!isReadOnly)
                 DockManager.LayoutGroupItems.Remove(this);
             else
             {
@@ -279,9 +279,9 @@ public class LayoutItemsControl : TabControlEdit, IDropSurface, ILayoutSerializa
         }
 
         LayoutDockItemsControl? newElement;
-        var isReadOnly = ((IList)DockManager.Items).IsReadOnly;
+        var isReadOnlyDockManager = ((IList)DockManager.Items).IsReadOnly;
 
-        if (isReadOnly)
+        if (isReadOnlyDockManager)
         {
             var newItem = DockManager.Add();
             newElement = DockManager.ContainerFromItem(newItem) as LayoutDockItemsControl;
@@ -293,13 +293,12 @@ public class LayoutItemsControl : TabControlEdit, IDropSurface, ILayoutSerializa
 
         if (newElement is null)
         {
-            throw new InvalidOperationException("Failed to create a new DockableControl instance.");
+            throw new InvalidOperationException("Failed to create a new LayoutDockItemsControl instance.");
         }
 
         newElement.Add(item);
         newElement.DockManager = DockManager;
         newElement.State = LayoutItemState.Window;
-
         window.SetHostContent(newElement);
         window.Owner = DockManager.Owner;
         RestoreWindowSizeAndPosition(window);
@@ -313,10 +312,11 @@ public class LayoutItemsControl : TabControlEdit, IDropSurface, ILayoutSerializa
 
         Remove(item);
 
+        var isReadOnly = ((IList)DockManager.LayoutGroupItems.Items).IsReadOnly;
+
         if (Items.Count == 0)
         {
-            var isReadOnlyDockManager = ((IList)DockManager.LayoutGroupItems.Items).IsReadOnly;
-            if (!isReadOnlyDockManager)
+            if (!isReadOnly)
                 DockManager.LayoutGroupItems.Remove(this);
             else
             {
@@ -325,29 +325,28 @@ public class LayoutItemsControl : TabControlEdit, IDropSurface, ILayoutSerializa
             }
         }
 
-        var isReadOnly = ((IList)Items).IsReadOnly;
-
-        LayoutItemsControl? newElement = null;
-        if (newElement is null)
+        LayoutItemsControl? newElement;
+        if (isReadOnly)
         {
-            if (isReadOnly)
-            {
-                var newItem = DockManager.LayoutGroupItems.Add();
-                newElement = DockManager.LayoutGroupItems.ContainerFromItem(newItem) as LayoutItemsControl;
-            }
-            else newElement = DockManager.LayoutGroupItems.Add() as LayoutItemsControl;
-
-            if (newElement is null) return;
-
-            newElement.Add(item);
+            var newItem = DockManager.LayoutGroupItems.Add();
+            newElement = DockManager.LayoutGroupItems.ContainerFromItem(newItem) as LayoutItemsControl;
+        }
+        else
+        {
+            newElement = DockManager.LayoutGroupItems.Add() as LayoutItemsControl;
         }
 
+        if (newElement is null)
+        {
+            throw new InvalidOperationException("Failed to create a new LayoutItemsControl instance.");
+        }
+
+        newElement.Add(item);
         newElement.DockManager = DockManager;
         newElement.State = LayoutItemState.Window;
-        
         window.SetHostContent(newElement);
+        window.Owner = DockManager.Owner;
         RestoreWindowSizeAndPosition(window);
-
         DockManager.Drag(window, startDragPoint, offset);
     }
 

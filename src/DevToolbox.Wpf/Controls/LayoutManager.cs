@@ -19,6 +19,7 @@ namespace DevToolbox.Wpf.Controls;
 [TemplatePart(Name = PART_BottomPanel, Type = typeof(LayoutDockButtonGroupControl))]
 [TemplatePart(Name = PART_DockableOverlayControl, Type = typeof(LayoutDockOverlayControl))]
 [TemplatePart(Name = PART_DockingPanel, Type = typeof(LayoutDockGroupPanel))]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class LayoutManager : ItemsControl, IDropSurface
 {
     #region Fields/Consts
@@ -42,7 +43,7 @@ public class LayoutManager : ItemsControl, IDropSurface
     private LayoutDockButtonGroupControl? _leftDockingButtonGroupControl;
     private LayoutDockButtonGroupControl? _rightDockingButtonGroupControl;
     private LayoutDockButtonGroupControl? _bottomDockingButtonGroupControl;
-    private LayoutDockTargetControl _layoutDockTargetControl;
+    private LayoutDockTargetControl? _layoutDockTargetControl;
 
     public static readonly DependencyProperty LayoutGroupItemsProperty =
         DependencyProperty.Register(nameof(LayoutGroupItems), typeof(LayoutGroupItemsControl), typeof(LayoutManager), new FrameworkPropertyMetadata(null, OnLayoutGroupItemsChanged));
@@ -81,7 +82,7 @@ public class LayoutManager : ItemsControl, IDropSurface
     /// </summary>
     internal Window OverlayWindow => _overlayWindow;
 
-    internal LayoutDockTargetControl LayoutDockTargetControl => _layoutDockTargetControl;
+    internal LayoutDockTargetControl? LayoutDockTargetControl => _layoutDockTargetControl;
 
     /// <summary>
     /// Gets a rectangle where this surface is active
@@ -834,3 +835,4 @@ public class LayoutManager : ItemsControl, IDropSurface
 
     #endregion
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

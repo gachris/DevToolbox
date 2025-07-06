@@ -58,7 +58,6 @@ public class LayoutGroupItemsControl : ItemsControl, ILayoutSerializable
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
-
         _layoutGroupPanel = Template.FindName("PART_LayoutGroupPanel", this) as LayoutGroupPanel;
     }
 

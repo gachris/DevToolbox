@@ -382,19 +382,19 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
     /// <inheritdoc/>
     public void OnDragEnter(Point point)
     {
-        DockManager?.LayoutDockTargetControl.OnDragEnter(this, point);
+        DockManager?.LayoutDockTargetControl?.OnDragEnter(this, point);
     }
 
     /// <inheritdoc/>
     public void OnDragOver(Point point)
     {
-        DockManager?.LayoutDockTargetControl.OnDragOver(this, point);
+        DockManager?.LayoutDockTargetControl?.OnDragOver(this, point);
     }
 
     /// <inheritdoc/>
     public void OnDragLeave(Point point)
     {
-        DockManager?.LayoutDockTargetControl.OnDragLeave(this, point);
+        DockManager?.LayoutDockTargetControl?.OnDragLeave(this, point);
     }
 
     /// <inheritdoc/>
@@ -435,7 +435,7 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
     /// <summary>
     /// Create and show a floating window hosting this control
     /// </summary> 
-    private LayoutBaseWindow CreateDockableHost(object item)
+    private LayoutDockWindow CreateDockableHost(object item)
     {
         if (DockManager is null)
         {
@@ -513,6 +513,7 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
             State = LayoutItemState.Hidden;
         }
 
+        // TODO: Check if we can add to the document area or create new
         var documentControlElement = (LayoutItemsControl)DockManager.LayoutGroupItems.ContainerFromItem(DockManager.LayoutGroupItems.Items[0]);
         documentControlElement.Add(item);
     }
