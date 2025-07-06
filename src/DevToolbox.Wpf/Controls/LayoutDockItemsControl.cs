@@ -418,7 +418,7 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
         var window = DockManager.GetContainerForDockingOverride();
 
         State = LayoutItemState.Window;
-        window.Content = this;
+        window.SetHostContent(this);
         window.Owner = DockManager.Owner;
         RestoreWindowSizeAndPosition(window);
 
@@ -481,7 +481,7 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
         newElement.DockManager = DockManager;
         newElement.State = LayoutItemState.Window;
 
-        window.Content = newElement;
+        window.SetHostContent(this);
         window.Owner = DockManager.Owner;
         RestoreWindowSizeAndPosition(window);
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using DevToolbox.Wpf.Controls;
 using DevToolbox.Wpf.Extensions;
 using DevToolbox.Wpf.Interop;
@@ -17,10 +18,12 @@ public class LayoutWindow : LayoutBaseWindow
 {
     #region Properties
 
+    private bool _allowContentChange;
+
     /// <summary>
     /// Gets the hosted <see cref="LayoutItemsControl"/> currently displayed as the window content, or null if none.
     /// </summary>
-    protected internal LayoutItemsControl? HostControl => Content as LayoutItemsControl;
+    protected internal LayoutItemsControl? HostControl { get; private set; }
 
     #endregion
 
@@ -29,14 +32,16 @@ public class LayoutWindow : LayoutBaseWindow
     /// </summary>
     static LayoutWindow()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(LayoutWindow), new FrameworkPropertyMetadata(typeof(LayoutWindow)));
+        DefaultStyleKeyProperty.OverrideMetadata(
+            typeof(LayoutWindow), 
+            new FrameworkPropertyMetadata(typeof(LayoutWindow)));
     }
 
     #region Methods Overrides
 
     /// <summary>
     /// Ensures the window content is only set once and is of type <see cref="LayoutItemsControl"/>.
-    /// Subscribes to <see cref="LayoutItemsControl.StateChanged"/> events when content is applied.
+    /// Subscribes to <see cref="LayoutItemsControl.StateChanged"/> and <see cref="TabControlEdit.Closed"/> events when content is applied.
     /// </summary>
     /// <param name="oldContent">Previous content object.</param>
     /// <param name="newContent">New content object.</param>
@@ -45,35 +50,65 @@ public class LayoutWindow : LayoutBaseWindow
     /// </exception>
     protected override void OnContentChanged(object oldContent, object newContent)
     {
-        if (oldContent is not null)
-            throw new InvalidOperationException($"Cannot change {nameof(Content)} of {typeof(LayoutDockWindow)}");
-        if (newContent is not LayoutItemsControl content)
-            throw new InvalidOperationException($"{nameof(Content)} of {typeof(LayoutWindow)} must be {typeof(LayoutItemsControl)} type");
+        if (!_allowContentChange)
+            throw new InvalidOperationException($"External code may not change the Content of {nameof(LayoutWindow)}");
 
-        content.StateChanged += OnStateChanged;
-        content.Closed += DocumentControl_Closed;
+        if (oldContent is LayoutItemsControl oldControl)
+        {
+            oldControl.StateChanged -= OnStateChanged;
+            oldControl.Closed -= LayoutItemClosed;
+        }
+
+        if (newContent is LayoutItemsControl newControl)
+        {
+            newControl.StateChanged += OnStateChanged;
+            newControl.Closed += LayoutItemClosed;
+            HostControl = newControl;
+        }
 
         base.OnContentChanged(oldContent, newContent);
+
+        // Ensure command bindings update for new content
+        CommandManager.InvalidateRequerySuggested();
     }
 
-    /// <inheritdoc/>
-    protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+    /// <summary>
+    /// Processes Windows messages for size, move, and non-client left button down events to support docking and size persistence.
+    /// </summary>
+    /// <param name="hwnd">Window handle.</param>
+    /// <param name="msg">Windows message identifier.</param>
+    /// <param name="wParam">Additional message parameter.</param>
+    /// <param name="lParam">Additional message parameter.</param>
+    /// <param name="handled">Set to true if the message is handled by this method.</param>
+    /// <returns>Always returns IntPtr.Zero.</returns>
+    protected override IntPtr WndProc(
+        IntPtr hwnd,
+        int msg,
+        IntPtr wParam,
+        IntPtr lParam,
+        ref bool handled)
     {
         base.WndProc(hwnd, msg, wParam, lParam, ref handled);
 
-        switch (msg)
+        if (HostControl == null)
+            return IntPtr.Zero;
+
+        var wm = (WM)msg;
+        switch (wm)
         {
-            case (int)WM.SIZE:
-            case (int)WM.MOVE:
-                HostControl?.SaveWindowSizeAndPosition(this);
+            case WM.SIZE:
+            case WM.MOVE:
+                HostControl.SaveWindowSizeAndPosition(this);
                 break;
-            case (int)WM.NCLBUTTONDOWN:
+            case WM.NCLBUTTONDOWN:
                 if (wParam.ToInt32() == (int)HT.CAPTION)
                 {
                     var x = NativeMethods.GET_X_LPARAM(lParam);
                     var y = NativeMethods.GET_Y_LPARAM(lParam);
-
-                    handled = HostControl?.DockManager?.Drag(this, new Point(x, y), new Point(x - Left, y - Top)) ?? false;
+                    handled = HostControl.DockManager?.Drag(
+                        this,
+                        new Point(x, y),
+                        new Point(x - Left, y - Top)) ?? false;
                 }
                 break;
         }
@@ -86,8 +121,8 @@ public class LayoutWindow : LayoutBaseWindow
     /// Supports pane-into, pane docking, and document docking positions.
     /// </summary>
     /// <param name="control">The drop surface receiving the item.</param>
-    /// <param name="btnDock">The specified docking position.</param>
-    protected internal override void OnDrop(IDropSurface control, LayoutDockTargetPosition btnDock)
+    /// <param name="dockPosition">The specified docking position.</param>
+    protected internal override void OnDrop(IDropSurface control, LayoutDockTargetPosition dockPosition)
     {
         if (HostControl is null)
         {
@@ -95,8 +130,9 @@ public class LayoutWindow : LayoutBaseWindow
         }
 
         var dockManager = HostControl.DockManager!;
+        SetHostContent(null);
 
-        if (btnDock == LayoutDockTargetPosition.PaneInto && control is LayoutItemsControl documentControl)
+        if (dockPosition == LayoutDockTargetPosition.PaneInto && control is LayoutItemsControl documentControl)
         {
             dockManager.MoveInto(HostControl, documentControl);
             return;
@@ -107,33 +143,63 @@ public class LayoutWindow : LayoutBaseWindow
             return;
         }
 
-        var dock = btnDock == LayoutDockTargetPosition.PaneBottom
-            ? Dock.Bottom
-            : btnDock == LayoutDockTargetPosition.PaneLeft
-            ? Dock.Left
-            : btnDock == LayoutDockTargetPosition.PaneRight
-            ? Dock.Right
-            : btnDock == LayoutDockTargetPosition.PaneTop
-            ? Dock.Top
-            : throw new InvalidOperationException($"{btnDock} DockingPosition not supported for {typeof(LayoutItemsControl)}");
+        var dock = dockPosition switch
+        {
+            LayoutDockTargetPosition.PaneLeft => Dock.Left,
+            LayoutDockTargetPosition.PaneRight => Dock.Right,
+            LayoutDockTargetPosition.PaneTop => Dock.Top,
+            LayoutDockTargetPosition.PaneBottom => Dock.Bottom,
+            _ => throw new InvalidOperationException(
+                $"{dockPosition} not supported for {nameof(LayoutItemsControl)}.")
+        };
 
         dockManager.MoveTo(HostControl, (LayoutItemsControl)control, dock);
-        HostControl.State = LayoutItemState.Document;
     }
 
     /// <inheritdoc/>
     protected override void OnClosing(CancelEventArgs e)
     {
         base.OnClosing(e);
+        if (e.Cancel)
+            return;
 
-        // If the window is being canceled, save its last size/pos
-        if (!e.Cancel)
-            HostControl?.SaveWindowSizeAndPosition(this);
+        HostControl?.SaveWindowSizeAndPosition(this);
+    }
+
+    /// <inheritdoc/>
+    protected override void OnClosed(EventArgs e)
+    {
+        SetHostContent(null);
+        HostControl = null;
+
+        base.OnClosed(e);
     }
 
     #endregion
 
     #region Methods
+
+    /// <summary>
+    /// Sets the hosted content. Must be used by internal code to initialize or clear the <see cref="HostControl"/>.
+    /// Prevents external code from setting Content directly.
+    /// </summary>
+    /// <param name="content">The <see cref="LayoutItemsControl"/> to host, or null to clear.</param>
+    protected internal void SetHostContent(LayoutItemsControl? content)
+    {
+        _allowContentChange = true;
+        try
+        {
+            Content = content;
+        }
+        finally
+        {
+            _allowContentChange = false;
+        }
+    }
+
+    #endregion
+
+    #region Events Subscriptions
 
     /// <summary>
     /// Closes the window when its associated document control exits the Window state.
@@ -143,30 +209,32 @@ public class LayoutWindow : LayoutBaseWindow
     private void OnStateChanged(object? sender, LayoutItemStateChangedEventArgs e)
     {
         if (e.NewValue != LayoutItemState.Window)
-        {
             Close();
-        }
     }
 
-    private void DocumentControl_Closed(object? sender, EventArgs e)
+    /// <summary>
+    /// Handles cleanup when a hosted layout item is closed. Removes the control from its group and closes the host if no items remain.
+    /// </summary>
+    /// <param name="sender">The document control that was closed.</param>
+    /// <param name="e">Event arguments.</param>
+    private void LayoutItemClosed(object? sender, EventArgs e)
     {
-        if (HostControl != null && HostControl.Items.Count == 0)
-        {
-            var dockManager = HostControl.DockManager!;
-            var isReadOnly = ((IList)dockManager.LayoutGroupItems.Items).IsReadOnly;
+        if (HostControl is null || HostControl.Items.Count > 0)
+            return;
 
-            if (isReadOnly)
-            {
-                var item = dockManager.LayoutGroupItems.ItemFromContainer(HostControl);
-                dockManager.LayoutGroupItems.Remove(item);
-            }
-            else
-            {
-                dockManager.LayoutGroupItems.Remove(HostControl);
-            }
-            
-            Close();
+        var manager = HostControl.DockManager!;
+        var items = (IList)manager.LayoutGroupItems.Items;
+        if (items.IsReadOnly)
+        {
+            var item = manager.LayoutGroupItems.ItemFromContainer(HostControl);
+            manager.LayoutGroupItems.Remove(item);
         }
+        else
+        {
+            manager.LayoutGroupItems.Remove(HostControl);
+        }
+
+        Close();
     }
 
     #endregion

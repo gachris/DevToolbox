@@ -7,6 +7,9 @@
         <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/WindowEx.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style BasedOn="{StaticResource ResourceKey={x:Type windows:WindowEx}}" TargetType="{x:Type windows:LayoutWindow}" />
+    <Style BasedOn="{StaticResource ResourceKey={x:Type windows:WindowEx}}" TargetType="{x:Type windows:LayoutWindow}">
+        <Setter Property="Title" Value="{Binding Content.SelectedItem.Header, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=Self}}" />
+        <Setter Property="Icon" Value="{Binding Content.SelectedItem.Icon, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=Self}}" />
+    </Style>
 
 </ResourceDictionary>

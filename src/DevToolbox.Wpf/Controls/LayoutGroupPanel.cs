@@ -15,7 +15,7 @@ public class LayoutGroupPanel : Grid, ILayoutSerializable
 {
     #region Fields/Consts
 
-    private readonly IList<LayoutItemsControl> _documentControls = new List<LayoutItemsControl>();
+    private readonly List<LayoutItemsControl> _documentControls = [];
 
     private LayoutGroupItemsControl? _owner;
 
@@ -52,9 +52,13 @@ public class LayoutGroupPanel : Grid, ILayoutSerializable
         internal set => SetValue(OrientationPropertyKey, value);
     }
 
-    public bool CanAddVertical => _documentControls.Count(x => !x.IsHidden) == 1 || (_documentControls.Count(x => !x.IsHidden) > 1 && Orientation == Orientation.Vertical);
+    public bool CanAddVertical =>
+        _documentControls.Count(x => !x.IsHidden) == 1
+        || (_documentControls.Count(x => !x.IsHidden) > 1 && Orientation == Orientation.Vertical);
 
-    public bool CanAddHorizontal => _documentControls.Count(x => !x.IsHidden) == 1 || (_documentControls.Count(x => !x.IsHidden) > 1 && Orientation == Orientation.Horizontal);
+    public bool CanAddHorizontal =>
+        _documentControls.Count(x => !x.IsHidden) == 1
+        || (_documentControls.Count(x => !x.IsHidden) > 1 && Orientation == Orientation.Horizontal);
 
     #endregion
 
@@ -63,7 +67,6 @@ public class LayoutGroupPanel : Grid, ILayoutSerializable
     protected override void OnInitialized(EventArgs e)
     {
         base.OnInitialized(e);
-
         AttachToOwner();
     }
 
@@ -187,70 +190,97 @@ public class LayoutGroupPanel : Grid, ILayoutSerializable
 
     internal void ArrangeLayout()
     {
-        Clear(this);
+        // 1) Clear out everything up-front
+        ColumnDefinitions.Clear();
+        RowDefinitions.Clear();
+        Children.Clear();
 
-        var children = _documentControls.Where(x => !x.IsHidden).Select(GenerateContainer).ToArray();
-        for (var i = 0; ; i++)
+        var visible = _documentControls
+            .Where(c => !c.IsHidden)
+            .ToArray();
+
+        for (int i = 0; i < visible.Length; i++)
         {
-            if (children.Length <= i) break;
-
-            var child = children[i];
+            var child = visible[i];
 
             if (Orientation == Orientation.Horizontal)
             {
-                var column = new ColumnDefinition
+                // ——— 2) Add the child’s column ———
+                ColumnDefinitions.Add(new ColumnDefinition
                 {
                     MinWidth = GetMinColumnWidth(child),
                     Width = GetColumnWidth(child),
                     MaxWidth = GetMaxColumnWidth(child)
-                };
+                });
+                int childCol = ColumnDefinitions.Count - 1;
+                SetColumn(child, childCol);
+                Children.Add(child);
 
-                ColumnDefinitions.Add(column);
+                // ——— 3) If it’s not the last item, add a splitter column + splitter ———
+                if (i < visible.Length - 1)
+                {
+                    // make the splitter’s column auto-sized (so it's exactly as wide as the splitter)
+                    ColumnDefinitions.Add(new ColumnDefinition
+                    {
+                        Width = GridLength.Auto
+                    });
+                    int splitterCol = ColumnDefinitions.Count - 1;
 
-                SetColumn(child, i);
+                    var splitter = new GridSplitter
+                    {
+                        // explicitly tell it you’re resizing columns
+                        ResizeDirection = GridResizeDirection.Columns,
+                        // resize both neighbors (left & right)
+                        ResizeBehavior = GridResizeBehavior.PreviousAndNext,
+
+                        // fill the entire cell so you can grab it anywhere
+                        HorizontalAlignment = HorizontalAlignment.Stretch,
+                        VerticalAlignment = VerticalAlignment.Stretch,
+
+                        // visible “thumb” width
+                        Width = 5,
+                        Background = Brushes.Transparent
+                    };
+
+                    SetColumn(splitter, splitterCol);
+                    Children.Add(splitter);
+                }
             }
             else
             {
-                var row = new RowDefinition
+                // same thing but for vertical (rows)
+                RowDefinitions.Add(new RowDefinition
                 {
                     MinHeight = GetMinRowHeight(child),
                     Height = GetRowHeight(child),
                     MaxHeight = GetMaxRowHeight(child)
-                };
+                });
+                int childRow = RowDefinitions.Count - 1;
+                SetRow(child, childRow);
+                Children.Add(child);
 
-                RowDefinitions.Add(row);
+                if (i < visible.Length - 1)
+                {
+                    RowDefinitions.Add(new RowDefinition
+                    {
+                        Height = GridLength.Auto
+                    });
+                    int splitterRow = RowDefinitions.Count - 1;
 
-                SetRow(child, i);
+                    var splitter = new GridSplitter
+                    {
+                        ResizeDirection = GridResizeDirection.Rows,
+                        ResizeBehavior = GridResizeBehavior.PreviousAndNext,
+                        HorizontalAlignment = HorizontalAlignment.Stretch,
+                        VerticalAlignment = VerticalAlignment.Stretch,
+                        Height = 5,
+                        Background = Brushes.Transparent
+                    };
+
+                    SetRow(splitter, splitterRow);
+                    Children.Add(splitter);
+                }
             }
-
-            Children.Add(child);
-
-            if (i == children.Length - 1) break;
-
-            var splitter = new GridSplitter()
-            {
-                ResizeBehavior = GridResizeBehavior.CurrentAndNext,
-                Background = Brushes.Transparent
-            };
-
-            if (Orientation == Orientation.Horizontal)
-            {
-                splitter.Width = 5;
-                splitter.VerticalAlignment = VerticalAlignment.Stretch;
-                splitter.HorizontalAlignment = HorizontalAlignment.Right;
-
-                SetColumn(splitter, i);
-            }
-            else
-            {
-                splitter.Height = 5;
-                splitter.VerticalAlignment = VerticalAlignment.Bottom;
-                splitter.HorizontalAlignment = HorizontalAlignment.Stretch;
-
-                SetRow(splitter, i);
-            }
-
-            Children.Add(splitter);
         }
 
         InvalidateArrange();
@@ -294,11 +324,10 @@ public class LayoutGroupPanel : Grid, ILayoutSerializable
     internal void Remove(LayoutItemsControl element)
     {
         _documentControls.Remove(element);
-
         ArrangeLayout();
     }
 
-    private void Clear(Grid grid)
+    private static void Clear(Grid grid)
     {
         foreach (UIElement child in grid.Children)
         {
@@ -311,7 +340,10 @@ public class LayoutGroupPanel : Grid, ILayoutSerializable
         grid.RowDefinitions.Clear();
     }
 
-    private ContentPresenter GenerateContainer(object item) => new ContentPresenter { Content = item };
+    private ContentPresenter GenerateContainer(object item)
+    {
+        return new() { Content = item };
+    }
 
     private void AttachToOwner()
     {

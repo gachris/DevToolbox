@@ -19,22 +19,31 @@ public class LayoutDockWindow : LayoutBaseWindow
 {
     #region Properties
 
+    private bool _allowContentChange;
+
     /// <summary>
-    /// Gets the contained <see cref="LayoutDockItemsControl"/> instance, or null if none.
+    /// Gets the hosted <see cref="LayoutDockItemsControl"/> currently displayed as the window content, or null if none.
     /// </summary>
-    [Bindable(true)]
-    protected internal LayoutDockItemsControl? HostControl => Content as LayoutDockItemsControl;
+    protected internal LayoutDockItemsControl? HostControl { get; private set; }
 
     #endregion
 
+    /// <summary>
+    /// Static constructor overrides default style, size, and taskbar visibility metadata for <see cref="LayoutDockWindow"/>.
+    /// </summary>
     static LayoutDockWindow()
     {
         DefaultStyleKeyProperty.OverrideMetadata(
             typeof(LayoutDockWindow),
             new FrameworkPropertyMetadata(typeof(LayoutDockWindow)));
 
-        WidthProperty.OverrideMetadata(typeof(LayoutDockWindow), new FrameworkPropertyMetadata(300.0));
-        HeightProperty.OverrideMetadata(typeof(LayoutDockWindow), new FrameworkPropertyMetadata(300.0));
+        WidthProperty.OverrideMetadata(
+            typeof(LayoutDockWindow),
+            new FrameworkPropertyMetadata(300.0));
+
+        HeightProperty.OverrideMetadata(
+            typeof(LayoutDockWindow),
+            new FrameworkPropertyMetadata(300.0));
 
         ShowInTaskbarProperty.OverrideMetadata(
             typeof(LayoutDockWindow),
@@ -52,18 +61,32 @@ public class LayoutDockWindow : LayoutBaseWindow
 
     #region Methods Overrides
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Ensures the window content is only set via <see cref="SetHostContent"/>,
+    /// and subscribes to <see cref="LayoutDockItemsControl.StateChanged"/> and Closed events.
+    /// </summary>
+    /// <param name="oldContent">The previous content object.</param>
+    /// <param name="newContent">The new content object.</param>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown if attempting to change content after initial set, or if new content is not <see cref="LayoutDockItemsControl"/>.
+    /// </exception>
     protected override void OnContentChanged(object oldContent, object newContent)
     {
-        if (oldContent != null)
-            throw new InvalidOperationException($"Cannot change Content of {nameof(LayoutDockWindow)}");
+        if (!_allowContentChange)
+            throw new InvalidOperationException($"External code may not change the Content of {nameof(LayoutDockWindow)}");
 
-        if (newContent is not LayoutDockItemsControl content)
-            throw new InvalidOperationException($"Content of {nameof(LayoutDockWindow)} must be {nameof(LayoutDockItemsControl)}");
+        if (oldContent is LayoutDockItemsControl oldControl)
+        {
+            oldControl.StateChanged -= OnStateChanged;
+            oldControl.Closed -= LayoutDockItemClosed;
+        }
 
-        // Listen for when the state exits Window so we can close
-        content.StateChanged += OnStateChanged;
-        content.Closed += DockableControl_Closed;
+        if (newContent is LayoutDockItemsControl newControl)
+        {
+            newControl.StateChanged += OnStateChanged;
+            newControl.Closed += LayoutDockItemClosed;
+            HostControl = newControl;
+        }
 
         base.OnContentChanged(oldContent, newContent);
 
@@ -71,7 +94,15 @@ public class LayoutDockWindow : LayoutBaseWindow
         CommandManager.InvalidateRequerySuggested();
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Processes Windows messages for resizing, moving, and caption drag to support docking and size persistence.
+    /// </summary>
+    /// <param name="hwnd">Window handle.</param>
+    /// <param name="msg">Window message ID.</param>
+    /// <param name="wParam">Additional message parameter.</param>
+    /// <param name="lParam">Additional message parameter.</param>
+    /// <param name="handled">Indicates whether the message was handled.</param>
+    /// <returns>Always returns <see cref="IntPtr.Zero"/>.</returns>
     protected override IntPtr WndProc(
         IntPtr hwnd,
         int msg,
@@ -79,20 +110,23 @@ public class LayoutDockWindow : LayoutBaseWindow
         IntPtr lParam,
         ref bool handled)
     {
-        // Let base handle SCROLL/MOVE hooks
         base.WndProc(hwnd, msg, wParam, lParam, ref handled);
 
-        switch (msg)
+        if (HostControl == null)
+            return IntPtr.Zero;
+
+        var wm = (WM)msg;
+        switch (wm)
         {
-            case (int)WM.SIZE:
-            case (int)WM.MOVE:
+            case WM.SIZE:
+            case WM.MOVE:
                 HostControl?.SaveWindowSizeAndPosition(this);
                 break;
-            case (int)WM.NCLBUTTONDOWN:
+            case WM.NCLBUTTONDOWN:
                 if (wParam.ToInt32() == (int)HT.CAPTION)
                 {
-                    int x = NativeMethods.GET_X_LPARAM(lParam);
-                    int y = NativeMethods.GET_Y_LPARAM(lParam);
+                    var x = NativeMethods.GET_X_LPARAM(lParam);
+                    var y = NativeMethods.GET_Y_LPARAM(lParam);
                     handled = HostControl?.DockManager?.Drag(
                         this,
                         new Point(x, y),
@@ -104,34 +138,31 @@ public class LayoutDockWindow : LayoutBaseWindow
         return IntPtr.Zero;
     }
 
-    /// <inheritdoc/>
-    protected override void OnClosing(CancelEventArgs e)
-    {
-        base.OnClosing(e);
-
-        // If the window is being canceled, save its last size/pos
-        if (!e.Cancel)
-            HostControl?.SaveWindowSizeAndPosition(this);
-    }
-
-    #endregion
-
-    #region Methods
-
-    /// <inheritdoc/>
+    /// <summary>
+    /// Handles drop operations from the <see cref="IDropSurface"/>,
+    /// moving or docking items based on the specified <see cref="LayoutDockTargetPosition"/>.
+    /// </summary>
+    /// <param name="control">The surface receiving the drop.</param>
+    /// <param name="btnDock">The target docking position.</param>
     protected internal override void OnDrop(IDropSurface control, LayoutDockTargetPosition btnDock)
     {
-        if (HostControl is null) return;
+        if (HostControl is null)
+        {
+            return;
+        }
+
+        var dockManager = HostControl.DockManager!;
+        SetHostContent(null);
 
         if (btnDock == LayoutDockTargetPosition.PaneInto)
         {
             if (control is LayoutDockItemsControl dockableControl)
             {
-                HostControl.DockManager?.MoveInto(HostControl, dockableControl);
+                dockManager.MoveInto(HostControl, dockableControl);
             }
             else if (control is LayoutItemsControl documentControl)
             {
-                HostControl.DockManager?.MoveInto(HostControl, documentControl);
+                dockManager.MoveInto(HostControl, documentControl);
             }
             return;
         }
@@ -159,46 +190,96 @@ public class LayoutDockWindow : LayoutBaseWindow
 
             if (control is LayoutDockItemsControl dockableControl)
             {
-                HostControl.DockManager?.MoveTo(HostControl, dockableControl, dock);
+                dockManager.MoveTo(HostControl, dockableControl, dock);
             }
             else if (control is LayoutItemsControl documentControl)
             {
-                HostControl.DockManager?.MoveTo(HostControl, documentControl, dock);
+                dockManager.MoveTo(HostControl, documentControl, dock);
             }
         }
 
         HostControl.State = LayoutItemState.Docking;
     }
 
+    /// <inheritdoc/>
+    protected override void OnClosing(CancelEventArgs e)
+    {
+        base.OnClosing(e);
+        if (e.Cancel)
+            return;
+
+        HostControl?.SaveWindowSizeAndPosition(this);
+    }
+
+    /// <inheritdoc/>
+    protected override void OnClosed(EventArgs e)
+    {
+        SetHostContent(null);
+        HostControl = null;
+
+        base.OnClosed(e);
+    }
+
+    #endregion
+
+    #region Methods
+
     /// <summary>
-    /// Handles when the hosted control transitions out of Window state,
-    /// closing this floating window.
+    /// Sets the hosted content. Must be used by internal code to initialize or clear <see cref="HostControl"/>.
+    /// Prevents external code from setting Content directly.
     /// </summary>
+    /// <param name="content">The <see cref="LayoutDockItemsControl"/> to host, or null to clear.</param>
+    protected internal void SetHostContent(LayoutDockItemsControl? content)
+    {
+        _allowContentChange = true;
+        try
+        {
+            Content = content;
+        }
+        finally
+        {
+            _allowContentChange = false;
+        }
+    }
+
+    #endregion
+
+    #region Events Subscriptions
+
+    /// <summary>
+    /// Handles when the hosted control transitions out of Window state, closing this floating window.
+    /// </summary>
+    /// <param name="sender">The control raising the state change event.</param>
+    /// <param name="e">State change event arguments.</param>
     private void OnStateChanged(object? sender, LayoutItemStateChangedEventArgs e)
     {
         if (e.NewValue != LayoutItemState.Window)
             Close();
     }
 
-    private void DockableControl_Closed(object? sender, EventArgs e)
+    /// <summary>
+    /// Handles cleanup when the hosted dock control is closed. Removes it from its manager and closes the window if empty.
+    /// </summary>
+    /// <param name="sender">The control that was closed.</param>
+    /// <param name="e">Event arguments.</param>
+    private void LayoutDockItemClosed(object? sender, EventArgs e)
     {
-        if (HostControl != null && HostControl.Items.Count == 0)
+        if (HostControl is null || HostControl.Items.Count > 0)
+            return;
+
+        var manager = HostControl.DockManager!;
+        var items = (IList)manager.Items;
+        if (items.IsReadOnly)
         {
-            var dockManager = HostControl.DockManager!;
-            var isReadOnly = ((IList)dockManager.Items).IsReadOnly;
-
-            if (isReadOnly)
-            {
-                var item = dockManager.ItemFromContainer(HostControl);
-                dockManager.Remove(item);
-            }
-            else
-            {
-                dockManager.Remove(HostControl);
-            }
-
-            Close();
+            var item = manager.ItemFromContainer(HostControl);
+            manager.Remove(item);
         }
+        else
+        {
+            manager.Remove(HostControl);
+        }
+
+        Close();
     }
 
     #endregion

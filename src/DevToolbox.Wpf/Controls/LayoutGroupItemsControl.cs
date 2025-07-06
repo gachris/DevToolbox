@@ -202,7 +202,6 @@ public class LayoutGroupItemsControl : ItemsControl, ILayoutSerializable
         else
         {
             item = item is not null ? addNewItem.AddNewItem(item) : EditableItems.AddNew();
-
             EditableItems.CommitNew();
         }
 

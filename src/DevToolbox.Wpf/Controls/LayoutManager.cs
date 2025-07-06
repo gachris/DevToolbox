@@ -240,18 +240,17 @@ public class LayoutManager : ItemsControl, IDropSurface
     /// Creates or identifies the window that is used to display the given docking item.
     /// </summary>
     /// <returns>The window that is used to display the given docking item.</returns>
-    protected internal virtual LayoutBaseWindow GetContainerForDockingOverride() => new LayoutDockWindow();
+    protected internal virtual LayoutDockWindow GetContainerForDockingOverride() => new LayoutDockWindow();
 
     /// <summary>
     /// Creates or identifies the window that is used to display the given document item.
     /// </summary>
     /// <returns>The window that is used to display the given document item.</returns>
-    protected internal virtual LayoutBaseWindow GetContainerForDocumentItemOverride() => new LayoutWindow();
+    protected internal virtual LayoutWindow GetContainerForDocumentItemOverride() => new LayoutWindow();
 
     internal void MoveTo(LayoutDockItemsControl control, LayoutDockItemsControl relativeControl, Dock relativeDock)
     {
         control.Dock = relativeControl.Dock;
-
         control.State = LayoutItemState.Docking;
 
         _dockingPanel?.Remove(control);
@@ -260,6 +259,7 @@ public class LayoutManager : ItemsControl, IDropSurface
 
     internal void MoveTo(LayoutDockItemsControl source, LayoutItemsControl destination, Dock relativeDock)
     {
+        source.State = LayoutItemState.Docking;
         var isReadOnly = ((IList)Items).IsReadOnly;
 
         LayoutItemsControl? newElement;
@@ -307,7 +307,35 @@ public class LayoutManager : ItemsControl, IDropSurface
         DragServices.Unregister(source);
     }
 
-    internal void MoveTo(LayoutItemsControl control, LayoutItemsControl relativeControl, Dock relativeDock) => LayoutGroupItems.MoveTo(control, relativeControl, relativeDock);
+    internal void MoveTo(LayoutItemsControl control, LayoutItemsControl relativeControl, Dock relativeDock)
+    {
+        LayoutGroupItems.MoveTo(control, relativeControl, relativeDock);
+    }
+
+    public void MoveInto(LayoutItemsControl source, LayoutItemsControl destination)
+    {
+        var owner = LayoutGroupItems;
+
+        while (source.Items.Count > 0)
+        {
+            var item = source.Items[0];
+            source.Remove(item);
+            destination.Add(item);
+        }
+
+        object? objectToRemove;
+        if (owner.ItemsSource is not null)
+        {
+            owner.UpdateLayout();
+            var index = owner.ItemContainerGenerator.IndexFromContainer(source);
+            objectToRemove = owner.Items[index];
+        }
+        else objectToRemove = source;
+
+        owner.Remove(objectToRemove);
+
+        DragServices.Unregister(source);
+    }
 
     /// <summary>
     /// Called from a control when it's dropped into an other control
@@ -366,31 +394,6 @@ public class LayoutManager : ItemsControl, IDropSurface
         {
             Remove(source);
         }
-
-        DragServices.Unregister(source);
-    }
-
-    public void MoveInto(LayoutItemsControl source, LayoutItemsControl destination)
-    {
-        var owner = LayoutGroupItems;
-
-        while (source.Items.Count > 0)
-        {
-            var item = source.Items[0];
-            source.Remove(item);
-            destination.Add(item);
-        }
-
-        object? objectToRemove;
-        if (owner.ItemsSource is not null)
-        {
-            owner.UpdateLayout();
-            var index = owner.ItemContainerGenerator.IndexFromContainer(source);
-            objectToRemove = owner.Items[index];
-        }
-        else objectToRemove = source;
-
-        owner.Remove(objectToRemove);
 
         DragServices.Unregister(source);
     }

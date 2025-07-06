@@ -300,7 +300,7 @@ public class LayoutItemsControl : TabControlEdit, IDropSurface, ILayoutSerializa
         newElement.DockManager = DockManager;
         newElement.State = LayoutItemState.Window;
 
-        window.Content = newElement;
+        window.SetHostContent(newElement);
         window.Owner = DockManager.Owner;
         RestoreWindowSizeAndPosition(window);
         DockManager.Drag(window, startDragPoint, offset);
@@ -344,8 +344,8 @@ public class LayoutItemsControl : TabControlEdit, IDropSurface, ILayoutSerializa
 
         newElement.DockManager = DockManager;
         newElement.State = LayoutItemState.Window;
-
-        window.Content = newElement;
+        
+        window.SetHostContent(newElement);
         RestoreWindowSizeAndPosition(window);
 
         DockManager.Drag(window, startDragPoint, offset);

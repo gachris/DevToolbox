@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows.Interop;
 using DevToolbox.Wpf.Controls;
 
@@ -30,12 +29,11 @@ public abstract class LayoutBaseWindow : WindowEx
     }
 
     /// <inheritdoc/>
-    protected override void OnClosing(CancelEventArgs e)
+    protected override void OnClosed(EventArgs e)
     {
-        base.OnClosing(e);
+        _hwndSource?.RemoveHook(WndProc);
 
-        if (!e.Cancel)
-            _hwndSource?.RemoveHook(WndProc);
+        base.OnClosed(e);
     }
 
     #endregion
