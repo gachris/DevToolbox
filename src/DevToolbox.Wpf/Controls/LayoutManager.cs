@@ -244,9 +244,8 @@ public class LayoutManager : ItemsControl, IDropSurface
             dockableControl.StateChanged -= OnStateChanged;
             dockableControl.DockChanged -= OnDockChanged;
 
-            DragServices.Unregister(dockableControl);
-
             _dockingPanel?.Remove(dockableControl);
+            DragServices.Unregister(dockableControl);
         }
 
         base.ClearContainerForItemOverride(element, item);
@@ -294,22 +293,111 @@ public class LayoutManager : ItemsControl, IDropSurface
         return new();
     }
 
+    internal void MoveTo(LayoutItemsControl control, LayoutItemsControl relativeControl, Dock relativeDock)
+    {
+        control.Dock = relativeControl.Dock;
+        control.State = LayoutItemState.Document;
+        LayoutGroupItems.LayoutGroupPanel?.Remove(control);
+        LayoutGroupItems.LayoutGroupPanel?.Add(control, relativeControl, relativeDock);
+    }
+
+    internal void MoveTo(LayoutDockItemsControl control, LayoutItemsControl relativeControl, Dock relativeDock)
+    {
+        var newElement = AddNewLayoutItemsControl();
+
+        while (control.Items.Count > 0)
+        {
+            var item = control.Items[0];
+            control.Remove(item);
+            newElement.Add(item);
+
+            var element = newElement.ContainerFromItem(item) ?? item;
+            if (element is LayoutItem documentItem)
+            {
+                //documentItem.IsDockable = true;
+            }
+        }
+
+        RemoveLayoutDockItemsControl(control);
+
+        newElement.Dock = relativeControl.Dock;
+        newElement.State = LayoutItemState.Docking;
+        LayoutGroupItems.LayoutGroupPanel?.Remove(newElement);
+        LayoutGroupItems.LayoutGroupPanel?.Add(newElement, relativeControl, relativeDock);
+    }
+
     internal void MoveTo(LayoutDockItemsControl control, LayoutDockItemsControl relativeControl, Dock relativeDock)
     {
         control.Dock = relativeControl.Dock;
         control.State = LayoutItemState.Docking;
-
         _dockingPanel?.Remove(control);
         _dockingPanel?.Add(control, relativeControl, relativeDock);
     }
 
-    internal void MoveTo(LayoutDockItemsControl source, LayoutItemsControl destination, Dock relativeDock)
+    /// <summary>
+    /// Move contained contents into a destination control and close this one
+    /// </summary>
+    internal void MoveInto(LayoutItemsControl control)
     {
-        source.State = LayoutItemState.Docking;
-        var isReadOnly = ((IList)Items).IsReadOnly;
+        control.Dock = Dock.Left;
+        control.State = LayoutItemState.Document;
+        LayoutGroupItems.LayoutGroupPanel?.Remove(control);
+        LayoutGroupItems.LayoutGroupPanel?.Add(control);
+    }
 
+    internal void MoveInto(LayoutItemsControl source, LayoutItemsControl destination)
+    {
+        while (source.Items.Count > 0)
+        {
+            var item = source.Items[0];
+            source.Remove(item);
+            destination.Add(item);
+        }
+
+        RemoveLayoutItemsControl(source);
+    }
+
+    internal void MoveInto(LayoutDockItemsControl source, LayoutItemsControl destination)
+    {
+        while (source.Items.Count > 0)
+        {
+            var item = source.Items[0];
+            source.Remove(item);
+            destination.Add(item);
+
+            var element = destination.ContainerFromItem(item) ?? item;
+            if (element is LayoutItem documentItem)
+            {
+                //documentItem.IsDockable = true;
+            }
+        }
+
+        RemoveLayoutDockItemsControl(source);
+    }
+
+    /// <summary>
+    /// Called from a control when it's dropped into an other control
+    /// </summary>
+    /// <param name="source">Source control which is going to be closed</param>
+    /// <param name="destination">Destination control which is about to host contents from SourcePane</param>
+    internal void MoveInto(LayoutDockItemsControl source, LayoutDockItemsControl destination)
+    {
+        while (source.Items.Count > 0)
+        {
+            var item = source.Items[0];
+            source.Remove(item);
+            destination.Add(item);
+        }
+
+        RemoveLayoutDockItemsControl(source);
+    }
+
+    internal LayoutItemsControl AddNewLayoutItemsControl()
+    {
+        var items = (IList)LayoutGroupItems;
         LayoutItemsControl? newElement;
-        if (isReadOnly)
+
+        if (items.IsReadOnly)
         {
             var newItem = LayoutGroupItems.Add();
             newElement = LayoutGroupItems.ContainerFromItem(newItem) as LayoutItemsControl;
@@ -321,162 +409,40 @@ public class LayoutManager : ItemsControl, IDropSurface
 
         if (newElement is null)
         {
-            return;
+            throw new InvalidOperationException(
+                "Failed to create a new LayoutItemsControl instance. LayoutGroupItems.Add() returned null."
+            );
         }
 
-        LayoutGroupItems.MoveTo(newElement, destination, relativeDock);
-
-        while (source.Items.Count > 0)
-        {
-            var item = source.Items[0];
-
-            source.Remove(item);
-            newElement.Add(item);
-
-            var element = newElement.ContainerFromItem(item) ?? item;
-            if (element is LayoutItem documentItem)
-            {
-                //documentItem.IsDockable = true;
-            }
-        }
-
-        if (isReadOnly)
-        {
-            var item = this.ItemFromContainer(source);
-            Remove(item);
-        }
-        else
-        {
-            Remove(source);
-        }
-
-        DragServices.Unregister(source);
+        return newElement;
     }
 
-    internal void MoveTo(LayoutItemsControl control, LayoutItemsControl relativeControl, Dock relativeDock)
+    internal void RemoveLayoutDockItemsControl(LayoutDockItemsControl control)
     {
-        LayoutGroupItems.MoveTo(control, relativeControl, relativeDock);
-    }
-
-    internal void MoveInto(LayoutItemsControl source, LayoutItemsControl destination)
-    {
-        var owner = LayoutGroupItems;
-
-        while (source.Items.Count > 0)
-        {
-            var item = source.Items[0];
-            source.Remove(item);
-            destination.Add(item);
-        }
-
-        object? objectToRemove;
-        if (owner.ItemsSource is not null)
-        {
-            owner.UpdateLayout();
-            var index = owner.ItemContainerGenerator.IndexFromContainer(source);
-            objectToRemove = owner.Items[index];
-        }
-        else objectToRemove = source;
-
-        owner.Remove(objectToRemove);
-
-        DragServices.Unregister(source);
-    }
-
-    /// <summary>
-    /// Called from a control when it's dropped into an other control
-    /// </summary>
-    /// <param name="source">Source control which is going to be closed</param>
-    /// <param name="destination">Destination control which is about to host contents from SourcePane</param>
-    internal void MoveInto(LayoutDockItemsControl source, LayoutDockItemsControl destination)
-    {
-        var owner = this;
-
-        while (source.Items.Count > 0)
-        {
-            var item = source.Items[0];
-            source.Remove(item);
-            destination.Add(item);
-        }
-
-        object? objectToRemove;
-        if (owner.ItemsSource is not null)
-        {
-            owner.UpdateLayout();
-            var index = owner.ItemContainerGenerator.IndexFromContainer(source);
-            objectToRemove = owner.Items[index];
-        }
-        else objectToRemove = source;
-
-        owner.Remove(objectToRemove);
-
-        DragServices.Unregister(source);
-    }
-
-    internal void MoveInto(LayoutDockItemsControl source, LayoutItemsControl destination)
-    {
-        while (source.Items.Count > 0)
-        {
-            var item = source.Items[0];
-
-            source.Remove(item);
-            destination.Add(item);
-
-            var element = destination.ContainerFromItem(item) ?? item;
-            if (element is LayoutItem documentItem)
-            {
-                //documentItem.IsDockable = true;
-            }
-        }
-
         var isReadOnly = ((IList)Items).IsReadOnly;
-
         if (isReadOnly)
         {
-            var item = this.ItemFromContainer(source);
+            var item = this.ItemFromContainer(control);
             Remove(item);
         }
         else
         {
-            Remove(source);
+            Remove(control);
         }
-
-        DragServices.Unregister(source);
     }
 
-    /// <summary>
-    /// Move contained contents into a destination control and close this one
-    /// </summary>
-    public void MoveInto(LayoutItemsControl source)
+    internal void RemoveLayoutItemsControl(LayoutItemsControl control)
     {
-        if (source.State == LayoutItemState.Document) return;
-
-        var item = LayoutGroupItems.ItemFromContainer(source);
-
-        var isReadOnlyDockManager = ((IList)LayoutGroupItems.Items).IsReadOnly;
-        if (!isReadOnlyDockManager)
-            LayoutGroupItems.Remove(source);
-        else
-        {
-            var currentItem = LayoutGroupItems.ItemFromContainer(source);
-            LayoutGroupItems.Remove(currentItem);
-        }
-
-        var isReadOnly = ((IList)LayoutGroupItems.Items).IsReadOnly;
-
-        LayoutItemsControl? newElement;
+        var isReadOnly = ((IList)LayoutGroupItems).IsReadOnly;
         if (isReadOnly)
         {
-            var newItem = LayoutGroupItems.Add();
-            newElement = LayoutGroupItems.ContainerFromItem(newItem) as LayoutItemsControl;
+            var item = LayoutGroupItems.ItemFromContainer(control);
+            LayoutGroupItems.Remove(item);
         }
-        else newElement = LayoutGroupItems.Add() as LayoutItemsControl;
-
-        if (newElement is null) return;
-
-        newElement.Add(item);
-        newElement.State = LayoutItemState.Document;
-        newElement.DockManager = this;
+        else
+        {
+            LayoutGroupItems.Remove(control);
+        }
     }
 
     /// <summary>
@@ -643,7 +609,6 @@ public class LayoutManager : ItemsControl, IDropSurface
             if (item is null)
             {
                 var generator = ItemContainerGenerator as IItemContainerGenerator;
-
                 item = GetContainerForItemOverride();
                 generator.PrepareItemContainer((DependencyObject)item);
             }
