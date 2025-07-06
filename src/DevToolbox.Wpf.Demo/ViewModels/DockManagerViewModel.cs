@@ -106,7 +106,7 @@ public class DockManagerViewModel : ObservableObject
         //Properties.Settings.Default.Save();
     }
 
-    private DockableItem? GetContentFromTypeString(string type)
+    private LayoutDockItem? GetContentFromTypeString(string type)
     {
         //if (type == typeof(PropertyWindow).ToString())
         //    return propertyWindow;

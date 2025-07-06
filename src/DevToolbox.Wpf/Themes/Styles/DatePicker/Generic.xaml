@@ -136,7 +136,7 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Cursor="Hand"
-                                    FocusVisualStyle="{DynamicResource FocusVisualStyle}"
+                                    FocusVisualStyle="{DynamicResource Control.FocusVisualStyle}"
                                     Focusable="True"
                                     Foreground="{TemplateBinding Foreground}"
                                     IsTabStop="True"

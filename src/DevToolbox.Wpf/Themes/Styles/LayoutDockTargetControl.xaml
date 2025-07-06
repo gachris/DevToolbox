@@ -1,0 +1,241 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
+    xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/DrawingBrushes.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <converters:FlagToVisibilityConverter x:Key="FlagToVisibilityConverter" />
+
+    <Style TargetType="{x:Type controls:LayoutDockTargetControl}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:LayoutDockTargetControl}">
+                    <Grid Opacity="0.4" UseLayoutRounding="True">
+                        <Grid x:Name="PART_DockVectorOuter" Visibility="Collapsed">
+                            <controls:LayoutDockTargetButton
+                                Width="42"
+                                Height="42"
+                                Margin="6,0,0,0"
+                                HorizontalAlignment="Left"
+                                Background="{StaticResource DockLeftOuterBorder}"
+                                DockingPosition="Left"
+                                Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=Left}" />
+                            <controls:LayoutDockTargetButton
+                                Width="42"
+                                Height="42"
+                                Margin="0,0,6,0"
+                                HorizontalAlignment="Right"
+                                Background="{StaticResource DockRightOuterBorder}"
+                                DockingPosition="Right"
+                                Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=Right}" />
+                            <controls:LayoutDockTargetButton
+                                Width="42"
+                                Height="42"
+                                Margin="0,0,0,6"
+                                VerticalAlignment="Bottom"
+                                Background="{StaticResource DockBottomOuterBorder}"
+                                DockingPosition="Bottom"
+                                Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=Bottom}" />
+                            <controls:LayoutDockTargetButton
+                                Width="42"
+                                Height="42"
+                                Margin="0,6,0,0"
+                                VerticalAlignment="Top"
+                                Background="{StaticResource DockTopOuterBorder}"
+                                DockingPosition="Top"
+                                Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=Top}" />
+                        </Grid>
+                        <Canvas>
+                            <Grid
+                                x:Name="PART_DockVectorSmall"
+                                Width="124"
+                                Height="124"
+                                Background="{StaticResource DockVectorSmall}"
+                                Visibility="Collapsed">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <controls:LayoutDockTargetButton
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Width="34"
+                                    Height="34"
+                                    Background="{StaticResource DockHorizontalDash}"
+                                    DockingPosition="PaneTop"
+                                    Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                    Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=PaneTop}" />
+                                <controls:LayoutDockTargetButton
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Width="34"
+                                    Height="34"
+                                    Background="{StaticResource DockVerticalDash}"
+                                    DockingPosition="PaneRight"
+                                    Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                    Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=PaneRight}" />
+                                <controls:LayoutDockTargetButton
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Width="34"
+                                    Height="34"
+                                    Background="{StaticResource DockHorizontalDash}"
+                                    DockingPosition="PaneBottom"
+                                    Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                    Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=PaneBottom}" />
+                                <controls:LayoutDockTargetButton
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Width="34"
+                                    Height="34"
+                                    Background="{StaticResource DockVerticalDash}"
+                                    DockingPosition="PaneLeft"
+                                    Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                    Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=PaneLeft}" />
+                                <controls:LayoutDockTargetButton
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Width="34"
+                                    Height="34"
+                                    Background="{StaticResource DockInto}"
+                                    DockingPosition="PaneInto"
+                                    Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                    Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=PaneInto}" />
+                            </Grid>
+                            <Grid
+                                x:Name="PART_DockVectorLarge"
+                                Width="202"
+                                Height="202"
+                                Background="{StaticResource DockVectorLarge}"
+                                Visibility="Collapsed">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <controls:LayoutDockTargetButton
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Width="34"
+                                    Height="34"
+                                    Background="{StaticResource DockLeft}"
+                                    DockingPosition="InnerLeft"
+                                    Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                    Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=InnerLeft}" />
+                                <controls:LayoutDockTargetButton
+                                    Grid.Row="2"
+                                    Grid.Column="4"
+                                    Width="34"
+                                    Height="34"
+                                    Background="{StaticResource DockRight}"
+                                    DockingPosition="InnerRight"
+                                    Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                    Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=InnerRight}" />
+                                <controls:LayoutDockTargetButton
+                                    Grid.Row="4"
+                                    Grid.Column="2"
+                                    Width="34"
+                                    Height="34"
+                                    Background="{StaticResource DockBottom}"
+                                    DockingPosition="InnerBottom"
+                                    Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                    Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=InnerBottom}" />
+                                <controls:LayoutDockTargetButton
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Width="34"
+                                    Height="34"
+                                    Background="{StaticResource DockTop}"
+                                    DockingPosition="InnerTop"
+                                    Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                    Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=InnerTop}" />
+                                <controls:LayoutDockTargetButton
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Width="34"
+                                    Height="34"
+                                    Background="{StaticResource DockHorizontalDash}"
+                                    DockingPosition="PaneTop"
+                                    Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                    Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=PaneTop}" />
+                                <controls:LayoutDockTargetButton
+                                    Grid.Row="2"
+                                    Grid.Column="3"
+                                    Width="34"
+                                    Height="34"
+                                    Background="{StaticResource DockVerticalDash}"
+                                    DockingPosition="PaneRight"
+                                    Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                    Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=PaneRight}" />
+                                <controls:LayoutDockTargetButton
+                                    Grid.Row="3"
+                                    Grid.Column="2"
+                                    Width="34"
+                                    Height="34"
+                                    Background="{StaticResource DockHorizontalDash}"
+                                    DockingPosition="PaneBottom"
+                                    Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                    Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=PaneBottom}" />
+                                <controls:LayoutDockTargetButton
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Width="34"
+                                    Height="34"
+                                    Background="{StaticResource DockVerticalDash}"
+                                    DockingPosition="PaneLeft"
+                                    Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                    Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=PaneLeft}" />
+                                <controls:LayoutDockTargetButton
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    Width="34"
+                                    Height="34"
+                                    Background="{StaticResource DockInto}"
+                                    DockingPosition="PaneInto"
+                                    Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutDockTargetControl}, Path=DockManager.OverlayButtonStyle}"
+                                    Visibility="{Binding Path=DockTargetVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FlagToVisibilityConverter}, ConverterParameter=PaneInto}" />
+                            </Grid>
+                        </Canvas>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="DockTargetZone" Value="InnerCross">
+                            <Setter TargetName="PART_DockVectorSmall" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="DockTargetZone" Value="InnerCrossWithOuterEdges">
+                            <Setter TargetName="PART_DockVectorOuter" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_DockVectorSmall" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="DockTargetZone" Value="FullGridWithOuterEdges">
+                            <Setter TargetName="PART_DockVectorOuter" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_DockVectorLarge" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

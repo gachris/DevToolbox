@@ -12,13 +12,13 @@ internal class DockingDragServices
     private Point _offset;
     private readonly List<IDropSurface> _surfaces = [];
     private readonly List<IDropSurface> _surfacesWithDragOver = [];
-    private DockManagerWindow? _window;
+    private LayoutBaseWindow? _window;
 
     #endregion
 
     #region Properties
 
-    public DockManagerWindow? Window => _window;
+    public LayoutBaseWindow? Window => _window;
 
     #endregion
 
@@ -37,7 +37,7 @@ internal class DockingDragServices
         _surfaces.Remove(surface);
     }
 
-    public void StartDrag(DockManagerWindow wnd, Point point, Point offset)
+    public void StartDrag(LayoutBaseWindow wnd, Point point, Point offset)
     {
         _offset = offset;
 

@@ -48,9 +48,24 @@ public static class Icons
     /// <summary>Add icon.</summary>
     public const string Add = "e710";
 
+    /// <summary>ChevronUp icon.</summary>
+    public const string ChevronUp = "e70e";
+
     /// <summary>ChevronDown icon.</summary>
     public const string ChevronDown = "e70d";
 
-    /// <summary>ChevronDown icon.</summary>
+    /// <summary>ChevronLeft icon.</summary>
+    public const string ChevronLeft = "e76b";
+
+    /// <summary>ChevronRight icon.</summary>
+    public const string ChevronRight = "e76c";
+
+    /// <summary>CaretSolidDown icon.</summary>
     public const string CaretSolidDown = "f08e";
+
+    /// <summary>Unpin icon.</summary>
+    public const string Unpin = "e77a";
+
+    /// <summary>Pinned icon.</summary>
+    public const string Pinned = "e840";
 }

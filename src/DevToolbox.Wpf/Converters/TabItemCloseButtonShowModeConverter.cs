@@ -21,9 +21,20 @@ public class TabItemCloseButtonShowModeConverter : IMultiValueConverter
     /// <returns>The visibility of the close button.</returns>
     public object Convert(object[] value, Type targetType, object parameter, CultureInfo culture)
     {
-      var closeButtonShowMode = (CloseButtonShowMode)value[0];
-        var isSelected = (bool)value[1];
-        var isMouseOver = (bool)value[2];
+        // assume CloseButtonShowMode.None is the default you want when it’s not provided
+        CloseButtonShowMode closeButtonShowMode = default;
+        bool isSelected = false;
+        bool isMouseOver = false;
+
+        // value is object[] — check length and type before assigning
+        if (value.Length > 0 && value[0] is CloseButtonShowMode mode)
+            closeButtonShowMode = mode;
+
+        if (value.Length > 1 && value[1] is bool sel)
+            isSelected = sel;
+
+        if (value.Length > 2 && value[2] is bool over)
+            isMouseOver = over;
 
         return closeButtonShowMode switch
         {

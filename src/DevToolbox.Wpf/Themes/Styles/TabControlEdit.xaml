@@ -15,98 +15,62 @@
     <converters:ScrollLimitConverter x:Key="ScrollLimitConverter" />
 
     <Style
-        x:Key="TabControlEdit.BaseButtonStyle"
-        BasedOn="{StaticResource ButtonStyle}"
-        TargetType="{x:Type Button}">
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="ContentTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <controls:FontGlyph
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Code="{Binding}"
-                        Foreground="{Binding RelativeSource={RelativeSource AncestorType=ButtonBase}, Path=Foreground}" />
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style
-        x:Key="TabControlEdit.BaseRepeatButtonStyle"
-        BasedOn="{StaticResource RepeatButtonStyle}"
-        TargetType="{x:Type RepeatButton}">
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="ContentTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <controls:FontGlyph
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Code="{Binding}"
-                        Foreground="{Binding RelativeSource={RelativeSource AncestorType=ButtonBase}, Path=Foreground}" />
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
+        x:Key="TabControlEdit.BaseChromeStyle"
+        BasedOn="{StaticResource ButtonBase.ChromeStyle}"
+        TargetType="{x:Type ButtonBase}">
+        <Setter Property="Width" Value="14" />
+        <Setter Property="Height" Value="14" />
+        <Setter Property="FontSize" Value="8" />
     </Style>
 
     <Style
         x:Key="TabRightScrollButtonStyle"
-        BasedOn="{StaticResource TabControlEdit.BaseRepeatButtonStyle}"
-        TargetType="{x:Type RepeatButton}">
-        <Setter Property="Content" Value="{x:Static controls:Symbol.ExpandRight}" />
+        BasedOn="{StaticResource TabControlEdit.BaseChromeStyle}"
+        TargetType="{x:Type ButtonBase}">
+        <Setter Property="Content" Value="{x:Static controls:Icons.ChevronRight}" />
     </Style>
 
     <Style
         x:Key="TabLeftScrollButtonStyle"
-        BasedOn="{StaticResource TabControlEdit.BaseRepeatButtonStyle}"
-        TargetType="{x:Type RepeatButton}">
-        <Setter Property="Content" Value="{x:Static controls:Symbol.CollapseLeft}" />
+        BasedOn="{StaticResource TabControlEdit.BaseChromeStyle}"
+        TargetType="{x:Type ButtonBase}">
+        <Setter Property="Content" Value="{x:Static controls:Icons.ChevronLeft}" />
     </Style>
 
     <Style
         x:Key="TabTopScrollButtonStyle"
-        BasedOn="{StaticResource TabControlEdit.BaseRepeatButtonStyle}"
-        TargetType="{x:Type RepeatButton}">
-        <Setter Property="Content" Value="{x:Static controls:Symbol.CollapseUp}" />
+        BasedOn="{StaticResource TabControlEdit.BaseChromeStyle}"
+        TargetType="{x:Type ButtonBase}">
+        <Setter Property="Content" Value="{x:Static controls:Icons.ChevronUp}" />
     </Style>
 
     <Style
         x:Key="TabBottomScrollButtonStyle"
-        BasedOn="{StaticResource TabControlEdit.BaseRepeatButtonStyle}"
-        TargetType="{x:Type RepeatButton}">
-        <Setter Property="Content" Value="{x:Static controls:Symbol.ExpandDown}" />
+        BasedOn="{StaticResource TabControlEdit.BaseChromeStyle}"
+        TargetType="{x:Type ButtonBase}">
+        <Setter Property="Content" Value="{x:Static controls:Icons.ChevronDown}" />
     </Style>
 
     <Style
         x:Key="AddTabItemButtonStyle"
-        BasedOn="{StaticResource TabControlEdit.BaseButtonStyle}"
-        TargetType="{x:Type Button}">
-        <Setter Property="Content" Value="{x:Static controls:Symbol.Add}" />
+        BasedOn="{StaticResource TabControlEdit.BaseChromeStyle}"
+        TargetType="{x:Type ButtonBase}">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Content" Value="{x:Static controls:Icons.Add}" />
     </Style>
 
     <Style
         x:Key="SwapTabsButtonStyle"
-        BasedOn="{StaticResource TabControlEdit.BaseButtonStyle}"
-        TargetType="{x:Type Button}">
-        <Setter Property="Content" Value="{x:Static controls:Symbol.GlyphDown}" />
+        BasedOn="{StaticResource TabControlEdit.BaseChromeStyle}"
+        TargetType="{x:Type ButtonBase}">
+        <Setter Property="Content" Value="{x:Static controls:Icons.CaretSolidDown}" />
     </Style>
 
     <Style
         x:Key="CloseTabItemButtonStyle"
-        BasedOn="{StaticResource TabControlEdit.BaseButtonStyle}"
-        TargetType="{x:Type Button}">
-        <Setter Property="Content" Value="{x:Static controls:Symbol.Close}" />
+        BasedOn="{StaticResource TabControlEdit.BaseChromeStyle}"
+        TargetType="{x:Type ButtonBase}">
+        <Setter Property="Content" Value="{x:Static controls:Icons.ChromeClose}" />
     </Style>
 
     <Style x:Key="ScrollViewerStyle" TargetType="{x:Type ScrollViewer}">
@@ -291,9 +255,9 @@
                                 ContextMenuService.Placement="Bottom"
                                 Style="{TemplateBinding SwapTabsButtonStyle}">
                                 <Button.ContextMenu>
-                                    <ContextMenu ItemsSource="{Binding Items, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                    <ContextMenu FontSize="{DynamicResource FontSize12}" ItemsSource="{Binding Items, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                         <ContextMenu.ItemContainerStyle>
-                                            <Style BasedOn="{StaticResource MenuItemStyle}" TargetType="MenuItem">
+                                            <Style TargetType="MenuItem">
                                                 <Setter Property="Command" Value="{x:Static controls:TabControlEdit.SelectTabCommand}" />
                                                 <Setter Property="CommandParameter" Value="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=Self}}" />
                                             </Style>

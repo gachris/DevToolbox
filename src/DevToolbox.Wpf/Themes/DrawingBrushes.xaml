@@ -1,0 +1,414 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <DrawingBrush x:Key="DockTopOuterBorder" Stretch="None">
+        <DrawingBrush.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V42 H42 V0 H0 Z">
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry
+                            RadiusX="0"
+                            RadiusY="0"
+                            Rect="0.5,0.5,41,41" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M42,42z M0,0z M6,4.5L36,4.5C36.8284,4.5,37.5,5.17157,37.5,6L37.5,36C37.5,36.8284,36.8284,37.5,36,37.5L6,37.5C5.17157,37.5,4.5,36.8284,4.5,36L4.5,6C4.5,5.17157,5.17157,4.5,6,4.5z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M42,42z M0,0z M25,15.5L26.2071,15.5 25.3536,14.6464 21.3536,10.6464 21,10.2929 20.6464,10.6464 16.6464,14.6464 15.7929,15.5 17,15.5 21,15.5 25,15.5z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M42,42z M0,0z M7,21L35,21 35,33C35,34.1046,34.1046,35,33,35L9,35C7.89543,35,7,34.1046,7,33L7,21z" />
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M42,42z M0,0z M9,25L33,25 33,33 9,33 9,25z" />
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="DockBottomOuterBorder" Stretch="None">
+        <DrawingBrush.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V42 H42 V0 H0 Z">
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry
+                            RadiusX="0"
+                            RadiusY="0"
+                            Rect="0.5,0.5,41,41" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M42,42z M0,0z M4.5,6C4.5,5.17157,5.17157,4.5,6,4.5L36,4.5C36.8284,4.5,37.5,5.17157,37.5,6L37.5,36C37.5,36.8284,36.8284,37.5,36,37.5L6,37.5C5.17157,37.5,4.5,36.8284,4.5,36L4.5,6z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M42,42z M0,0z M20.6464,31.3536L21,31.7071 21.3536,31.3536 25.3536,27.3536 26.2071,26.5 25,26.5 21,26.5 17,26.5 15.7929,26.5 16.6464,27.3536 20.6464,31.3536z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M42,42z M0,0z M7,7L35,7 35,19C35,20.1046,34.1046,21,33,21L9,21C7.89543,21,7,20.1046,7,19L7,7z" />
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M42,42z M0,0z M9,11L33,11 33,19 9,19 9,11z" />
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="DockLeftOuterBorder" Stretch="None">
+        <DrawingBrush.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V42 H42 V0 H0 Z">
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M42,42z M0,0z M0.5,0.5L41.5,0.5 41.5,41.5 0.5,41.5 0.5,0.5z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M42,42z M0,0z M6,4.5L36,4.5C36.8284,4.5,37.5,5.17157,37.5,6L37.5,36C37.5,36.8284,36.8284,37.5,36,37.5L6,37.5C5.17157,37.5,4.5,36.8284,4.5,36L4.5,6C4.5,5.17157,5.17157,4.5,6,4.5z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M42,42z M0,0z M31.5,18L31.5,16.7929 30.6464,17.6464 26.6464,21.6464 26.2929,22 26.6464,22.3536 30.6464,26.3536 31.5,27.2071 31.5,26 31.5,22 31.5,18z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M42,42z M0,0z M7,7L21,7 21,33C21,34.1046,20.1046,35,19,35L9,35C7.89543,35,7,34.1046,7,33L7,7z" />
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M42,42z M0,0z M9,11L19,11 19,33 9,33 9,11z" />
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="DockRightOuterBorder" Stretch="None">
+        <DrawingBrush.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V42 H42 V0 H0 Z">
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M42,42z M0,0z M0.5,0.5L41.5,0.5 41.5,41.5 0.5,41.5 0.5,0.5z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M42,42z M0,0z M6,4.5L36,4.5C36.8284,4.5,37.5,5.17157,37.5,6L37.5,36C37.5,36.8284,36.8284,37.5,36,37.5L6,37.5C5.17157,37.5,4.5,36.8284,4.5,36L4.5,6C4.5,5.17157,5.17157,4.5,6,4.5z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M42,42z M0,0z M11.3536,16.6464L10.5,15.7929 10.5,17 10.5,25 10.5,26.2071 11.3536,25.3536 15.3536,21.3536 15.7071,21 15.3536,20.6464 11.3536,16.6464z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M42,42z M0,0z M21,7L35,7 35,33C35,34.1046,34.1046,35,33,35L23,35C21.8954,35,21,34.1046,21,33L21,7z" />
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M42,42z M0,0z M23,11L33,11 33,33 23,33 23,11z" />
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="DockTop" Stretch="None">
+        <DrawingBrush.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V34 H34 V0 H0 Z">
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M34,34z M0,0z M2,0.5L32,0.5C32.8284,0.5,33.5,1.17157,33.5,2L33.5,32C33.5,32.8284,32.8284,33.5,32,33.5L2,33.5C1.17157,33.5,0.5,32.8284,0.5,32L0.5,2C0.5,1.17157,1.17157,0.5,2,0.5z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M34,34z M0,0z M21,11.5L22.2071,11.5 21.3536,10.6464 17.3536,6.64645 17,6.29289 16.6464,6.64645 12.6464,10.6464 11.7929,11.5 13,11.5 17,11.5 21,11.5z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M34,34z M0,0z M3,17L31,17 31,29C31,30.1046,30.1046,31,29,31L5,31C3.89543,31,3,30.1046,3,29L3,17z" />
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M34,34z M0,0z M5,21L29,21 29,29 5,29 5,21z" />
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="DockBottom" Stretch="None">
+        <DrawingBrush.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V34 H34 V0 H0 Z">
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M34,34z M0,0z M2,0.5L32,0.5C32.8284,0.5,33.5,1.17157,33.5,2L33.5,32C33.5,32.8284,32.8284,33.5,32,33.5L2,33.5C1.17157,33.5,0.5,32.8284,0.5,32L0.5,2C0.5,1.17157,1.17157,0.5,2,0.5z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M34,34z M0,0z M13,22.5L11.7929,22.5 12.6464,23.3536 16.6464,27.3536 17,27.7071 17.3536,27.3536 21.3536,23.3536 22.2071,22.5 21,22.5 17,22.5 13,22.5z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M34,34z M0,0z M3,3L31,3 31,15C31,16.1046,30.1046,17,29,17L5,17C3.89543,17,3,16.1046,3,15L3,3z" />
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M34,34z M0,0z M5,7L29,7 29,15 5,15 5,7z" />
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="DockLeft" Stretch="None">
+        <DrawingBrush.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V34 H34 V0 H0 Z">
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M34,34z M0,0z M2,0.5L32,0.5C32.8284,0.5,33.5,1.17157,33.5,2L33.5,32C33.5,32.8284,32.8284,33.5,32,33.5L2,33.5C1.17157,33.5,0.5,32.8284,0.5,32L0.5,2C0.5,1.17157,1.17157,0.5,2,0.5z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M34,34z M0,0z M27.5,14L27.5,12.7929 26.6464,13.6464 22.6464,17.6464 22.2929,18 22.6464,18.3536 26.6464,22.3536 27.5,23.2071 27.5,22 27.5,18 27.5,14z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M34,34z M0,0z M3,3L17,3 17,29C17,30.1046,16.1046,31,15,31L5,31C3.89543,31,3,30.1046,3,29L3,3z" />
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M34,34z M0,0z M5,7L15,7 15,29 5,29 5,7z" />
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="DockRight" Stretch="None">
+        <DrawingBrush.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V34 H34 V0 H0 Z">
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M34,34z M0,0z M2,0.5L32,0.5C32.8284,0.5,33.5,1.17157,33.5,2L33.5,32C33.5,32.8284,32.8284,33.5,32,33.5L2,33.5C1.17157,33.5,0.5,32.8284,0.5,32L0.5,2C0.5,1.17157,1.17157,0.5,2,0.5z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M34,34z M0,0z M7.35355,12.6464L6.5,11.7929 6.5,13 6.5,21 6.5,22.2071 7.35355,21.3536 11.3536,17.3536 11.7071,17 11.3536,16.6464 7.35355,12.6464z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M34,34z M0,0z M17,3L31,3 31,29C31,30.1046,30.1046,31,29,31L19,31C17.8954,31,17,30.1046,17,29L17,3z" />
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M34,34z M0,0z M19,7L29,7 29,29 19,29 19,7z" />
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="DockInto" Stretch="None">
+        <DrawingBrush.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V34 H34 V0 H0 Z">
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M34,34z M0,0z M2,0.5L32,0.5C32.8284,0.5,33.5,1.17157,33.5,2L33.5,32C33.5,32.8284,32.8284,33.5,32,33.5L2,33.5C1.17157,33.5,0.5,32.8284,0.5,32L0.5,2C0.5,1.17157,1.17157,0.5,2,0.5z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M34,34z M0,0z M3,3L31,3 31,29C31,30.1046,30.1046,31,29,31L5,31C3.89543,31,3,30.1046,3,29L3,3z" />
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M34,34z M0,0z M5,7L29,7 29,29 5,29 5,7z" />
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="DockVectorSmall" Stretch="None">
+        <DrawingBrush.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V124 H124 V0 H0 Z">
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M124,124z M0,0z M94,39.5L123.5,39.5 123.5,84.5 94,84.5 93.7929,84.5 93.6464,84.6464 84.6464,93.6464 84.5,93.7929 84.5,94 84.5,123.5 39.5,123.5 39.5,94 39.5,93.7929 39.3536,93.6464 30.3536,84.6464 30.2071,84.5 30,84.5 0.5,84.5 0.5,39.5 30,39.5 30.2071,39.5 30.3536,39.3536 39.3536,30.3536 39.5,30.2071 39.5,30 39.5,0.5 84.5,0.5 84.5,30 84.5,30.2071 84.6464,30.3536 93.6464,39.3536 93.7929,39.5 94,39.5z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="DockVectorLarge" Stretch="None">
+        <DrawingBrush.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V202 H202 V0 H0 Z">
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M202,202z M0,0z M133,78.5L201.5,78.5 201.5,123.5 133,123.5 132.793,123.5 132.646,123.646 123.646,132.646 123.5,132.793 123.5,133 123.5,201.5 78.5,201.5 78.5,133 78.5,132.793 78.3536,132.646 69.3536,123.646 69.2071,123.5 69,123.5 0.5,123.5 0.5,78.5 69,78.5 69.2071,78.5 69.3536,78.3536 78.3536,69.3536 78.5,69.2071 78.5,69 78.5,0.5 123.5,0.5 123.5,69 123.5,69.2071 123.646,69.3536 132.646,78.3536 132.793,78.5 133,78.5z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="DockVerticalDash" Stretch="None">
+        <DrawingBrush.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V34 H34 V0 H0 Z">
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M34,34z M0,0z M2,0.5L32,0.5C32.8284,0.5,33.5,1.17157,33.5,2L33.5,32C33.5,32.8284,32.8284,33.5,32,33.5L2,33.5C1.17157,33.5,0.5,32.8284,0.5,32L0.5,2C0.5,1.17157,1.17157,0.5,2,0.5z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M34,34z M0,0z M3,3L31,3 31,29C31,30.1046,30.1046,31,29,31L5,31C3.89543,31,3,30.1046,3,29L3,3z" />
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M34,34z M0,0z M5,7L29,7 29,29 5,29 5,7z" />
+                <GeometryDrawing>
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            DashCap="Flat"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1">
+                            <Pen.DashStyle>
+                                <DashStyle Dashes="1 1" Offset="0" />
+                            </Pen.DashStyle>
+                        </Pen>
+                    </GeometryDrawing.Pen>
+                    <GeometryDrawing.Geometry>
+                        <LineGeometry StartPoint="17,29" EndPoint="17,7" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="DockHorizontalDash">
+        <DrawingBrush.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V34 H34 V0 H0 Z">
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M34,34z M0,0z M0.5,2C0.5,1.17157,1.17157,0.5,2,0.5L32,0.5C32.8284,0.5,33.5,1.17157,33.5,2L33.5,32C33.5,32.8284,32.8284,33.5,32,33.5L2,33.5C1.17157,33.5,0.5,32.8284,0.5,32L0.5,2z">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M34,34z M0,0z M3,3L31,3 31,29C31,30.1046,30.1046,31,29,31L5,31C3.89544,31,3,30.1046,3,29L3,3z" />
+                <GeometryDrawing Brush="{DynamicResource AccentLight2Brush}" Geometry="F1 M34,34z M0,0z M5,7L29,7 29,29 5,29 5,7z" />
+                <GeometryDrawing>
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF000000"
+                            DashCap="Flat"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="1">
+                            <Pen.DashStyle>
+                                <DashStyle Dashes="1 1" Offset="0" />
+                            </Pen.DashStyle>
+                        </Pen>
+                    </GeometryDrawing.Pen>
+                    <GeometryDrawing.Geometry>
+                        <LineGeometry StartPoint="5,18" EndPoint="29,18" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+</ResourceDictionary>

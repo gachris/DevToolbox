@@ -4,6 +4,7 @@
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
     xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters"
     xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers"
+    xmlns:markup="clr-namespace:DevToolbox.Wpf.Markup"
     xmlns:media="clr-namespace:DevToolbox.Wpf.Media">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/Button/Generic.xaml" />
@@ -11,43 +12,16 @@
 
     <converters:TabItemCloseButtonShowModeConverter x:Key="TabItemCloseButtonShowModeConverter" />
 
-    <Style x:Key="FocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle
-                        Margin="2"
-                        SnapsToDevicePixels="true"
-                        Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
-                        StrokeDashArray="1 2"
-                        StrokeThickness="1" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style
-        x:Key="TabItemEdit.Close.Button.Style"
-        BasedOn="{StaticResource ButtonStyle}"
-        TargetType="{x:Type Button}">
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="Content" Value="{x:Static controls:Symbol.Close}" />
-        <Setter Property="ContentTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <controls:FontGlyph
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Code="{Binding}"
-                        Foreground="{Binding RelativeSource={RelativeSource AncestorType=ButtonBase}, Path=Foreground}" />
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
+        x:Key="CloseTabButton.ChromeStyle"
+        BasedOn="{StaticResource ButtonBase.ChromeStyle}"
+        TargetType="{x:Type ButtonBase}">
+        <Setter Property="Width" Value="14" />
+        <Setter Property="Height" Value="14" />
+        <Setter Property="ToolTip" Value="Close" />
+        <Setter Property="FontSize" Value="8" />
+        <Setter Property="Margin" Value="8,0,0,0" />
+        <Setter Property="Content" Value="{x:Static controls:Icons.ChromeClose}" />
     </Style>
 
     <ControlTemplate x:Key="TabItemEditThemedTemplate" TargetType="{x:Type controls:TabItemEdit}">
@@ -246,8 +220,8 @@
         <Setter Property="Padding" Value="6,2,6,2" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Setter Property="CloseTabButtonStyle" Value="{StaticResource TabItemEdit.Close.Button.Style}" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+        <Setter Property="CloseTabButtonStyle" Value="{StaticResource CloseTabButton.ChromeStyle}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource Control.FocusVisualStyle}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:TabItemEdit}">

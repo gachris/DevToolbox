@@ -1,9 +1,10 @@
+using System;
 using System.Windows;
 
 namespace DevToolbox.Wpf.Controls;
 
 /// <summary>
-/// Defines a surface that can accept drag-and-drop operations within a <see cref="DockManager"/>.
+/// Defines a surface that can accept drag-and-drop operations within a <see cref="LayoutManager"/>.
 /// </summary>
 public interface IDropSurface
 {

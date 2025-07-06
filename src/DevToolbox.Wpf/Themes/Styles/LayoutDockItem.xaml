@@ -1,0 +1,155 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
+    xmlns:converters="clr-namespace:DevToolbox.Wpf.Converters">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/Button/Generic.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <converters:TabItemCloseButtonShowModeConverter x:Key="TabItemCloseButtonShowModeConverter" />
+    <converters:WidthThresholdToVisibilityConverter x:Key="WidthThresholdToVisibilityConverter" />
+
+    <Style
+        x:Key="CloseTabButton.ChromeStyle"
+        BasedOn="{StaticResource ButtonBase.ChromeStyle}"
+        TargetType="{x:Type ButtonBase}">
+        <Setter Property="Width" Value="14" />
+        <Setter Property="Height" Value="14" />
+        <Setter Property="ToolTip" Value="Close" />
+        <Setter Property="FontSize" Value="8" />
+        <Setter Property="Margin" Value="8,0,0,0" />
+        <Setter Property="Content" Value="{x:Static controls:Icons.ChromeClose}" />
+    </Style>
+
+    <Style TargetType="{x:Type controls:LayoutDockItem}">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="6,3" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource Control.FocusVisualStyle}" />
+        <Setter Property="Background" Value="{DynamicResource LayoutDockItem.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource LayoutDockItem.BorderBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource LayoutDockItem.Foreground}" />
+        <Setter Property="FontSize" Value="{DynamicResource FontSize12}" />
+        <Setter Property="CloseTabButtonStyle" Value="{StaticResource CloseTabButton.ChromeStyle}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:LayoutDockItem}">
+                    <Grid x:Name="templateGridRoot">
+                        <Border
+                            x:Name="templateRoot"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            SnapsToDevicePixels="true" />
+                        <Grid Margin="{TemplateBinding Padding}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                x:Name="icon"
+                                Grid.Column="0"
+                                Width="16"
+                                Height="16"
+                                Margin="0,0,4,0"
+                                Source="{TemplateBinding Icon}"
+                                Stretch="Uniform"
+                                Visibility="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type controls:LayoutDockItem}}, Converter={StaticResource WidthThresholdToVisibilityConverter}, ConverterParameter=40}" />
+                            <ContentPresenter
+                                x:Name="contentPresenter"
+                                Grid.Column="0"
+                                HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                ContentSource="Header"
+                                Focusable="False"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <Button
+                                Grid.Column="1"
+                                Command="{x:Static controls:TabControlEdit.CloseCommand}"
+                                Style="{TemplateBinding CloseTabButtonStyle}">
+                                <Button.Visibility>
+                                    <MultiBinding Converter="{StaticResource TabItemCloseButtonShowModeConverter}">
+                                        <Binding Path="CloseButtonShowMode" RelativeSource="{RelativeSource AncestorType=controls:TabControlEdit}" />
+                                        <Binding Path="IsSelected" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                        <Binding Path="IsMouseOver" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                    </MultiBinding>
+                                </Button.Visibility>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger SourceName="icon" Property="Visibility" Value="Visible">
+                            <Setter TargetName="contentPresenter" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource Self}}" Value="Top">
+                            <Setter TargetName="templateRoot" Property="BorderThickness" Value="1,1,1,0" />
+                            <Setter TargetName="templateGridRoot" Property="Margin" Value="0,0,0,1" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource Self}}" Value="Bottom">
+                            <Setter TargetName="templateRoot" Property="BorderThickness" Value="1,0,1,1" />
+                            <Setter TargetName="templateGridRoot" Property="Margin" Value="0,1,0,0" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource Self}}" Value="Left">
+                            <Setter TargetName="templateRoot" Property="BorderThickness" Value="1,1,0,1" />
+                            <Setter TargetName="templateGridRoot" Property="Margin" Value="0,0,1,0" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource Self}}" Value="Right">
+                            <Setter TargetName="templateRoot" Property="BorderThickness" Value="0,1,1,1" />
+                            <Setter TargetName="templateGridRoot" Property="Margin" Value="1,0,0,0" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="False" />
+                                <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource Self}}" Value="Top" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="templateRoot" Property="Margin" Value="0,0,0,1" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="False" />
+                                <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource Self}}" Value="Bottom" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="templateRoot" Property="Margin" Value="0,1,0,0" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="False" />
+                                <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource Self}}" Value="Left" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="templateRoot" Property="Margin" Value="0,0,1,0" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="False" />
+                                <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource Self}}" Value="Right" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="templateRoot" Property="Margin" Value="1,0,0,0" />
+                        </MultiDataTrigger>
+                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True">
+                            <Setter TargetName="templateRoot" Property="Background" Value="{DynamicResource LayoutDockItem.SelectedBackground}" />
+                            <Setter TargetName="templateRoot" Property="BorderBrush" Value="{DynamicResource LayoutDockItem.SelectedBorderBrush}" />
+                            <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{DynamicResource LayoutDockItem.SelectedForeground}" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="False" />
+                                <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="templateRoot" Property="Background" Value="{DynamicResource LayoutDockItem.MouseOverBackground}" />
+                            <Setter TargetName="templateRoot" Property="BorderBrush" Value="{DynamicResource LayoutDockItem.MouseOverBorderBrush}" />
+                            <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{DynamicResource LayoutDockItem.MouseOverForeground}" />
+                        </MultiDataTrigger>
+                        <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="False">
+                            <Setter TargetName="templateRoot" Property="Background" Value="{DynamicResource LayoutDockItem.DisabledBackground}" />
+                            <Setter TargetName="templateRoot" Property="BorderBrush" Value="{DynamicResource LayoutDockItem.DisabledBorderBrush}" />
+                            <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{DynamicResource LayoutDockItem.DisabledForeground}" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

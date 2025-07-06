@@ -4,39 +4,9 @@
     xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls"
     xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
 
-    <Style x:Key="FocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle
-                        Margin="2"
-                        SnapsToDevicePixels="true"
-                        Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
-                        StrokeDashArray="1 2"
-                        StrokeThickness="1" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="OptionMarkFocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle
-                        Margin="14,0,0,0"
-                        SnapsToDevicePixels="true"
-                        Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
-                        StrokeDashArray="1 2"
-                        StrokeThickness="1" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="CheckBoxStyle" TargetType="{x:Type CheckBox}">
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource Control.FocusVisualStyle}" />
         <Setter Property="Background" Value="{DynamicResource CheckBox.Background}" />
         <Setter Property="Foreground" Value="{DynamicResource CheckBox.Foreground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource CheckBox.BorderBrush}" />
@@ -100,9 +70,6 @@
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="HasContent" Value="true">
-                            <Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}" />
-                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter TargetName="checkBoxBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBackground)}" />
                             <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBorderBrush)}" />

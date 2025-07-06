@@ -54,16 +54,6 @@
     <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=InactiveForeground, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor='#818183', LightColor='#818183', SystemColorType=AccentLight2}" />
     <SolidColorBrush x:Key="{markup:ChromeButtonResourceKey TypeInTargetAssembly={x:Type markup:ButtonChromeBrushKey}, ResourceId=InactiveBorderBrush, IsClose=true}" Color="{markup:ChromeButtonColorKey DarkColor=Transparent, LightColor=Transparent}" />
 
-    <Style x:Key="FocusVisualStyle">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle SnapsToDevicePixels="true" Stroke="{markup:ThemeBrush DarkThemeBrush='#FFFFFF', LightThemeBrush='#000000', DefaultBrush='#000000', HighContrastBrush={x:Static SystemColors.ActiveBorderBrush}}" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="Button.BaseChromeStyle" TargetType="{x:Type Button}">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
@@ -72,7 +62,7 @@
         <Setter Property="Width" Value="45" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="10" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisualStyle}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource Control.FocusVisualStyle}" />
         <Setter Property="ContentTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -257,7 +247,6 @@
         <Setter Property="ToolTip" Value="Back" />
         <Setter Property="helpers:UIElementHelper.CornerRadius" Value="4" />
         <Setter Property="Content" Value="{x:Static controls:Icons.ChromeBack}" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisualStyle}" />
     </Style>
 
     <Style TargetType="{x:Type windows:WindowEx}">

@@ -5,7 +5,7 @@ namespace DevToolbox.Wpf.Serialization;
 
 /// <summary>
 /// Defines methods for serializing and deserializing the layout of controls
-/// in a <see cref="DockManager"/> to and from XML.
+/// in a <see cref="LayoutManager"/> to and from XML.
 /// </summary>
 public interface ILayoutSerializable
 {
@@ -19,7 +19,7 @@ public interface ILayoutSerializable
 
     /// <summary>
     /// Deserializes and applies previously saved layout information from the specified XML node,
-    /// attaching the deserialized control to the provided <see cref="DockManager"/>.
+    /// attaching the deserialized control to the provided <see cref="LayoutManager"/>.
     /// </summary>
     /// <param name="managerToAttach">The DockManager instance to which deserialized controls will be added.</param>
     /// <param name="node">The XML node containing serialized layout data.</param>
@@ -27,5 +27,5 @@ public interface ILayoutSerializable
     /// A callback that maps XML element names to control instances.
     /// Receives the type-string and returns the corresponding content object.
     /// </param>
-    void Deserialize(DockManager managerToAttach, XmlNode node, GetContentFromTypeString getObjectHandler);
+    void Deserialize(LayoutManager managerToAttach, XmlNode node, GetContentFromTypeString getObjectHandler);
 }

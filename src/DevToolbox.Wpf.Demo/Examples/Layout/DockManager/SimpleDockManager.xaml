@@ -12,12 +12,12 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <devtoolbox:DockManager
+    <devtoolbox:LayoutManager
         x:Name="DockManagerItemsSource"
         BorderThickness="0"
         ItemsSource="{Binding DockableControlItems}">
-        <devtoolbox:DockManager.ItemContainerStyle>
-            <Style BasedOn="{StaticResource ResourceKey={x:Type devtoolbox:DockableControl}}" TargetType="{x:Type devtoolbox:DockableControl}">
+        <devtoolbox:LayoutManager.ItemContainerStyle>
+            <Style BasedOn="{StaticResource ResourceKey={x:Type devtoolbox:LayoutDockItemsControl}}" TargetType="{x:Type devtoolbox:LayoutDockItemsControl}">
                 <Setter Property="Dock" Value="{Binding Dock}" />
                 <Setter Property="ItemsSource" Value="{Binding Items}" />
                 <Setter Property="VerticalAlignment" Value="Stretch" />
@@ -26,7 +26,7 @@
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 <Setter Property="ItemContainerStyle">
                     <Setter.Value>
-                        <Style BasedOn="{StaticResource ResourceKey={x:Type devtoolbox:DockableItem}}" TargetType="{x:Type devtoolbox:DockableItem}">
+                        <Style BasedOn="{StaticResource ResourceKey={x:Type devtoolbox:LayoutDockItem}}" TargetType="{x:Type devtoolbox:LayoutDockItem}">
                             <Setter Property="Header" Value="{Binding Header}" />
                             <Setter Property="Icon" Value="{Binding Icon}" />
                             <Setter Property="VerticalAlignment" Value="Stretch" />
@@ -37,11 +37,11 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-        </devtoolbox:DockManager.ItemContainerStyle>
-        <devtoolbox:DockManager.DocumentList>
-            <devtoolbox:DocumentList ItemsSource="{Binding DocumentControItems}">
-                <devtoolbox:DocumentList.ItemContainerStyle>
-                    <Style BasedOn="{StaticResource ResourceKey={x:Type devtoolbox:DocumentControl}}" TargetType="{x:Type devtoolbox:DocumentControl}">
+        </devtoolbox:LayoutManager.ItemContainerStyle>
+        <devtoolbox:LayoutManager.LayoutGroupItems>
+            <devtoolbox:LayoutGroupItemsControl ItemsSource="{Binding DocumentControItems}">
+                <devtoolbox:LayoutGroupItemsControl.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource ResourceKey={x:Type devtoolbox:LayoutItemsControl}}" TargetType="{x:Type devtoolbox:LayoutItemsControl}">
                         <Setter Property="ItemsSource" Value="{Binding Items}" />
                         <Setter Property="VerticalAlignment" Value="Stretch" />
                         <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -49,7 +49,7 @@
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                         <Setter Property="ItemContainerStyle">
                             <Setter.Value>
-                                <Style BasedOn="{StaticResource ResourceKey={x:Type devtoolbox:DocumentItem}}" TargetType="{x:Type devtoolbox:DocumentItem}">
+                                <Style BasedOn="{StaticResource ResourceKey={x:Type devtoolbox:LayoutItem}}" TargetType="{x:Type devtoolbox:LayoutItem}">
                                     <Setter Property="Header" Value="{Binding Header}" />
                                     <Setter Property="VerticalAlignment" Value="Stretch" />
                                     <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -59,10 +59,10 @@
                             </Setter.Value>
                         </Setter>
                     </Style>
-                </devtoolbox:DocumentList.ItemContainerStyle>
-            </devtoolbox:DocumentList>
-        </devtoolbox:DockManager.DocumentList>
-    </devtoolbox:DockManager>
+                </devtoolbox:LayoutGroupItemsControl.ItemContainerStyle>
+            </devtoolbox:LayoutGroupItemsControl>
+        </devtoolbox:LayoutManager.LayoutGroupItems>
+    </devtoolbox:LayoutManager>
 
     <!--
 <devtoolbox:DockManager Margin="5" BorderThickness="0">

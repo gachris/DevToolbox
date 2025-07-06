@@ -1,0 +1,17 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:DevToolbox.Wpf.Controls">
+
+    <Style BasedOn="{StaticResource ResourceKey={x:Type ItemsControl}}" TargetType="{x:Type controls:LayoutDockButtonGroupItem}">
+        <Setter Property="ItemContainerStyle" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:LayoutManager}, Path=DockButtonStyle}" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:LayoutDockButtonGroupControl}}, Path=Orientation}" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

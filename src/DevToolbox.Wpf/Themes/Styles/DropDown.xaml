@@ -24,27 +24,12 @@
         </Border>
     </ControlTemplate>
 
-    <Style x:Key="FocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle
-                        Margin="2"
-                        SnapsToDevicePixels="true"
-                        Stroke="Black"
-                        StrokeDashArray="1 2"
-                        StrokeThickness="1" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="{x:Type controls:DropDown}" TargetType="{x:Type controls:DropDown}">
         <Setter Property="Padding" Value="1" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource Control.FocusVisualStyle}" />
         <Setter Property="Background" Value="{DynamicResource DropDown.Background}" />
         <Setter Property="Foreground" Value="{DynamicResource DropDown.Foreground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource DropDown.BorderBrush}" />

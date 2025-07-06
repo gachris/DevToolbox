@@ -2,6 +2,11 @@ using DevToolbox.Wpf.Controls;
 
 namespace DevToolbox.Wpf.Serialization;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public delegate DockableItem GetContentFromTypeString(string type);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+/// <summary>
+/// Defines a method that returns a <see cref="LayoutDockItem"/> instance corresponding to a given type string.
+/// </summary>
+/// <param name="type">A string identifier representing the type of content to create.</param>
+/// <returns>
+/// A <see cref="LayoutDockItem"/> that corresponds to the specified <paramref name="type"/> string.
+/// </returns>
+public delegate LayoutDockItem GetContentFromTypeString(string type);

@@ -17,7 +17,7 @@
         <Setter Property="devtoolbox:UIElementHelper.MouseOverBackground" Value="{DynamicResource Button.Borderless.MouseOverBackground}" />
         <Setter Property="devtoolbox:UIElementHelper.PressedBackground" Value="{DynamicResource Button.Borderless.PressedBackground}" />
         <Setter Property="devtoolbox:UIElementHelper.DisabledBackground" Value="{DynamicResource Button.Borderless.DisabledBackground}" />
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource FocusVisualStyle}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource Control.FocusVisualStyle}" />
     </Style>
 
     <Style
