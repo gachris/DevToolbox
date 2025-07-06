@@ -325,7 +325,6 @@ public class LayoutItemsControl : TabControlEdit, IDropSurface, ILayoutSerializa
             }
         }
 
-
         var isReadOnly = ((IList)Items).IsReadOnly;
 
         LayoutItemsControl? newElement = null;
@@ -444,9 +443,16 @@ public class LayoutItemsControl : TabControlEdit, IDropSurface, ILayoutSerializa
             || !_originalIndex.HasValue)
             return;
 
+        var point = e.GetPosition(this);
+        var element = InputHitTest(point) as DependencyObject;
+        var hoveredElement = element.VisualUpwardSearch<Button>();
+        if (hoveredElement is not null)
+        {
+            return;
+        }
+
         Mouse.Capture(_draggedTab, CaptureMode.SubTree);
 
-        var point = e.GetPosition(this);
         var tabPanel = _draggedTab.VisualUpwardSearch<Panel>();
         if (tabPanel != null)
         {
@@ -468,7 +474,6 @@ public class LayoutItemsControl : TabControlEdit, IDropSurface, ILayoutSerializa
             }
         }
 
-        var element = InputHitTest(point) as DependencyObject;
         var hoveredTab = element.VisualUpwardSearch<LayoutItem>();
         if (hoveredTab != null && hoveredTab != _draggedTab)
         {
@@ -499,7 +504,10 @@ public class LayoutItemsControl : TabControlEdit, IDropSurface, ILayoutSerializa
 
     private void Tab_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
-        Mouse.Capture(null);
+        if (_draggedTab?.IsMouseCaptured == true)
+        {
+            Mouse.Capture(null);
+        }
 
         _draggedTab = null;
         _originalIndex = null;

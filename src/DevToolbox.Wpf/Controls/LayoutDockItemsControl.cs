@@ -762,9 +762,16 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
             || !_originalIndex.HasValue)
             return;
 
+        var point = e.GetPosition(this);
+        var element = InputHitTest(point) as DependencyObject;
+        var hoveredElement = element.VisualUpwardSearch<Button>();
+        if (hoveredElement is not null)
+        {
+            return;
+        }
+
         Mouse.Capture(_draggedTab, CaptureMode.SubTree);
 
-        var point = e.GetPosition(this);
         var tabPanel = _draggedTab.VisualUpwardSearch<Panel>();
         if (tabPanel != null)
         {
@@ -786,7 +793,6 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
             }
         }
 
-        var element = InputHitTest(point) as DependencyObject;
         var hoveredTab = element.VisualUpwardSearch<LayoutDockItem>();
         if (hoveredTab != null && hoveredTab != _draggedTab)
         {
@@ -817,7 +823,10 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
 
     private void Tab_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
-        Mouse.Capture(null);
+        if (_draggedTab?.IsMouseCaptured == true)
+        {
+            Mouse.Capture(null);
+        }
 
         _draggedTab = null;
         _originalIndex = null;

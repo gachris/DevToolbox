@@ -696,7 +696,6 @@ public class LayoutManager : ItemsControl, IDropSurface
     /// <param name="point"></param>
     public void OnDragOver(Point point)
     {
-        //OverlayWindow.OnDragEnter(this, point);
     }
 
     /// <summary>
