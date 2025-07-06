@@ -75,7 +75,7 @@ public class TabControlEdit : TabControl
     /// Dependency property indicating whether the add tab button should be displayed.
     /// </summary>
     public static readonly DependencyProperty ShowAddTabButtonProperty =
-        DependencyProperty.Register(nameof(ShowAddTabButton), typeof(bool), typeof(TabControlEdit), new PropertyMetadata(true));
+        DependencyProperty.Register(nameof(ShowAddTabButton), typeof(bool), typeof(TabControlEdit), new PropertyMetadata(false));
 
     /// <summary>
     /// Dependency property for the visibility mode of the swap tabs button.

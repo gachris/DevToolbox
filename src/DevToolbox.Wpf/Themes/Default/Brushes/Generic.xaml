@@ -57,51 +57,64 @@
     <SolidColorBrush x:Key="MessageBarIconWarning" Color="#D83B01" />
     <SolidColorBrush x:Key="MessageBarIconProgress" Color="#000000" />
 
-    <!--#region DockManager-->
+    <!--#region LayoutManager-->
 
-    <SolidColorBrush x:Key="DockManager.Background" Color="Transparent" />
-    <SolidColorBrush x:Key="DockManager.Foreground" Color="#1E1E1E" />
-    <SolidColorBrush x:Key="DockManager.BorderBrush" Color="#707070" />
-
-    <!--#endregion-->
-
-    <!--#region DockableControl-->
-
-    <SolidColorBrush x:Key="DockableControl.Background" Color="#FFFFFF" />
-    <SolidColorBrush x:Key="DockableControl.Foreground" Color="#1E1E1E" />
-    <SolidColorBrush x:Key="DockableControl.BorderBrush" Color="#ACACAC" />
-    <SolidColorBrush x:Key="DockableControl.SeparatorBrush" Color="#707070" />
+    <SolidColorBrush x:Key="LayoutManager.Background" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="LayoutManager.Foreground" Color="#000000" />
+    <SolidColorBrush x:Key="LayoutManager.BorderBrush" Color="#707070" />
 
     <!--#endregion-->
 
-    <!--#region DockingButton-->
+    <!--#region LayoutDockTargetButtonAdornerContent-->
 
-    <SolidColorBrush x:Key="DockingButton.Background" Color="#FFFFFF" />
-    <SolidColorBrush x:Key="DockingButton.Foreground" Color="#1E1E1E" />
-    <SolidColorBrush x:Key="DockingButton.BorderBrush" Color="#FF707070" />
+    <SolidColorBrush x:Key="LayoutDockTargetButtonAdornerContent.Background" Color="{StaticResource Accent}" />
+    <SolidColorBrush x:Key="LayoutDockTargetButtonAdornerContent.BorderBrush" Color="#2E2E2E" />
 
     <!--#endregion-->
 
-    <!--#region DockableItem-->
+    <!--#region LayoutDockItemsControl-->
 
-    <LinearGradientBrush x:Key="DockableItem.Background" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Offset="0.0" Color="#F0F0F0" />
-        <GradientStop Offset="1.0" Color="#E5E5E5" />
-    </LinearGradientBrush>
-    <SolidColorBrush x:Key="DockableItem.Foreground" Color="#1E1E1E" />
-    <SolidColorBrush x:Key="DockableItem.BorderBrush" Color="#ACACAC" />
-    <LinearGradientBrush x:Key="DockableItem.MouseOverBackground" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Offset="0.0" Color="#ECF4FC" />
-        <GradientStop Offset="1.0" Color="#DCECFC" />
-    </LinearGradientBrush>
-    <SolidColorBrush x:Key="DockableItem.MouseOverBorderBrush" Color="#7EB4EA" />
-    <SolidColorBrush x:Key="DockableItem.MouseOverForeground" Color="#1E1E1E" />
-    <SolidColorBrush x:Key="DockableItem.SelectedBackground" Color="#FFFFFF" />
-    <SolidColorBrush x:Key="DockableItem.SelectedForeground" Color="#1E1E1E" />
-    <SolidColorBrush x:Key="DockableItem.SelectedBorderBrush" Color="#ACACAC" />
-    <SolidColorBrush x:Key="DockableItem.DisabledBackground" Color="#F0F0F0" />
-    <SolidColorBrush x:Key="DockableItem.DisabledForeground" Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}" />
-    <SolidColorBrush x:Key="DockableItem.DisabledBorderBrush" Color="#D9D9D9" />
+    <SolidColorBrush x:Key="LayoutDockItemsControl.Background" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="LayoutDockItemsControl.Foreground" Color="#000000" />
+    <SolidColorBrush x:Key="LayoutDockItemsControl.BorderBrush" Color="#CCCCCC" />
+
+    <!--#endregion-->
+
+    <!--#region LayoutDockButton-->
+
+    <SolidColorBrush x:Key="LayoutDockButton.Background" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="LayoutDockButton.Foreground" Color="#1F1F1F" />
+    <SolidColorBrush x:Key="LayoutDockButton.BorderBrush" Color="#CCCCCC" />
+    <SolidColorBrush x:Key="LayoutDockButton.ChromeBrush" Color="#EEEEEE" />
+    <SolidColorBrush x:Key="LayoutDockButton.MouseOverBackground" Color="#F5F5F5" />
+    <SolidColorBrush x:Key="LayoutDockButton.MouseOverForeground" Color="#000000" />
+    <SolidColorBrush x:Key="LayoutDockButton.MouseOverBorderBrush" Color="#CCCCCC" />
+    <SolidColorBrush x:Key="LayoutDockButton.MouseOverChromeBrush" Color="{StaticResource Accent}" />
+    <SolidColorBrush x:Key="LayoutDockButton.PressedBackground" Color="#EDEDED" />
+    <SolidColorBrush x:Key="LayoutDockButton.PressedForeground" Color="#000000" />
+    <SolidColorBrush x:Key="LayoutDockButton.PressedBorderBrush" Color="#CCCCCC" />
+    <SolidColorBrush x:Key="LayoutDockButton.PressedChromeBrush" Color="{StaticResource Accent}" />
+    <SolidColorBrush x:Key="LayoutDockButton.DisabledBackground" Color="#F0F0F0" />
+    <SolidColorBrush x:Key="LayoutDockButton.DisabledForeground" Color="#A0A0A0" />
+    <SolidColorBrush x:Key="LayoutDockButton.DisabledBorderBrush" Color="#E0E0E0" />
+    <SolidColorBrush x:Key="LayoutDockButton.DisabledChromeBrush" Color="#E0E0E0" />
+
+    <!--#endregion-->
+
+    <!--#region LayoutDockItem-->
+
+    <SolidColorBrush x:Key="LayoutDockItem.Background" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="LayoutDockItem.Foreground" Color="#1F1F1F" />
+    <SolidColorBrush x:Key="LayoutDockItem.BorderBrush" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="LayoutDockItem.MouseOverBackground" Color="#F5F5F5" />
+    <SolidColorBrush x:Key="LayoutDockItem.MouseOverBorderBrush" Color="#E0E0E0" />
+    <SolidColorBrush x:Key="LayoutDockItem.MouseOverForeground" Color="#000000" />
+    <SolidColorBrush x:Key="LayoutDockItem.SelectedBackground" Color="#EFEFEF" />
+    <SolidColorBrush x:Key="LayoutDockItem.SelectedForeground" Color="#000000" />
+    <SolidColorBrush x:Key="LayoutDockItem.SelectedBorderBrush" Color="#CCCCCC" />
+    <SolidColorBrush x:Key="LayoutDockItem.DisabledBackground" Color="#F0F0F0" />
+    <SolidColorBrush x:Key="LayoutDockItem.DisabledForeground" Color="#A0A0A0" />
+    <SolidColorBrush x:Key="LayoutDockItem.DisabledBorderBrush" Color="#E0E0E0" />
 
     <!--#endregion-->
 
@@ -282,6 +295,7 @@
 
     <SolidColorBrush x:Key="TabControlEdit.Background" Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="TabControlEdit.BorderBrush" Color="#FFACACAC" />
+    <SolidColorBrush x:Key="TabControlEdit.Foreground" Color="#000000" />
 
     <!--#endregion-->
 

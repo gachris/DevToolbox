@@ -12,6 +12,17 @@
 
     <Style TargetType="{x:Type controls:LayoutDockItemsControl}">
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="TabPanelViewMode" Value="Stretch" />
+        <Setter Property="ShowAddTabButton" Value="False" />
+        <Setter Property="TabStripPlacement" Value="Bottom" />
+        <Setter Property="CloseButtonShowMode" Value="NoWhere" />
+        <Setter Property="SwapTabsButtonShowMode" Value="Hidden" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Icon" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=SelectedItem.Icon}" />
+        <Setter Property="Header" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=SelectedItem.Header}" />
         <Setter Property="Background" Value="{DynamicResource LayoutDockItemsControl.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource LayoutDockItemsControl.BorderBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource LayoutDockItemsControl.Foreground}" />
@@ -22,18 +33,6 @@
         <Setter Property="TabLeftScrollButtonStyle" Value="{StaticResource TabLeftScrollButtonStyle}" />
         <Setter Property="TabTopScrollButtonStyle" Value="{StaticResource TabTopScrollButtonStyle}" />
         <Setter Property="TabBottomScrollButtonStyle" Value="{StaticResource TabBottomScrollButtonStyle}" />
-        <Setter Property="Icon" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=SelectedItem.Icon}" />
-        <Setter Property="Header" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=SelectedItem.Header}" />
-        <Setter Property="TabPanelViewMode" Value="Stretch" />
-        <Setter Property="IsSynchronizedWithCurrentItem" Value="True" />
-        <Setter Property="ShowAddTabButton" Value="False" />
-        <Setter Property="TabStripPlacement" Value="Bottom" />
-        <Setter Property="CloseButtonShowMode" Value="NoWhere" />
-        <Setter Property="SwapTabsButtonShowMode" Value="Hidden" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:LayoutDockItemsControl}">
@@ -158,7 +157,7 @@
                                         Grid.Row="0"
                                         Visibility="{Binding ShowHeader, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}">
                                         <ContentControl.ContextMenu>
-                                            <ContextMenu DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}" FontSize="{DynamicResource FontSize14}">
+                                            <ContextMenu DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                                 <MenuItem
                                                     Padding="8,0,0,0"
                                                     Command="{x:Static controls:LayoutDockItemsControl.DockableWindowCommand}"
@@ -226,7 +225,7 @@
                                                     ContextMenuService.Placement="Bottom"
                                                     Style="{StaticResource TabControlEdit.BaseChromeStyle}">
                                                     <Button.ContextMenu>
-                                                        <ContextMenu DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}" FontSize="{DynamicResource FontSize14}">
+                                                        <ContextMenu DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                                             <MenuItem
                                                                 Padding="8,0,0,0"
                                                                 Command="{x:Static controls:LayoutDockItemsControl.DockableWindowCommand}"

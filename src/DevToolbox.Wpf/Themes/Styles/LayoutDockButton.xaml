@@ -5,19 +5,32 @@
     xmlns:helpers="clr-namespace:DevToolbox.Wpf.Helpers">
 
     <Style TargetType="{x:Type controls:LayoutDockButton}">
+        <Setter Property="Margin" Value="0,0,12,0" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="{DynamicResource FontSize12}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Command" Value="{x:Static controls:LayoutDockButton.ShowHideOverlayCommand}" />
-        <Setter Property="Background" Value="{DynamicResource DockingButton.Background}" />
-        <Setter Property="Foreground" Value="{DynamicResource DockingButton.Foreground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource DockingButton.BorderBrush}" />
+        <Setter Property="Background" Value="{DynamicResource LayoutDockButton.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource LayoutDockButton.Foreground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource LayoutDockButton.BorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.ChromeBrush" Value="{DynamicResource LayoutDockButton.ChromeBrush}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBackground" Value="{DynamicResource LayoutDockButton.MouseOverBackground}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverForeground" Value="{DynamicResource LayoutDockButton.MouseOverForeground}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverBorderBrush" Value="{DynamicResource LayoutDockButton.MouseOverBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.MouseOverChromeBrush" Value="{DynamicResource LayoutDockButton.MouseOverChromeBrush}" />
+        <Setter Property="helpers:UIElementHelper.PressedBackground" Value="{DynamicResource LayoutDockButton.PressedBackground}" />
+        <Setter Property="helpers:UIElementHelper.PressedForeground" Value="{DynamicResource LayoutDockButton.PressedForeground}" />
+        <Setter Property="helpers:UIElementHelper.PressedBorderBrush" Value="{DynamicResource LayoutDockButton.PressedBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.PressedChromeBrush" Value="{DynamicResource LayoutDockButton.PressedChromeBrush}" />
+        <Setter Property="helpers:UIElementHelper.DisabledBackground" Value="{DynamicResource LayoutDockButton.DisabledBackground}" />
+        <Setter Property="helpers:UIElementHelper.DisabledForeground" Value="{DynamicResource LayoutDockButton.DisabledForeground}" />
+        <Setter Property="helpers:UIElementHelper.DisabledBorderBrush" Value="{DynamicResource LayoutDockButton.DisabledBorderBrush}" />
+        <Setter Property="helpers:UIElementHelper.DisabledChromeBrush" Value="{DynamicResource LayoutDockButton.DisabledChromeBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:LayoutDockButton}">
                     <Border
-                        Name="PART_Border"
-                        Margin="0,0,12,0"
+                        x:Name="border"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
@@ -28,7 +41,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <StackPanel x:Name="MainContent" Orientation="Horizontal">
+                            <StackPanel x:Name="content" Orientation="Horizontal">
                                 <Image
                                     Width="16"
                                     Height="16"
@@ -38,20 +51,37 @@
                                 <ContentPresenter TextElement.FontSize="{TemplateBinding FontSize}" />
                             </StackPanel>
                             <Border
-                                x:Name="AccentChrome"
+                                x:Name="chrome"
                                 Grid.Row="1"
-                                BorderBrush="{DynamicResource AccentDark1Brush}"
+                                BorderBrush="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.ChromeBrush)}"
                                 BorderThickness="3" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="AccentChrome" Property="BorderBrush" Value="{DynamicResource AccentLight1Brush}" />
+                        <Trigger Property="IsDefaulted" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBackground)}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="chrome" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverChromeBrush)}" />
+                            <Setter TargetName="border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBackground)}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.MouseOverBorderBrush)}" />
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.MouseOverForeground)}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="chrome" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedChromeBrush)}" />
+                            <Setter TargetName="border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBackground)}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.PressedBorderBrush)}" />
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.PressedForeground)}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="chrome" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledChromeBrush)}" />
+                            <Setter TargetName="border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBackground)}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:UIElementHelper.DisabledBorderBrush)}" />
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(helpers:UIElementHelper.DisabledForeground)}" />
                         </Trigger>
                         <Trigger Property="Dock" Value="Left">
-                            <Setter TargetName="PART_Border" Property="Margin" Value="0,0,12,0" />
-                            <Setter TargetName="AccentChrome" Property="Grid.Row" Value="1" />
-                            <Setter TargetName="MainContent" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="chrome" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="content" Property="Grid.Row" Value="0" />
                             <Setter Property="LayoutTransform">
                                 <Setter.Value>
                                     <RotateTransform Angle="90" />
@@ -59,22 +89,26 @@
                             </Setter>
                         </Trigger>
                         <Trigger Property="Dock" Value="Right">
-                            <Setter TargetName="PART_Border" Property="Margin" Value="0,0,12,0" />
-                            <Setter TargetName="AccentChrome" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="MainContent" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="chrome" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="content" Property="Grid.Row" Value="1" />
                             <Setter Property="LayoutTransform">
                                 <Setter.Value>
                                     <RotateTransform Angle="90" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
-                        <Trigger Property="Dock" Value="Bottom">
-                            <Setter TargetName="PART_Border" Property="CornerRadius" Value="4,4,0,0" />
-                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="Dock" Value="Left">
+                <Setter Property="Margin" Value="0,0,0,12" />
+            </Trigger>
+            <Trigger Property="Dock" Value="Right">
+                <Setter Property="Margin" Value="0,0,0,12" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

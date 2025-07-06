@@ -5,26 +5,9 @@
 
     <Style TargetType="{x:Type controls:LayoutManager}">
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Background" Value="{DynamicResource DockManager.Background}" />
-        <Setter Property="Foreground" Value="{DynamicResource DockManager.Foreground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource DockManager.BorderBrush}" />
-        <Setter Property="OverlayButtonStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type controls:LayoutDockTargetButton}">
-                    <Setter Property="AdornerContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <Rectangle
-                                    Fill="{DynamicResource AccentBrush}"
-                                    Opacity="0.6"
-                                    Stroke="#FF000000"
-                                    StrokeThickness="5" />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource LayoutManager.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource LayoutManager.Foreground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource LayoutManager.BorderBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:LayoutManager}">

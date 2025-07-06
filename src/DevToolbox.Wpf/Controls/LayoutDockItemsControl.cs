@@ -481,7 +481,7 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
         newElement.DockManager = DockManager;
         newElement.State = LayoutItemState.Window;
 
-        window.SetHostContent(this);
+        window.SetHostContent(newElement);
         window.Owner = DockManager.Owner;
         RestoreWindowSizeAndPosition(window);
 

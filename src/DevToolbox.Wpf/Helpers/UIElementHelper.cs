@@ -282,6 +282,34 @@ public class UIElementHelper
     public static readonly DependencyProperty SubMenuBorderBrushProperty =
         DependencyProperty.RegisterAttached("SubMenuBorderBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
 
+    /// <summary>
+    /// DependencyProperty for the default chrome brush.
+    /// </summary>
+    public static readonly DependencyProperty ChromeBrushProperty =
+        DependencyProperty.RegisterAttached(
+            "ChromeBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
+
+    /// <summary>
+    /// DependencyProperty for the chrome brush when the mouse is over the element.
+    /// </summary>
+    public static readonly DependencyProperty MouseOverChromeBrushProperty =
+        DependencyProperty.RegisterAttached(
+            "MouseOverChromeBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
+
+    /// <summary>
+    /// DependencyProperty for the chrome brush when the element is pressed.
+    /// </summary>
+    public static readonly DependencyProperty PressedChromeBrushProperty =
+        DependencyProperty.RegisterAttached(
+            "PressedChromeBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
+
+    /// <summary>
+    /// DependencyProperty for the chrome brush when the element is disabled.
+    /// </summary>
+    public static readonly DependencyProperty DisabledChromeBrushProperty =
+        DependencyProperty.RegisterAttached(
+            "DisabledChromeBrush", typeof(Brush), typeof(UIElementHelper), new FrameworkPropertyMetadata());
+
     #endregion
 
     #region Methods
@@ -1184,6 +1212,70 @@ public class UIElementHelper
     public static Brush GetSubMenuBorderBrush(UIElement element)
     {
         return (Brush)element.GetValue(SubMenuBorderBrushProperty);
+    }
+
+    /// <summary>
+    /// Sets the default chrome brush for the specified UIElement.
+    /// </summary>
+    public static void SetChromeBrush(UIElement element, Brush value)
+    {
+        element.SetValue(ChromeBrushProperty, value);
+    }
+
+    /// <summary>
+    /// Gets the default chrome brush for the specified UIElement.
+    /// </summary>
+    public static Brush GetChromeBrush(UIElement element)
+    {
+        return (Brush)element.GetValue(ChromeBrushProperty);
+    }
+
+    /// <summary>
+    /// Sets the chrome brush for the specified UIElement when the mouse is over it.
+    /// </summary>
+    public static void SetMouseOverChromeBrush(UIElement element, Brush value)
+    {
+        element.SetValue(MouseOverChromeBrushProperty, value);
+    }
+
+    /// <summary>
+    /// Gets the chrome brush for the specified UIElement when the mouse is over it.
+    /// </summary>
+    public static Brush GetMouseOverChromeBrush(UIElement element)
+    {
+        return (Brush)element.GetValue(MouseOverChromeBrushProperty);
+    }
+
+    /// <summary>
+    /// Sets the chrome brush for the specified UIElement when it is pressed.
+    /// </summary>
+    public static void SetPressedChromeBrush(UIElement element, Brush value)
+    {
+        element.SetValue(PressedChromeBrushProperty, value);
+    }
+
+    /// <summary>
+    /// Gets the chrome brush for the specified UIElement when it is pressed.
+    /// </summary>
+    public static Brush GetPressedChromeBrush(UIElement element)
+    {
+        return (Brush)element.GetValue(PressedChromeBrushProperty);
+    }
+
+    /// <summary>
+    /// Sets the chrome brush for the specified UIElement when it is disabled.
+    /// </summary>
+    public static void SetDisabledChromeBrush(UIElement element, Brush value)
+    {
+        element.SetValue(DisabledChromeBrushProperty, value);
+    }
+
+    /// <summary>
+    /// Gets the chrome brush for the specified UIElement when it is disabled.
+    /// </summary>
+    public static Brush GetDisabledChromeBrush(UIElement element)
+    {
+        return (Brush)element.GetValue(DisabledChromeBrushProperty);
     }
 
     #endregion

@@ -6,10 +6,6 @@
         <ResourceDictionary Source="pack://application:,,,/DevToolbox.Wpf;component/Themes/Styles/TabControlEdit.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style BasedOn="{StaticResource ResourceKey={x:Type controls:TabControlEdit}}" TargetType="{x:Type controls:LayoutItemsControl}">
-        <Setter Property="ShowAddTabButton" Value="False" />
-        <Setter Property="IsSynchronizedWithCurrentItem" Value="True" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
-    </Style>
+    <Style BasedOn="{StaticResource ResourceKey={x:Type controls:TabControlEdit}}" TargetType="{x:Type controls:LayoutItemsControl}" />
 
 </ResourceDictionary>

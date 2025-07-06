@@ -153,6 +153,7 @@ public class LayoutManager : ItemsControl, IDropSurface
             ShowActivated = false,
             AllowsTransparency = true,
             WindowStyle = WindowStyle.None,
+            Background = System.Windows.Media.Brushes.Transparent,
             ShowInTaskbar = false,
             Content = _layoutDockTargetControl
         };

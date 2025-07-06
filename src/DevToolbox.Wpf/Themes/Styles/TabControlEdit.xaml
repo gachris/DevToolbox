@@ -163,6 +163,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Background" Value="{DynamicResource TabControlEdit.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TabControlEdit.BorderBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TabControlEdit.Foreground}" />
         <Setter Property="AddTabButtonStyle" Value="{StaticResource AddTabItemButtonStyle}" />
         <Setter Property="SwapTabsButtonStyle" Value="{StaticResource SwapTabsButtonStyle}" />
         <Setter Property="CloseTabControlButtonStyle" Value="{StaticResource CloseTabItemButtonStyle}" />

@@ -18,10 +18,10 @@ internal class LayoutDockTargetButton : ContentControl, IDropSurface, IDisposabl
     private bool _isRegistered;
 
     public static readonly DependencyProperty AdornerContentTemplateProperty =
-        DependencyProperty.Register("AdornerContentTemplate", typeof(DataTemplate), typeof(LayoutDockTargetButton), new FrameworkPropertyMetadata(default));
+        DependencyProperty.Register(nameof(AdornerContentTemplate), typeof(DataTemplate), typeof(LayoutDockTargetButton), new FrameworkPropertyMetadata(default));
 
     public static readonly DependencyProperty DockingPositionProperty =
-        DependencyProperty.Register("DockingPosition", typeof(LayoutDockTargetPosition), typeof(LayoutDockTargetButton), new PropertyMetadata(default(LayoutDockTargetPosition)));
+        DependencyProperty.Register(nameof(DockingPosition), typeof(LayoutDockTargetPosition), typeof(LayoutDockTargetButton), new PropertyMetadata(default(LayoutDockTargetPosition)));
 
     #endregion
 
