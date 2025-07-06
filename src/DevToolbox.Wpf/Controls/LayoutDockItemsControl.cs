@@ -253,6 +253,7 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
     public LayoutDockItemsControl()
     {
         ItemContainerGenerator.StatusChanged += OnItemGeneratorStatusChanged;
+        Closed += LayoutDockItemClosed;
     }
 
     #region Methods Override
@@ -744,6 +745,28 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
                 tab.PreviewMouseMove += Tab_PreviewMouseMove;
                 tab.PreviewMouseLeftButtonUp += Tab_PreviewMouseLeftButtonUp;
             }
+        }
+    }
+
+    /// <summary>
+    /// Handles cleanup when a hosted layout item is closed. Removes the control from its group and closes the host if no items remain.
+    /// </summary>
+    /// <param name="sender">The document control that was closed.</param>
+    /// <param name="e">Event arguments.</param>
+    private void LayoutDockItemClosed(object? sender, EventArgs e)
+    {
+        if (State is LayoutItemState.Window || Items.Count > 0)
+            return;
+
+        var items = (IList)DockManager!.Items;
+        if (items.IsReadOnly)
+        {
+            var item = DockManager.ItemFromContainer(this);
+            DockManager.Remove(item);
+        }
+        else
+        {
+            DockManager.Remove(this);
         }
     }
 

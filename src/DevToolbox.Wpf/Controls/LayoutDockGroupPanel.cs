@@ -448,14 +448,7 @@ public class LayoutDockGroupPanel : Grid, ILayoutSerializable
     {
         if (dockableGroup.AttachedElement is not null)
         {
-            if (dockableGroup.AttachedElement is LayoutGroupItemsControl)
-            {
-                grid.Children.Add(dockableGroup.AttachedElement);
-            }
-            else
-            {
-                grid.Children.Add(new ContentControl { Content = dockableGroup.AttachedElement });
-            }
+            grid.Children.Add(dockableGroup.AttachedElement);
         }
         else if (dockableGroup.FirstChild is not null && dockableGroup.FirstChild.IsHidden && dockableGroup.SecondChild is not null && !dockableGroup.SecondChild.IsHidden)
         {

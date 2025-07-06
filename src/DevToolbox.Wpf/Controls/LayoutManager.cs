@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,13 +14,16 @@ using DevToolbox.Wpf.Windows;
 
 namespace DevToolbox.Wpf.Controls;
 
+/// <summary>
+/// Manages layout of dockable and document items within a container,
+/// providing drag-and-drop docking, auto-hide panes, and serialization support.
+/// </summary>
 [TemplatePart(Name = PART_LeftPanel, Type = typeof(LayoutDockButtonGroupControl))]
 [TemplatePart(Name = PART_RightPanel, Type = typeof(LayoutDockButtonGroupControl))]
 [TemplatePart(Name = PART_TopPanel, Type = typeof(LayoutDockButtonGroupControl))]
 [TemplatePart(Name = PART_BottomPanel, Type = typeof(LayoutDockButtonGroupControl))]
 [TemplatePart(Name = PART_DockableOverlayControl, Type = typeof(LayoutDockOverlayControl))]
 [TemplatePart(Name = PART_DockingPanel, Type = typeof(LayoutDockGroupPanel))]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class LayoutManager : ItemsControl, IDropSurface
 {
     #region Fields/Consts
@@ -34,7 +38,7 @@ public class LayoutManager : ItemsControl, IDropSurface
     private const string PART_DockingPanel = nameof(PART_DockingPanel);
 
     private readonly DockingDragServices _dragServices = new();
-    private Window _overlayWindow = default!;
+    private Window? _overlayWindow;
 
     private Window? _owner;
     private LayoutDockOverlayControl? _overlayControl;
@@ -45,24 +49,43 @@ public class LayoutManager : ItemsControl, IDropSurface
     private LayoutDockButtonGroupControl? _bottomDockingButtonGroupControl;
     private LayoutDockTargetControl? _layoutDockTargetControl;
 
+    /// <summary>
+    /// Backing field for the <see cref="LayoutGroupItems"/> dependency property.
+    /// </summary>
     public static readonly DependencyProperty LayoutGroupItemsProperty =
-        DependencyProperty.Register(nameof(LayoutGroupItems), typeof(LayoutGroupItemsControl), typeof(LayoutManager), new FrameworkPropertyMetadata(null, OnLayoutGroupItemsChanged));
-
-    public static readonly DependencyProperty OverlayButtonStyleProperty =
-        DependencyProperty.Register(nameof(OverlayButtonStyle), typeof(Style), typeof(LayoutManager), new FrameworkPropertyMetadata(default));
-
-    public static readonly DependencyProperty DockButtonStyleProperty =
-        DependencyProperty.Register(nameof(DockButtonStyle), typeof(Style), typeof(LayoutManager), new FrameworkPropertyMetadata(default));
+        DependencyProperty.Register(
+            nameof(LayoutGroupItems),
+            typeof(LayoutGroupItemsControl),
+            typeof(LayoutManager),
+            new FrameworkPropertyMetadata(null, OnLayoutGroupItemsChanged));
 
     /// <summary>
-    ///     An event that is raised when a new item is created so that
-    ///     developers can initialize the item with custom default values.
+    /// Dependency property for styling auto-hide overlay buttons.
+    /// </summary>
+    public static readonly DependencyProperty OverlayButtonStyleProperty =
+        DependencyProperty.Register(
+            nameof(OverlayButtonStyle),
+            typeof(Style),
+            typeof(LayoutManager),
+            new FrameworkPropertyMetadata(default(Style)));
+
+    /// <summary>
+    /// Dependency property for styling dock buttons.
+    /// </summary>
+    public static readonly DependencyProperty DockButtonStyleProperty =
+        DependencyProperty.Register(
+            nameof(DockButtonStyle),
+            typeof(Style),
+            typeof(LayoutManager),
+            new FrameworkPropertyMetadata(default(Style)));
+
+    /// <summary>
+    /// Event raised after a new item is created, for initialization.
     /// </summary>
     public event InitializingNewItemEventHandler? InitializingNewItem;
 
     /// <summary>
-    ///     An event that is raised before a new item is created so that
-    ///     developers can participate in the construction of the new item.
+    /// Event raised before a new item is created.
     /// </summary>
     public event EventHandler<AddingNewItemEventArgs>? AddingNewItem;
 
@@ -70,47 +93,62 @@ public class LayoutManager : ItemsControl, IDropSurface
 
     #region Properties
 
+    /// <summary>
+    /// Gets the editable collection.
+    /// </summary>
     private IEditableCollectionView EditableItems => Items;
 
     /// <summary>
-    /// Gets current docking item
+    /// Gets the currently focused auto-hide dock button.
     /// </summary>
     public LayoutDockButton? FocusedDockingButton { get; private set; }
 
     /// <summary>
-    /// Gets current overlay window
+    /// Gets the overlay window used for docking previews.
     /// </summary>
-    internal Window OverlayWindow => _overlayWindow;
+    internal Window? OverlayWindow => _overlayWindow;
 
+    /// <summary>
+    /// Gets the active layout dock target control.
+    /// </summary>
     internal LayoutDockTargetControl? LayoutDockTargetControl => _layoutDockTargetControl;
 
     /// <summary>
-    /// Gets a rectangle where this surface is active
+    /// Gets the screen rectangle occupied by this surface.
     /// </summary>
     public Rect SurfaceRectangle => new(PointToScreen(new(0, 0)), new Size(ActualWidth, ActualHeight));
 
     /// <summary>
-    /// Gets the drag services
+    /// Gets the drag-and-drop services instance.
     /// </summary>
     internal DockingDragServices DragServices => _dragServices;
 
     /// <summary>
-    /// Gets the owner window
+    /// Gets the owner window of this control.
     /// </summary>
     internal Window? Owner => _owner;
 
+    /// <summary>
+    /// Gets or sets the <see cref="LayoutGroupItemsControl"/> that provides document hosting.
+    /// </summary>
     public LayoutGroupItemsControl LayoutGroupItems
     {
         get => (LayoutGroupItemsControl)GetValue(LayoutGroupItemsProperty);
         set => SetValue(LayoutGroupItemsProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the style applied to overlay buttons.
+    /// </summary>
     public Style OverlayButtonStyle
     {
         get => (Style)GetValue(OverlayButtonStyleProperty);
         set => SetValue(OverlayButtonStyleProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the style applied to dock buttons.
+    /// </summary>
     public Style DockButtonStyle
     {
         get => (Style)GetValue(DockButtonStyleProperty);
@@ -139,9 +177,7 @@ public class LayoutManager : ItemsControl, IDropSurface
 
     #region Methods Override
 
-    /// <summary>
-    /// Apply default template
-    /// </summary>
+    /// <inheritdoc/>
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
@@ -183,6 +219,7 @@ public class LayoutManager : ItemsControl, IDropSurface
         _overlayControl = Template.FindName(PART_DockableOverlayControl, this) as LayoutDockOverlayControl;
     }
 
+    /// <inheritdoc/>
     protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
     {
         base.PrepareContainerForItemOverride(element, item);
@@ -199,6 +236,7 @@ public class LayoutManager : ItemsControl, IDropSurface
         }
     }
 
+    /// <inheritdoc/>
     protected override void ClearContainerForItemOverride(DependencyObject element, object item)
     {
         if (element is LayoutDockItemsControl dockableControl)
@@ -214,11 +252,11 @@ public class LayoutManager : ItemsControl, IDropSurface
         base.ClearContainerForItemOverride(element, item);
     }
 
-    /// <summary>
-    /// Creates or identifies the element that is used to display the given item.
-    /// </summary>
-    /// <returns>The window that is used to display the given item.</returns>
-    protected override DependencyObject GetContainerForItemOverride() => new LayoutDockItemsControl();
+    /// <inheritdoc/>
+    protected override DependencyObject GetContainerForItemOverride()
+    {
+        return new LayoutDockItemsControl();
+    }
 
     #endregion
 
@@ -242,13 +280,19 @@ public class LayoutManager : ItemsControl, IDropSurface
     /// Creates or identifies the window that is used to display the given docking item.
     /// </summary>
     /// <returns>The window that is used to display the given docking item.</returns>
-    protected internal virtual LayoutDockWindow GetContainerForDockingOverride() => new LayoutDockWindow();
+    protected internal virtual LayoutDockWindow GetContainerForDockingOverride()
+    {
+        return new();
+    }
 
     /// <summary>
     /// Creates or identifies the window that is used to display the given document item.
     /// </summary>
     /// <returns>The window that is used to display the given document item.</returns>
-    protected internal virtual LayoutWindow GetContainerForDocumentItemOverride() => new LayoutWindow();
+    protected internal virtual LayoutWindow GetContainerForDocumentItemOverride()
+    {
+        return new();
+    }
 
     internal void MoveTo(LayoutDockItemsControl control, LayoutDockItemsControl relativeControl, Dock relativeDock)
     {
@@ -314,7 +358,7 @@ public class LayoutManager : ItemsControl, IDropSurface
         LayoutGroupItems.MoveTo(control, relativeControl, relativeDock);
     }
 
-    public void MoveInto(LayoutItemsControl source, LayoutItemsControl destination)
+    internal void MoveInto(LayoutItemsControl source, LayoutItemsControl destination)
     {
         var owner = LayoutGroupItems;
 
@@ -344,7 +388,7 @@ public class LayoutManager : ItemsControl, IDropSurface
     /// </summary>
     /// <param name="source">Source control which is going to be closed</param>
     /// <param name="destination">Destination control which is about to host contents from SourcePane</param>
-    public void MoveInto(LayoutDockItemsControl source, LayoutDockItemsControl destination)
+    internal void MoveInto(LayoutDockItemsControl source, LayoutDockItemsControl destination)
     {
         var owner = this;
 
@@ -369,7 +413,7 @@ public class LayoutManager : ItemsControl, IDropSurface
         DragServices.Unregister(source);
     }
 
-    public void MoveInto(LayoutDockItemsControl source, LayoutItemsControl destination)
+    internal void MoveInto(LayoutDockItemsControl source, LayoutItemsControl destination)
     {
         while (source.Items.Count > 0)
         {
@@ -405,7 +449,7 @@ public class LayoutManager : ItemsControl, IDropSurface
     /// </summary>
     public void MoveInto(LayoutItemsControl source)
     {
-        if (source. State == LayoutItemState.Document) return;
+        if (source.State == LayoutItemState.Document) return;
 
         var item = LayoutGroupItems.ItemFromContainer(source);
 
@@ -441,11 +485,11 @@ public class LayoutManager : ItemsControl, IDropSurface
     /// <param name="dockableControl"></param>
     private void AddDockingButtons(LayoutDockItemsControl dockableControl)
     {
-        LayoutDockButtonGroupItem dockingButtonGroupItem = new() { Dock = dockableControl.Dock };
+        var dockingButtonGroupItem = new LayoutDockButtonGroupItem() { Dock = dockableControl.Dock };
 
         foreach (var item in dockableControl.Items)
         {
-            int itemIdex = dockableControl.Items.IndexOf(item);
+            var index = dockableControl.Items.IndexOf(item);
             dockableControl.UpdateLayout();
 
             if (item is not LayoutDockItem containerItem)
@@ -458,7 +502,7 @@ public class LayoutManager : ItemsControl, IDropSurface
             {
                 Icon = containerItem.Icon,
                 Content = containerItem.Header,
-                AssociatedItemIndex = itemIdex,
+                AssociatedItemIndex = index,
                 AssociatedContainer = dockableControl,
                 ParentGroupItem = dockingButtonGroupItem
             };
@@ -484,7 +528,7 @@ public class LayoutManager : ItemsControl, IDropSurface
     }
 
     /// <summary>
-    /// Handle AutoHide/Hide commande issued by user on temporary control
+    /// Handle AutoHide/Hide command issued by user on temporary control
     /// </summary>
     /// <param name="dockableControl"></param>
     private void RemoveDockingButtons(LayoutDockItemsControl dockableControl)
@@ -540,7 +584,7 @@ public class LayoutManager : ItemsControl, IDropSurface
     /// <param name="window">Floating window containing control which is dragged by user</param>
     /// <param name="point">Current mouse position</param>
     /// <param name="offset">Offset to be use to set floating window screen position</param>
-    /// <returns>Retruns True is drag is completed, false otherwise</returns>
+    /// <returns>Returns True is drag is completed, false otherwise</returns>
     public bool Drag(LayoutBaseWindow window, Point point, Point offset)
     {
         if (!IsMouseCaptured)
@@ -556,16 +600,32 @@ public class LayoutManager : ItemsControl, IDropSurface
         return false;
     }
 
+    /// <summary>
+    /// Adds a new item to the internal collection, creating and initializing its container.
+    /// </summary>
+    /// <returns>The newly created item container.</returns>
     public object Add()
     {
         return AddNewItem();
     }
 
+    /// <summary>
+    /// Adds the specified item to the internal collection, initializing its container.
+    /// </summary>
+    /// <param name="item">The existing item to add.</param>
+    /// <returns>The created or added item container.</returns>
     public object Add(object item)
     {
         return AddNewItem(item);
     }
 
+    /// <summary>
+    /// Core logic for adding new items, handling both readonly and writable collection scenarios.
+    /// </summary>
+    /// <param name="item">
+    /// An existing item to add; if <c>null</c>, a new container will be created.
+    /// </param>
+    /// <returns>The newly added or created item container.</returns>
     private object AddNewItem(object? item = null)
     {
         var addNewItem = (IEditableCollectionViewAddNewItem)Items;
@@ -596,12 +656,14 @@ public class LayoutManager : ItemsControl, IDropSurface
         }
 
         OnInitializingNewItem(new InitializingNewItemEventArgs(item));
-
         CommandManager.InvalidateRequerySuggested();
-
         return item;
     }
 
+    /// <summary>
+    /// Removes the specified item from the internal collection, supporting both readonly and writable sources.
+    /// </summary>
+    /// <param name="item">The item to remove.</param>
     public void Remove(object item)
     {
         var isReadOnly = ((IList)Items).IsReadOnly;
@@ -612,21 +674,21 @@ public class LayoutManager : ItemsControl, IDropSurface
     }
 
     /// <summary>
-    ///     A method that is called before a new item is created so that
-    ///     overrides can participate in the construction of the new item.
+    /// A method that is called before a new item is created so that
+    /// overrides can participate in the construction of the new item.
     /// </summary>
     /// <remarks>
-    ///     The default implementation raises the AddingNewItem event.
+    /// The default implementation raises the AddingNewItem event.
     /// </remarks>
     /// <param name="e">Event arguments that provide access to the new item.</param>
     protected virtual void OnAddingNewItem(AddingNewItemEventArgs e) => AddingNewItem?.Invoke(this, e);
 
     /// <summary>
-    ///     A method that is called when a new item is created so that
-    ///     overrides can initialize the item with custom default values.
+    /// A method that is called when a new item is created so that
+    /// overrides can initialize the item with custom default values.
     /// </summary>
     /// <remarks>
-    ///     The default implementation raises the InitializingNewItem event.
+    /// The default implementation raises the InitializingNewItem event.
     /// </remarks>
     /// <param name="e">Event arguments that provide access to the new item.</param>
     protected virtual void OnInitializingNewItem(InitializingNewItemEventArgs e) => InitializingNewItem?.Invoke(this, e);
@@ -656,25 +718,25 @@ public class LayoutManager : ItemsControl, IDropSurface
     /// <param name="getContentHandler">Delegate used by serializer to get user defined dockable contents</param>
     public void RestoreLayoutFromXml(string xml, GetContentFromTypeString getContentHandler)
     {
-        //XmlDocument doc = new();
-        //doc.LoadXml(xml);
+        XmlDocument doc = new();
+        doc.LoadXml(xml);
 
-        //_dockingPanel.Deserialize(this, doc.ChildNodes[0], getContentHandler);
+        _dockingPanel?.Deserialize(this, doc.ChildNodes[0]!, getContentHandler);
 
-        //List<DockableControl> addedControls = new();
-        //foreach (DockableControl content in Items)
-        //{
-        //    if (!addedControls.Contains(content))
-        //    {
-        //        if (content.State == State.AutoHide)
-        //        {
-        //            addedControls.Add(content);
-        //            AddDockingButtons(content);
-        //        }
-        //    }
-        //}
+        var addedControls = new List<LayoutDockItemsControl>();
+        foreach (LayoutDockItemsControl content in Items)
+        {
+            if (!addedControls.Contains(content))
+            {
+                if (content.State == LayoutItemState.AutoHide)
+                {
+                    addedControls.Add(content);
+                    AddDockingButtons(content);
+                }
+            }
+        }
 
-        //FocusedDockingButton = null;
+        FocusedDockingButton = null;
     }
 
     #endregion
@@ -682,12 +744,17 @@ public class LayoutManager : ItemsControl, IDropSurface
     #region IDropSurface
 
     /// <summary>
-    /// Handles this sourface mouse entering (show current overlay window)
+    /// Handles this surface mouse entering (show current overlay window)
     /// </summary>
     /// <param name="point">Current mouse position</param>
     public void OnDragEnter(Point point)
     {
-        OverlayWindow.Owner = _owner;
+        if (OverlayWindow is null)
+        {
+            throw new InvalidOperationException("OverlayWindow is not initialized. Ensure that the LayoutManager template is applied and the PART_DockableOverlayControl is defined.");
+        }
+
+        OverlayWindow.Owner = Owner;
         OverlayWindow.Left = PointToScreen(new Point(0, 0)).X;
         OverlayWindow.Top = PointToScreen(new Point(0, 0)).Y;
         OverlayWindow.Width = ActualWidth;
@@ -709,6 +776,11 @@ public class LayoutManager : ItemsControl, IDropSurface
     /// <param name="point"></param>
     public void OnDragLeave(Point point)
     {
+        if (OverlayWindow is null)
+        {
+            throw new InvalidOperationException("OverlayWindow is not initialized. Ensure that the LayoutManager template is applied and the PART_DockableOverlayControl is defined.");
+        }
+
         OverlayWindow.Owner = null;
         OverlayWindow.Hide();
     }
@@ -717,7 +789,7 @@ public class LayoutManager : ItemsControl, IDropSurface
     /// Handler drop events
     /// </summary>
     /// <param name="point">Current mouse position</param>
-    /// <returns>Returns alwasy false because this surface doesn't support direct drop</returns>
+    /// <returns>Returns always false because this surface doesn't support direct drop</returns>
     public bool OnDrop(Point point) => false;
 
     #endregion
@@ -784,7 +856,7 @@ public class LayoutManager : ItemsControl, IDropSurface
     }
 
     /// <summary>
-    /// Handles mousemove event
+    /// Handles mouse move event
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -799,13 +871,17 @@ public class LayoutManager : ItemsControl, IDropSurface
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    /// <remarks>Releases eventually camptured mouse events</remarks>
+    /// <remarks>Releases eventually captured mouse events</remarks>
     private void OnMouseUp(object sender, MouseButtonEventArgs e)
     {
         if (IsMouseCaptured)
         {
             _dragStarted = false;
-            OverlayWindow.Owner = null;
+            if (OverlayWindow is not null)
+            {
+                OverlayWindow.Owner = null;
+            }
+
             DragServices.EndDrag(PointToScreen(e.GetPosition(this)));
             ReleaseMouseCapture();
         }
@@ -822,17 +898,23 @@ public class LayoutManager : ItemsControl, IDropSurface
         {
             _owner.Closed -= WindowClosed;
         }
-        _overlayWindow.Close();
+
+        _overlayWindow?.Close();
     }
 
     #endregion
 
     #region Commands
 
-    private void ShowOverlayCommandExecute(object sender, ExecutedRoutedEventArgs e) => OnShowAutoHidePane((LayoutDockButton)e.OriginalSource);
+    private void ShowOverlayCommandExecute(object sender, ExecutedRoutedEventArgs e)
+    {
+        OnShowAutoHidePane((LayoutDockButton)e.OriginalSource);
+    }
 
-    private void ShowOverlayCommandCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = sender is LayoutManager && e.OriginalSource is LayoutDockButton;
+    private void ShowOverlayCommandCanExecute(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = sender is LayoutManager && e.OriginalSource is LayoutDockButton;
+    }
 
     #endregion
 }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
