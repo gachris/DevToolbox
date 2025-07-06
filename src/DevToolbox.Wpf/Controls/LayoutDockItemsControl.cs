@@ -422,21 +422,19 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
         window.SetHostContent(this);
         window.Owner = DockManager.Owner;
         RestoreWindowSizeAndPosition(window);
-
-        window.Show();
         DockManager.Drag(window, startDragPoint, offset);
     }
 
-    private void CreateDockableHost(object item, Point startDragPoint, Point offset)
+    private void DragContent(object item, Point startDragPoint, Point offset)
     {
-        var window = CreateDockableHost(item);
+        var window = CreateWindowHost(item);
         DockManager!.Drag(window, startDragPoint, offset);
     }
 
     /// <summary>
     /// Create and show a floating window hosting this control
     /// </summary> 
-    private LayoutDockWindow CreateDockableHost(object item)
+    private LayoutDockWindow CreateWindowHost(object item)
     {
         if (DockManager is null)
         {
@@ -444,48 +442,21 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
         }
 
         var window = DockManager.GetContainerForDockingOverride();
-        var isReadOnly = ((IList)DockManager.Items).IsReadOnly;
 
         Remove(item);
 
         if (Items.Count == 0)
         {
-            if (!isReadOnly)
-            {
-                DockManager.Remove(this);
-            }
-            else
-            {
-                var currentItem = DockManager.ItemFromContainer(this);
-                DockManager.Remove(currentItem);
-            }
+            DockManager.RemoveLayoutDockItemsControl(this);
         }
 
-        LayoutDockItemsControl? newElement;
-
-        if (isReadOnly)
-        {
-            var newItem = DockManager.Add();
-            newElement = DockManager.ContainerFromItem(newItem) as LayoutDockItemsControl;
-        }
-        else
-        {
-            newElement = DockManager.Add() as LayoutDockItemsControl;
-        }
-
-        if (newElement is null)
-        {
-            throw new InvalidOperationException("Failed to create a new DockableControl instance.");
-        }
-
+        var newElement = DockManager.AddNewLayoutDockItemsControl();
         newElement.Add(item);
         newElement.DockManager = DockManager;
         newElement.State = LayoutItemState.Window;
-
         window.SetHostContent(newElement);
         window.Owner = DockManager.Owner;
         RestoreWindowSizeAndPosition(window);
-
         return window;
     }
 
@@ -493,30 +464,27 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
     {
         if (DockManager is null)
         {
-            return;
+            throw new InvalidOperationException("DockManager is null or the control is already in a tabbed document state.");
         }
 
         Remove(item);
 
         if (Items.Count == 0)
         {
-            var isReadOnly = ((IList)DockManager.Items).IsReadOnly;
-            if (!isReadOnly)
-            {
-                DockManager.Remove(this);
-            }
-            else
-            {
-                var currentItem = DockManager.ItemFromContainer(this);
-                DockManager.Remove(currentItem);
-            }
-
-            State = LayoutItemState.Hidden;
+            DockManager.RemoveLayoutDockItemsControl(this);
         }
 
-        // TODO: Check if we can add to the document area or create new
-        var documentControlElement = (LayoutItemsControl)DockManager.LayoutGroupItems.ContainerFromItem(DockManager.LayoutGroupItems.Items[0]);
-        documentControlElement.Add(item);
+        if (DockManager.LayoutGroupItems.Items.Count > 0)
+        {
+            var item0 = DockManager.LayoutGroupItems.Items[0];
+            var documentControlElement = (LayoutItemsControl)DockManager.LayoutGroupItems.ContainerFromItem(item0);
+            documentControlElement.Add(item);
+        }
+        else
+        {
+            var newElement = DockManager.AddNewLayoutItemsControl();
+            newElement.Add(item);
+        }
     }
 
     /// <inheritdoc/>
@@ -631,7 +599,7 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
 
     private void DockingWindowCommandExecute(ExecutedRoutedEventArgs _)
     {
-        var window = CreateDockableHost(SelectedItem);
+        var window = CreateWindowHost(SelectedItem);
         window.Show();
     }
 
@@ -809,7 +777,7 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
                 var screenPos = PointToScreen(point);
                 var offset = e.GetPosition(_draggedTab);
                 var item = _draggedTab.DataContext ?? _draggedTab;
-                CreateDockableHost(item, screenPos, offset);
+                DragContent(item, screenPos, offset);
                 _draggedTab = null;
                 _originalIndex = null;
                 _lastSwapTargetIndex = null;

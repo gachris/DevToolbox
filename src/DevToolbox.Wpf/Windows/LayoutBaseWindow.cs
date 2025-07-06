@@ -64,5 +64,13 @@ public abstract class LayoutBaseWindow : WindowEx
     /// <param name="btnDock">The docking position indicated by the drop.</param>
     protected internal abstract void OnDrop(IDropSurface control, LayoutDockTargetPosition btnDock);
 
+    /// <summary>
+    /// Called to update the window’s host content.
+    /// </summary>
+    /// <param name="content">
+    /// The content that should become the new content.
+    /// </param>
+    protected internal abstract void SetHostContent(object? content);
+
     #endregion
 }

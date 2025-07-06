@@ -392,9 +392,34 @@ public class LayoutManager : ItemsControl, IDropSurface
         RemoveLayoutDockItemsControl(source);
     }
 
+    internal LayoutDockItemsControl AddNewLayoutDockItemsControl()
+    {
+        var items = (IList)Items;
+        LayoutDockItemsControl? newElement;
+
+        if (items.IsReadOnly)
+        {
+            var newItem = Add();
+            newElement = this.ContainerFromItem(newItem) as LayoutDockItemsControl;
+        }
+        else
+        {
+            newElement = Add() as LayoutDockItemsControl;
+        }
+
+        if (newElement is null)
+        {
+            throw new InvalidOperationException(
+                "Failed to create a new LayoutDockItemsControl instance. Add() returned null."
+            );
+        }
+
+        return newElement;
+    }
+
     internal LayoutItemsControl AddNewLayoutItemsControl()
     {
-        var items = (IList)LayoutGroupItems;
+        var items = (IList)LayoutGroupItems.Items;
         LayoutItemsControl? newElement;
 
         if (items.IsReadOnly)
@@ -433,7 +458,7 @@ public class LayoutManager : ItemsControl, IDropSurface
 
     internal void RemoveLayoutItemsControl(LayoutItemsControl control)
     {
-        var isReadOnly = ((IList)LayoutGroupItems).IsReadOnly;
+        var isReadOnly = ((IList)LayoutGroupItems.Items).IsReadOnly;
         if (isReadOnly)
         {
             var item = LayoutGroupItems.ItemFromContainer(control);

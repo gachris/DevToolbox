@@ -220,16 +220,12 @@ public class LayoutDockWindow : LayoutBaseWindow
         base.OnClosed(e);
     }
 
-    #endregion
-
-    #region Methods
-
     /// <summary>
     /// Sets the hosted content. Must be used by internal code to initialize or clear <see cref="HostControl"/>.
     /// Prevents external code from setting Content directly.
     /// </summary>
     /// <param name="content">The <see cref="LayoutDockItemsControl"/> to host, or null to clear.</param>
-    protected internal void SetHostContent(LayoutDockItemsControl? content)
+    protected internal override void SetHostContent(object? content)
     {
         _allowContentChange = true;
         try

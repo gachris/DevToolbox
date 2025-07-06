@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Xml;
 using DevToolbox.Wpf.Extensions;
 using DevToolbox.Wpf.Serialization;
+using DevToolbox.Wpf.Windows;
 
 namespace DevToolbox.Wpf.Controls;
 
@@ -250,59 +251,32 @@ public class LayoutItemsControl : TabControlEdit, IDropSurface, ILayoutSerializa
     }
 
     /// <inheritdoc/>
-    public virtual bool OnDrop(Point point) => false;
+    public virtual bool OnDrop(Point point)
+    {
+        return false;
+    }
 
     private void DragContent(DependencyObject element, object item, Point startDragPoint, Point offset)
     {
-        //if (element is LayoutItem documentItem && documentItem.IsDockable)
-        //    CreateDockableHost(item, startDragPoint, offset);
-        //else
-        CreateDocumentHost(item, startDragPoint, offset);
-    }
+        LayoutBaseWindow? window;
 
-    private void CreateDockableHost(object item, Point startDragPoint, Point offset)
-    {
-        if (DockManager is null || State == LayoutItemState.Window) return;
-        var window = DockManager.GetContainerForDockingOverride();
-
-        Remove(item);
-
-        if (Items.Count == 0)
-        {
-            DockManager.RemoveLayoutItemsControl(this);
-        }
-
-        LayoutDockItemsControl? newElement;
-        var isReadOnlyDockManager = ((IList)DockManager.Items).IsReadOnly;
-
-        if (isReadOnlyDockManager)
-        {
-            var newItem = DockManager.Add();
-            newElement = DockManager.ContainerFromItem(newItem) as LayoutDockItemsControl;
-        }
+        if (element is LayoutDockItem)
+            window = CreateWindowHost(item, true);
         else
-        {
-            newElement = DockManager.Add() as LayoutDockItemsControl;
-        }
+            window = CreateWindowHost(item, false);
 
-        if (newElement is null)
-        {
-            throw new InvalidOperationException("Failed to create a new LayoutDockItemsControl instance.");
-        }
-
-        newElement.Add(item);
-        newElement.DockManager = DockManager;
-        newElement.State = LayoutItemState.Window;
-        window.SetHostContent(newElement);
-        window.Owner = DockManager.Owner;
-        RestoreWindowSizeAndPosition(window);
-        DockManager.Drag(window, startDragPoint, offset);
+        DockManager!.Drag(window, startDragPoint, offset);
     }
 
-    private void CreateDocumentHost(object item, Point startDragPoint, Point offset)
+    private LayoutBaseWindow CreateWindowHost(object item, bool isDockable)
     {
-        if (DockManager is null || State == LayoutItemState.Window) return;
-        var window = DockManager.GetContainerForDocumentItemOverride();
+        if (DockManager is null)
+        {
+            throw new InvalidOperationException("DockManager is null or the control is already in a floating window state.");
+        }
+
+        LayoutBaseWindow window = isDockable ? DockManager.GetContainerForDockingOverride()
+            : DockManager.GetContainerForDocumentItemOverride();
 
         Remove(item);
 
@@ -311,14 +285,26 @@ public class LayoutItemsControl : TabControlEdit, IDropSurface, ILayoutSerializa
             DockManager.RemoveLayoutItemsControl(this);
         }
 
-        var newElement = DockManager.AddNewLayoutItemsControl();
+        TabControlEdit newElement = isDockable ? DockManager.AddNewLayoutDockItemsControl()
+            : DockManager.AddNewLayoutItemsControl();
+
         newElement.Add(item);
-        newElement.DockManager = DockManager;
-        newElement.State = LayoutItemState.Window;
+
+        if (newElement is LayoutDockItemsControl layoutDockItemsControl)
+        {
+            layoutDockItemsControl.DockManager = DockManager;
+            layoutDockItemsControl.State = LayoutItemState.Window;
+        }
+        else if (newElement is LayoutItemsControl layoutItemsControl)
+        {
+            layoutItemsControl.DockManager = DockManager;
+            layoutItemsControl.State = LayoutItemState.Window;
+        }
+
         window.SetHostContent(newElement);
         window.Owner = DockManager.Owner;
         RestoreWindowSizeAndPosition(window);
-        DockManager.Drag(window, startDragPoint, offset);
+        return window;
     }
 
     /// <inheritdoc/>
