@@ -726,16 +726,7 @@ public sealed class LayoutDockItemsControl : TabControlEdit, IDropSurface, ILayo
         if (State is LayoutItemState.Window || Items.Count > 0)
             return;
 
-        var items = (IList)DockManager!.Items;
-        if (items.IsReadOnly)
-        {
-            var item = DockManager.ItemFromContainer(this);
-            DockManager.Remove(item);
-        }
-        else
-        {
-            DockManager.Remove(this);
-        }
+        DockManager?.RemoveLayoutDockItemsControl(this);
     }
 
     private void Tab_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

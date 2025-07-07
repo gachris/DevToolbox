@@ -219,17 +219,7 @@ public class LayoutWindow : LayoutBaseWindow
             return;
 
         var manager = HostControl.DockManager!;
-        var items = (IList)manager.LayoutGroupItems.Items;
-        if (items.IsReadOnly)
-        {
-            var item = manager.LayoutGroupItems.ItemFromContainer(HostControl);
-            manager.LayoutGroupItems.Remove(item);
-        }
-        else
-        {
-            manager.LayoutGroupItems.Remove(HostControl);
-        }
-
+        manager.RemoveLayoutItemsControl(HostControl);
         Close();
     }
 

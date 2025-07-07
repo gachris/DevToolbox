@@ -393,16 +393,7 @@ public class LayoutItemsControl : TabControlEdit, IDropSurface, ILayoutSerializa
         if (State is LayoutItemState.Window || Items.Count > 0)
             return;
 
-        var items = (IList)DockManager!.LayoutGroupItems.Items;
-        if (items.IsReadOnly)
-        {
-            var item = DockManager.ItemFromContainer(this);
-            DockManager.LayoutGroupItems.Remove(item);
-        }
-        else
-        {
-            DockManager.LayoutGroupItems.Remove(this);
-        }
+        DockManager?.RemoveLayoutItemsControl(this);
     }
 
     private void Tab_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
